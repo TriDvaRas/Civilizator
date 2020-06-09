@@ -3,7 +3,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const client = new Discord.Client();
-
+const giEvents=require("./assets/functions/guildConfig.js")
 //read CommandList
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -19,6 +19,7 @@ client.once('ready', () => {
 
 client.login(token);
 
+giEvents.initGuildEvents(client);
 client.on('message', message => {
 	//check if message is a command and author is not a bot
 	if (!message.content.startsWith(prefix) || message.author.bot) 
