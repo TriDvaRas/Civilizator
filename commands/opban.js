@@ -1,7 +1,7 @@
 //imports 
-var Perm = require('./assets/functions/PermissionsFunctions.js');
-var FF = require('./assets/functions/FileFunctions.js');
-var BanF = require('./assets/functions/BansFunctions.js');
+var Perm = require('../assets/functions/PermissionsFunctions.js');
+var FF = require('../assets/functions/IO.js');
+var BanF = require('../assets/functions/BansFunctions.js');
 module.exports = {
     name: 'opban',
     description: 'Bans Civilization by id or alias ignoring bans limit (OP)',

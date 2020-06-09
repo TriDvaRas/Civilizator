@@ -1,5 +1,5 @@
 
-var Perm = require('./assets/functions/PermissionsFunctions.js');
+var Perm = require('../assets/functions/PermissionsFunctions.js');
 module.exports = {
     name: 'list',
     description: 'Gives a link to civlist Spreadsheet',

@@ -1,7 +1,7 @@
 //imports 
 var fs = require('fs');
-var Perm = require('./assets/functions/PermissionsFunctions.js');
-var FF = require('./assets/functions/FileFunctions.js');
+var Perm = require('../assets/functions/PermissionsFunctions.js');
+var FF = require('../assets/functions/IO.js');
 module.exports = {
     name: 'dlc',
     description: 'Whitelist/BlackList DLC (OP)',

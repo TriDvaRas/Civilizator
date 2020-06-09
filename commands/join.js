@@ -1,5 +1,5 @@
-var FF = require('./assets/functions/FileFunctions.js');
-var Perm = require('./assets/functions/PermissionsFunctions.js');
+var FF = require('../assets/functions/IO.js');
+var Perm = require('../assets/functions/PermissionsFunctions.js');
 module.exports = {
     name: 'join',
     description: 'Adds you to CivRandomizer game',

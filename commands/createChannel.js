@@ -1,5 +1,5 @@
 
-var Perm = require('./assets/functions/PermissionsFunctions.js');
+var Perm = require('../assets/functions/PermissionsFunctions.js');
 module.exports = {
     name: 'createChannel',
     description: 'Creates civ channel accessible for users with role [roleName] (Admin)',

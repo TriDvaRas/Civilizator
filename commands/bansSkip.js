@@ -1,5 +1,5 @@
-var FF = require('./assets/functions/FileFunctions.js');
-var Phaser = require('./assets/functions/PhasingFunctions.js');
+var FF = require('../assets/functions/IO.js');
+var Phaser = require('../assets/functions/PhasingFunctions.js');
 module.exports = {
     name: 'bansSkip',
     description: 'Ends bans phase (OP)',

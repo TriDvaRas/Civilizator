@@ -1,6 +1,6 @@
-var FF = require('./assets/functions/FileFunctions.js');
-var Phaser = require('./assets/functions/PhasingFunctions.js');
-var Perm = require('./assets/functions/PermissionsFunctions.js');
+var FF = require('../assets/functions/IO.js');
+var Phaser = require('../assets/functions/PhasingFunctions.js');
+var Perm = require('../assets/functions/PermissionsFunctions.js');
 module.exports = {
     name: 'joinEnd',
     description: 'Ends join phase (OP)',

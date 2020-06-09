@@ -1,4 +1,4 @@
-var FF = require('./assets/functions/FileFunctions.js');
+var FF = require('../assets/functions/IO.js');
 module.exports = {
     name: 'end',
     description: 'Ends current phase if possible (OP)',

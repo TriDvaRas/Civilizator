@@ -1,5 +1,5 @@
 
-var Perm = require('./assets/functions/PermissionsFunctions.js');
+var Perm = require('../assets/functions/PermissionsFunctions.js');
 module.exports = {
     name: 'createRole',
     description: 'Creates [roleName] role (Admin)',

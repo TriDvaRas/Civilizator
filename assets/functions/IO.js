@@ -12,5 +12,8 @@ module.exports = {
                 console.log(err);
             }
         });
+    },
+    createDir(path, name){
+        fs.mkdirSync(`${path}/${name}`);
     }
 }

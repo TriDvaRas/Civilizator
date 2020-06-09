@@ -1,5 +1,5 @@
-var FF = require('./assets/functions/FileFunctions.js');
-var BanF = require('./assets/functions/BansFunctions.js');
+var FF = require('../assets/functions/IO.js');
+var BanF = require('../assets/functions/BansFunctions.js');
 module.exports = {
     name: 'ban',
     description: 'Bans Civilization by id or alias',

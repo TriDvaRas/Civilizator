@@ -14,7 +14,7 @@ module.exports = {
     }
 }
 //IO system
-var FF = require('./FileFunctions.js');
+var FF = require('./IO.js');
 //gen and send all picks
 function GeneratePicks(CurrState, message) {
     shuffle(CurrState.Players, CurrState.PlayersId);
