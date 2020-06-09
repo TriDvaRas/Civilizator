@@ -1,0 +1,2 @@
+# TheRatBot
+ TheRat discord bot
