@@ -1,5 +1,4 @@
 
-var Phaser = require('./PhasingFunctions.js');
 module.exports = {
     CheckBanned(CurrState, C) {
         if (CurrState.banned.find(x => x == C.id)) {
@@ -39,12 +38,6 @@ module.exports = {
 
     },
 
-    CheckBansEnd(CurrState, message) {
-        if (CurrState.bansActual >= CurrState.bansFull) {
-
-            Phaser.StartPicks(CurrState, message);
-        }
-    },
     includesIgnoreCase(arr, value) {
         let LCvalue = value.toLowerCase();
 

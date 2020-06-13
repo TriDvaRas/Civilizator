@@ -1,37 +1,20 @@
 
-var Perm = require('../assets/functions/PermissionsFunctions.js');
+var Perm = require('../assets/functions/Permissions.js');
+const { createBaseChannel } = require('../assets/functions/Setup.js');
 module.exports = {
-    name: 'createChannel',
-    description: 'Creates civ channel accessible for users with role [roleName] (Admin)',
-    usage: `\`!civ createChannel [roleName]\` ([roleName] is not a mention)`,
-    execute:async function(message, args) {
-        if (!Perm.checkRoles(message, "skip", true, false, false)) {
-            message.reply("ахуел?(Admin only)");
+    name: 'createchannel',
+    description: 'Create Civilizator channel',
+    usage: `\`createChannel\``,
+    execute: async function (message, args) {
+        if (!Perm.checkRoles(message.member, null, { admin: true })) {
+            message.reply("Server admin command");
             return;
         }
-        let { channelName, roleName } = require('./config.json');
-        if(args[0])
-            roleName=args[0];
-        
-        if (!message.guild.channels.find(channel => channel.name === channelName)) {
-            message.guild.createChannel(channelName, {
-                type: 'text',
-                permissionOverwrites: [
-                    {
-                        id: message.guild.defaultRole.id,
-                        deny: ['VIEW_CHANNEL'],
-                    },
-                    {
-                        id: message.guild.roles.find(role => role.name === roleName).id,
-                        allow: ['VIEW_CHANNEL'],
-                    },
-                ]
+        createBaseChannel(message.guild, undefined, message)
+            .then(channel => {
+                message.channel.send(`Successfuly created ${channel}`)
+            }).catch(err => {
+                message.channel.send(err)
             });
-            message.channel.send(`${message.author} created Civ channel`);
-        } else {
-            message.reply(`channel already exists`);
-        }
-
-
     },
 };

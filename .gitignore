@@ -2,7 +2,8 @@ config.json
 Start.bat
 node_modules
 StartDebug.bat
-commands/CivRandomizer/Imgs/Players/*
-commands/CivRandomizer/CurrentState.json
-old
+assets/Imgs/Players/*
 commands/f.js
+guilds/*
+gameState
+logs

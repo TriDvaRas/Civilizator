@@ -1,22 +1,27 @@
 
 var fs = require('fs');
+const logger = require(`../../logger`);
 module.exports = {
     Read: function Read(Path) {
         var data = fs.readFileSync(Path, "utf8");
-        
+
         return JSON.parse(data);
     },
     Write: function Write(Path, data) {
         fs.writeFileSync(Path, JSON.stringify(data, null, 2), function (err) {
             if (err) {
-                console.log(err);
+                logger.log(`error`, err);
             }
         });
     },
-    createDir(path){
-        fs.mkdirSync(path,{recursive:true});
+    createDir(path) {
+        fs.mkdirSync(path, { recursive: true }, function (err) {
+            if (err) {
+                logger.log(`error`, err);
+            }
+        });
     },
-    removeDir(path){
+    removeDir(path) {
         if (fs.existsSync(path)) {
             fs.readdirSync(path).forEach(function (file, index) {
                 var curPath = path + "/" + file;
@@ -24,6 +29,10 @@ module.exports = {
                     deleteFolderRecursive(curPath);
                 } else { // delete file
                     fs.unlinkSync(curPath);
+                }
+            }, function (err) {
+                if (err) {
+                    logger.log(`error`, err);
                 }
             });
             fs.rmdirSync(path);

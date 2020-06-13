@@ -1,0 +1,114 @@
+//imports 
+
+const GC = require(`../assets/functions/guildConfig.js`);
+var Perm = require('../assets/functions/Permissions.js');
+var IO = require('../assets/functions/IO.js');
+const Embeder = require("../assets/functions/embeder.js");
+module.exports = {
+    name: 'dlc',
+    description: 'Whitelist/BlackList DLC (OP)',
+    usage: '`!civ dlc [w/b] [DLC names]`',
+    execute: async function (message, args) {
+        message.delete({ timeout: 5000 });
+        //read GameState
+        var state = GC.getGameState(message.guild);
+        //check if Player is OP
+        if (!Perm.checkRoles(message.member, state.Op, { admin: true, op: true })) {
+            message.reply("Operator command");
+            return;
+        }
+        //check phase
+        if (state.started != true) {
+            message.channel.send("`start` game first").then(botMsg => {
+                botMsg.delete({ timeout: 5000 });
+            });
+            return;
+        } else if (state.Phase != "join") {
+            message.channel.send("Wrong phase").then(botMsg => {
+                botMsg.delete({ timeout: 5000 });
+            });
+            return;
+
+        } else {
+
+            if (args[0] == "r" || args[0] == "reset") {
+                state.DLCs = state.DLCs.concat(state.disabledDLC);
+                state.disabledDLC = [];
+                state.Civs = state.Civs.concat(state.disabled);
+                state.disabled = [];
+                let embed = Embeder.get(state, message.channel);
+                embed.fields.find(field => field.name == "DLCs").value = "All" + '\u200B';
+                Embeder.set(state, message.channel, embed)
+                GC.setGameState(message.guild, state);
+                return;
+            }
+
+            if (!args[0] || !args[1])
+                message.channel.send(`Wrong arguments`).then(botMsg => {
+                    botMsg.delete({ timeout: 5000 });
+                    return;
+                });
+            let white;
+            if (args[0] == "+" || args[0] == "w" || args[0] == "white" || args[0] == "whitelist")
+                white = true;
+            else if (args[0] == "-" || args[0] == "b" || args[0] == "black" || args[0] == "blacklist")
+                white = false;
+            else {
+                message.channel.send(`Wrong arguments`).then(botMsg => {
+                    botMsg.delete({ timeout: 5000 });
+                });
+                return;
+            }
+            args = args.slice(1);
+            checkDLCs(state, args, white);
+            checkCivs(state);
+            let embed = Embeder.get(state, message.channel);
+            if (state.DLCs.length < 9)
+                embed.fields.find(field => field.name == "DLCs").value = state.DLCs.join('\n') + '\u200B';
+            else if (state.DLCs.length == 9)
+                embed.fields.find(field => field.name == "DLCs").value = "All" + '\u200B';
+            else
+                embed.fields.find(field => field.name == "DLCs").value = "None" + '\u200B';
+            Embeder.set(state, message.channel, embed);
+            GC.setGameState(message.guild, state);
+        }
+
+
+
+        //write
+    },
+};
+//remove civ from pool
+function DisableCiv(id, CurrState) {
+    CurrState.Civs.splice(CurrState.Civs.findIndex(x => x == id), 1);
+    CurrState.disabled.push(id);
+}
+function DisableDLC(DLC, CurrState) {
+    CurrState.DLCs.splice(CurrState.DLCs.findIndex(x => x == DLC), 1);
+    CurrState.disabledDLC.push(DLC);
+}
+
+function checkDLCs(state, args, white) {
+    if (!white)
+        for (let i = 0; i < args.length; i++) {
+            const arg = args[i];
+            let dlc = state.DLCs.find(dlc => dlc.toLowerCase().includes(arg.toLowerCase()))
+            if (dlc)
+                DisableDLC(dlc, state);
+        }
+    else
+        for (let i = state.DLCs.length - 1; i >= 0; i--) {
+            const dlc = state.DLCs[i];
+            if (!args.find(arg => dlc.toLowerCase().includes(arg.toLowerCase())))
+                DisableDLC(dlc, state);
+        }
+
+}
+function checkCivs(state) {
+    var CivList = IO.Read('./assets/CivList.json');
+    for (let i = 0; i < state.Civs.length; i++) {
+        const Civ = state.Civs[i];
+        if (state.disabledDLC.includes(CivList.find(C => C.id == Civ).DLC))
+            DisableCiv(Civ, state);
+    }
+}

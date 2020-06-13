@@ -1,28 +1,20 @@
 
-var Perm = require('../assets/functions/PermissionsFunctions.js');
+var Perm = require('../assets/functions/Permissions.js');
+const { createBaseRole } = require('../assets/functions/Setup.js');
 module.exports = {
-    name: 'createRole',
-    description: 'Creates [roleName] role (Admin)',
-    usage: `\`!civ createRole [roleName]\` (defalult name is \`Civilized\`)`,
+    name: 'createrole',
+    description: 'Creates role (Admin)',
+    usage: `\`!createrole\``,
     execute: async function (message, args) {
-        if (!Perm.checkRoles(message, "skip", true, false, false)) {
+        if (!Perm.checkRoles(message.member, "skip", { admin: true })) {
             message.reply("ахуел?(Admin only)");
             return;
         }
-        const { roleName } = require('./config.json');
-        if (!message.guild.roles.cache.some(role => role.name === roleName)) {
-            message.guild.roles.create({
-                data: {
-                    name: roleName,
-                    mentionable: true,
-                    color: [64, 255, 159]
-                }
+        createBaseRole(message.guild, message)
+            .then(role => {
+                message.channel.send(`Successfuly created ${role.name} role`);
+            }).catch(err => {
+                message.channel.send(err);
             });
-            message.channel.send(`${message.author} created \`${roleName}\` role`);
-        } else {
-            message.reply(`role already exists`);
-        }
-
-
     },
 };

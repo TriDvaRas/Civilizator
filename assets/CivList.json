@@ -26,7 +26,7 @@
       "Name": "Austrian",
       "Alias": ["Austrian","Maria Theresa"],
       "picPath": "Imgs/Civs/4.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "5",
@@ -54,21 +54,21 @@
       "Name": "Byzantine",
       "Alias": ["Byzantine","Byzantium","Theodora"],
       "picPath": "Imgs/Civs/8.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "9",
       "Name": "Carthaginian",
       "Alias": ["Carthaginian","Dido","Didona"],
       "picPath": "Imgs/Civs/9.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "10",
       "Name": "Celtic",
       "Alias": ["Celtic","Boudicca"],
       "picPath": "Imgs/Civs/10.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "11",
@@ -89,7 +89,7 @@
       "Name": "Dutch",
       "Alias": ["Dutch","Netherlands","William"],
       "picPath": "Imgs/Civs/13.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "14",
@@ -110,7 +110,7 @@
       "Name": "Ethiopian",
       "Alias": ["Ethiopian","Haile Selassie"],
       "picPath": "Imgs/Civs/16.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "17",
@@ -138,7 +138,7 @@
       "Name": "Hunnic",
       "Alias": ["Hunnic","Huns","Attila"],
       "picPath": "Imgs/Civs/20.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "21",
@@ -173,7 +173,7 @@
       "Name": "Japanese",
       "Alias": ["Japanese","Oda Nobunaga"],
       "picPath": "Imgs/Civs/25.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "26",
@@ -187,7 +187,7 @@
       "Name": "Mayan",
       "Alias": ["Mayan","Pacal"],
       "picPath": "Imgs/Civs/27.png",
-      "DLC": "G&K"
+      "DLC": "G&K/Gods&Kings"
     },
     {
       "id": "28",
