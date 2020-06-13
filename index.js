@@ -26,7 +26,6 @@ process
 		process.kill(process.ppid);
 	})
 
-logger.log('rat', "RAt")
 //read CommandList
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
