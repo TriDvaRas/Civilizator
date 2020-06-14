@@ -1,9 +1,9 @@
 
 const GC = require("../assets/functions/guildConfig.js");
 module.exports = {
-    name: 'getRole',
-    description: 'Gives you Civilized role',
-    usage: `\`!civ getRole\``,
+    name: 'getrole',
+    description: 'Gives you Civilized role if enabled on server',
+    usage: `\`getrole\``,
     execute: async function (message, args) {
         let config = GC.getConfig(message.guild);
         if (!config.allowGetRole) {

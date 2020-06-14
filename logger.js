@@ -8,7 +8,7 @@ const options = {
 
     file: [
         {
-            level:'debug',
+            level: 'debug',
             filename: `${appRoot}/logs/raw.log`,
             handleExceptions: true,
             json: true,
@@ -25,7 +25,7 @@ const options = {
             format: winston.format.printf(log => `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`),
         },
         {
-            level:'debug',
+            level: 'debug',
             filename: `${appRoot}/logs/debug.log`,
             handleExceptions: true,
             maxsize: 5242880, // 5MB
@@ -36,7 +36,7 @@ const options = {
     ],
     console: [
         {
-            level: `info`,
+            level: `cmd`,
             handleExceptions: true,
             json: false,
             colorize: true,
@@ -52,9 +52,9 @@ let logger = new winston.createLogger({
         error: 0,
         warn: 1,
         info: 2,
-        http: 3,
-        verbose: 4,
-        rat: 5,
+        cmd: 3,
+        http: 4,
+        verbose: 5,
         debug: 6,
         silly: 7,
     },
@@ -74,11 +74,13 @@ function getTransports() {
 function color(text) {
     switch (text) {
         case `ERROR`:
-            return chalk.bgRedBright(text);
+            return chalk.bold.bgRedBright(text);
         case `WARN`:
-            return chalk.bgRgb(224, 134, 22)(text);
+            return chalk.bold.bgRgb(224, 134, 22)(text);
         case `DEBUG`:
-            return chalk.yellowBright(text);
+            return chalk.bold.yellowBright(text);
+        case `CMD`:
+            return chalk.bold.rgb(255, 87, 20)(text);
         default:
             return chalk.green(text);
     }

@@ -4,35 +4,41 @@ const Perm = require('../assets/functions/Permissions.js');
 const GC = require(`../assets/functions/guildConfig.js`);
 const Reacter = require(`../assets/functions/reactions.js`);
 const Embeder = require("../assets/functions/embeder.js");
+const logger = require("../logger");
+const chalk = require('chalk');
+
 module.exports = {
     name: 'start',
     description: 'Starts Civilizator Game',
-    usage: '`start [CivPerPlayer(1-6)] <BansPerPlayer(0-4)>`',
+    usage: '`start <CivPerPlayer(1-6)> [BansPerPlayer(0-4)]`',
     execute: async function (message, args) {
         if (args.length > 0) {
             //read state
-            var CurrState = GC.getGameState(message.guild);
+            var state = GC.getGameState(message.guild);
 
             //check civ role
-            if (!Perm.checkRoles(message.member, CurrState.Op, { civ: true })) {
+            if (!Perm.checkRoles(message.member, state.Op, { civ: true })) {
                 message.reply("CivRole only");
                 return;
             }
             //check if game is started
-            if (CurrState.started == true) {
-                Perm.checkRoles(message.member, CurrState.Op, { op: true });
+            if (state.started == true) {
+                Perm.checkRoles(message.member, state.Op, { op: true });
                 GC.resetGameState(message.guild);
                 //reread State
-                CurrState = GC.getGameState(message.guild);
+                state = GC.getGameState(message.guild);
             }
             //create embed
             gameEmbed = Embeder.create();
             //start game
-            if (StartGame(message, args, CurrState, gameEmbed))
+            if (StartGame(message, args, state, gameEmbed))
                 return;
+
+            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started PPP-${state.playerSize} BPP-${state.banSize}`);
             message.channel.send(gameEmbed).then(msg => {
-                CurrState.embedId = msg.id;
-                GC.setGameState(message.guild, CurrState);
+                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
+                state.embedId = msg.id;
+                GC.setGameState(message.guild, state);
                 Reacter.addJoiner(msg);
             });
             return;
@@ -48,8 +54,8 @@ function StartGame(message, args, CurrState, gameEmbed) {
     gameEmbed.fields.find(field => field.name == "Game Operator").value = message.author;
     //check CPP
     if (!args[0] || !parseInt(args[0])) {
-        message.channel.send("Wrong arguments").then(msg=>{
-            msg.delete({timeout:5000});
+        message.channel.send("Wrong arguments").then(msg => {
+            msg.delete({ timeout: 5000 });
         });
         return true;
     }

@@ -2,10 +2,12 @@ var IO = require('../assets/functions/IO.js');
 const GC = require(`../assets/functions/guildConfig.js`);
 var BanF = require('../assets/functions/BansFunctions.js');
 const Embeder = require("../assets/functions/embeder.js");
+const logger = require("../logger");
+const chalk = require('chalk');
 module.exports = {
     name: 'ban',
     description: 'Bans Civilization by id or alias',
-    usage: '`ban [Id/Alias]`',
+    usage: '`ban <Id/Alias>`',
     execute: async function (message, args) {
         message.delete({ timeout: 5000 });
         //read GameState
@@ -42,8 +44,6 @@ module.exports = {
                 //find civ by id
                 C = CivList.find(civ => civ.id == arg);
 
-
-
                 // if not found by id
                 if (!C) {
                     C = [];
@@ -55,6 +55,7 @@ module.exports = {
                     //check if multiple
                     if (C.length > 1) {
                         let txt = `Multiple aliases for \`${arg}\`:`;
+                        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${txt}`);
                         C.forEach(civ => {
                             txt += `\n${civ.id}. ${civ.Alias.join(` - `)}`
                         });
@@ -65,6 +66,7 @@ module.exports = {
                     }
                     else if (C.length == 0) {
                         let txt = `No aliases found for \`${arg}\``;
+                        logger.log(`cmd`, txt);
                         message.channel.send(txt).then(botMsg => {
                             botMsg.delete({ timeout: 7000 });
                         });;
@@ -81,8 +83,8 @@ module.exports = {
                 if (C) {
                     //check if banned
                     if (!BanF.CheckBanned(state, C)) {
-                        let player=state.Players.find(u=>u.id==`${message.author}`);
-                        if(player.bans.length>=state.banSize){
+                        let player = state.Players.find(u => u.id == `${message.author}`);
+                        if (player.bans.length >= state.banSize) {
                             message.reply(`Out of bans`).then(botMsg => {
                                 botMsg.delete({ timeout: 10000 });
                             });
@@ -96,6 +98,7 @@ module.exports = {
                         }).then(botMsg => {
                             botMsg.delete({ timeout: 10000 });
                         });
+                        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] banned ${C.Name} [${state.bansActual}/${state.bansFull}]`);
                         let embed = Embeder.get(state, message.channel);
                         embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
                         embed.fields.find(field => field.name == "Banned civs").value = state.banned.join('\n') + '\u200B';
@@ -103,6 +106,7 @@ module.exports = {
                         GC.setGameState(message.guild, state);
                         if (state.bansActual >= state.bansFull) {
                             let msg = message.channel.messages.cache.array().find(msg => msg.id == state.embedId);
+                            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] Last ban, proceeding to picks`);
                             msg.react(`✔️`);
                         }
 

@@ -1,6 +1,8 @@
 const IO = require('./IO.js');
-const {createBase} = require('./Setup.js');
-const logger=require(`../../logger`);
+const { createBase } = require('./Setup.js');
+const logger = require(`../../logger`);
+const chalk = require('chalk');
+
 function createConfig(guild) {
     let config = {
         roleId: "",
@@ -10,18 +12,30 @@ function createConfig(guild) {
     IO.createDir(`guilds/${guild.id}`);
     IO.Write(`guilds/${guild.id}/config.json`, config);
     IO.Write(`guilds/${guild.id}/gameState.json`, IO.Read(`assets/BaseState.json`));
+
 }
 
 function initGuildEvents(client) {
     client.on('guildCreate', guild => {
-        createConfig(guild);
-        createBase(guild, client);
-        logger.log(`info`, `Joined guild ${guild.name} -- ${guild.id}`);
+        try {
+            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] joined guild `);
+            createConfig(guild);
+            createBase(guild, client);
+            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] created config `);
+        } catch (error) {
+            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] failed creating config \n${error}`);
+        }
+
 
     })
     client.on('guildDelete', guild => {
-        deleteConfig(guild);
-        logger.log(`info`, `Left guild ${guild.name} -- ${guild.id}`);
+        try {
+            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] left guild `);
+            deleteConfig(guild);
+            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] deleted config`);
+        } catch (error) {
+            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] failed deleting config \n${error}`);
+        }
     })
 }
 

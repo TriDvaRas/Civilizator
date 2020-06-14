@@ -4,7 +4,7 @@ const { createBaseRole } = require('../assets/functions/Setup.js');
 module.exports = {
     name: 'createrole',
     description: 'Creates role (Admin)',
-    usage: `\`!createrole\``,
+    usage: `\`createrole\``,
     execute: async function (message, args) {
         if (!Perm.checkRoles(message.member, "skip", { admin: true })) {
             message.reply("ахуел?(Admin only)");

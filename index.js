@@ -1,29 +1,38 @@
+let pressences = ["KPbICA"];
+
 //Setup
 const fs = require('fs');
-const winston = require('winston');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const GC = require("./assets/functions/guildConfig.js");
-const client = new Discord.Client();
+
+const client = new Discord.Client({
+	presence: {
+		activity: {
+			name: botPressence(),
+			type: "CUSTOM_STATUS"
+		}
+	}
+});
 
 //Set logger
-const logger = require("./logger")
+const logger = require("./logger");
+const chalk = require('chalk');
 
 client.on('ready', () => logger.log('info', 'Logged in'))
-	.on('debug', m => logger.log('debug', m))
-	.on('warn', m => logger.log('warn', m))
-	.on('error', m => logger.log('error', m));
+	.on('debug', m => logger.log('debug', `[*] ${m}`))
+	.on('warn', m => logger.log('warn', `[*] ${m}`))
+	.on('error', m => logger.log('error', `[*] ${m}`));
 
 process
 	.on('uncaughtException', error => {
-		logger.log('error', error);
+		logger.log('error', `[*] ${error}`);
 	})
 	.on('unhandledRejection', error => {
-		logger.log('error', error);
+		logger.log('error', `[*] ${error}`);
 	})
 	.on('SIGHUP', () => {
 		logger.log('info', 'Shutting down...')
-		process.kill(process.ppid);
 	})
 
 //read CommandList
@@ -59,25 +68,28 @@ client.on('message', message => {
 	if (client.commands.has(command))
 		//execute command		
 		try {
-			//send usage
+			logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 			if (args[0] == "help") {
 				message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).usage}`)
 			} else
 				client.commands.get(command).execute(message, args);
 		} catch (error) {
-			logger.log('error', error)
+			logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
 		}
 	else if (client.civcommands.has(command) && GC.getConfig(message.guild).channelId == message.channel.id)
 		try {
-			//send usage
+			logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 			if (args[0] == "help") {
 				message.channel.send(`${client.civcommands.get(command).description}\nUsage:\n${client.civcommands.get(command).usage}`)
 			} else
 				client.civcommands.get(command).execute(message, args);
 		} catch (error) {
-			logger.log('error', error)
+			logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
 		}
 
 });
 
 
+function botPressence() {
+	return pressences[Math.floor(Math.random() * pressences.length)];
+}

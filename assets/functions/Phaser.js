@@ -4,7 +4,6 @@ module.exports = {
     StartJoins: function StartJoins(CurrState, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n\u200B";
         CurrState.Phase = "join";
-        gameEmbed.f
     },
     StartBans: function StartBans(CurrState, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Bans**\n Click  ➡️  to skip 1 ban  \n Click  ⏩  to end phase (Operator) \n `ban [civId/civName]` to ban civilization\n\u200B";

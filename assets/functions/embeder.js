@@ -1,5 +1,7 @@
 
 const Discord = require('discord.js');
+const logger=require(`../../logger`);
+const chalk = require('chalk');
 module.exports = {
     create: createEmbed,
     get: getEmbed,
@@ -9,7 +11,7 @@ module.exports = {
 function createEmbed() {
     return new Discord.MessageEmbed()
         .setColor('#46a832')
-        .setTitle("Civilization 5 Game")
+        .setTitle("**Civilization V Game**")
         .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
         .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
         .addFields(

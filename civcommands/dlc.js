@@ -4,10 +4,15 @@ const GC = require(`../assets/functions/guildConfig.js`);
 var Perm = require('../assets/functions/Permissions.js');
 var IO = require('../assets/functions/IO.js');
 const Embeder = require("../assets/functions/embeder.js");
+const logger = require("../logger");
+const chalk = require('chalk');
 module.exports = {
     name: 'dlc',
-    description: 'Whitelist/BlackList DLC (OP)',
-    usage: '`!civ dlc [w/b] [DLC names]`',
+    description: 'Manage DLCs (Operator)',
+    usage: 
+`\`dlc <whitelist/white/w/+> <DLCs>\` disables all DLCs which are not in [DLCs]
+\`dlc <blacklist/black/b/-> <DLCs>\` disables all DLCs which are in [DLCs]
+\`dlc <reset/r>\` enables all DLCs`,
     execute: async function (message, args) {
         message.delete({ timeout: 5000 });
         //read GameState
@@ -40,6 +45,7 @@ module.exports = {
                 embed.fields.find(field => field.name == "DLCs").value = "All" + '\u200B';
                 Embeder.set(state, message.channel, embed)
                 GC.setGameState(message.guild, state);
+                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => all`);
                 return;
             }
 
@@ -63,12 +69,18 @@ module.exports = {
             checkDLCs(state, args, white);
             checkCivs(state);
             let embed = Embeder.get(state, message.channel);
-            if (state.DLCs.length < 9)
+            if (state.DLCs.length < 9) {
                 embed.fields.find(field => field.name == "DLCs").value = state.DLCs.join('\n') + '\u200B';
-            else if (state.DLCs.length == 9)
+                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => ${state.DLCs.join('\n')}`);
+            }
+            else if (state.DLCs.length == 9) {
                 embed.fields.find(field => field.name == "DLCs").value = "All" + '\u200B';
-            else
+                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => all`);
+            }
+            else {
                 embed.fields.find(field => field.name == "DLCs").value = "None" + '\u200B';
+                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => none`);
+            }
             Embeder.set(state, message.channel, embed);
             GC.setGameState(message.guild, state);
         }
