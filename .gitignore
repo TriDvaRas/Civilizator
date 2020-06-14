@@ -7,3 +7,4 @@ commands/f.js
 guilds/*
 gameState
 logs
+nodemon.json
