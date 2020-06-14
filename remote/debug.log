@@ -1,0 +1,1045 @@
+[6/13/2020, 9:10:09 PM] [INFO] - Logging in...
+[6/13/2020, 9:10:09 PM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/13/2020, 9:10:09 PM] [DEBUG] - Preparing to connect to the gateway...
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 944
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 226ms
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] [READY] Session 982e7b476a9cfc69d5c978ec66475945.
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/13/2020, 9:10:09 PM] [INFO] - Logged in
+[6/13/2020, 9:10:09 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/13/2020, 9:10:26 PM] [ERROR] - uncaughtException: ENOENT: no such file or directory, open 'guilds/272336653589413889/config.json'
+Error: ENOENT: no such file or directory, open 'guilds/272336653589413889/config.json'
+    at Object.openSync (fs.js:443:3)
+    at Object.readFileSync (fs.js:343:35)
+    at Object.Read (/root/Civilizator/assets/functions/IO.js:6:23)
+    at Object.getConfig (/root/Civilizator/assets/functions/guildConfig.js:35:15)
+    at Client.client.on.message (/root/Civilizator/index.js:70:49)
+    at Client.emit (events.js:198:13)
+    at MessageCreateAction.handle (/root/Civilizator/node_modules/discord.js/src/client/actions/MessageCreate.js:31:14)
+    at Object.module.exports [as MESSAGE_CREATE] (/root/Civilizator/node_modules/discord.js/src/client/websocket/handlers/MESSAGE_CREATE.js:4:32)
+    at WebSocketManager.handlePacket (/root/Civilizator/node_modules/discord.js/src/client/websocket/WebSocketManager.js:386:31)
+    at WebSocketShard.onPacket (/root/Civilizator/node_modules/discord.js/src/client/websocket/WebSocketShard.js:436:22)
+[6/13/2020, 9:10:26 PM] [ERROR] - undefined
+[6/13/2020, 9:16:37 PM] [INFO] - Logging in...
+[6/13/2020, 9:16:37 PM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/13/2020, 9:16:37 PM] [DEBUG] - Preparing to connect to the gateway...
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 943
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 231ms
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] [READY] Session a4037a0aa4d3170657bdf085b5356ed1.
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/13/2020, 9:16:38 PM] [INFO] - Logged in
+[6/13/2020, 9:16:38 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 112ms.
+[6/13/2020, 9:17:19 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:17:19 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/13/2020, 9:18:00 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:18:00 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 109ms.
+[6/13/2020, 9:18:42 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:18:42 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/13/2020, 9:19:09 PM] [INFO] - Joined guild 3425 -- 272336653589413889
+[6/13/2020, 9:19:23 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:19:23 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:20:04 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:20:04 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:20:45 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:20:45 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/13/2020, 9:21:27 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:21:27 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/13/2020, 9:22:08 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:22:08 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/13/2020, 9:22:49 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:22:49 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:23:30 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:23:31 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/13/2020, 9:24:12 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:24:12 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 123ms.
+[6/13/2020, 9:24:23 PM] [INFO] - Shutting down...
+[6/13/2020, 9:24:23 PM] [ERROR] - uncaughtException: write EIO
+Error: write EIO
+    at afterWriteDispatched (internal/stream_base_commons.js:78:25)
+    at writeGeneric (internal/stream_base_commons.js:73:3)
+    at WriteStream.Socket._writeGeneric (net.js:714:5)
+    at WriteStream.Socket._write (net.js:726:8)
+    at doWrite (_stream_writable.js:415:12)
+    at writeOrBuffer (_stream_writable.js:399:5)
+    at WriteStream.Writable.write (_stream_writable.js:299:11)
+    at Console.log (/root/Civilizator/node_modules/winston/lib/winston/transports/console.js:79:23)
+    at Console._write (/root/Civilizator/node_modules/winston-transport/index.js:102:17)
+    at doWrite (/root/Civilizator/node_modules/winston-transport/node_modules/readable-stream/lib/_stream_writable.js:428:64)
+[6/13/2020, 9:24:23 PM] [ERROR] - undefined
+[6/13/2020, 9:30:59 PM] [INFO] - Logging in...
+[6/13/2020, 9:30:59 PM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/13/2020, 9:30:59 PM] [DEBUG] - Preparing to connect to the gateway...
+[6/13/2020, 9:30:59 PM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/13/2020, 9:30:59 PM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 942
+[6/13/2020, 9:30:59 PM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/13/2020, 9:30:59 PM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/13/2020, 9:30:59 PM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/13/2020, 9:31:00 PM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 227ms
+[6/13/2020, 9:31:00 PM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/13/2020, 9:31:00 PM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/13/2020, 9:31:00 PM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/13/2020, 9:31:00 PM] [DEBUG] - [WS => Shard 0] [READY] Session 371ffed59d26771322e6c4d640354f21.
+[6/13/2020, 9:31:00 PM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/13/2020, 9:31:00 PM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/13/2020, 9:31:00 PM] [INFO] - Logged in
+[6/13/2020, 9:31:00 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 108ms.
+[6/13/2020, 9:31:27 PM] [ERROR] - undefined
+[6/13/2020, 9:31:41 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:31:41 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:32:22 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:32:22 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/13/2020, 9:32:38 PM] [ERROR] - undefined
+[6/13/2020, 9:33:03 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:33:04 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:33:45 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:33:45 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 118ms.
+[6/13/2020, 9:34:26 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:34:26 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:35:07 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:35:07 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:35:49 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:35:49 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:36:30 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:36:30 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:37:11 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:37:11 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:37:52 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:37:52 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/13/2020, 9:38:10 PM] [ERROR] - undefined
+[6/13/2020, 9:38:34 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:38:34 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/13/2020, 9:39:15 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:39:15 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:39:56 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:39:56 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:40:37 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:40:37 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 141ms.
+[6/13/2020, 9:41:19 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:41:19 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:42:00 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:42:00 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:42:41 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:42:41 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/13/2020, 9:43:22 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:43:23 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/13/2020, 9:44:04 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:44:04 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:44:45 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:44:45 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/13/2020, 9:45:26 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:45:26 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:46:07 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:46:08 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:46:49 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:46:49 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:47:30 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:47:30 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:48:11 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:48:11 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:48:53 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:48:53 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:49:34 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:49:34 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/13/2020, 9:50:15 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:50:15 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:50:56 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:50:56 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:51:38 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:51:38 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:52:19 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:52:19 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:53:00 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:53:00 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/13/2020, 9:53:41 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:53:41 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:54:23 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:54:23 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:55:04 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:55:04 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:55:45 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:55:45 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/13/2020, 9:56:26 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:56:27 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/13/2020, 9:57:08 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:57:08 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:57:49 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:57:49 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:58:30 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:58:30 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 9:59:11 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:59:12 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 9:59:53 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 9:59:53 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/13/2020, 10:00:34 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:00:34 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 10:01:15 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:01:15 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 10:01:57 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:01:57 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 10:02:38 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:02:38 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 10:03:19 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:03:19 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/13/2020, 10:04:00 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:04:00 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 110ms.
+[6/13/2020, 10:04:42 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:04:42 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 10:05:23 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:05:23 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/13/2020, 10:06:04 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:06:04 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/13/2020, 10:06:45 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:06:46 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 10:07:27 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:07:27 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/13/2020, 10:08:08 PM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/13/2020, 10:08:08 PM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/13/2020, 10:08:15 PM] [INFO] - Shutting down...
+[6/13/2020, 10:08:15 PM] [ERROR] - uncaughtException: write EIO
+Error: write EIO
+    at afterWriteDispatched (internal/stream_base_commons.js:78:25)
+    at writeGeneric (internal/stream_base_commons.js:73:3)
+    at WriteStream.Socket._writeGeneric (net.js:714:5)
+    at WriteStream.Socket._write (net.js:726:8)
+    at doWrite (_stream_writable.js:415:12)
+    at writeOrBuffer (_stream_writable.js:399:5)
+    at WriteStream.Writable.write (_stream_writable.js:299:11)
+    at Console.log (/root/Civilizator/node_modules/winston/lib/winston/transports/console.js:79:23)
+    at Console._write (/root/Civilizator/node_modules/winston-transport/index.js:102:17)
+    at doWrite (/root/Civilizator/node_modules/winston-transport/node_modules/readable-stream/lib/_stream_writable.js:428:64)
+[6/13/2020, 10:08:15 PM] [ERROR] - undefined
+[6/14/2020, 8:47:11 AM] [INFO] - Logging in...
+[6/14/2020, 8:47:11 AM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 8:47:11 AM] [DEBUG] - Preparing to connect to the gateway...
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 941
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 232ms
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 8:47:11 AM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 8:47:12 AM] [DEBUG] - [WS => Shard 0] [READY] Session 30170b436c91a76611acff4e3b187dd8.
+[6/14/2020, 8:47:12 AM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 8:47:12 AM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 8:47:12 AM] [INFO] - Logged in
+[6/14/2020, 8:47:12 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 8:47:28 AM] [ERROR] - undefined
+[6/14/2020, 8:47:44 AM] [INFO] - Shutting down...
+[6/14/2020, 8:47:44 AM] [ERROR] - uncaughtException: write EIO
+Error: write EIO
+    at afterWriteDispatched (internal/stream_base_commons.js:78:25)
+    at writeGeneric (internal/stream_base_commons.js:73:3)
+    at WriteStream.Socket._writeGeneric (net.js:714:5)
+    at WriteStream.Socket._write (net.js:726:8)
+    at doWrite (_stream_writable.js:415:12)
+    at writeOrBuffer (_stream_writable.js:399:5)
+    at WriteStream.Writable.write (_stream_writable.js:299:11)
+    at Console.log (/root/Civilizator/node_modules/winston/lib/winston/transports/console.js:79:23)
+    at Console._write (/root/Civilizator/node_modules/winston-transport/index.js:102:17)
+    at doWrite (/root/Civilizator/node_modules/winston-transport/node_modules/readable-stream/lib/_stream_writable.js:428:64)
+[6/14/2020, 8:47:44 AM] [ERROR] - undefined
+[6/14/2020, 9:13:18 AM] [INFO] - Logging in...
+[6/14/2020, 9:13:18 AM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 9:13:18 AM] [DEBUG] - Preparing to connect to the gateway...
+[6/14/2020, 9:13:18 AM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 9:13:18 AM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 939
+[6/14/2020, 9:13:18 AM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/14/2020, 9:13:18 AM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 9:13:18 AM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 9:13:19 AM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 222ms
+[6/14/2020, 9:13:19 AM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 9:13:19 AM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 9:13:19 AM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 9:13:19 AM] [DEBUG] - [WS => Shard 0] [READY] Session 46f7449df5cf8920ef2ed1e3af613f39.
+[6/14/2020, 9:13:19 AM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 9:13:19 AM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 9:13:19 AM] [INFO] - Logged in
+[6/14/2020, 9:13:19 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:13:32 AM] [ERROR] - TypeError: fields.flat is not a function!
+[6/14/2020, 9:14:00 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:14:00 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 9:14:01 AM] [ERROR] - TypeError: fields.flat is not a function!
+[6/14/2020, 9:14:41 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:14:41 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 9:15:22 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:15:23 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 9:22:42 AM] [INFO] - Logging in...
+[6/14/2020, 9:22:42 AM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 9:22:42 AM] [DEBUG] - Preparing to connect to the gateway...
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 1000
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 224ms
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] [READY] Session 5912f1c5b9e17bc844e0989f678a36c3.
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 9:22:42 AM] [INFO] - Logged in
+[6/14/2020, 9:22:42 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 9:22:55 AM] [ERROR] - uncaughtException: Cannot find module 'merge-img'
+Require stack:
+- /root/Civilizator/assets/functions/Phaser.js
+- /root/Civilizator/civcommands/start.js
+- /root/Civilizator/index.js
+Error: Cannot find module 'merge-img'
+Require stack:
+- /root/Civilizator/assets/functions/Phaser.js
+- /root/Civilizator/civcommands/start.js
+- /root/Civilizator/index.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:1020:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:890:27)
+    at Module.require (internal/modules/cjs/loader.js:1080:19)
+    at require (internal/modules/cjs/helpers.js:72:18)
+    at GetCivLine (/root/Civilizator/assets/functions/Phaser.js:54:22)
+    at GeneratePicks (/root/Civilizator/assets/functions/Phaser.js:46:9)
+    at Object.StartPicks (/root/Civilizator/assets/functions/Phaser.js:36:9)
+    at ReactionCollector.<anonymous> (/root/Civilizator/assets/functions/reactions.js:40:24)
+    at ReactionCollector.emit (events.js:327:22)
+    at ReactionCollector.handleCollect (/root/Civilizator/node_modules/discord.js/src/structures/interfaces/Collector.js:100:12)
+[6/14/2020, 9:22:55 AM] [ERROR] - Error: Cannot find module 'merge-img'
+Require stack:
+- /root/Civilizator/assets/functions/Phaser.js
+- /root/Civilizator/civcommands/start.js
+- /root/Civilizator/index.js?
+[6/14/2020, 9:24:04 AM] [INFO] - Logging in...
+[6/14/2020, 9:24:04 AM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 9:24:04 AM] [DEBUG] - Preparing to connect to the gateway...
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 999
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 224ms
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 9:24:04 AM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 9:24:05 AM] [DEBUG] - [WS => Shard 0] [READY] Session f6453f6b07cd50ed65f1f3f4d3edf56a.
+[6/14/2020, 9:24:05 AM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 9:24:05 AM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 9:24:05 AM] [INFO] - Logged in
+[6/14/2020, 9:24:05 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 9:24:18 AM] [ERROR] - Error: ENOENT: no such file or directory, stat '/root/Civilizator/assets/Imgs/Players/TriDvaRas#4805.png'!
+[6/14/2020, 9:24:36 AM] [ERROR] - Error: ENOENT: no such file or directory, stat '/root/Civilizator/assets/Imgs/Players/TriDvaRas#4805.png'!
+[6/14/2020, 9:24:46 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:24:46 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 108ms.
+[6/14/2020, 9:24:53 AM] [ERROR] - Error: ENOENT: no such file or directory, stat '/root/Civilizator/assets/Imgs/Players/TriDvaRas#4805.png'!
+[6/14/2020, 9:25:27 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:25:27 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 9:26:08 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:26:08 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 9:38:03 AM] [INFO] - Logging in...
+[6/14/2020, 9:38:03 AM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 9:38:03 AM] [DEBUG] - Preparing to connect to the gateway...
+[6/14/2020, 9:38:03 AM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 9:38:03 AM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 998
+[6/14/2020, 9:38:03 AM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/14/2020, 9:38:03 AM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 9:38:03 AM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 9:38:04 AM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 227ms
+[6/14/2020, 9:38:04 AM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 9:38:04 AM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 9:38:04 AM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 9:38:04 AM] [DEBUG] - [WS => Shard 0] [READY] Session 366203503f74336aeeee89f7002561a7.
+[6/14/2020, 9:38:04 AM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 9:38:04 AM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 9:38:04 AM] [INFO] - Logged in
+[6/14/2020, 9:38:04 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:38:45 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:38:45 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 9:39:23 AM] [INFO] - Logging in...
+[6/14/2020, 9:39:23 AM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 9:39:23 AM] [DEBUG] - Preparing to connect to the gateway...
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 997
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 223ms
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] [READY] Session a007c5d88a0810e03adb9e20f477c154.
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 9:39:23 AM] [INFO] - Logged in
+[6/14/2020, 9:39:23 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 119ms.
+[6/14/2020, 9:40:04 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:40:04 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 9:40:46 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:40:46 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 9:41:27 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:41:27 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 9:42:08 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:42:08 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:42:10 AM] [INFO] - Logging in...
+[6/14/2020, 9:42:10 AM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 9:42:10 AM] [DEBUG] - Preparing to connect to the gateway...
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 996
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 220ms
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] [READY] Session f5128226f9872d51622ae784a9f06dc6.
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 9:42:10 AM] [INFO] - Logged in
+[6/14/2020, 9:42:10 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 9:42:51 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:42:51 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:43:33 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:43:33 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:45:17 AM] [INFO] - Logging in...
+[6/14/2020, 9:45:17 AM] [DEBUG] - Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 9:45:17 AM] [DEBUG] - Preparing to connect to the gateway...
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 995
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Manager] Spawning shards: 0
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 221ms
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] [READY] Session 21f2282f61a19122b461e75b3099d3af.
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 9:45:17 AM] [DEBUG] - [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 9:45:17 AM] [INFO] - Logged in
+[6/14/2020, 9:45:18 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:45:59 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:45:59 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 9:46:40 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:46:40 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:47:21 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:47:21 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:48:02 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:48:02 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 9:48:44 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:48:44 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 9:49:25 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:49:25 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 9:50:06 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:50:06 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 9:50:47 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:50:47 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:51:29 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:51:29 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 112ms.
+[6/14/2020, 9:52:10 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:52:10 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 9:52:51 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:52:51 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 9:53:32 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:53:33 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 9:54:14 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:54:14 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 9:54:55 AM] [DEBUG] - [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 9:54:55 AM] [DEBUG] - [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:32:37 PM] [INFO] - Logging in...
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] Preparing to connect to the gateway...
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 915
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Manager] Spawning shards: 0
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 226ms
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] [READY] Session b368db0e495d14f4e644b9af53f61877.
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 5:32:37 PM] [INFO] - Logged in
+[6/14/2020, 5:32:37 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 5:33:18 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:33:19 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 100ms.
+[6/14/2020, 5:34:00 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:34:00 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:34:41 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:34:41 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 5:35:22 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:35:22 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 5:36:04 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:36:04 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 108ms.
+[6/14/2020, 5:36:45 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:36:45 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:37:26 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:37:26 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 5:38:07 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:38:07 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 5:38:49 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:38:49 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:39:30 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:39:30 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:40:11 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:40:11 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 5:40:52 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:40:53 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 5:41:34 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:41:34 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 5:42:15 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:42:15 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 125ms.
+[6/14/2020, 5:42:56 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:42:56 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 5:43:37 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:43:38 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 100ms.
+[6/14/2020, 5:44:19 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:44:19 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 5:45:00 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:45:00 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 5:45:41 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:45:41 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 5:46:23 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:46:23 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:47:04 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:47:04 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 5:47:45 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:47:45 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:48:26 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:48:26 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 5:49:08 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:49:08 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 5:49:49 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:49:49 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:50:30 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:50:30 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 5:51:11 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:51:12 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 5:51:53 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:51:53 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:52:34 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:52:34 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 5:53:15 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:53:15 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 144ms.
+[6/14/2020, 5:53:57 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:53:57 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 112ms.
+[6/14/2020, 5:54:38 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:54:38 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 5:55:19 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:55:19 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:56:00 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:56:00 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 5:56:42 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:56:42 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 5:57:23 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:57:23 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 118ms.
+[6/14/2020, 5:58:04 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:58:04 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 5:58:45 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:58:45 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 5:59:27 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 5:59:27 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:00:08 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:00:08 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:00:49 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:00:49 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:01:30 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:01:30 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 6:02:12 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:02:12 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:02:53 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:02:53 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:03:34 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:03:34 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:04:15 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:04:16 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:04:57 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:04:57 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 6:05:38 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:05:38 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:06:19 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:06:19 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 132ms.
+[6/14/2020, 6:07:01 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:07:01 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:07:42 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:07:42 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:08:23 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:08:23 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:09:04 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:09:04 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:09:46 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:09:46 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:10:27 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:10:27 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 115ms.
+[6/14/2020, 6:11:08 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:11:08 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:11:49 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:11:50 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 6:12:31 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:12:31 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:13:12 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:13:12 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 116ms.
+[6/14/2020, 6:13:53 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:13:53 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:14:35 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:14:35 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 6:15:16 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:15:16 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:15:57 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:15:57 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:16:38 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:16:38 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 112ms.
+[6/14/2020, 6:17:20 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:17:20 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 6:18:01 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:18:01 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 6:18:42 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:18:42 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:19:23 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:19:23 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:20:05 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:20:05 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 116ms.
+[6/14/2020, 6:20:46 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:20:46 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 6:21:27 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:21:27 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:22:08 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:22:09 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 112ms.
+[6/14/2020, 6:22:50 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:22:50 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 116ms.
+[6/14/2020, 6:23:31 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:23:31 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:24:12 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:24:12 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:24:53 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:24:54 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:25:35 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:25:35 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:26:16 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:26:16 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:26:57 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:26:57 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:27:39 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:27:39 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:28:20 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:28:20 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 113ms.
+[6/14/2020, 6:29:01 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:29:01 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 116ms.
+[6/14/2020, 6:29:42 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:29:42 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:30:24 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:30:24 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:31:05 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:31:05 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:31:46 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:31:46 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:32:27 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:32:28 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:33:09 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:33:09 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 6:33:50 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:33:50 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:34:31 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:34:31 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 146ms.
+[6/14/2020, 6:35:13 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:35:13 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 108ms.
+[6/14/2020, 6:35:54 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:35:54 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 123ms.
+[6/14/2020, 6:36:35 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:36:35 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 6:37:16 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:37:16 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:37:58 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:37:58 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:38:39 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:38:39 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:39:20 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:39:20 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 118ms.
+[6/14/2020, 6:40:01 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:40:01 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:40:43 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:40:43 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:41:24 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:41:24 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:42:05 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:42:05 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 6:42:46 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:42:47 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:43:28 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:43:28 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 6:44:09 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:44:09 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:44:50 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:44:50 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:45:32 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:45:32 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 113ms.
+[6/14/2020, 6:46:13 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:46:13 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 111ms.
+[6/14/2020, 6:46:54 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:46:54 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 6:47:35 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:47:35 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 6:48:17 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:48:17 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 111ms.
+[6/14/2020, 6:48:58 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:48:58 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 6:49:39 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:49:39 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:50:20 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:50:20 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 108ms.
+[6/14/2020, 6:51:02 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:51:02 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:51:43 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:51:43 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 168ms.
+[6/14/2020, 6:52:24 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:52:24 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 6:53:05 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:53:06 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:53:47 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:53:47 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 6:54:28 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:54:28 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 6:55:09 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:55:09 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:55:51 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:55:51 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:56:32 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:56:32 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 118ms.
+[6/14/2020, 6:57:13 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:57:13 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 6:57:54 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:57:54 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 119ms.
+[6/14/2020, 6:58:36 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:58:36 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:59:17 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:59:17 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 6:59:58 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 6:59:58 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:00:39 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:00:39 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:01:21 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:01:21 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 7:02:02 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:02:02 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 7:02:43 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:02:43 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:03:24 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:03:25 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 116ms.
+[6/14/2020, 7:04:06 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:04:06 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:04:47 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:04:47 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 7:05:28 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:05:28 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:06:09 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:06:10 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 224ms.
+[6/14/2020, 7:06:51 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:06:51 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:07:32 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:07:32 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 109ms.
+[6/14/2020, 7:08:13 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:08:13 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:08:55 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:08:55 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 109ms.
+[6/14/2020, 7:09:36 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:09:36 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 113ms.
+[6/14/2020, 7:10:17 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:10:17 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:10:58 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:10:58 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 7:11:40 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:11:40 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:12:21 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:12:21 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 111ms.
+[6/14/2020, 7:13:02 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:13:02 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:13:43 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:13:44 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:14:25 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:14:25 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 7:15:06 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:15:06 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:15:47 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:15:47 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:16:29 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:16:29 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:17:10 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:17:10 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 108ms.
+[6/14/2020, 7:17:51 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:17:51 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:18:32 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:18:32 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:19:14 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:19:14 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:19:55 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:19:55 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:20:36 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:20:36 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:21:17 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:21:17 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:21:59 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:21:59 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 141ms.
+[6/14/2020, 7:22:40 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:22:40 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:23:21 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:23:21 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:24:02 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:24:03 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 109ms.
+[6/14/2020, 7:24:44 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:24:44 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:25:25 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:25:25 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 109ms.
+[6/14/2020, 7:26:06 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:26:06 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 7:26:47 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:26:48 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:27:29 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:27:29 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 7:28:10 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:28:10 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:28:51 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:28:51 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:29:33 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:29:33 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 112ms.
+[6/14/2020, 7:30:14 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:30:14 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:30:55 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:30:55 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:31:36 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:31:36 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:32:18 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:32:18 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:32:59 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:32:59 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 113ms.
+[6/14/2020, 7:33:40 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:33:40 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:34:21 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:34:22 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 7:35:03 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:35:03 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:35:44 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:35:44 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 7:36:25 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:36:25 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.
+[6/14/2020, 7:37:06 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:37:07 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:37:48 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:37:48 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 112ms.
+[6/14/2020, 7:38:29 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:38:29 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 131ms.
+[6/14/2020, 7:39:10 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:39:10 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 109ms.
+[6/14/2020, 7:39:52 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:39:52 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 114ms.
+[6/14/2020, 7:40:33 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:40:33 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:40:34 PM] [CMD] - [3425] [TriDvaRas#4805] invite 
+[6/14/2020, 7:40:49 PM] [ERROR] - [*] ReferenceError: message is not defined
+[6/14/2020, 7:41:14 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:41:14 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 123ms.
+[6/14/2020, 7:41:55 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:41:55 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:42:37 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:42:37 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 7:43:18 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:43:18 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 106ms.
+[6/14/2020, 7:43:59 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:43:59 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:44:40 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:44:40 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:45:22 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:45:22 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:46:03 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:46:03 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:46:33 PM] [ERROR] - uncaughtException: message is not defined
+ReferenceError: message is not defined
+    at Client.<anonymous> (/root/Civilizator/assets/functions/guildConfig.js:38:56)
+    at Client.emit (events.js:315:20)
+    at GuildDeleteAction.handle (/root/Civilizator/node_modules/discord.js/src/client/actions/GuildDelete.js:51:14)
+    at Object.module.exports [as GUILD_DELETE] (/root/Civilizator/node_modules/discord.js/src/client/websocket/handlers/GUILD_DELETE.js:4:30)
+    at WebSocketManager.handlePacket (/root/Civilizator/node_modules/discord.js/src/client/websocket/WebSocketManager.js:386:31)
+    at WebSocketShard.onPacket (/root/Civilizator/node_modules/discord.js/src/client/websocket/WebSocketShard.js:436:22)
+    at WebSocketShard.onMessage (/root/Civilizator/node_modules/discord.js/src/client/websocket/WebSocketShard.js:293:10)
+    at WebSocket.onMessage (/root/Civilizator/node_modules/ws/lib/event-target.js:125:16)
+    at WebSocket.emit (events.js:315:20)
+    at Receiver.receiverOnMessage (/root/Civilizator/node_modules/ws/lib/websocket.js:800:20)
+[6/14/2020, 7:46:33 PM] [ERROR] - [*] ReferenceError: message is not defined
+[6/14/2020, 7:51:22 PM] [INFO] - Logging in...
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] Provided token: NzE5OTMzNzE0NDIzMDg3MTM1.XuSYmw.***************************
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] Preparing to connect to the gateway...
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Manager] Fetched Gateway Information
+    URL: wss://gateway.discord.gg
+    Recommended Shards: 1
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Manager] Session Limit Information
+    Total: 1000
+    Remaining: 914
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Manager] Spawning shards: 0
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Shard 0] [CONNECT]
+    Gateway    : wss://gateway.discord.gg/
+    Version    : 6
+    Encoding   : json
+    Compression: none
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Shard 0] Setting a HELLO timeout for 20s.
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Shard 0] [CONNECTED] wss://gateway.discord.gg/?v=6&encoding=json in 242ms
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Shard 0] Clearing the HELLO timeout.
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Shard 0] Setting a heartbeat interval for 41250ms.
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Shard 0] [IDENTIFY] Shard 0/1
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Shard 0] [READY] Session a47d6cd7df72fbadbc595b48697dfbea.
+[6/14/2020, 7:51:22 PM] [DEBUG] - [*] [WS => Shard 0] [ReadyHeartbeat] Sending a heartbeat.
+[6/14/2020, 7:51:23 PM] [DEBUG] - [*] [WS => Shard 0] Shard received all its guilds. Marking as fully ready.
+[6/14/2020, 7:51:23 PM] [INFO] - Logged in
+[6/14/2020, 7:51:23 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:52:04 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:52:04 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:52:19 PM] [INFO] - [Absolute] joined guild 
+[6/14/2020, 7:52:19 PM] [INFO] - [Absolute] created config 
+[6/14/2020, 7:52:45 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:52:45 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:53:26 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:53:26 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:54:05 PM] [INFO] - [Absolute] left guild 
+[6/14/2020, 7:54:05 PM] [INFO] - [Absolute] deleted config
+[6/14/2020, 7:54:07 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:54:07 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 7:54:49 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:54:49 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 101ms.
+[6/14/2020, 7:55:30 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:55:30 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 111ms.
+[6/14/2020, 7:56:11 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:56:11 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 7:56:52 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:56:52 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 123ms.
+[6/14/2020, 7:57:34 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:57:34 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:58:15 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:58:15 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 7:58:56 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:58:56 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 117ms.
+[6/14/2020, 7:59:37 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 7:59:38 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 102ms.
+[6/14/2020, 8:00:19 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 8:00:19 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 103ms.
+[6/14/2020, 8:01:00 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 8:01:00 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 104ms.
+[6/14/2020, 8:01:41 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 8:01:41 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 107ms.
+[6/14/2020, 8:01:58 PM] [INFO] - [Absolute] joined guild 
+[6/14/2020, 8:01:58 PM] [INFO] - [Absolute] created config 
+[6/14/2020, 8:02:22 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 8:02:23 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 109ms.
+[6/14/2020, 8:02:48 PM] [CMD] - [Absolute] [TriDvaRas#4805] prefix ~
+[6/14/2020, 8:02:48 PM] [CMD] - [Absolute] changing prefix
+[6/14/2020, 8:02:48 PM] [CMD] - [Absolute] changed prefix to ~
+[6/14/2020, 8:03:04 PM] [DEBUG] - [*] [WS => Shard 0] [HeartbeatTimer] Sending a heartbeat.
+[6/14/2020, 8:03:04 PM] [DEBUG] - [*] [WS => Shard 0] Heartbeat acknowledged, latency of 105ms.

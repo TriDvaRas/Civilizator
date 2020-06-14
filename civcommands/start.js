@@ -17,13 +17,12 @@ module.exports = {
             var state = GC.getGameState(message.guild);
 
             //check civ role
-            if (!Perm.checkRoles(message.member, state.Op, { civ: true })) {
+            if (!Perm.checkRoles(message.member, state.Op, { admin: true, op: true, civ: true })) {
                 message.reply("CivRole only");
                 return;
             }
             //check if game is started
             if (state.started == true) {
-                Perm.checkRoles(message.member, state.Op, { op: true });
                 GC.resetGameState(message.guild);
                 //reread State
                 state = GC.getGameState(message.guild);

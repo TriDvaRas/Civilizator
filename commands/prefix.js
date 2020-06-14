@@ -5,7 +5,8 @@ const logger = require("../logger");
 const chalk = require('chalk');
 module.exports = {
     name: 'prefix',
-    description: 'Change bot\'s prefix',
+    description: `Change bot\'s prefix.
+It's recomended to use bot mention instead of prefix in this command to avoid changing different bot's prefix`,
     usage: '`prefix <new prefix>`',
     execute: async function (message, args) {
         if (!Perm.checkRoles(message.member, null, { admin: true })) {
@@ -21,6 +22,7 @@ module.exports = {
             let config = GC.getConfig(message.guild)
             config.prefix = args[0];
             GC.setConfig(message.guild, config);
+            message.channel.send(`Changed prefix to \`${args[0]}\``)
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] changed prefix to ${config.prefix}`);
         } catch (error) {
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] failed to change prefix ${error}`);

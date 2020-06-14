@@ -19,23 +19,23 @@ function createConfig(guild) {
 function initGuildEvents(client) {
     client.on('guildCreate', guild => {
         try {
-            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] joined guild `);
+            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] joined guild `);
             createConfig(guild);
             createBase(guild, client);
-            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] created config `);
+            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created config `);
         } catch (error) {
-            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] failed creating config \n${error}`);
+            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating config \n${error}`);
         }
 
 
     })
     client.on('guildDelete', guild => {
         try {
-            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] left guild `);
+            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] left guild `);
             deleteConfig(guild);
-            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] deleted config`);
+            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] deleted config`);
         } catch (error) {
-            logger.log(`info`, `[${chalk.magentaBright(message.guild.name)}] failed deleting config \n${error}`);
+            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed deleting config \n${error}`);
         }
     })
 }
