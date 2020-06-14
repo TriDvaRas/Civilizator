@@ -1,2 +1,2 @@
-# TheRatBot
- TheRat discord bot
+# Civilizator Discord Bot
+ TODO
