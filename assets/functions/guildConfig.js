@@ -5,6 +5,7 @@ const chalk = require('chalk');
 
 function createConfig(guild) {
     let config = {
+        prefix: "!",
         roleId: "",
         channelId: "",
         allowGetRole: true

@@ -6,8 +6,8 @@ module.exports = {
     description: 'Creates role (Admin)',
     usage: `\`createrole\``,
     execute: async function (message, args) {
-        if (!Perm.checkRoles(message.member, "skip", { admin: true })) {
-            message.reply("ахуел?(Admin only)");
+        if (!Perm.checkRoles(message.member, null, { admin: true })) {
+            message.reply("Server admin command");
             return;
         }
         createBaseRole(message.guild, message)

@@ -1,16 +1,16 @@
-let pressences = ["KPbICA"];
+let pressences = ["Blumenkranz"];
 
 //Setup
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+const { token } = require('./config.json');
 const GC = require("./assets/functions/guildConfig.js");
 
 const client = new Discord.Client({
 	presence: {
 		activity: {
 			name: botPressence(),
-			type: "CUSTOM_STATUS"
+			type: "LISTENING"
 		}
 	}
 });
@@ -18,6 +18,7 @@ const client = new Discord.Client({
 //Set logger
 const logger = require("./logger");
 const chalk = require('chalk');
+const { report } = require('process');
 
 client.on('ready', () => logger.log('info', 'Logged in'))
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
@@ -58,6 +59,11 @@ client.login(token);
 GC.initGuildEvents(client);
 
 client.on('message', message => {
+	if (message.guild == null || message.author.bot) {
+		//sheet.submitReport();
+		return;
+	}
+	let prefix = GC.getConfig(message.guild).prefix;
 	//check if message is a command and author is not a bot
 	if (!message.content.startsWith(prefix) || message.author.bot)
 		return;
