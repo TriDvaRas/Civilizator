@@ -3,7 +3,7 @@ var Perm = require('../assets/functions/Permissions.js');
 const { createBaseChannel } = require('../assets/functions/Setup.js');
 module.exports = {
     name: 'createchannel',
-    description: 'Create Civilizator channel',
+    description: 'Create Civilizator channel (Admin)',
     usage: `\`createChannel\``,
     execute: async function (message, args) {
         if (!Perm.checkRoles(message.member, null, { admin: true })) {

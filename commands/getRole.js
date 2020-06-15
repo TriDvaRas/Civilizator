@@ -16,7 +16,7 @@ module.exports = {
         }
 
         if (!message.member.roles.cache.some(role => role.id === config.roleId)) {
-            let role = message.guild.roles.cache.find(role => role.name === roleName);
+            let role = message.guild.roles.cache.find(role => role.id === config.roleId);
             message.member.roles.add(role);
             message.channel.send(`${message.author} got \`${role.name}\` role`)
                 .then(botMsg => {
@@ -24,7 +24,7 @@ module.exports = {
                     botMsg.delete({ timeout: 10000 });
                 });
         } else {
-            message.channel.send(`${message.author} already have a role`)
+            message.reply(`you already have a role`)
                 .then(botMsg => {
                     message.delete({ timeout: 10000 });
                     botMsg.delete({ timeout: 10000 });
