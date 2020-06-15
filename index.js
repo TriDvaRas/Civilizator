@@ -1,4 +1,3 @@
-let pressences = ["Blumenkranz"];
 
 //Setup
 const fs = require('fs');
@@ -6,6 +5,7 @@ const Discord = require('discord.js');
 const { token } = require('./config.json');
 const GC = require("./assets/functions/guildConfig.js");
 
+let pressences = JSON.parse(fs.readFileSync("pressence.json", "utf8"))
 const client = new Discord.Client({
 	presence: {
 		activity: {
