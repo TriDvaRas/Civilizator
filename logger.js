@@ -32,6 +32,15 @@ const options = {
             maxFiles: 5,
             colorize: false,
             format: winston.format.printf(log => `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`),
+        },
+        {
+            level: 'cmd',
+            filename: `${appRoot}/logs/cmd.log`,
+            handleExceptions: true,
+            maxsize: 5242880, // 5MB
+            maxFiles: 5,
+            colorize: false,
+            format: winston.format.printf(log => `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`),
         }
     ],
     console: [
