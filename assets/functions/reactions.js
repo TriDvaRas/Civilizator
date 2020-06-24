@@ -75,7 +75,7 @@ function addJoiner(msg) {
                     bans: [],
                     civs: [],
                     pick: "",
-                    civsMessage:""
+                    civsMessage: ""
                 });
                 state.gameSize = parseInt(state.gameSize) + 1;
             }
@@ -202,8 +202,10 @@ function addPicker(msg) {
         embed.fields.find(field => field.name == "Reroll Votes").value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
         Embeder.set(state, msg.channel, embed)
         if (state.reVotes >= state.reVotesFull) {
+            msg.reactions.removeAll();
+            setTimeout(() =>
+                msg.react(`🔁`),1000)
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] rerolling`);
-            deleteOldPicks();
             Phaser.StartPicks(state, embed, msg.channel);
         }
         GC.setGameState(msg.guild, state);
@@ -213,7 +215,7 @@ function addPicker(msg) {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] re collector committed die`);
         msg.reactions.removeAll();
         let state = GC.getGameState(msg.guild)
-        state.flushed=true;
+        state.flushed = true;
         GC.setGameState(msg.guild, state);
         sheet.updateGame(state);
     });
