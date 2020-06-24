@@ -136,7 +136,7 @@ function addBanner(msg) {
             state.bansActual = parseInt(state.bansActual) + 1;
 
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] ban skip [${state.bansActual}/${state.bansFull}]`);
-            
+
             let embed = Embeder.get(state, msg.channel);
             embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
             embed.fields.find(field => field.name == "Banned civs").value = state.banned.join('\n') + '\u200B';
@@ -201,9 +201,8 @@ function addPicker(msg) {
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] rerolling`);
             deleteOldPicks();
             Phaser.StartPicks(state, embed, msg.channel);
-        } else {
-            GC.setGameState(msg.guild, state);
         }
+        GC.setGameState(msg.guild, state);
 
     });
     collector.on('end', (reaction, user) => {
