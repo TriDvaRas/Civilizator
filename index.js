@@ -18,7 +18,6 @@ const client = new Discord.Client({
 //Set logger
 const logger = require("./logger");
 const chalk = require('chalk');
-const { report } = require('process');
 
 client.on('ready', () => logger.log('info', 'Logged in'))
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
