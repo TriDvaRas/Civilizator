@@ -13,6 +13,7 @@ function createConfig(guild) {
     IO.createDir(`guilds/${guild.id}`);
     IO.Write(`guilds/${guild.id}/config.json`, config);
     IO.Write(`guilds/${guild.id}/gameState.json`, IO.Read(`assets/BaseState.json`));
+    IO.Write(`guilds/${guild.id}/pickMsgs.json`, []);
 
 }
 
@@ -61,7 +62,12 @@ function setGameState(guild, state) {
 function resetGameState(guild) {
     IO.Write(`guilds/${guild.id}/gameState.json`, IO.Read(`assets/BaseState.json`));
 }
-
+function getPickMsgs(guild) {
+    return IO.Read(`guilds/${guild.id}/pickMsgs.json`);
+}
+function setPickMsgs(guild, state) {
+    IO.Write(`guilds/${guild.id}/pickMsgs.json`, state);
+}
 module.exports = {
     getConfig,
     setConfig,
@@ -70,5 +76,7 @@ module.exports = {
     setGameState,
     resetGameState,
 
+    getPickMsgs,
+    setPickMsgs,
     initGuildEvents,
 }

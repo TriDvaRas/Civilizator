@@ -5,6 +5,7 @@ const Perm = require('./Permissions.js');
 const Phaser = require('./Phaser.js');
 const logger = require(`../../logger`);
 const chalk = require('chalk');
+const sheet = require(`./sheet`);
 
 module.exports = {
     addJoiner,
@@ -71,7 +72,10 @@ function addJoiner(msg) {
                 state.Players.push({
                     tag: user.tag,
                     id: `${user}`,
-                    bans: []
+                    bans: [],
+                    civs: [],
+                    pick: "",
+                    civsMessage:""
                 });
                 state.gameSize = parseInt(state.gameSize) + 1;
             }
@@ -208,8 +212,9 @@ function addPicker(msg) {
     collector.on('end', (reaction, user) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] re collector committed die`);
         msg.reactions.removeAll();
+        let state = GC.getGameState(msg.guild)
+        state.flushed=true;
+        GC.setGameState(msg.guild, state);
+        sheet.updateGame(state);
     });
-}
-function deleteOldPicks() {
-
 }

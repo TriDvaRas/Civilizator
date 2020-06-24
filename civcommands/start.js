@@ -6,6 +6,7 @@ const Reacter = require(`../assets/functions/reactions.js`);
 const Embeder = require("../assets/functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
+const sheet = require(`../assets/functions/sheet`);
 
 module.exports = {
     name: 'start',
@@ -28,19 +29,23 @@ module.exports = {
                 //reread State
                 state = GC.getGameState(message.guild);
             }
-            //create embed
-            gameEmbed = Embeder.create();
-            //start game
-            if (StartGame(message, args, state, gameEmbed))
-                return;
+            sheet.newGame(state, message.author.username, message.guild.name).then(id => {
+                state.gameId=id;
+                //create embed
+                gameEmbed = Embeder.create();
+                //start game
+                if (StartGame(message, args, state, gameEmbed))
+                    return;
 
-            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started PPP-${state.playerSize} BPP-${state.banSize}`);
-            message.channel.send(gameEmbed).then(msg => {
-                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
-                state.embedId = msg.id;
-                GC.setGameState(message.guild, state);
-                Reacter.addJoiner(msg);
+                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started PPP-${state.playerSize} BPP-${state.banSize}`);
+                message.channel.send(gameEmbed).then(msg => {
+                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
+                    state.embedId = msg.id;
+                    GC.setGameState(message.guild, state);
+                    Reacter.addJoiner(msg);
+                });
             });
+
             return;
         }
         //send help on 0 args
@@ -65,6 +70,7 @@ function StartGame(message, args, CurrState, gameEmbed) {
         args[0] = 6;
 
     gameEmbed.fields.find(field => field.name == "Picks per player").value = parseInt(args[0]);
+    gameEmbed.fields.find(field => field.name == "Game Id").value = parseInt(CurrState.gameId);
     CurrState.playerSize = parseInt(args[0]);
     CurrState.started = true;
     //Start join phase

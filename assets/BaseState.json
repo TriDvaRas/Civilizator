@@ -1,4 +1,6 @@
 {
+	"gameId":"",
+	"flushed":false,
     "started":"false",
     "embedId":"",
     "Phase":"",
@@ -7,6 +9,7 @@
     "banSize":"",
     "bansFull":"0",
     "bansActual":"0",
+	"rerolls":0,
 	"reVotes":0,
 	"reVotesFull":0,
     "Players":[],

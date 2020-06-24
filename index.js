@@ -2,6 +2,7 @@
 
 //Setup
 const fs = require('fs');
+const IO = require('./assets/functions/IO');
 const sheet = require('./assets/functions/sheet');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
@@ -10,7 +11,7 @@ let pressences = JSON.parse(fs.readFileSync("pressence.json", "utf8"))
 const client = new Discord.Client({
 	presence: {
 		activity: {
-			name: "Starting...",
+			name: "Star Beat!",
 			type: "LISTENING"
 		}
 	}
@@ -20,17 +21,27 @@ const client = new Discord.Client({
 const logger = require("./logger");
 const chalk = require('chalk');
 
-client.on('ready', () => logger.log('info', 'Logged in'))
+client.on('ready', () => {
+	logger.log('info', 'Logged in');
+	updateGameCount();
+	client.setInterval(setPressence, 25000);
+	client.setInterval(updateGameCount, 300000);
+})
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))
-	.on('error', m => logger.log('error', `[*] ${m}`));
+	.on('error', m => {
+		logger.log('error', `[*] ${m}`)
+		console.log(m)
+	});
 
 process
 	.on('uncaughtException', error => {
 		logger.log('error', `[*] ${error}`);
+		console.log(error)
 	})
 	.on('unhandledRejection', error => {
 		logger.log('error', `[*] ${error}`);
+		console.log(error)
 	})
 	.on('SIGHUP', () => {
 		logger.log('info', 'Shutting down...')
@@ -53,8 +64,7 @@ for (const file of civCommandFiles) {
 
 
 logger.log(`info`, `Logging in...`)
-client.login(token);
-client.setInterval(setPressence, 10000);
+client.login(token);///////////////////////////////////////
 
 //guild join/leave event
 GC.initGuildEvents(client);
@@ -102,8 +112,18 @@ function setPressence() {
 	pressences.push(act);
 	client.user.setPresence({
 		activity: {
-			name: act.name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`).replace(`{gamesCount}`, `${sheet.getGameCount()}`),
+			name: act.name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`).replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`),
 			type: act.type
 		}
 	})
 }
+function updateGameCount() {
+
+	sheet.getGameCount().then(count => {
+		let stats = IO.Read(`./stats.json`);
+		stats.gameCount = +count;
+		IO.Write(`./stats.json`, stats);
+	})
+}
+
+sheet.test();

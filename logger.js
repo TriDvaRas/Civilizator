@@ -61,11 +61,12 @@ let logger = new winston.createLogger({
         error: 0,
         warn: 1,
         info: 2,
-        cmd: 3,
-        http: 4,
-        verbose: 5,
-        debug: 6,
-        silly: 7,
+        sheet: 4,
+        cmd: 6,
+        http: 8,
+        verbose: 9,
+        debug: 10,
+        silly: 11,
     },
     transports: getTransports(),
     exitOnError: false, // do not exit on handled exceptions
@@ -90,6 +91,8 @@ function color(text) {
             return chalk.bold.yellowBright(text);
         case `CMD`:
             return chalk.bold.rgb(255, 87, 20)(text);
+        case `SHEET`:
+            return chalk.bold.greenBright(text);
         default:
             return chalk.green(text);
     }
