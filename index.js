@@ -2,6 +2,7 @@
 
 //Setup
 const fs = require('fs');
+const sheet = require('./assets/functions/sheet');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
 const GC = require("./assets/functions/guildConfig.js");
@@ -9,7 +10,7 @@ let pressences = JSON.parse(fs.readFileSync("pressence.json", "utf8"))
 const client = new Discord.Client({
 	presence: {
 		activity: {
-			name: botPressence(),
+			name: "Starting...",
 			type: "LISTENING"
 		}
 	}
@@ -53,6 +54,7 @@ for (const file of civCommandFiles) {
 
 logger.log(`info`, `Logging in...`)
 client.login(token);
+client.setInterval(setPressence, 10000);
 
 //guild join/leave event
 GC.initGuildEvents(client);
@@ -75,7 +77,7 @@ client.on('message', message => {
 		try {
 			logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 			if (args[0] == "help") {
-				message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).usage}`).then(msg=>{message.delete({timeout:30000});msg.delete({timeout:30000})});
+				message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
 			} else
 				client.commands.get(command).execute(message, args);
 		} catch (error) {
@@ -85,7 +87,7 @@ client.on('message', message => {
 		try {
 			logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 			if (args[0] == "help") {
-				message.channel.send(`${client.civcommands.get(command).description}\nUsage:\n${client.civcommands.get(command).usage}`).then(msg=>{message.delete({timeout:30000});msg.delete({timeout:30000})});
+				message.channel.send(`${client.civcommands.get(command).description}\nUsage:\n${client.civcommands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
 			} else
 				client.civcommands.get(command).execute(message, args);
 		} catch (error) {
@@ -95,6 +97,13 @@ client.on('message', message => {
 });
 
 
-function botPressence() {
-	return pressences[Math.floor(Math.random() * pressences.length)];
+function setPressence() {
+	let act = pressences.shift();
+	pressences.push(act);
+	client.user.setPresence({
+		activity: {
+			name: act.name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`).replace(`{gamesCount}`, `${sheet.getGameCount()}`),
+			type: act.type
+		}
+	})
 }

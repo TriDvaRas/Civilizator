@@ -1,3 +1,14 @@
 [
-    "RAT MUSIC"
+    {
+        "name": "Blumenkranz",
+        "type": "LISTENING"
+    },
+    {
+        "name": "{guildCount} servers",
+        "type": "LISTENING"
+    },
+    {
+        "name": "{gamesCount} games played",
+        "type": "LISTENING"
+    }
 ]
