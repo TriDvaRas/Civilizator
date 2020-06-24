@@ -2,7 +2,7 @@
 const Embeder = require(`./embeder.js`);
 module.exports = {
     StartJoins: function StartJoins(CurrState, gameEmbed) {
-        gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n\u200B";
+        gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n `dlc` to manage DLCs (Operator)\n\u200B";
         CurrState.Phase = "join";
     },
     StartBans: function StartBans(CurrState, gameEmbed) {
@@ -18,15 +18,20 @@ module.exports = {
         CurrState.bansFull = CurrState.Players.length * CurrState.banSize;
     },
     StartPicks: function StartPicks(CurrState, gameEmbed, channel) {
-        gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Picks** \n ПОШЕЛ НАХУЙ\n\u200B";
+        gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Picks** \n Click 🔁 tp vote for reroll\n\u200B";
         gameEmbed.setColor('#09ded0');
         CurrState.reVotesFull = Math.ceil(CurrState.Players.length * 0.65);
         CurrState.reVotes = 0;
         CurrState.reVoters = [];
         CurrState.Phase = "picks";
         let reVotesField = gameEmbed.fields.find(field => field.name == "Reroll Votes")
-        if (!reVotesField)
+        if (!reVotesField){
             reVotesField = gameEmbed.addField('Reroll Votes', '\u200B', false);
+            gameEmbed.addField('Rerolls', '0', false);
+        }
+        else{
+            gameEmbed.fields.find(field => field.name == "Rerolls").value=+gameEmbed.fields.find(field => field.name == "Rerolls").value+1;
+        }
         
             
         reVotesField.value = `[${CurrState.reVotes}/${CurrState.reVotesFull}\n]` + CurrState.reVoters.map(user => user.id).join('\n') + '\u200B';
