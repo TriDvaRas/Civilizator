@@ -9,3 +9,4 @@ gameState
 logs
 nodemon.json
 assets/sheet_secret.json
+stats.json
