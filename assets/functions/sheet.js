@@ -26,7 +26,7 @@ function newGame(state, op, guild) {
                         date: new Date().toUTCString(),
                         flushed: false,
                         lastPhase: `join`,
-                        PPP: state.playerSize,
+                        CPP: state.playerSize,
                         BPP: state.banSize,
                         rerolls: 0,
                         disabledDLCs: `-`,
@@ -57,7 +57,7 @@ async function updateGame(state) {
                 x.flushed = state.flushed;
                 x.lastPhase = state.Phase;
                 x.rerolls = state.rerolls;
-                x.PPP = state.playerSize;
+                x.CPP = state.playerSize;
                 x.BPP = state.banSize;
                 if (state.disabledDLC.length > 0)
                     x.disabledDLCs = state.disabledDLC.join(`\n`);

@@ -19,7 +19,7 @@ function createEmbed() {
             { name: 'Game Id', value: '\u200B', inline: true },
             { name: 'Game Phase', value: '\u200B', inline: false },
             { name: 'DLCs', value: 'All', inline: true },
-            { name: 'Picks per player', value: '\u200B', inline: true },
+            { name: 'Civs per player', value: '\u200B', inline: true },
             { name: 'Bans per player', value: '\u200B', inline: true },
             { name: 'Players', value: '\u200B', inline: true }
         )

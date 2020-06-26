@@ -37,7 +37,7 @@ module.exports = {
                 if (StartGame(message, args, state, gameEmbed))
                     return;
 
-                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started PPP-${state.playerSize} BPP-${state.banSize}`);
+                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
                 message.channel.send(gameEmbed).then(msg => {
                     logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
                     state.embedId = msg.id;
@@ -69,7 +69,7 @@ function StartGame(message, args, CurrState, gameEmbed) {
     else if (parseInt(args[0]) > 6)
         args[0] = 6;
 
-    gameEmbed.fields.find(field => field.name == "Picks per player").value = parseInt(args[0]);
+    gameEmbed.fields.find(field => field.name == "Civs per player").value = parseInt(args[0]);
     gameEmbed.fields.find(field => field.name == "Game Id").value = parseInt(CurrState.gameId);
     CurrState.playerSize = parseInt(args[0]);
     CurrState.started = true;
