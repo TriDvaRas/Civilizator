@@ -6,6 +6,7 @@ const Phaser = require('./Phaser.js');
 const logger = require(`../../logger`);
 const chalk = require('chalk');
 const sheet = require(`./sheet`);
+const { Message } = require('discord.js');
 
 module.exports = {
     addJoiner,
@@ -30,10 +31,23 @@ function addJoiner(msg) {
         let state = GC.getGameState(msg.guild);
         let member = msg.guild.members.cache.array().find(M => M.user = user);
         if (reaction.emoji.name === '⏩') {
+            //check perm
             if (!Perm.checkRoles(member, state.Op, { admin: true, op: true }))
                 return;
-            let embed = Embeder.get(state, msg.channel);
+            //check size
+            let size = state.Players.length * (state.banSize + state.playerSize)
+            let maxSize= state.Civs.length;
+            if (size>maxSize) {
+                msg.channel.send(`Not enough civs for all players
+Civs in pool: \`${maxSize}\`
+Civs needed to start: \`${size}\`(players count*(CPP+BPP))
+Try lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command 
+or enabling more DLCs with \`dlc\` command`).then(m=>m.delete({timeout:12500}));
+            }
+
+            //go to next phase
             collector.stop();
+            let embed = Embeder.get(state, msg.channel);
 
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] joins ended`);
             if (state.banSize > 0) {
@@ -204,7 +218,7 @@ function addPicker(msg) {
         if (state.reVotes >= state.reVotesFull) {
             msg.reactions.removeAll();
             setTimeout(() =>
-                msg.react(`🔁`),1000)
+                msg.react(`🔁`), 1000)
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] rerolling`);
             Phaser.StartPicks(state, embed, msg.channel);
         }
