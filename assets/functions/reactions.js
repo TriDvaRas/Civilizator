@@ -6,7 +6,6 @@ const Phaser = require('./Phaser.js');
 const logger = require(`../../logger`);
 const chalk = require('chalk');
 const sheet = require(`./sheet`);
-const { Message } = require('discord.js');
 
 module.exports = {
     addJoiner,
@@ -36,13 +35,13 @@ function addJoiner(msg) {
                 return;
             //check size
             let size = state.Players.length * (state.banSize + state.playerSize)
-            let maxSize= state.Civs.length;
-            if (size>maxSize) {
+            let maxSize = state.Civs.length;
+            if (size > maxSize) {
                 msg.channel.send(`Not enough civs for all players
 Civs in pool: \`${maxSize}\`
 Civs needed to start: \`${size}\`(players count*(CPP+BPP))
 Try lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command 
-or enabling more DLCs with \`dlc\` command`).then(m=>m.delete({timeout:12500}));
+or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500 }));
             }
 
             //go to next phase
@@ -234,3 +233,4 @@ function addReroller(msg) {
         sheet.updateGame(state);
     });
 }
+

@@ -2,6 +2,8 @@
 const Embeder = require(`./embeder.js`);
 const sheet = require(`./sheet`);
 const GC = require(`./guildConfig`);
+const addPicker = require(`./picker`);
+
 module.exports = {
     StartJoins: function StartJoins(CurrState, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n `dlc` to manage DLCs (Operator)\n\u200B";
@@ -69,13 +71,13 @@ module.exports = {
 }
 //IO system
 var IO = require('./IO.js');
+const reactions = require('./reactions.js');
 //gen and send all picks
 function GeneratePicks(CurrState, channel) {
     shuffle(CurrState.Players);
     for (let i = 0; i < CurrState.Players.length; i++) {
 
         GetCivLine(CurrState, channel, i);
-
     }
 }
 //get player civ set
@@ -100,6 +102,7 @@ function GetCivLine(state, channel, i) {
                     let msgIds = GC.getPickMsgs(channel.guild);
                     msgIds.push(msg.id)
                     GC.setPickMsgs(channel.guild, msgIds);
+                    addPicker(msg,Player,i+1)
                 })
             });
 
