@@ -13,7 +13,7 @@ module.exports = {
 `\`dlc <whitelist/white/w/+> <DLCs>\` disables all DLCs which are not in [DLCs]
 \`dlc <blacklist/black/b/-> <DLCs>\` disables all DLCs which are in [DLCs]
 \`dlc <reset/r>\` enables all DLCs`,
-    execute: async function (message, args) {
+    execute: function (message, args) {
         message.delete({ timeout: 5000 });
         //read GameState
         var state = GC.getGameState(message.guild);

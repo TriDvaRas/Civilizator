@@ -8,7 +8,7 @@ module.exports = {
     name: 'ban',
     description: 'Bans Civilization by id or alias',
     usage: '`ban <Id/Alias>`',
-    execute: async function (message, args) {
+    execute: function (message, args) {
         message.delete({ timeout: 5000 });
         //read GameState
         var state = GC.getGameState(message.guild);

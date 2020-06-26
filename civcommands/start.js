@@ -12,7 +12,7 @@ module.exports = {
     name: 'start',
     description: 'Starts Civilizator Game',
     usage: '`start <CivPerPlayer(1-6)> [BansPerPlayer(0-4)]`',
-    execute: async function (message, args) {
+    execute: function (message, args) {
         if (args.length > 0) {
             //read state
             var state = GC.getGameState(message.guild);
