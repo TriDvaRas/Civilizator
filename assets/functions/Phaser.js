@@ -59,6 +59,10 @@ module.exports = {
         reVotesField.value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
 
         Embeder.set(state, channel, gameEmbed);
+        state.picked.forEach(element => {
+            state.Civs.push(element);
+        });
+        state.picked = [];
         GeneratePicks(state, channel);
         sheet.updateGame(state);
     }
