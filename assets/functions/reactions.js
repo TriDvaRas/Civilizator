@@ -11,7 +11,7 @@ const { Message } = require('discord.js');
 module.exports = {
     addJoiner,
     addBanner,
-    addPicker
+    addReroller
 }
 
 function addJoiner(msg) {
@@ -66,7 +66,7 @@ or enabling more DLCs with \`dlc\` command`).then(m=>m.delete({timeout:12500}));
                     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] skiping bans`);
                     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
                     Phaser.StartPicks(state, embed, msg.channel);
-                    addPicker(msg);
+                    addReroller(msg);
                     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
                 } catch (error) {
                     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
@@ -133,7 +133,7 @@ function addBanner(msg) {
             let embed = Embeder.get(state, msg.channel);
             collector.stop();
             Phaser.StartPicks(state, embed, msg.channel);
-            addPicker(msg);
+            addReroller(msg);
 
             GC.setGameState(msg.guild, state);
             msg.edit(embed);
@@ -176,7 +176,7 @@ function addBanner(msg) {
             try {
                 logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
                 Phaser.StartPicks(state, embed, msg.channel);
-                addPicker(msg);
+                addReroller(msg);
                 logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
             } catch (error) {
                 logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
@@ -191,7 +191,7 @@ function addBanner(msg) {
         msg.reactions.removeAll();
     });
 }
-function addPicker(msg) {
+function addReroller(msg) {
     //add reaction
     msg.react(`🔁`);
     //set reaction filter
