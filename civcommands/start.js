@@ -36,10 +36,10 @@ module.exports = {
                 .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
                 .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
                 .addFields(
-                    { name: 'Starting...', value: '\u200B', inline: true }
+                    { name: 'Creating game...', value: '\u200B', inline: true }
                 )
                 .setTimestamp()
-                .setFooter('Created by TriDvaRas#4805', 'https://tdr.s-ul.eu/hP8HuUCR')
+                .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
             ).then(mess=>{
                 sheet.newGame(state, mess.author.username, mess.guild.name).then(id => {
                     state.gameId = id;
