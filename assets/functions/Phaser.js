@@ -33,7 +33,7 @@ module.exports = {
         state.Phase = "picks";
         state.Players.forEach(P => {
             P.civs = [];
-            P.pick = "-";
+            P.pick = {Name:"-"};
             if (P.civsMessage != "")
                 channel.messages.cache.array().find(x => x.id == P.civsMessage).delete();
         });

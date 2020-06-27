@@ -157,7 +157,7 @@ function addBanner(msg) {
             return;
         reaction.users.remove(user);
         if (reaction.emoji.name === '➡️') {
-            let player = state.Players.find(P => P.id = `${user}`)
+            let player = state.Players.find(P => P.id == `${user}`)
             if (!player)
                 return;
             state.Banners.push(`${user}`);
@@ -228,7 +228,7 @@ function addReroller(msg) {
             collector.stop(`old game`);
             return;
         }
-        let player = state.Players.find(P => P.id = `${user}`)
+        let player = state.Players.find(P => P.id == `${user}`)
         if (!player)
             return;
         state.reVoters.push(player);
