@@ -7,6 +7,7 @@ const Embeder = require("../assets/functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
 const sheet = require(`../assets/functions/sheet`);
+const Discord=require(`discord.js`)
 
 module.exports = {
     name: 'start',
@@ -29,22 +30,35 @@ module.exports = {
                 //reread State
                 state = GC.getGameState(message.guild);
             }
-            sheet.newGame(state, message.author.username, message.guild.name).then(id => {
-                state.gameId=id;
-                //create embed
-                gameEmbed = Embeder.create();
-                //start game
-                if (StartGame(message, args, state, gameEmbed))
-                    return;
-
-                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
-                message.channel.send(gameEmbed).then(msg => {
-                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
-                    state.embedId = msg.id;
-                    GC.setGameState(message.guild, state);
-                    Reacter.addJoiner(msg);
+            message.channel.send(new Discord.MessageEmbed()
+                .setColor('#46a832')
+                .setTitle("**Civilization V Game**")
+                .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
+                .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
+                .addFields(
+                    { name: 'Starting...', value: '\u200B', inline: true }
+                )
+                .setTimestamp()
+                .setFooter('Created by TriDvaRas#4805', 'https://tdr.s-ul.eu/hP8HuUCR')
+            ).then(mess=>{
+                sheet.newGame(state, mess.author.username, mess.guild.name).then(id => {
+                    state.gameId = id;
+                    //create embed
+                    gameEmbed = Embeder.create();
+                    //start game
+                    if (StartGame(message, args, state, gameEmbed))
+                        return;
+    
+                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
+                    mess.edit(gameEmbed).then(msg => {
+                        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
+                        state.embedId = msg.id;
+                        GC.setGameState(message.guild, state);
+                        Reacter.addJoiner(msg);
+                    });
                 });
-            });
+            })
+            
 
             return;
         }
@@ -52,10 +66,10 @@ module.exports = {
         message.channel.send(`${this.description}\nUsage:\n${this.usage}`);
     },
 };
-function StartGame(message, args, CurrState, gameEmbed) {
+function StartGame(message, args, state, gameEmbed) {
 
     //set game state
-    CurrState.Op = `${message.author}`
+    state.Op = `${message.author}`
     gameEmbed.fields.find(field => field.name == "Game Operator").value = message.author;
     //check CPP
     if (!args[0] || !parseInt(args[0])) {
@@ -70,11 +84,11 @@ function StartGame(message, args, CurrState, gameEmbed) {
         args[0] = 6;
 
     gameEmbed.fields.find(field => field.name == "Civs per player").value = parseInt(args[0]);
-    gameEmbed.fields.find(field => field.name == "Game Id").value = parseInt(CurrState.gameId);
-    CurrState.playerSize = parseInt(args[0]);
-    CurrState.started = true;
+    gameEmbed.fields.find(field => field.name == "Game Id").value = parseInt(state.gameId);
+    state.playerSize = parseInt(args[0]);
+    state.started = true;
     //Start join phase
-    Phaser.StartJoins(CurrState, gameEmbed);
+    Phaser.StartJoins(state, gameEmbed);
     //check for bans
     args[1] = parseInt(args[1]);
     if (!args[1] || args[1] < 0)
@@ -83,7 +97,7 @@ function StartGame(message, args, CurrState, gameEmbed) {
         args[1] = 4;
 
     gameEmbed.fields.find(field => field.name == "Bans per player").value = args[1];
-    CurrState.banSize = args[1];
+    state.banSize = args[1];
     return;
 
 }

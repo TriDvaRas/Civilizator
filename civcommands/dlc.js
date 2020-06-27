@@ -91,13 +91,13 @@ module.exports = {
     },
 };
 //remove civ from pool
-function DisableCiv(id, CurrState) {
-    CurrState.Civs.splice(CurrState.Civs.findIndex(x => x == id), 1);
-    CurrState.disabled.push(id);
+function DisableCiv(id, state) {
+    state.Civs.splice(state.Civs.findIndex(x => x == id), 1);
+    state.disabled.push(id);
 }
-function DisableDLC(DLC, CurrState) {
-    CurrState.DLCs.splice(CurrState.DLCs.findIndex(x => x == DLC), 1);
-    CurrState.disabledDLC.push(DLC);
+function DisableDLC(DLC, state) {
+    state.DLCs.splice(state.DLCs.findIndex(x => x == DLC), 1);
+    state.disabledDLC.push(DLC);
 }
 
 function checkDLCs(state, args, white) {

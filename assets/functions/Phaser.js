@@ -5,23 +5,24 @@ const GC = require(`./guildConfig`);
 const addPicker = require(`./picker`);
 
 module.exports = {
-    StartJoins: function StartJoins(CurrState, gameEmbed) {
+    StartJoins: function StartJoins(state, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n `dlc` to manage DLCs (Operator)\n\u200B";
-        CurrState.Phase = "join";
-        sheet.updateGame(CurrState);
+        state.Phase = "join";
+        sheet.updateGame(state);
     },
-    StartBans: function StartBans(CurrState, gameEmbed) {
+    StartBans: function StartBans(state, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Bans**\n Click  ➡️  to skip 1 ban  \n Click  ⏩  to end phase (Operator) \n `ban [civId/civName]` to ban civilization\n\u200B";
-        gameEmbed.fields.find(field => field.name == "Players").value = CurrState.Players.map(user => user.id).join('\n') + '\u200B';
+        gameEmbed.fields.find(field => field.name == "Players").value = state.Players.map(user => user.id).join('\n') + '\u200B';
         gameEmbed.addFields(
             { name: 'Bans', value: '\u200B', inline: true },
+            { name: 'Pick', value: '\u200B', inline: true },
             { name: 'Banned civs', value: '\u200B', inline: false }
         );
-        gameEmbed.fields.find(field => field.name == "Bans").value = CurrState.Players.map(user => `[${user.bans.length}/${CurrState.banSize}]`).join('\n') + '\u200B';
+        gameEmbed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
         gameEmbed.setColor('#de3b09');
-        CurrState.Phase = "bans";
-        CurrState.bansFull = CurrState.Players.length * CurrState.banSize;
-        sheet.updateGame(CurrState);
+        state.Phase = "bans";
+        state.bansFull = state.Players.length * state.banSize;
+        sheet.updateGame(state);
     },
     StartPicks: function StartPicks(state, gameEmbed, channel) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Picks** \n Click 🔁 to vote for reroll\n\u200B";
@@ -37,12 +38,19 @@ module.exports = {
                 channel.messages.cache.array().find(x => x.id == P.civsMessage).delete();
         });
 
-
+        let pickField = gameEmbed.fields.find(field => field.name == "Pick")
+        if (!pickField)
+            gameEmbed.addFields(
+                { name: 'Pick', value: '\u200B', inline: true }
+            );
 
         let reVotesField = gameEmbed.fields.find(field => field.name == "Reroll Votes")
         if (!reVotesField) {
+
             reVotesField = gameEmbed.addField('Reroll Votes', '\u200B', false);
-            gameEmbed.addField('Rerolls', '0', false);
+            gameEmbed.addFields(
+                { name: 'Rerolls', value: '0', inline: true }
+            );
         }
         else {
             let msgIds = GC.getPickMsgs(channel.guild);
@@ -59,7 +67,8 @@ module.exports = {
 
 
         reVotesField.value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
-
+        gameEmbed.fields.find(field => field.name == "Pick").value = state.Players.map(user => user.pick.Name).join('\n') + '\u200B';
+        
         Embeder.set(state, channel, gameEmbed);
         state.picked.forEach(element => {
             state.Civs.push(element);
@@ -73,12 +82,18 @@ module.exports = {
 var IO = require('./IO.js');
 const reactions = require('./reactions.js');
 //gen and send all picks
-function GeneratePicks(CurrState, channel) {
-    shuffle(CurrState.Players);
-    for (let i = 0; i < CurrState.Players.length; i++) {
+function GeneratePicks(state, channel) {
+    let indexes = [];
+    for (let i = 0; i < state.Players.length; i++)
+        indexes.push(i)
 
-        GetCivLine(CurrState, channel, i);
-    }
+    shuffle(indexes);
+    indexes.forEach(i => {
+        GetCivLine(state, channel, i);
+    });
+
+
+
 }
 //get player civ set
 function GetCivLine(state, channel, i) {
@@ -102,7 +117,7 @@ function GetCivLine(state, channel, i) {
                     let msgIds = GC.getPickMsgs(channel.guild);
                     msgIds.push(msg.id)
                     GC.setPickMsgs(channel.guild, msgIds);
-                    addPicker(msg,Player,i+1)
+                    addPicker(msg, Player, i + 1)
                 })
             });
 
@@ -114,10 +129,10 @@ function GetCivLine(state, channel, i) {
     return;
 }
 //civ id from pool
-function GetRandomCivId(CurrState) {//Pool, RemoveFromPool
-    i = getRandomInt(0, CurrState.Civs.length - 1);
-    n = CurrState.Civs[i];
-    CurrState.picked.push(CurrState.Civs.splice(i, 1)[0]);
+function GetRandomCivId(state) {//Pool, RemoveFromPool
+    i = getRandomInt(0, state.Civs.length - 1);
+    n = state.Civs[i];
+    state.picked.push(state.Civs.splice(i, 1)[0]);
     return n;
 }
 //rng

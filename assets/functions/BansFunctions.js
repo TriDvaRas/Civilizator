@@ -1,40 +1,40 @@
 
 module.exports = {
-    CheckBanned(CurrState, C) {
-        if (CurrState.banned.find(x => x == C.id)) {
+    CheckBanned(state, C) {
+        if (state.banned.find(x => x == C.id)) {
 
             return true;
         }
         return false;
     },
-    Ban(C, CurrState) {
-        CurrState.bansActual = parseInt(CurrState.bansActual) + 1;
-        CurrState.Civs.splice(CurrState.Civs.findIndex(x => x == C.id), 1);
-        CurrState.banned.push(C.id);
+    Ban(C, state) {
+        state.bansActual = parseInt(state.bansActual) + 1;
+        state.Civs.splice(state.Civs.findIndex(x => x == C.id), 1);
+        state.banned.push(C.id);
 
     },
-    CheckCanBan(CurrState, message) {
+    CheckCanBan(state, message) {
         n = 0;
-        for (let i = 0; i < CurrState.Banners.length; i++) {
-            if (CurrState.Banners[i] == message.author)
+        for (let i = 0; i < state.Banners.length; i++) {
+            if (state.Banners[i] == message.author)
                 n++;
-            if (n >= CurrState.banSize)
+            if (n >= state.banSize)
                 return false;
         }
         return true;
     },
-    CheckBanned(CurrState, C) {
-        if (CurrState.banned.find(x => x == C.id)) {
+    CheckBanned(state, C) {
+        if (state.banned.find(x => x == C.id)) {
 
             return true;
         }
         return false;
     },
     //remove civ from pool
-    opBan(C, CurrState) {
+    opBan(C, state) {
 
-        CurrState.Civs.splice(CurrState.Civs.findIndex(x => x == C.id), 1);
-        CurrState.banned.push(C.id);
+        state.Civs.splice(state.Civs.findIndex(x => x == C.id), 1);
+        state.banned.push(C.id);
 
     },
 

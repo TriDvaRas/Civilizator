@@ -24,7 +24,7 @@ function createEmbed() {
             { name: 'Players', value: '\u200B', inline: true }
         )
         .setTimestamp()
-        .setFooter('Created by TriDvaRas#4805', 'https://tdr.s-ul.eu/hP8HuUCR');
+        .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR');
 }
 
 function getEmbed(gameState, channel) {

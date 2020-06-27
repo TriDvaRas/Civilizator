@@ -26,22 +26,23 @@ client.on('ready', () => {
 	updateGameCount();
 	client.setInterval(setPressence, 25000);
 	client.setInterval(updateGameCount, 300000);
+
 })
 	.on('debug', m => logger.log('debug', `[*] ${m}`))
 	.on('warn', m => logger.log('warn', `[*] ${m}`))
 	.on('error', m => {
 		logger.log('error', `[*] ${m}`)
-		console.log(m)
+		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`[*] ${m}`))
 	});
 
 process
 	.on('uncaughtException', error => {
 		logger.log('error', `[*] ${error}`);
-		console.log(error)
+		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`uncaughtException [*] ${error}`))
 	})
 	.on('unhandledRejection', error => {
 		logger.log('error', `[*] ${error}`);
-		console.log(error)
+		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`unhandledRejection [*] ${error}`))
 	})
 	.on('SIGHUP', () => {
 		logger.log('info', 'Shutting down...')
@@ -70,8 +71,13 @@ client.login(token);///////////////////////////////////////
 GC.initGuildEvents(client);
 
 client.on('message', message => {
-	if (message.guild == null || message.author.bot) {
-		//sheet.submitReport();
+	if (message.author.bot)
+		return;
+	if (message.guild == null) {
+		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`**FEED**
+From: ${message.author}
+Text: ${message.toString()}
+Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`))
 		return;
 	}
 	let prefix = GC.getConfig(message.guild).prefix;

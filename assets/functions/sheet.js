@@ -78,8 +78,10 @@ async function updateGame(state) {
                             x._rawData[j] = player.civs.map(x => x.Name).join(`\n`);
                         }
                         else if (element == `p${i + 1}pick` && player.pick) {
-                            0
-                            x._rawData[j] = player.pick.Name;
+                            if(player.pick==`-`)
+                                x._rawData[j] = `-`;
+                            else
+                                x._rawData[j] = player.pick.Name;
                         }
                     }
                 }

@@ -6,6 +6,7 @@ const Phaser = require('./Phaser.js');
 const logger = require(`../../logger`);
 const chalk = require('chalk');
 const sheet = require(`./sheet`);
+const IO = require('./IO.js');
 
 module.exports = {
     addJoiner,
@@ -28,6 +29,10 @@ function addJoiner(msg) {
     collector.on('collect', (reaction, user) => {
         reaction.users.remove(user);
         let state = GC.getGameState(msg.guild);
+        if (state.embedId != msg.id) {
+            collector.stop(`old game`);
+            return;
+        }
         let member = msg.guild.members.cache.array().find(M => M.user = user);
         if (reaction.emoji.name === '⏩') {
             //check perm
@@ -106,9 +111,15 @@ or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500
             msg.edit(embed);
         }
     });
-    collector.on('end', (reaction, user) => {
-        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] join collector committed die`);
+    collector.on('end', (collected, reason) => {
+        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] join collector committed die | reason ${reason}`);
         msg.reactions.removeAll();
+        if ([`idle`,`new game`].includes(reason)) {
+            let state = GC.getGameState(msg.guild)
+            state.flushed = true;
+            GC.setGameState(msg.guild, state);
+            sheet.updateGame(state);
+        }
     });
 }
 
@@ -125,6 +136,10 @@ function addBanner(msg) {
 
     collector.on('collect', (reaction, user) => {
         let state = GC.getGameState(msg.guild);
+        if (state.embedId != msg.id) {
+            collector.stop(`old game`);
+            return;
+        }
         if (reaction.emoji.name === '✔️') {
             if (user.id != 719933714423087135)
                 return;
@@ -153,10 +168,10 @@ function addBanner(msg) {
             state.bansActual = parseInt(state.bansActual) + 1;
 
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] ban skip [${state.bansActual}/${state.bansFull}]`);
-
+            let civList = IO.Read(`assets/CivList.json`);
             let embed = Embeder.get(state, msg.channel);
             embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
-            embed.fields.find(field => field.name == "Banned civs").value = state.banned.join('\n') + '\u200B';
+            embed.fields.find(field => field.name == "Banned civs").value = state.banned.map(id => civList.find(x => x.id == id).Name).join('\n') + '\u200B';
             Embeder.set(state, msg.channel, embed)
             GC.setGameState(msg.guild, state);
             if (state.bansActual >= state.bansFull) {
@@ -185,9 +200,15 @@ function addBanner(msg) {
             msg.edit(embed);
         }
     });
-    collector.on('end', (reaction, user) => {
-        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] banner collector committed die`);
+    collector.on('end', (collected, reason) => {
+        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] banner collector committed die | reason ${reason}`);
         msg.reactions.removeAll();
+        if ([`idle`,`new game`].includes(reason)) {
+            let state = GC.getGameState(msg.guild)
+            state.flushed = true;
+            GC.setGameState(msg.guild, state);
+            sheet.updateGame(state);
+        }
     });
 }
 function addReroller(msg) {
@@ -203,7 +224,10 @@ function addReroller(msg) {
     collector.on('collect', (reaction, user) => {
         reaction.users.remove(user);
         let state = GC.getGameState(msg.guild);
-
+        if (state.embedId != msg.id) {
+            collector.stop(`old game`);
+            return;
+        }
         let player = state.Players.find(P => P.id = `${user}`)
         if (!player)
             return;
@@ -224,12 +248,14 @@ function addReroller(msg) {
         GC.setGameState(msg.guild, state);
 
     });
-    collector.on('end', (reaction, user) => {
-        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] re collector committed die`);
+    collector.on('end', (collected, reason) => {
+        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] re collector committed die | reason ${reason}`);
         msg.reactions.removeAll();
         let state = GC.getGameState(msg.guild)
-        state.flushed = true;
-        GC.setGameState(msg.guild, state);
+        if ([`idle`,`new game`].includes(reason)) {
+            state.flushed = true;
+            GC.setGameState(msg.guild, state);
+        }
         sheet.updateGame(state);
     });
 }
