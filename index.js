@@ -78,6 +78,7 @@ client.on('message', message => {
 From: ${message.author}
 Text: ${message.toString()}
 Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`))
+		message.channel.send(`Your message was successfully submited 👍`)
 		return;
 	}
 	let prefix = GC.getConfig(message.guild).prefix;
