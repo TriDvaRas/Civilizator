@@ -2,7 +2,10 @@
 const Embeder = require(`./embeder.js`);
 const sheet = require(`./sheet`);
 const GC = require(`./guildConfig`);
-const addPicker = require(`./picker`);
+const Picker = require(`./picker`);
+var IO = require('./IO.js');
+const logger = require('../../logger.js');
+const chalk = require('chalk');
 
 module.exports = {
     StartJoins: function StartJoins(state, gameEmbed) {
@@ -25,62 +28,64 @@ module.exports = {
         sheet.updateGame(state);
     },
     StartPicks: function StartPicks(state, gameEmbed, channel) {
-        gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Picks** \n Click 🔁 to vote for reroll\n\u200B";
-        gameEmbed.setColor('#09ded0');
-        state.reVotesFull = Math.ceil(state.Players.length * 0.65);
-        state.reVotes = 0;
-        state.reVoters = [];
-        state.Phase = "picks";
-        state.Players.forEach(P => {
-            P.civs = [];
-            P.pick = {Name:"-"};
-            if (P.civsMessage != "")
-                channel.messages.cache.array().find(x => x.id == P.civsMessage).delete();
-        });
+        try {
+            gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Picks** \n Click 🔁 to vote for reroll\n\u200B";
+            gameEmbed.setColor('#09ded0');
+            state.reVotesFull = Math.ceil(state.Players.length * 0.65);
+            state.reVotes = 0;
+            state.reVoters = [];
+            state.Phase = "picks";
+            state.Players.forEach(P => {
+                P.civs = [];
+                P.pick = { Name: "-" };
+            });
 
-        let pickField = gameEmbed.fields.find(field => field.name == "Pick")
-        if (!pickField)
-            gameEmbed.addFields(
-                { name: 'Pick', value: '\u200B', inline: true }
-            );
+            let pickField = gameEmbed.fields.find(field => field.name == "Pick")
+            if (!pickField)
+                gameEmbed.addFields(
+                    { name: 'Pick', value: '\u200B', inline: true }
+                );
 
-        let reVotesField = gameEmbed.fields.find(field => field.name == "Reroll Votes")
-        if (!reVotesField) {
+            let reVotesField = gameEmbed.fields.find(field => field.name == "Reroll Votes")
+            if (!reVotesField) {
 
-            reVotesField = gameEmbed.addField('Reroll Votes', '\u200B', false);
-            gameEmbed.addFields(
-                { name: 'Rerolls', value: '0', inline: true }
-            );
-        }
-        else {
-            let msgIds = GC.getPickMsgs(channel.guild);
-            for (let i = 0; i < msgIds.length; i++) {
-                const element = msgIds[i];
-                let mess = channel.messages.cache.array().find(x => x.id == element)
-                if (mess)
-                    mess.delete();
+                reVotesField = gameEmbed.addField('Reroll Votes', '\u200B', false);
+                gameEmbed.addFields(
+                    { name: 'Rerolls', value: '0', inline: true }
+                );
             }
-            GC.setPickMsgs(channel.guild, []);
-            gameEmbed.fields.find(field => field.name == "Rerolls").value = +gameEmbed.fields.find(field => field.name == "Rerolls").value + 1;
-            state.rerolls = +gameEmbed.fields.find(field => field.name == "Rerolls").value;
+            else {
+                let msgIds = GC.getPickMsgs(channel.guild);
+                for (let i = 0; i < msgIds.length; i++) {
+                    const element = msgIds[i];
+                    let mess = channel.messages.cache.array().find(message => message.id == element)
+                    if (mess)
+                        removeOld(mess, state.playerSize)
+                }
+                GC.setPickMsgs(channel.guild, []);
+                gameEmbed.fields.find(field => field.name == "Rerolls").value = +gameEmbed.fields.find(field => field.name == "Rerolls").value + 1;
+                state.rerolls = +gameEmbed.fields.find(field => field.name == "Rerolls").value;
+            }
+
+
+            reVotesField.value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
+            gameEmbed.fields.find(field => field.name == "Pick").value = state.Players.map(user => user.pick.Name).join('\n') + '\u200B';
+
+            Embeder.set(state, channel, gameEmbed);
+            state.picked.forEach(element => {
+                state.Civs.push(element);
+            });
+            state.picked = [];
+            GeneratePicks(state, channel);
+            sheet.updateGame(state);
+        } catch (error) {
+            logger.log(`error`, `[${chalk.magentaBright(channel.guild.name)}] Error on starting game ${error.stack}`);
+
         }
 
-
-        reVotesField.value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
-        gameEmbed.fields.find(field => field.name == "Pick").value = state.Players.map(user => user.pick.Name).join('\n') + '\u200B';
-        
-        Embeder.set(state, channel, gameEmbed);
-        state.picked.forEach(element => {
-            state.Civs.push(element);
-        });
-        state.picked = [];
-        GeneratePicks(state, channel);
-        sheet.updateGame(state);
     }
 }
-//IO system
-var IO = require('./IO.js');
-const reactions = require('./reactions.js');
+
 //gen and send all picks
 function GeneratePicks(state, channel) {
     let indexes = [];
@@ -113,11 +118,12 @@ function GetCivLine(state, channel, i) {
             img.write(`./assets/Imgs/Players/${Player.tag}.png`, () => {
                 channel.send(txt.slice(0, -1), {
                     files: [`./assets/Imgs/Players/${Player.tag}.png`]
-                }).then(msg => {
+                }).then(mess => {
                     let msgIds = GC.getPickMsgs(channel.guild);
-                    msgIds.push(msg.id)
+                    msgIds.push(mess.id)
                     GC.setPickMsgs(channel.guild, msgIds);
-                    addPicker(msg, Player, i + 1)
+                    Picker.add(mess, Player, i + 1);
+
                 })
             });
 
@@ -126,7 +132,6 @@ function GetCivLine(state, channel, i) {
         for (let i = state.picked.length - 1; i >= 0; i--) {
             state.Civs.push(state.picked.splice(i, 1)[0]);
         }
-    return;
 }
 //civ id from pool
 function GetRandomCivId(state) {//Pool, RemoveFromPool
@@ -145,4 +150,14 @@ function shuffle(Players) {
         let j = Math.floor(Math.random() * (i + 1));
         [Players[i], Players[j]] = [Players[j], Players[i]];
     }
+}
+
+function removeOld(mess, max) {
+    mess.fetch().then(mess => {
+        if (mess.reactions.cache.some(x => x.emoji.name == [`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][max - 1]))
+            mess.delete();
+        else{
+            setTimeout(() => removeOld(mess, max), 500);
+        }
+    }).catch();
 }

@@ -28,21 +28,21 @@ client.on('ready', () => {
 	client.setInterval(updateGameCount, 300000);
 
 })
-	.on('debug', m => logger.log('debug', `[*] ${m}`))
-	.on('warn', m => logger.log('warn', `[*] ${m}`))
-	.on('error', m => {
-		logger.log('error', `[*] ${m}`)
-		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`[*] ${m}`))
+	.on('debug', error => logger.log('debug', `[*]\n${error.stack}`))
+	.on('warn', error => logger.log('warn', `[*]\n${error.stack}`))
+	.on('error', error => {
+		logger.log('error', `[*]\n${error.stack}`)
+		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`[*]\n${error.stack}`))
 	});
 
 process
 	.on('uncaughtException', error => {
-		logger.log('error', `[*] ${error}`);
-		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`uncaughtException [*] ${error}`))
+		logger.log('error', `[*]\n${error.stack}`);
+		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`[*]\n${error.stack}`))
 	})
 	.on('unhandledRejection', error => {
-		logger.log('error', `[*] ${error}`);
-		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`unhandledRejection [*] ${error}`))
+		logger.log('error', `[*]\n${error.stack}`);
+		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`[*]\n${error.stack}`))
 	})
 	.on('SIGHUP', () => {
 		logger.log('info', 'Shutting down...')

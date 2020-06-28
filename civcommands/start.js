@@ -41,7 +41,7 @@ module.exports = {
                 .setTimestamp()
                 .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
             ).then(mess=>{
-                sheet.newGame(state, mess.author.username, mess.guild.name).then(id => {
+                sheet.newGame(state, message.author.username, message.guild.name).then(id => {
                     state.gameId = id;
                     //create embed
                     gameEmbed = Embeder.create();

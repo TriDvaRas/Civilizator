@@ -48,9 +48,8 @@ Civs needed to start: \`${size}\`(players count*(CPP+BPP))
 Try lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command 
 or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500 }));
             }
-
             //go to next phase
-            collector.stop();
+            collector.stop("force end");
             let embed = Embeder.get(state, msg.channel);
 
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] joins ended`);
@@ -114,7 +113,7 @@ or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500
     collector.on('end', (collected, reason) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] join collector committed die | reason ${reason}`);
         msg.reactions.removeAll();
-        if ([`idle`,`new game`].includes(reason)) {
+        if ([`idle`, `new game`].includes(reason)) {
             let state = GC.getGameState(msg.guild)
             state.flushed = true;
             GC.setGameState(msg.guild, state);
@@ -186,7 +185,7 @@ function addBanner(msg) {
 
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans ended`);
             let embed = Embeder.get(state, msg.channel);
-            collector.stop();
+            collector.stop("force end");
             try {
                 logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
                 Phaser.StartPicks(state, embed, msg.channel);
@@ -203,7 +202,7 @@ function addBanner(msg) {
     collector.on('end', (collected, reason) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] banner collector committed die | reason ${reason}`);
         msg.reactions.removeAll();
-        if ([`idle`,`new game`].includes(reason)) {
+        if ([`idle`, `new game`].includes(reason)) {
             let state = GC.getGameState(msg.guild)
             state.flushed = true;
             GC.setGameState(msg.guild, state);
@@ -222,41 +221,48 @@ function addReroller(msg) {
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created re collector`);
 
     collector.on('collect', (reaction, user) => {
-        reaction.users.remove(user);
-        let state = GC.getGameState(msg.guild);
-        if (state.embedId != msg.id) {
-            collector.stop(`old game`);
-            return;
-        }
-        let player = state.Players.find(P => P.id == `${user}`)
-        if (!player)
-            return;
-        state.reVoters.push(player);
-        state.reVotes = parseInt(state.reVotes) + 1;
-        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] re vote [${state.reVotes}/${state.reVotesFull}]`);
+        try {
+            reaction.users.remove(user);
+            let state = GC.getGameState(msg.guild);
+            if (state.embedId != msg.id) {
+                collector.stop(`old game`);
+                return;
+            }
+            let player = state.Players.find(P => P.id == `${user}`)
+            if (!player)
+                return;
+            state.reVoters.push(player);
+            state.reVotes = parseInt(state.reVotes) + 1;
+            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] re vote [${state.reVotes}/${state.reVotesFull}]`);
 
-        let embed = Embeder.get(state, msg.channel);
-        embed.fields.find(field => field.name == "Reroll Votes").value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
-        Embeder.set(state, msg.channel, embed)
-        if (state.reVotes >= state.reVotesFull) {
-            msg.reactions.removeAll();
-            setTimeout(() =>
-                msg.react(`🔁`), 1000)
-            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] rerolling`);
-            Phaser.StartPicks(state, embed, msg.channel);
+            let embed = Embeder.get(state, msg.channel);
+            embed.fields.find(field => field.name == "Reroll Votes").value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
+            Embeder.set(state, msg.channel, embed)
+            if (state.reVotes == state.reVotesFull) {
+                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] rerolling`);
+                Phaser.StartPicks(state, embed, msg.channel);
+            }
+            GC.setGameState(msg.guild, state);
+        } catch (error) {
+            logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] Error on collecting re ${error.stack}`);
+
         }
-        GC.setGameState(msg.guild, state);
 
     });
     collector.on('end', (collected, reason) => {
-        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] re collector committed die | reason ${reason}`);
-        msg.reactions.removeAll();
-        let state = GC.getGameState(msg.guild)
-        if ([`idle`,`new game`].includes(reason)) {
-            state.flushed = true;
-            GC.setGameState(msg.guild, state);
+        try {
+            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] re collector committed die | reason ${reason}`);
+            if (reason != `messageDelete`)
+                msg.reactions.removeAll();
+            let state = GC.getGameState(msg.guild)
+            if ([`idle`, `new game`].includes(reason)) {
+                state.flushed = true;
+                GC.setGameState(msg.guild, state);
+            }
+            sheet.updateGame(state);
+        } catch (error) {
+            logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] Error on ending re ${error.stack}`);
         }
-        sheet.updateGame(state);
     });
 }
 
