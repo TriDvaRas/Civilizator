@@ -2,7 +2,6 @@
 <img src="https://tdr.s-ul.eu/FYpCCEZi" title="FVCproductions" alt="logo">
 
 # Civilizator Discord Bot
-> Civilization V Civ Randomizer for your Discord server 
 
 Discord bot for randoming sets of Civilization V civs for each player.
 Bot is primarily meant to be used in small servers by friends companies and just to make the game fun.  
