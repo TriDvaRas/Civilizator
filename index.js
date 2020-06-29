@@ -25,7 +25,7 @@ client.on('ready', () => {
 	logger.log('info', 'Logged in');
 	updateGameCount();
 	client.setInterval(setPressence, 25000);
-	client.setInterval(updateGameCount, 3600000);
+	client.setInterval(updateGameCount, 1825000);
 
 })
 	.on('debug', error => logger.log('debug', `[*]\n${error.stack}`))
@@ -132,5 +132,3 @@ function updateGameCount() {
 		IO.Write(`./stats.json`, stats);
 	})
 }
-
-sheet.test();

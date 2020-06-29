@@ -10,8 +10,8 @@ module.exports = {
     name: 'dlc',
     description: 'Manage DLCs (Operator)',
     usage: 
-`\`dlc <whitelist/white/w/+> <DLCs>\` disables all DLCs which are not in [DLCs]
-\`dlc <blacklist/black/b/-> <DLCs>\` disables all DLCs which are in [DLCs]
+`\`dlc <whitelist/white/w/+> <DLCs>\` disables all DLCs which are not in <DLCs>
+\`dlc <blacklist/black/b/-> <DLCs>\` disables all DLCs which are in <DLCs>
 \`dlc <reset/r>\` enables all DLCs`,
     execute: function (message, args) {
         message.delete({ timeout: 5000 });

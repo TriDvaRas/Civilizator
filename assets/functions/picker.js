@@ -40,8 +40,6 @@ function addPicker(msg, player, playerSlot) {
             let embed = Embeder.get(state, msg.channel);
             embed.fields.find(field => field.name == "Pick").value = state.Players.map(user => user.pick.Name).join('\n') + '\u200B';
             Embeder.set(state, msg.channel, embed);
-
-            sheet.updateGame(state);
             GC.setGameState(msg.guild, state);
 
         } catch (error) {
@@ -68,19 +66,4 @@ function addPicker(msg, player, playerSlot) {
 
         }
     });
-}
-
-function numReact(message, i, max) {
-
-    
-    message.react([`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][i])
-        .then(() => {
-            i++;
-            if (i < max && i < 6) {
-                numReact(message, i, max);
-            }
-        }).catch(error => {
-            logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] Error on collecting pick ${message} ${i} ${max} \n${error.stack}`);
-        });
-    
 }
