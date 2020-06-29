@@ -2,8 +2,14 @@
 <img src="https://tdr.s-ul.eu/FYpCCEZi" title="FVCproductions" alt="logo">
 
 # Civilizator Discord Bot
- Civilization V Civ Randomizer for your Discord server 
- 
+> Civilization V Civ Randomizer for your Discord server 
+
+Bot's idea is make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll all players would get a new pool of civs to pick from!  Bot uses embed-reactions UI so you can almost forget about typing commands and just press buttons.
+
+Bot is primarily meant to be used in small servers by friends companies and just to make the game fun. 
+
+Bot collects statistics of played games. It will be made public when enough games are played.
+
 [Invite Link](https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952)
 
 [Discord Server](https://discord.gg/nFMFs2e)
@@ -80,7 +86,7 @@ TODO
 - **Q: Can I try using a bot without adding it to my server?**
     - A: Yes, you can try out bot in `#civilizator` channel of [bot's discord server](https://discord.gg/nFMFs2e)
 - **Q: Can I start multiple games at the same time?**
-    - A: No, bot was primarily made for small servers to just play some games with your friends, so I'm not planing the support of multiple games per server.
+    - A: No, bot was primarily made for small servers to just play some games with your friends, so I'm not planing the support of multiple simultaneous games per server.
 - **Q: How do I start a game?**
     - A: Just use `start` command
 - **Q: Why can't I use `start` command?**
@@ -100,6 +106,9 @@ TODO
 
 ## Inspiration
 
-TODO
+- http://leshaigraet.ru/civ-randomizer/  (died long time ago)
 
+- http://civdrafter.com/civ5/
+
+- http://sempris.od.ua/civ/random.html
 ---
