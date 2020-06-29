@@ -36,7 +36,7 @@ TODO
 
 ## Commands
 
-- All commands start with prefix(default !) or bot mention
+- All commands start with prefix (default is `!`) or bot mention
 
 - Permissions stands for minimal permission user must have to use the command
 - Permissions are:
