@@ -4,11 +4,14 @@
 # Civilizator Discord Bot
 > Civilization V Civ Randomizer for your Discord server 
 
-Bot's idea is make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll all players would get a new pool of civs to pick from!  Bot uses embed-reactions UI so you can almost forget about typing commands and just press buttons.
+Discord bot for randoming sets of Civilization V civs for each player.
+Bot is primarily meant to be used in small servers by friends companies and just to make the game fun.  
 
-Bot is primarily meant to be used in small servers by friends companies and just to make the game fun. 
+Bot's idea is make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll all players would get a new pool of civs to pick from! 
 
+Bot uses embed-reactions UI so you can almost forget about typing commands and just press buttons.
 Bot collects statistics of played games. It will be made public when enough games are played.
+
 
 [Invite Link](https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952)
 
