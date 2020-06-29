@@ -49,7 +49,7 @@ module.exports = {
             let reVotesField = gameEmbed.fields.find(field => field.name == "Reroll Votes")
             if (!reVotesField) {
 
-                reVotesField = gameEmbed.addField('Reroll Votes', '\u200B', false);
+                reVotesField = gameEmbed.addField('Reroll Votes', `[${state.reVotes}/${state.reVotesFull}]\n`, false);
                 gameEmbed.addFields(
                     { name: 'Rerolls', value: '0', inline: true }
                 );

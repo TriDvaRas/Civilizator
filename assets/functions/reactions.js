@@ -231,10 +231,20 @@ function addReroller(msg) {
             let player = state.Players.find(P => P.id == `${user}`)
             if (!player)
                 return;
-            state.reVoters.push(player);
-            state.reVotes = parseInt(state.reVotes) + 1;
-            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] re vote [${state.reVotes}/${state.reVotesFull}]`);
+            let reVoter = state.reVoters.find(p => p.id == `${user}`);
+            if (reVoter) {
+                state.reVoters.splice(state.reVoters.indexOf(reVoter), 1);
+                state.reVotes = parseInt(state.reVotes) - 1;
+                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] -re vote [${state.reVotes}/${state.reVotesFull}]`);
 
+
+            }
+            else {
+                state.reVoters.push(player);
+                state.reVotes = parseInt(state.reVotes) + 1;
+                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] +re vote [${state.reVotes}/${state.reVotesFull}]`);
+
+            }
             let embed = Embeder.get(state, msg.channel);
             embed.fields.find(field => field.name == "Reroll Votes").value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
             Embeder.set(state, msg.channel, embed)
@@ -243,6 +253,7 @@ function addReroller(msg) {
                 Phaser.StartPicks(state, embed, msg.channel);
             }
             GC.setGameState(msg.guild, state);
+
         } catch (error) {
             logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] Error on collecting re ${error.stack}`);
 
