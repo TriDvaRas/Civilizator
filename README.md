@@ -96,7 +96,7 @@ TODO
 - **Q: Is there Civilization VI support?**
     - A: No
 - **Q: Will there be Civilization VI support?**
-    - A: Maybe...
+    - A: Not planned but maybe someday...
 - **Q: Can players join game after join phase has ended?**
     - A: No
 - **Q: Can I unban Civilization**
