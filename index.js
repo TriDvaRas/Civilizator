@@ -25,7 +25,7 @@ client.on('ready', () => {
 	logger.log('info', 'Logged in');
 	updateGameCount();
 	client.setInterval(setPressence, 25000);
-	client.setInterval(updateGameCount, 300000);
+	client.setInterval(updateGameCount, 3600000);
 
 })
 	.on('debug', error => logger.log('debug', `[*]\n${error.stack}`))

@@ -1,4 +1,5 @@
 const IO = require('./IO.js');
+const welcome=require(`../welcome`);
 function createBaseChannel(guild, role, message) {
     return new Promise(function (resolve, reject) {
         let config = IO.Read(`guilds/${guild.id}/config.json`);
@@ -28,7 +29,7 @@ function createBaseChannel(guild, role, message) {
             ]
         }).then(channel => {
             if (!message) {
-                channel.send(IO.Read("config.json").welcome);
+                channel.send(welcome);
                 channel.send(`Bound role to \`${role.name}\` ✅`);
             }
             channel.send(`Bound bot to ${channel} ✅`);
