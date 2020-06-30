@@ -6,10 +6,7 @@
 Discord bot for randoming sets of Civilization V civs for each player.
 Bot is primarily meant to be used in small servers by friends companies and just to make the game fun.  
 
-Bot's idea is make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll all players would get a new pool of civs to pick from! 
-
-Bot uses embed-reactions UI so you can almost forget about typing commands and just press buttons.
-Bot collects statistics of played games. It will be made public when enough games are played.
+Bot's idea is to make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll all players would get a new pool of civs to pick from! 
 
 
 [Invite Link](https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952)
@@ -30,7 +27,37 @@ Bot collects statistics of played games. It will be made public when enough game
 
 ## Features
 
-TODO
+### UI 
+
+Bot uses embed-reactions UI so you can almost forget about typing commands and just press buttons.
+
+START GIF
+
+### DLCs
+
+By default all DLCs are enabled but you can change it
+
+DLC GIF
+
+### Bans
+
+If you choose BansPerPlayer 1-4 there would be a ban phase where you can ban civs from random pool
+
+BAN GIF
+
+### Picks
+
+In the picks phase you can choose your pick to save it in game's UI and bot's pick statistics
+
+PICK GIF
+
+### Rerolls
+
+Players can vote to reroll and after 70% of players have voted all players would get a new pool of civs to pick from
+
+RE GIF
+
+###
 
 ---
 
