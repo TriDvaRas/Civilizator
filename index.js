@@ -28,7 +28,6 @@ client.on('ready', () => {
 	client.setInterval(setPressence, 15532 * 1.68);
 	client.setInterval(updateGameCount, 630250);
 })
-	.on('debug', error => logger.log('debug', `[*]\n${error.stack}`))
 	.on('warn', error => logger.log('warn', `[*]\n${error.stack}`))
 	.on('error', error => {
 		logger.log('error', `[*]\n${error.stack}`)
