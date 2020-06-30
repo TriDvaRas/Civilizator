@@ -80,9 +80,20 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 		message.channel.send(`Your message was successfully submited 👍`)
 		return;
 	}
-	let prefix = GC.getConfig(message.guild).prefix;
-	//check if message is a command and author is not a bot
-	if (!message.content.startsWith(prefix) || message.author.bot)
+	let args, command; 
+	console.log(message.content)
+	console.log(`<@!${client.user.id}>`)
+
+	if (message.content.startsWith(GC.getConfig(message.guild).prefix)) {
+		args = message.content.slice(prefix.length).split(/ +/);
+		command = args.shift().toLowerCase();
+	}
+	else if (message.content.startsWith(`<@!${client.user.id}>`)) {
+		args = message.content.split(/ +/);
+		args.shift();
+		command = args.shift().toLowerCase();
+	}
+	else
 		return;
 	//split message into command and arguments
 
