@@ -153,11 +153,14 @@ function shuffle(Players) {
 }
 
 function removeOld(mess, max) {
-    mess.fetch().then(mess => {
+    try {
         if (mess.reactions.cache.some(x => x.emoji.name == [`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][max - 1]))
             mess.delete();
-        else{
-            setTimeout(() => removeOld(mess, max), 500);
+        else {
+            setTimeout(() => removeOld(mess, max), 525);
         }
-    }).catch();
+    } catch (error) {
+        logger.log(`error`, `Error in removeOld ${error.stack}`)
+    }
+
 }
