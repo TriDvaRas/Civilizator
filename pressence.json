@@ -1,6 +1,6 @@
 [
     {
-        "name": "Blumenkranz",
+        "name": "uptime: {uptime}",
         "type": "LISTENING"
     },
     {

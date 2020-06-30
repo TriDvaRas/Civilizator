@@ -25,7 +25,7 @@ const chalk = require('chalk');
 client.on('ready', () => {
 	logger.log('info', 'Logged in');
 	updateGameCount();
-	client.setInterval(setPressence, 25000);
+	client.setInterval(setPressence, 15532);
 	client.setInterval(updateGameCount, 1825000);
 })
 	.on('debug', error => logger.log('debug', `[*]\n${error.stack}`))
@@ -78,9 +78,9 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 		message.channel.send(`Your message was successfully submited 👍`)
 		return;
 	}
-	let args, command; 
-
-	if (message.content.startsWith(GC.getConfig(message.guild).prefix)) {
+	let args, command;
+	const prefix = GC.getConfig(message.guild).prefix;
+	if (message.content.startsWith(prefix)) {
 		args = message.content.slice(prefix.length).split(/ +/);
 		command = args.shift().toLowerCase();
 	}
@@ -122,7 +122,7 @@ function setPressence() {
 	pressences.push(act);
 	client.user.setPresence({
 		activity: {
-			name: act.name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`).replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`),
+			name: act.name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`).replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`).replace(`{uptime}`, `${getUptime()}`),
 			type: act.type
 		}
 	})
@@ -136,4 +136,10 @@ function updateGameCount() {
 	})
 }
 
-
+function getUptime() {
+	let ms = client.uptime;
+	let s = Math.floor(ms / 1000) % 60;
+	let m = Math.floor(ms / 60000) % 60;
+	let h = Math.floor(ms / 3600000);
+	return `${h.toString().length==1?'0'+h:h}:${m.toString().length==1?'0'+m:m}:${s.toString().length==1?'0'+s:s}`
+}
