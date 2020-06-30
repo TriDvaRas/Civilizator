@@ -61,10 +61,10 @@ function createBaseRole(guild) {
         });
     });
 }
-function createBase(guild, client) {
+function createBase(guild) {
     createBaseRole(guild).then(role => {
         createBaseChannel(guild, role).then(channel => {
-            guild.members.cache.find(member => member.user.id == client.user.id).roles.add(role);
+            guild.members.cache.find(member => member.user.id == globalThis.client.user.id).roles.add(role);
             //TODO something
         })
     });

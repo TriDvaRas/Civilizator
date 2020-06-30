@@ -40,7 +40,7 @@ const options = {
             maxsize: 5242880, // 5MB
             maxFiles: 5,
             colorize: false,
-            format: winston.format.printf(log => `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`),
+            format: winston.format.printf(log => formatLog(log)),
         }
     ],
     console: [
@@ -98,12 +98,16 @@ function color(text) {
     }
 
 }
-// create a stream object with a 'write' function that will be used by `morgan`
-logger.stream = {
-    write: function (message, encoding) {
-        // use the 'info' log level so the output will be picked up by both transports (file and console)
-        logger.info(message);
-    },
-};
+
+function formatLog(log) {
+    let msg = `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`
+    if (log.level==`error`){
+        let guild = globalThis.client.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
+        if(guild)
+            guild.channels.cache.find(channel => channel.name==`error-log`).send(msg);
+    }
+    return msg;
+
+}
 
 module.exports = logger;

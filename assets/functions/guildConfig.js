@@ -17,12 +17,12 @@ function createConfig(guild) {
 
 }
 
-function initGuildEvents(client) {
-    client.on('guildCreate', guild => {
+function initGuildEvents() {
+    globalThis.client.on('guildCreate', guild => {
         try {
             logger.log(`info`, `[${chalk.magentaBright(guild.name)}] joined guild `);
             createConfig(guild);
-            createBase(guild, client);
+            createBase(guild);
             logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created config `);
         } catch (error) {
             logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating config \n${error}`);
@@ -30,7 +30,7 @@ function initGuildEvents(client) {
 
 
     })
-    client.on('guildDelete', guild => {
+    globalThis.client.on('guildDelete', guild => {
         try {
             logger.log(`info`, `[${chalk.magentaBright(guild.name)}] left guild `);
             deleteConfig(guild);
