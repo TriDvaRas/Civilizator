@@ -25,7 +25,7 @@ const chalk = require('chalk');
 client.on('ready', () => {
 	logger.log('info', 'Logged in');
 	updateGameCount();
-	client.setInterval(setPressence, 15532);
+	client.setInterval(setPressence, 15532 * 1.68);
 	client.setInterval(updateGameCount, 1825000);
 })
 	.on('debug', error => logger.log('debug', `[*]\n${error.stack}`))
@@ -141,5 +141,5 @@ function getUptime() {
 	let s = Math.floor(ms / 1000) % 60;
 	let m = Math.floor(ms / 60000) % 60;
 	let h = Math.floor(ms / 3600000);
-	return `${h.toString().length==1?'0'+h:h}:${m.toString().length==1?'0'+m:m}:${s.toString().length==1?'0'+s:s}`
+	return `${h.toString().length == 1 ? '0' + h : h}:${m.toString().length == 1 ? '0' + m : m}:${s.toString().length == 1 ? '0' + s : s}`
 }
