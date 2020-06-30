@@ -22,11 +22,11 @@ globalThis.client = new Discord.Client({
 const logger = require("./logger");
 const chalk = require('chalk');
 
-client.on('ready', () => {
+globalThis.client.on('ready', () => {
 	logger.log('info', 'Logged in');
 	updateGameCount();
-	client.setInterval(setPressence, 25000);
-	client.setInterval(updateGameCount, 1825000);
+	globalThis.client.setInterval(setPressence, 25000);
+	globalThis.client.setInterval(updateGameCount, 1825000);
 })
 	.on('debug', error => logger.log('debug', `[*]\n${error.stack}`))
 	.on('warn', error => logger.log('warn', `[*]\n${error.stack}`))
@@ -46,37 +46,35 @@ process
 	})
 
 //read CommandList
-client.commands = new Discord.Collection();
+globalThis.client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+	globalThis.client.commands.set(command.name, command);
 }
 //read civCommands
-client.civcommands = new Discord.Collection();
+globalThis.client.civcommands = new Discord.Collection();
 const civCommandFiles = fs.readdirSync('./civcommands').filter(file => file.endsWith('.js'));
 for (const file of civCommandFiles) {
 	const command = require(`./civcommands/${file}`);
-	client.civcommands.set(command.name, command);
+	globalThis.client.civcommands.set(command.name, command);
 }
 
 
 logger.log(`info`, `Logging in...`)
-client.login(token);///////////////////////////////////////
+globalThis.client.login(token);///////////////////////////////////////
 
 //guild join/leave event
-GC.initGuildEvents(client);
+GC.initGuildEvents(globalThis.client);
 
-client.on('message', message => {
+globalThis.client.on('message', message => {
 	if (message.author.bot)
 		return;
 	if (message.guild == null) {
-		let guild = client.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
-		if (guild)
-			guild.channels.cache.find(channel => channel.name == `feed`).send(`**FEED**
+		globalThis.client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`**FEED**
 From: ${message.author}
 Text: ${message.toString()}
-Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`)
+Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`))
 		message.channel.send(`Your message was successfully submited 👍`)
 		return;
 	}
@@ -96,26 +94,27 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 	else
 		return;
 	//split message into command and arguments
-
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const command = args.shift().toLowerCase();
 	//exit if command doesn't exist
-	if (client.commands.has(command))
+	if (globalThis.client.commands.has(command))
 		//execute command		
 		try {
 			logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 			if (args[0] == "help") {
-				message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+				message.channel.send(`${globalThis.client.commands.get(command).description}\nUsage:\n${globalThis.client.commands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
 			} else
-				client.commands.get(command).execute(message, args);
+				globalThis.client.commands.get(command).execute(message, args);
 		} catch (error) {
 			logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
 		}
-	else if (client.civcommands.has(command) && GC.getConfig(message.guild).channelId == message.channel.id)
+	else if (globalThis.client.civcommands.has(command) && GC.getConfig(message.guild).channelId == message.channel.id)
 		try {
 			logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 			if (args[0] == "help") {
-				message.channel.send(`${client.civcommands.get(command).description}\nUsage:\n${client.civcommands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+				message.channel.send(`${globalThis.client.civcommands.get(command).description}\nUsage:\n${globalThis.client.civcommands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
 			} else
-				client.civcommands.get(command).execute(message, args);
+				globalThis.client.civcommands.get(command).execute(message, args);
 		} catch (error) {
 			logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
 		}
@@ -126,9 +125,9 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 function setPressence() {
 	let act = pressences.shift();
 	pressences.push(act);
-	client.user.setPresence({
+	globalThis.client.user.setPresence({
 		activity: {
-			name: act.name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`).replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`),
+			name: act.name.replace(`{guildCount}`, `${globalThis.client.guilds.cache.array().length}`).replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`),
 			type: act.type
 		}
 	})
@@ -141,4 +140,5 @@ function updateGameCount() {
 		IO.Write(`./stats.json`, stats);
 	})
 }
+
 
