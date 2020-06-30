@@ -30,9 +30,9 @@ function createBaseChannel(guild, role, message) {
         }).then(channel => {
             if (!message) {
                 channel.send(welcome);
-                channel.send(`Bound role to \`${role.name}\` ✅`);
+                channel.send(`Bound bot role to \`${role.name}\` ✅`);
             }
-            channel.send(`Bound bot to ${channel} ✅`);
+            channel.send(`Bound bot channel to ${channel} ✅`);
             config.channelId = channel.id;
             IO.Write(`guilds/${guild.id}/config.json`, config);
             resolve(channel);
