@@ -27,15 +27,16 @@ function addPicker(msg, player, playerSlot) {
                     return;
                 reaction.users.remove(user).catch(()=>{});
 
-                if (`${user}` != `${player.id}`)
+                if (!msg.mentions.users.has(user.id)){
                     return;
+                }
                 let state = GC.getGameState(msg.guild);
 
                 let actualPicks = msg.content.split(`\n`)[1];
-                let expectedPicks = state.Players.find(P => P.id = player.id).civs.map(civ => civ.Name).join(`/`);
-                if (actualPicks != expectedPicks)
+                let expectedPicks = state.Players.find(P => P.id == player.id).civs.map(civ => civ.Name).join(`/`);
+                if (actualPicks != expectedPicks){
                     return;
-
+                }
                 let pick = player.civs[[`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`].indexOf(reaction.emoji.name)];
                 logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] pick ${pick.Name}`);
                 state.Players[playerSlot - 1].pick = pick;
