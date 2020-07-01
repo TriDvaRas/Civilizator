@@ -6,7 +6,7 @@
 Discord bot for randoming sets of Civilization V civs for each player.
 Bot is primarily meant to be used in small servers by friends companies and just to make the game fun.  
 
-Bot's idea is to make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll all players would get a new pool of civs to pick from! 
+Bot's idea is to make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll each player's pool would be rerandomed! 
 
 
 [Invite Link](https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952)
@@ -31,31 +31,35 @@ Bot's idea is to make random Civilization games less random and more interesting
 
 Bot uses embed-reactions UI so you can almost forget about typing commands and just press buttons.
 
-START GIF
+![UI GIF](https://tdr.s-ul.eu/cET6clv5)
 
 ### DLCs
 
-By default all DLCs are enabled but you can change it
+By default all DLCs are enabled but you can change this with `dlc` command
 
-DLC GIF
+![DLC GIF](https://tdr.s-ul.eu/ukTLgPxd)
+
 
 ### Bans
 
-If you choose BansPerPlayer 1-4 there would be a ban phase where you can ban civs from random pool
+If you choose `BansPerPlayer` 1-4 when creating a game there would be a ban phase, where you can ban civs from random pool
 
-BAN GIF
+![BAN GIF](https://tdr.s-ul.eu/IdpIKLo3)
+
 
 ### Picks
 
 In the picks phase you can choose your pick to save it in game's UI and bot's pick statistics
 
-PICK GIF
+![PICK GIF](https://tdr.s-ul.eu/ONxWVHA6)
+
 
 ### Rerolls
 
-Players can vote to reroll and after 70% of players have voted all players would get a new pool of civs to pick from
+Players can vote to reroll and after 70% of players have voted, all players would get a new pool of civs to pick from
 
-RE GIF
+![RE GIF](https://tdr.s-ul.eu/pKxEYD85)
+
 
 ###
 
