@@ -117,21 +117,25 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 ## FAQ
 
 - **Q: Can I try using a bot without adding it to my server?**
-    - A: Yes, you can try out bot in `#civilizator` channel of [bot's discord server](https://discord.gg/nFMFs2e)
-- **Q: Can I start multiple games at the same time?**
-    - A: No, bot was primarily made for small servers to just play some games with your friends, so I'm not planing the support of multiple simultaneous games per server.
+    - A: Yes, you can try out bot in `#civilizator` channel of [bot's discord server](https://discord.gg/nFMFs2e).
 - **Q: How do I start a game?**
-    - A: Just use `start` command
+    - A: Just use `start` command.
 - **Q: Why can't I use `start` command?**
     - A: You need to get the Civilizator role to use it. Also it can only be used in the channel the bot is locked to.
+- **Q: Bot's reactions semm to appear slow. Is this ok?**
+    - A: Yes, Discord API has a limit of 4 reactions per second.
+- **Q: Can I start multiple games at the same time?**
+    - A: No, bot was primarily made for small servers to play with your friends, so  the support of multiple simultaneous games per server is not planned.
 - **Q: Is there Civilization VI support?**
-    - A: No
+    - A: No.
 - **Q: Will there be Civilization VI support?**
     - A: Not planned but maybe someday...
 - **Q: Can players join game after join phase has ended?**
-    - A: No
-- **Q: Can I unban Civilization**
-    - A: No
+    - A: No.
+- **Q: Can I get back to previous phase?**
+    - A: No, you need to `start` a new game.
+- **Q: Can I unban Civilization?**
+    - A: No.
 - **Q: My question is not in FAQ**
     - A: Try asking in [bot's discord server](https://discord.gg/nFMFs2e)
 ---
