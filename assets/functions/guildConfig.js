@@ -20,6 +20,9 @@ function createConfig(guild) {
 function initGuildEvents() {
     globalThis.client.on('guildCreate', guild => {
         try {
+            let logguild = client.guilds.cache.array().find(g => g.id == `727081958823165963`);
+            if (logguild)
+                logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Joined guild [${guild.id}] [${guild.name}]`);
             logger.log(`info`, `[${chalk.magentaBright(guild.name)}] joined guild `);
             createConfig(guild);
             createBase(guild);
@@ -32,6 +35,9 @@ function initGuildEvents() {
     })
     globalThis.client.on('guildDelete', guild => {
         try {
+            let logguild = client.guilds.cache.array().find(g => g.id == `727081958823165963`);
+            if (logguild)
+                logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Left guild [${guild.id}] [${guild.name}] \n guildCount: ${client.guilds.cache.array().length}`);
             logger.log(`info`, `[${chalk.magentaBright(guild.name)}] left guild `);
             deleteConfig(guild);
             logger.log(`info`, `[${chalk.magentaBright(guild.name)}] deleted config`);
