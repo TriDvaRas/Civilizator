@@ -19,7 +19,9 @@ module.exports = {
         var state = GC.getGameState(message.guild);
         //check if Player is OP
         if (!Perm.checkRoles(message.member, state.Op, { admin: true, op: true })) {
-            message.reply("Operator command");
+            message.channel.send("Operator command").then(botMsg => {
+                botMsg.delete({ timeout: 5000 })
+            });
             return;
         }
         //check phase
@@ -85,9 +87,6 @@ module.exports = {
             GC.setGameState(message.guild, state);
         }
 
-
-
-        //write
     },
 };
 //remove civ from pool

@@ -33,10 +33,9 @@ function addJoiner(msg) {
             collector.stop(`old game`);
             return;
         }
-        let member = msg.guild.members.cache.array().find(M => M.user = user);
         if (reaction.emoji.name === '⏩') {
             //check perm
-            if (!Perm.checkRoles(member, state.Op, { admin: true, op: true }))
+            if (!Perm.checkRoles(msg.guild.members.cache.get(user.id), state.Op, { admin: true, op: true }))
                 return;
             //check size
             let size = state.Players.length * (state.banSize + state.playerSize)
