@@ -51,11 +51,12 @@ module.exports = {
                 return;
             }
 
-            if (!args[0] || !args[1])
+            if (!args[0] || !args[1]) {
                 message.channel.send(`Wrong arguments`).then(botMsg => {
                     botMsg.delete({ timeout: 5000 });
-                    return;
                 });
+                return;
+            }
             let white;
             if (args[0] == "+" || args[0] == "w" || args[0] == "white" || args[0] == "whitelist")
                 white = true;
