@@ -27,13 +27,13 @@ Bot's idea is to make random Civilization games less random and more interesting
 
 ## Features
 
-### UI 
+### Intuitive UI 
 
 Bot uses embed-reactions UI so you can almost forget about typing commands and just press buttons.
 
 ![UI GIF](https://tdr.s-ul.eu/cET6clv5)
 
-### DLCs
+### Manageable DLCs
 
 By default all DLCs are enabled but you can change this with `dlc` command
 
