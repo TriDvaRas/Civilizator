@@ -7,7 +7,7 @@ const Embeder = require("../assets/functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
 const sheet = require(`../assets/functions/sheet`);
-const Discord=require(`discord.js`)
+const Discord = require(`discord.js`)
 
 module.exports = {
     name: 'start',
@@ -25,7 +25,8 @@ module.exports = {
             }
             //check if game is started
             if (state.started == true) {
-                Perm.checkRoles(message.member, state.Op, { op: true });
+                if (!CheckLastGame(message, state))
+                    return;
                 GC.resetGameState(message.guild);
                 //reread State
                 state = GC.getGameState(message.guild);
@@ -40,15 +41,16 @@ module.exports = {
                 )
                 .setTimestamp()
                 .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-            ).then(mess=>{
+            ).then(mess => {
                 sheet.newGame(state, message.author.username, message.guild.name).then(id => {
                     state.gameId = id;
+                    state.startTime = Date.now();
                     //create embed
                     gameEmbed = Embeder.create();
                     //start game
                     if (StartGame(message, args, state, gameEmbed))
                         return;
-    
+
                     logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
                     mess.edit(gameEmbed).then(msg => {
                         logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
@@ -58,7 +60,7 @@ module.exports = {
                     });
                 });
             })
-            
+
 
             return;
         }
@@ -99,5 +101,33 @@ function StartGame(message, args, state, gameEmbed) {
     gameEmbed.fields.find(field => field.name == "Bans per player").value = args[1];
     state.banSize = args[1];
     return;
+
+}
+
+function CheckLastGame(message, state) {
+    if (Perm.checkRoles(message.member)) 
+        return true;
+        
+    let ms = Date.now() - state.startTime;
+    let m = Math.floor(ms / 60000);
+    if (m < 3) {
+        message.channel.send(`Wait at least 10 minutes (3 for admin/op) before starting a new game`)
+        if (Perm.checkRoles(message.member, state.Op, { admin: true, op: true })) {
+            return false;
+        }
+        else {
+            return false;
+        }
+    } else if (m < 10) {
+        if (Perm.checkRoles(message.member, state.Op, { admin: true, op: true })) {
+            return true;
+        }
+        else {
+            message.channel.send(`Wait at least 10 minutes before starting a new game`)
+            return false;
+        }
+    } else {
+        return true;
+    }
 
 }

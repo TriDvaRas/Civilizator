@@ -2,6 +2,7 @@
 	"gameId":"",
 	"flushed":false,
     "started":"false",
+    "startTime":0,
     "embedId":"",
     "Phase":"",
     "gameSize":"0",
