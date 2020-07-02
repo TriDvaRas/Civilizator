@@ -3,6 +3,8 @@
 
 # Civilizator Discord Bot
 
+## About
+
 Discord bot for randoming sets of Civilization V civs for each player.
 Bot is primarily meant to be used in small servers by friends companies and just to make the game fun.  
 
@@ -17,8 +19,12 @@ Bot's idea is to make random Civilization games less random and more interesting
 
 ## Table of Contents 
 
+- [About](#about)
+- [Table of Contents](#table-of-contents)
 - [Features](#features)
 - [Bot commands](#commands)
+  - [Standard Commands](#standard-commands)
+  - [Civilization Commands](#civilization-commands)
 - [FAQ](#faq)
 - [Inspiration](#inspiration)
 
@@ -97,7 +103,7 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 |  | \<M\>-\<N\> | gives random number M-N | !roll 98-15532| everyone |
 |  | \<M\>d\<N\> | gives M random numbers 1-N | !roll 2d6 | everyone |
 
-### Civilizator Commands
+### Civilization Commands
 
 
 | Command | Arguments | Description | Usage example | Permissions |
