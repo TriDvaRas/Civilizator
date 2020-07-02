@@ -6,11 +6,12 @@ var IO = require('../assets/functions/IO.js');
 const Embeder = require("../assets/functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
+const { log } = require('console');
 module.exports = {
     name: 'dlc',
     description: 'Manage DLCs (Operator)',
-    usage: 
-`\`dlc <whitelist/white/w/+> <DLCs>\` disables all DLCs which are not in <DLCs>
+    usage:
+        `\`dlc <whitelist/white/w/+> <DLCs>\` disables all DLCs which are not in <DLCs>
 \`dlc <blacklist/black/b/-> <DLCs>\` disables all DLCs which are in <DLCs>
 \`dlc <reset/r>\` enables all DLCs`,
     execute: function (message, args) {
@@ -90,11 +91,6 @@ module.exports = {
 
     },
 };
-//remove civ from pool
-function DisableCiv(id, state) {
-    state.Civs.splice(state.Civs.findIndex(x => x == id), 1);
-    state.disabled.push(id);
-}
 function DisableDLC(DLC, state) {
     state.DLCs.splice(state.DLCs.findIndex(x => x == DLC), 1);
     state.disabledDLC.push(DLC);
@@ -117,10 +113,14 @@ function checkDLCs(state, args, white) {
 
 }
 function checkCivs(state) {
-    var CivList = IO.Read('./assets/CivList.json');
-    for (let i = 0; i < state.Civs.length; i++) {
-        const Civ = state.Civs[i];
-        if (state.disabledDLC.includes(CivList.find(C => C.id == Civ).DLC))
-            DisableCiv(Civ, state);
-    }
+    const CivList = IO.Read('./assets/CivList.json');
+    let newCivs = [];
+    state.Civs.forEach(Civ => {
+        civObj = CivList.find(C => C.id == Civ);
+        if (state.disabledDLC.includes(civObj.DLC))
+            state.disabled.push(Civ);
+        else
+            newCivs.push(Civ);
+    });
+    state.Civs = newCivs;
 }
