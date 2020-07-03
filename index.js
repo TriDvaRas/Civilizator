@@ -119,9 +119,19 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 function setPressence() {
 	let act = pressences.shift();
 	pressences.push(act);
+	let name = act.name;
+	if (name.includes(`{guildCount}`))
+		name = name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`);
+	else if (name.includes(`{gamesCount}`))
+		name = name.replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`)
+	else if (name.includes(`{uptime}`))
+		name = name.replace(`{uptime}`, `${getUptime()}`)
+	else if (name.includes(`{civilizedCount}`))
+		name = name.replace(`{civilizedCount}`, `${getCivilizedCount()}`);
+
 	client.user.setPresence({
 		activity: {
-			name: act.name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`).replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`).replace(`{uptime}`, `${getUptime()}`),
+			name: name,
 			type: act.type
 		}
 	})
@@ -141,4 +151,18 @@ function getUptime() {
 	let m = Math.floor(ms / 60000) % 60;
 	let h = Math.floor(ms / 3600000);
 	return `${h.toString().length == 1 ? '0' + h : h}:${m.toString().length == 1 ? '0' + m : m}:${s.toString().length == 1 ? '0' + s : s}`
+}
+
+function getCivilizedCount() {
+	let sum = 0;
+	client.guilds.cache.each(guild => {
+		let roleId = GC.getConfig(guild).roleId;
+		console.log(roleId);
+		guild.members.cache.each(member => {
+			if (member.roles.cache.has(roleId)) 
+				sum++;
+		});
+
+	});
+	return sum;
 }

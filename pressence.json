@@ -8,6 +8,10 @@
         "type": "LISTENING"
     },
     {
+        "name": "{civilizedCount} Civilized players",
+        "type": "LISTENING"
+    },
+    {
         "name": "{gamesCount} games played",
         "type": "LISTENING"
     }
