@@ -101,7 +101,7 @@ function color(text) {
 
 function formatLog(log) {
     let msg = `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`
-    if (log.level==`error`){
+    if ([`error`,`warn`].includes(log.level)){
         let guild = globalThis.client.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
         if(guild)
             guild.channels.cache.find(channel => channel.name==`error-log`).send(msg);

@@ -59,14 +59,14 @@ module.exports = {
                         Reacter.addJoiner(msg);
                     });
                 }).catch(error=>{
-                    logger.log(`warn`,`Civilizator machine broke...\n${error}`)
+                    logger.log(`warn`,`[${chalk.magentaBright(message.guild.name)}] Civilizator machine broke...\n${error}`)
                     mess.edit(new Discord.MessageEmbed()
                     .setColor('#46a832')
                     .setTitle("**Civilization V Game**")
                     .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
                     .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
                     .addFields(
-                        { name: `Civilizator machine broke...\nTry starting a new game\nIf this doesn't help submit a bug report [here](https://discord.gg/nFMFs2e)`, value: '\u200B', inline: true }
+                        { name: `Civilizator machine broke...\nTry starting a new game\nIf this doesn't help submit a bug report [here](https://discord.gg/nFMFs2e) or to Bot's DM`, value: '\u200B', inline: true }
                     )
                     .setTimestamp()
                     .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
