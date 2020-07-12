@@ -157,7 +157,6 @@ function getCivilizedCount() {
 	let sum = 0;
 	client.guilds.cache.each(guild => {
 		let roleId = GC.getConfig(guild).roleId;
-		console.log(roleId);
 		guild.members.cache.each(member => {
 			if (member.roles.cache.has(roleId)) 
 				sum++;
