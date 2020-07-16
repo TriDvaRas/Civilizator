@@ -12,7 +12,7 @@ module.exports = {
 `,
     execute: function (message, args) {
         message.delete({ timeout: 5000 });
-        GC.getGameState(msg.guild).then(state=>{
+        GC.getGameState(message.guild).then(state=>{
                     
             Perm.checkRoles(message.member, state.Op, { admin: true, op: true })
             .then(()=>{

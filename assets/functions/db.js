@@ -1,21 +1,23 @@
 
 const logger = require("../../logger");
 const dbCreds = require(`../mongo_secret.json`);
-
+const chalk = require(`chalk`)
 
 const MongoClient = require("mongodb").MongoClient;
-const mongoClient = new MongoClient(dbCreds.login, { useUnifiedTopology: true });
+const mongoClient = new MongoClient(dbCreds.login,
+    {
+        //reconnectTries: 240,
+        //reconnectInterval: 500,
+        useUnifiedTopology: true
+    });
 
 let dbClient;
-connectToDb();
+logger.log(`db`, `connecting to db`);
+connectToDb()
+    .then(() => logger.log(`db`, `Connected to db`))
+    .catch(err => logger.log(`error`, `Failed connecting to db \n${err}`))
 
 
-module.exports = {
-    getGameId,
-    newGame,
-    updateGame,
-    getCollection,
-}
 
 //+
 function newGame(state, op, guild) {
@@ -44,6 +46,7 @@ function newGame(state, op, guild) {
                         reject(err);
                         return logger.log(`error`, `${err}`);
                     }
+                    logger.log(`db`, `created new game ${id}`);
                 });
             }).catch(error => { reject(error) });
         }).catch(error => { reject(error) });
@@ -86,9 +89,24 @@ function updateGame(state) {
                         }
                     }
                     coll.updateOne({ id: state.gameId }, { $set: x })
+                    resolve()
+                    logger.log(`db`, `updated game info`);
                 }
             )
         }).catch(error => { reject(error) })
+    });
+
+}
+function updateGameFinal(guild) {
+    return new Promise((resolve, reject) => {
+        getCollection(`states`).then(coll => {
+            coll.findOne({ guildId: `${guild.id}` }, function (err, state) {
+                if (err)
+                    return reject(err);
+                updateGame(state).then(() => resolve(logger.log(`db`, `updated game info FINAL`))).catch(err => reject(err))
+            })
+
+        })
     });
 
 }
@@ -133,15 +151,19 @@ function getCollection(collection) {
         if (dbClient) {
             switch (collection) {
                 case `games`:
+                    logger.log(`db`, `Collection got`);
                     resolve(dbClient.db(dbCreds.dbName).collection(`Games`));
                     break;
                 case `states`:
+                    logger.log(`db`, `Collection got`);
                     resolve(dbClient.db(dbCreds.dbName).collection(`States`));
                     break;
                 case `stats`:
+                    logger.log(`db`, `Collection got`);
                     resolve(dbClient.db(dbCreds.dbName).collection(`Stats`));
                     break;
                 case `guilds`:
+                    logger.log(`db`, `Collection got`);
                     resolve(dbClient.db(dbCreds.dbName).collection(`Guilds`));
                     break;
                 default:
@@ -165,13 +187,32 @@ function getCollection(collection) {
 
 function connectToDb() {
     return new Promise((resolve, reject) => {
+        logger.log(`db`, `ConnectCalled`);
         mongoClient.connect(function (err, client) {
             if (err) {
                 reject();
                 return logger.log(`error`, `${err}`);
             }
             dbClient = client;
+            client
+            .on(`close`,()=>{
+                logger.log(`db`, `${chalk.red(close)}`);
+                
+            })
+            .on(`timeout`,()=>{
+                logger.log(`db`, `${chalk.red(close)}`);
+                
+            })
             resolve();
         });
     });
+}
+
+
+module.exports = {
+    getGameId,
+    newGame,
+    updateGame,
+    updateGameFinal,
+    getCollection,
 }

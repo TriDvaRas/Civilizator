@@ -23,7 +23,7 @@ function addJoiner(msg) {
     const filter = (reaction, user) => {
         return [`✅`, `❎`, `⏩`].includes(reaction.emoji.name) && !user.bot;
     };
-    const collector = msg.createReactionCollector(filter, { idle: 300000 });
+    const collector = msg.createReactionCollector(filter, { idle: 900000 });
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created join collector`);
 
     collector.on('collect', (reaction, user) => {
@@ -137,7 +137,7 @@ function addBanner(msg) {
     const filter = (reaction, user) => {
         return [`➡️`, `⏩`, `✔️`].includes(reaction.emoji.name) && (!user.bot || user.id == 719933714423087135);
     };
-    const collector = msg.createReactionCollector(filter, { idle: 300000 });
+    const collector = msg.createReactionCollector(filter, { idle: 900000 });
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created banner collector`);
 
     collector.on('collect', (reaction, user) => {

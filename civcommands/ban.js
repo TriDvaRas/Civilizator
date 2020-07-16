@@ -11,7 +11,7 @@ module.exports = {
     execute: function (message, args) {
         message.delete({ timeout: 5000 });
         //read GameState
-        GC.getGameState(msg.guild).then(state => {
+        GC.getGameState(message.guild).then(state => {
             //check phase
             if (state.started != true) {
                 message.channel.send("`start` game first").then(botMsg => {
