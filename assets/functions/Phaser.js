@@ -55,16 +55,19 @@ module.exports = {
                 );
             }
             else {
-                let msgIds = GC.getPickMsgs(channel.guild);
-                for (let i = 0; i < msgIds.length; i++) {
-                    const element = msgIds[i];
-                    let mess = channel.messages.cache.array().find(message => message.id == element)
-                    if (mess)
-                        removeOld(mess, state.playerSize)
-                }
+                GC.getPickMsgs(channel.guild).then(msgIds=>{
+                    for (let i = 0; i < msgIds.length; i++) {
+                        const element = msgIds[i];
+                        let mess = channel.messages.cache.array().find(message => message.id == element)
+                        if (mess)
+                            removeOld(mess, state.playerSize)
+                    }
+                    
+                })
+                .catch(err=>logger.log(`error`,`${err}`))
                 GC.setPickMsgs(channel.guild, []);
-                gameEmbed.fields.find(field => field.name == "Rerolls").value = +gameEmbed.fields.find(field => field.name == "Rerolls").value + 1;
-                state.rerolls = +gameEmbed.fields.find(field => field.name == "Rerolls").value;
+                state.rerolls += 1;
+                gameEmbed.fields.find(field => field.name == "Rerolls").value = state.rerolls;
             }
 
 
@@ -119,9 +122,12 @@ function GetCivLine(state, channel, i) {
                 channel.send(txt.slice(0, -1), {
                     files: [`./assets/Imgs/Players/${Player.tag}.png`]
                 }).then(mess => {
-                    let msgIds = GC.getPickMsgs(channel.guild);
-                    msgIds.push(mess.id)
-                    GC.setPickMsgs(channel.guild, msgIds);
+
+                    GC.getPickMsgs(channel.guild).then(msgIds=>{
+                        msgIds.push(mess.id)
+                        GC.setPickMsgs(channel.guild, msgIds);
+                    }).catch(err=>logger.log(`error`,`${err}`))
+
                     Picker.add(mess, Player, i + 1);
 
                 })

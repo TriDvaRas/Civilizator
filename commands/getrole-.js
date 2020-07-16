@@ -12,16 +12,18 @@ module.exports = {
             Perm.checkRoles(message.member, null, { admin: true })
             .then(()=>{
                 
-                let config = GC.getConfig(message.guild);
-                if (config.allowGetRole == false) {
-                    message.delete({timeout:30000});
-                    message.channel.send(`\`getrole\` is already disabled`).then(msg=>msg.delete({timeout:30000}));
-                    return;
-                }
-                config.allowGetRole = false;
-                GC.setConfig(message.guild, config);
-                message.channel.send(`Disabled \`getrole\``);
-                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] disabled getrole`);
+                GC.getConfig(message.guild).then(config=>{
+                    if (config.allowGetRole == false) {
+                        message.delete({timeout:30000});
+                        message.channel.send(`\`getrole\` is already disabled`).then(msg=>msg.delete({timeout:30000}));
+                        return;
+                    }
+                    config.allowGetRole = false;
+                    GC.setConfig(message.guild, config);
+                    message.channel.send(`Disabled \`getrole\``);
+                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] disabled getrole`);
+                    
+                })
 
             })
             .catch(()=>{

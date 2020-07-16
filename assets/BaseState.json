@@ -1,6 +1,7 @@
 {
 	"gameId":0,
 	"guildId":0,
+	"pickMsgs":[],
 	"flushed":false,
     "started":false,
     "startTime":0,

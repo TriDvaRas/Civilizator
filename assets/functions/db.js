@@ -14,7 +14,7 @@ module.exports = {
     getGameId,
     newGame,
     updateGame,
-    getCollection
+    getCollection,
 }
 
 //+

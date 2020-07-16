@@ -16,11 +16,13 @@ module.exports = {
                 }
                 try {
                     logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] changing prefix`);
-                    let config = GC.getConfig(message.guild)
-                    config.prefix = args[0];
-                    GC.setConfig(message.guild, config);
-                    message.channel.send(`Changed prefix to ${config.prefix}`);
-                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] changed prefix to ${config.prefix}`);
+                    GC.getConfig(message.guild).then(config=>{
+                        config.prefix = args[0];
+                        GC.setConfig(message.guild, config);
+                        message.channel.send(`Changed prefix to ${config.prefix}`);
+                        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] changed prefix to ${config.prefix}`);
+            
+                    })
                 } catch (error) {
                     message.channel.send(`Failed to change prefix`);
                     logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] failed to change prefix ${error}`);

@@ -7,7 +7,7 @@ const DB = require(`./db`);
 
 function createConfig(guild) {
     let config = {
-        prefix: "!",
+        prefix: "``",
         roleId: "",
         channelId: "",
         allowGetRole: true
@@ -144,10 +144,29 @@ function resetGameState(guild) {
 
 }
 function getPickMsgs(guild) {
-    return IO.Read(`guilds/${guild.id}/pickMsgs.json`);
+    return new Promise((resolve, reject) => {
+        DB.getCollection(`states`).then(coll => {
+            coll.findOne({ guildId: `${guild.id}` }, function (err, state) {
+                if (err)
+                    return reject(err)
+                resolve(state.pickMsgs)
+            })
+
+        })
+    });
 }
-function setPickMsgs(guild, state) {
-    IO.Write(`guilds/${guild.id}/pickMsgs.json`, state);
+function setPickMsgs(guild, msgs) {
+    return new Promise((resolve, reject) => {
+        DB.getCollection(`states`).then(coll => {
+            coll.findOne({ guildId: `${guild.id}` }, function (err, state) {
+                if (err)
+                    return reject(err)
+                resolve()
+                coll.updateOne({ guildId: guild.id }, { $set: {pickMsgs:msgs} })
+            })
+
+        })
+    });
 }
 module.exports = {
     getConfig,
