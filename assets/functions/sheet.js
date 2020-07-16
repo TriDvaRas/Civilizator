@@ -3,48 +3,14 @@ const logger = require("../../logger");
 const chalk = require('chalk');
 
 const creds = require(`../sheet_secret.json`);
-const { resolve } = require("app-root-path");
 
 
 module.exports = {
-    getGameCount,
-    newGame,
     updateGame,
-    getGameRow,
-    test
 }
 
-function newGame(state, op, guild) {
-    return new Promise((resolve, reject) => {
-        logger.log(`sheet`, `creating new game `);
-        getSheet().then(sheet => {
-            getNewId(sheet).then(id => {
-                resolve(id);
-                sheet.addRow({
-                    id: id,
-                    date: new Date().toUTCString(),
-                    flushed: false,
-                    lastPhase: `join`,
-                    CPP: state.playerSize,
-                    BPP: state.banSize,
-                    rerolls: 0,
-                    disabledDLCs: `-`,
-                    guild: guild,
-                    op: op,
-                    playerCount: `-`
-                }).then(row => {
-                    for (let i = 0; i < 64; i++) {
-                        row._rawData.push(`-`)
-                    }
-                    row.save();
-                }).catch(error => { reject(error) });
-            }).catch(error => { reject(error) });
-        }).catch(error => { reject(error) });
 
-    });
-
-}
-async function updateGame(state) {
+function updateGame(state) {
     return new Promise((resolve, reject) => {
         logger.log(`sheet`, `updating game info...`);
         getGameRow(state.gameId).then(x => {
@@ -62,21 +28,14 @@ async function updateGame(state) {
                 const player = state.Players[i];
                 for (let j = 0; j < x._sheet.headerValues.length; j++) {
                     const element = x._sheet.headerValues[j];
-                    if (element == `p${i + 1}`) {
+                    if (element == `p${i + 1}`)
                         x._rawData[j] = player.tag.split(`#`)[0];
-                    }
-                    else if (element == `p${i + 1}bans` && player.bans.length > 0) {
+                    else if (element == `p${i + 1}bans` && player.bans.length > 0)
                         x._rawData[j] = player.bans.map(x => x.Name).join(`\n`);
-                    }
-                    else if (element == `p${i + 1}civs` && player.civs.length > 0) {
+                    else if (element == `p${i + 1}civs` && player.civs.length > 0)
                         x._rawData[j] = player.civs.map(x => x.Name).join(`\n`);
-                    }
-                    else if (element == `p${i + 1}pick` && player.pick) {
-                        if (player.pick == `-`)
-                            x._rawData[j] = `-`;
-                        else
-                            x._rawData[j] = player.pick.Name;
-                    }
+                    else if (element == `p${i + 1}pick` && player.pick)
+                        x._rawData[j] = player.pick == `-` ? `-` : player.pick.Name
                 }
             }
             x.save()
@@ -96,57 +55,32 @@ function getGameRow(id) {
 
     });
 }
-
-function getGameCount(sheet) {
-    return new Promise((resolve, reject) => {
-        logger.log(`sheet`, `Fetching game count...`);
-        getRows(sheet).then(rows => {
-            resolve(+rows[rows.length - 1].id);
-        }).catch(error => { reject(error) });
-        logger.log(`sheet`, `Fetched game count`);
-
-    });
-}
-
-function getNewId(sheet) {
-    return new Promise((resolve, reject) => {
-            getGameCount(sheet).then(count => {
-                resolve(count + 1)
-            }).catch(error => { reject(error) });
-
-    });
-}
-
-
 function getRows(sheet) {
     return new Promise((resolve, reject) => {
-            if (!sheet)
-                getSheet().then(sheet => {
-                    sheet.getRows().then(rows => {
-                        resolve(rows)
-                    }).catch(error => { reject(error) });
-                }).catch(error => { reject(error) });
-            else {
+        if (!sheet)
+            getSheet().then(sheet => {
                 sheet.getRows().then(rows => {
                     resolve(rows)
                 }).catch(error => { reject(error) });
-            }
+            }).catch(error => { reject(error) });
+        else {
+            sheet.getRows().then(rows => {
+                resolve(rows)
+            }).catch(error => { reject(error) });
+        }
 
     });
 }
 function getSheet() {
     return new Promise((resolve, reject) => {
-            logger.log(`sheet`, `Fetching sheet...`)
-            const doc = new GSS.GoogleSpreadsheet(`1db51c8lzs6TVJU7u2eL1_RkxFdMKfjfFYNHDdjgQbTg`);
-            doc.useServiceAccountAuth(creds).then(() => {
-                doc.getInfo().then(() => {
-                    const sheet = doc.sheetsByIndex[0];
-                    resolve(sheet);
-                }).catch(error => { reject(error) });
-            });
+        logger.log(`sheet`, `Fetching sheet...`)
+        const doc = new GSS.GoogleSpreadsheet(`1db51c8lzs6TVJU7u2eL1_RkxFdMKfjfFYNHDdjgQbTg`);
+        doc.useServiceAccountAuth(creds).then(() => {
+            doc.getInfo().then(() => {
+                const sheet = doc.sheetsByIndex[0];
+                resolve(sheet);
+            }).catch(error => { reject(error) });
+        });
 
     });
-}
-function test() {
-
 }

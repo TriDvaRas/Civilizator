@@ -1,6 +1,6 @@
 
 const Embeder = require(`./embeder.js`);
-const sheet = require(`./sheet`);
+const DB = require(`./db`);
 const GC = require(`./guildConfig`);
 const Picker = require(`./picker`);
 var IO = require('./IO.js');
@@ -11,7 +11,7 @@ module.exports = {
     StartJoins: function StartJoins(state, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n `dlc` to manage DLCs (Operator)\n\u200B";
         state.Phase = "join";
-        sheet.updateGame(state);
+        DB.updateGame(state);
     },
     StartBans: function StartBans(state, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Bans**\n Click  ➡️  to skip 1 ban  \n Click  ⏩  to end phase (Operator) \n `ban [civId/civName]` to ban civilization\n\u200B";
@@ -25,7 +25,7 @@ module.exports = {
         gameEmbed.setColor('#de3b09');
         state.Phase = "bans";
         state.bansFull = state.Players.length * state.banSize;
-        sheet.updateGame(state);
+        DB.updateGame(state);
     },
     StartPicks: function StartPicks(state, gameEmbed, channel) {
         try {
@@ -55,16 +55,19 @@ module.exports = {
                 );
             }
             else {
-                let msgIds = GC.getPickMsgs(channel.guild);
-                for (let i = 0; i < msgIds.length; i++) {
-                    const element = msgIds[i];
-                    let mess = channel.messages.cache.array().find(message => message.id == element)
-                    if (mess)
-                        removeOld(mess, state.playerSize)
-                }
+                GC.getPickMsgs(channel.guild).then(msgIds=>{
+                    for (let i = 0; i < msgIds.length; i++) {
+                        const element = msgIds[i];
+                        let mess = channel.messages.cache.array().find(message => message.id == element)
+                        if (mess)
+                            removeOld(mess, state.playerSize)
+                    }
+                    
+                })
+                .catch(err=>logger.log(`error`,`${err}`))
                 GC.setPickMsgs(channel.guild, []);
-                gameEmbed.fields.find(field => field.name == "Rerolls").value = +gameEmbed.fields.find(field => field.name == "Rerolls").value + 1;
-                state.rerolls = +gameEmbed.fields.find(field => field.name == "Rerolls").value;
+                state.rerolls += 1;
+                gameEmbed.fields.find(field => field.name == "Rerolls").value = state.rerolls;
             }
 
 
@@ -77,7 +80,7 @@ module.exports = {
             });
             state.picked = [];
             GeneratePicks(state, channel);
-            sheet.updateGame(state);
+            DB.updateGame(state);
         } catch (error) {
             logger.log(`error`, `[${chalk.magentaBright(channel.guild.name)}] Error on starting game ${error.stack}`);
 
@@ -119,9 +122,12 @@ function GetCivLine(state, channel, i) {
                 channel.send(txt.slice(0, -1), {
                     files: [`./assets/Imgs/Players/${Player.tag}.png`]
                 }).then(mess => {
-                    let msgIds = GC.getPickMsgs(channel.guild);
-                    msgIds.push(mess.id)
-                    GC.setPickMsgs(channel.guild, msgIds);
+
+                    GC.getPickMsgs(channel.guild).then(msgIds=>{
+                        msgIds.push(mess.id)
+                        GC.setPickMsgs(channel.guild, msgIds);
+                    }).catch(err=>logger.log(`error`,`${err}`))
+
                     Picker.add(mess, Player, i + 1);
 
                 })

@@ -3,7 +3,7 @@ const GC = require(`./guildConfig.js`);
 const logger = require(`../../logger`);
 const Embeder = require(`./embeder.js`);
 const chalk = require('chalk');
-const sheet = require(`./sheet`);
+const DB = require(`./db`);
 
 module.exports = {
     add: addPicker
@@ -25,26 +25,30 @@ function addPicker(msg, player, playerSlot) {
             try {
                 if (msg.deleted)
                     return;
-                reaction.users.remove(user).catch(()=>{});
+                reaction.users.remove(user).catch(() => { });
 
-                if (!msg.mentions.users.has(user.id)){
+                if (!msg.mentions.users.has(user.id)) {
                     return;
                 }
-                let state = GC.getGameState(msg.guild);
+                GC.getGameState(msg.guild).then(state => {
 
-                let actualPicks = msg.content.split(`\n`)[1];
-                let expectedPicks = state.Players.find(P => P.id == player.id).civs.map(civ => civ.Name).join(`/`);
-                if (actualPicks != expectedPicks){
-                    return;
-                }
-                let pick = player.civs[[`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`].indexOf(reaction.emoji.name)];
-                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] pick ${pick.Name}`);
-                state.Players[playerSlot - 1].pick = pick;
+                    let actualPicks = msg.content.split(`\n`)[1];
+                    let expectedPicks = state.Players.find(P => P.id == player.id).civs.map(civ => civ.Name).join(`/`);
+                    if (actualPicks != expectedPicks) {
+                        return;
+                    }
+                    let pick = player.civs[[`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`].indexOf(reaction.emoji.name)];
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] pick ${pick.Name}`);
+                    state.Players[playerSlot - 1].pick = pick;
 
-                let embed = Embeder.get(state, msg.channel);
-                embed.fields.find(field => field.name == "Pick").value = state.Players.map(user => user.pick.Name).join('\n') + '\u200B';
-                Embeder.set(state, msg.channel, embed);
-                GC.setGameState(msg.guild, state);
+                    DB.updateGame(state);
+
+                    let embed = Embeder.get(state, msg.channel);
+                    embed.fields.find(field => field.name == "Pick").value = state.Players.map(user => user.pick.Name).join('\n') + '\u200B';
+                    Embeder.set(state, msg.channel, embed);
+                    GC.setGameState(msg.guild, state);
+
+                }).catch(error => logger.log(`error`, `${error}`))
 
             } catch (error) {
 
@@ -59,10 +63,12 @@ function addPicker(msg, player, playerSlot) {
                     msg.reactions.removeAll();
                     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] cleared reactions of pick collector ${playerSlot}`);
 
-                    let state = GC.getGameState(msg.guild)
-                    state.flushed = true;
-                    GC.setGameState(msg.guild, state);
-                    sheet.updateGame(state);
+                    GC.getGameState(msg.guild).then(state => {
+                        state.flushed = true;
+                        GC.setGameState(msg.guild, state);
+                        setTimeout(() => DB.updateGameFinal(msg.guild), 2500)
+
+                    }).catch(error => logger.log(`error`, `${error}`))
                 }
 
             } catch (error) {

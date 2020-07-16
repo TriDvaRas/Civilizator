@@ -9,4 +9,6 @@ gameState
 logs
 nodemon.json
 assets/sheet_secret.json
+assets/mongo_secret.json
 stats.json
+commands/debug.js
