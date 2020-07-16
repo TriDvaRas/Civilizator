@@ -2,7 +2,7 @@
 const logger = require("../../logger");
 const dbCreds = require(`../mongo_secret.json`);
 const chalk = require(`chalk`)
-
+const sheet= require(`./sheet`)
 const MongoClient = require("mongodb").MongoClient;
 const mongoClient = new MongoClient(dbCreds.login,
     {
@@ -62,33 +62,33 @@ function updateGame(state) {
             coll.findOne(
                 { id: state.gameId },
                 function (err, doc) {
-                    let x = {};
-                    x.flushed = state.flushed;
-                    x.lastPhase = state.Phase;
-                    x.rerolls = state.rerolls;
-                    x.CPP = state.playerSize;
-                    x.BPP = state.banSize;
+                    let newState = {};
+                    newState.flushed = state.flushed;
+                    newState.lastPhase = state.Phase;
+                    newState.rerolls = state.rerolls;
+                    newState.CPP = state.playerSize;
+                    newState.BPP = state.banSize;
                     if (state.disabledDLC.length > 0)
-                        x.disabledDLCs = state.disabledDLC.join(`\n`);
+                        newState.disabledDLCs = state.disabledDLC.join(`\n`);
                     else
-                        x.disabledDLCs = `-`;
-                    x.playerCount = state.Players.length;
+                        newState.disabledDLCs = `-`;
+                    newState.playerCount = state.Players.length;
                     for (let i = 0; i < state.Players.length; i++) {
                         const player = state.Players[i];
-                        x[`p${i + 1}`] = {
+                        newState[`p${i + 1}`] = {
                             name: player.tag.split(`#`)[0],
                             bans: player.bans.map(x => x.Name).join(`\n`),
                             civs: player.civs.map(x => x.Name).join(`\n`),
                             pick: player.pick == `-` ? `-` : player.pick.Name,
                         }
                     }
-                    for (const key in x) {
-                        if (x.hasOwnProperty(key)) {
-                            if (x[key] === doc[key])
-                                delete x[key];
+                    for (const key in newState) {
+                        if (newState.hasOwnProperty(key)) {
+                            if (newState[key] === doc[key])
+                                delete newState[key];
                         }
                     }
-                    coll.updateOne({ id: state.gameId }, { $set: x })
+                    coll.updateOne({ id: state.gameId }, { $set: newState })
                     resolve()
                     logger.log(`db`, `updated game info`);
                 }
@@ -195,12 +195,16 @@ function connectToDb() {
             }
             dbClient = client;
             client
-            .on(`close`,()=>{
-                logger.log(`db`, `${chalk.red(close)}`);
+            .on(`close`,err=>{
+                logger.log(`db`, `${chalk.red(`db close`)}`);
+                logger.log(`warn`, err);
+                logger.log(`warn`, `${err}`);
                 
             })
-            .on(`timeout`,()=>{
-                logger.log(`db`, `${chalk.red(close)}`);
+            .on(`timeout`,err=>{
+                logger.log(`warn`, `${chalk.red(`db timedout`)}`);
+                logger.log(`warn`, err);
+                logger.log(`warn`, `${err}`);
                 
             })
             resolve();

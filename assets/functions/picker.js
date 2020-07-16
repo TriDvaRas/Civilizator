@@ -66,7 +66,7 @@ function addPicker(msg, player, playerSlot) {
                     GC.getGameState(msg.guild).then(state => {
                         state.flushed = true;
                         GC.setGameState(msg.guild, state);
-                        setTimeout(DB.updateGameFinal(msg.guild), 2500)
+                        setTimeout(() => DB.updateGameFinal(msg.guild), 2500)
 
                     }).catch(error => logger.log(`error`, `${error}`))
                 }

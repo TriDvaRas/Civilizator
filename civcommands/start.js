@@ -31,7 +31,6 @@ module.exports = {
                         else
                             return state;
                     }).then(function (state) {
-                        console.log(state);
                         message.channel.send(new Discord.MessageEmbed()
                             .setColor('#46a832')
                             .setTitle("**Civilization V Game**")
