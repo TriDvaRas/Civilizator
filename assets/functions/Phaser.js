@@ -1,6 +1,6 @@
 
 const Embeder = require(`./embeder.js`);
-const sheet = require(`./sheet`);
+const DB = require(`./db`);
 const GC = require(`./guildConfig`);
 const Picker = require(`./picker`);
 var IO = require('./IO.js');
@@ -11,7 +11,7 @@ module.exports = {
     StartJoins: function StartJoins(state, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n `dlc` to manage DLCs (Operator)\n\u200B";
         state.Phase = "join";
-        sheet.updateGame(state);
+        DB.updateGame(state);
     },
     StartBans: function StartBans(state, gameEmbed) {
         gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Bans**\n Click  ➡️  to skip 1 ban  \n Click  ⏩  to end phase (Operator) \n `ban [civId/civName]` to ban civilization\n\u200B";
@@ -25,7 +25,7 @@ module.exports = {
         gameEmbed.setColor('#de3b09');
         state.Phase = "bans";
         state.bansFull = state.Players.length * state.banSize;
-        sheet.updateGame(state);
+        DB.updateGame(state);
     },
     StartPicks: function StartPicks(state, gameEmbed, channel) {
         try {
@@ -77,7 +77,7 @@ module.exports = {
             });
             state.picked = [];
             GeneratePicks(state, channel);
-            sheet.updateGame(state);
+            DB.updateGame(state);
         } catch (error) {
             logger.log(`error`, `[${chalk.magentaBright(channel.guild.name)}] Error on starting game ${error.stack}`);
 

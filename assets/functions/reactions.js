@@ -5,7 +5,7 @@ const Perm = require('./Permissions.js');
 const Phaser = require('./Phaser.js');
 const logger = require(`../../logger`);
 const chalk = require('chalk');
-const sheet = require(`./sheet`);
+const DB = require(`./db`);
 const IO = require('./IO.js');
 
 module.exports = {
@@ -35,49 +35,53 @@ function addJoiner(msg) {
         }
         if (reaction.emoji.name === '⏩') {
             //check perm
-            if (!Perm.checkRoles(msg.guild.members.cache.get(user.id), state.Op, { admin: true, op: true }))
-                return;
-            //check size
-            let size = state.Players.length * (state.banSize + state.playerSize)
-            let maxSize = state.Civs.length;
-            if (size > maxSize) {
-                msg.channel.send(`Not enough civs for all players
+            Perm.checkRoles(msg.guild.members.cache.get(user.id), state.Op, { admin: true, op: true })
+                .then(() => {
+
+                    //check size
+                    let size = state.Players.length * (state.banSize + state.playerSize)
+                    let maxSize = state.Civs.length;
+                    if (size > maxSize) {
+                        msg.channel.send(`Not enough civs for all players
 Civs in pool: \`${maxSize}\`
 Civs needed to start: \`${size}\`(players count*(CPP+BPP))
 Try lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command 
 or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500 }));
-            }
-            //go to next phase
-            collector.stop("force end");
-            let embed = Embeder.get(state, msg.channel);
+                    }
+                    //go to next phase
+                    collector.stop("force end");
+                    let embed = Embeder.get(state, msg.channel);
 
-            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] joins ended`);
-            if (state.banSize > 0) {
-                try {
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting bans`);
-                    Phaser.StartBans(state, embed);
-                    addBanner(msg);
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started bans`);
-                } catch (error) {
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting bans ${error}`);
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] joins ended`);
+                    if (state.banSize > 0) {
+                        try {
+                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting bans`);
+                            Phaser.StartBans(state, embed);
+                            addBanner(msg);
+                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started bans`);
+                        } catch (error) {
+                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting bans ${error}`);
 
-                }
-            }
-            else {
-                try {
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] skiping bans`);
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
-                    Phaser.StartPicks(state, embed, msg.channel);
-                    addReroller(msg);
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
-                } catch (error) {
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
+                        }
+                    }
+                    else {
+                        try {
+                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] skiping bans`);
+                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
+                            Phaser.StartPicks(state, embed, msg.channel);
+                            addReroller(msg);
+                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
+                        } catch (error) {
+                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
 
-                }
-            }
+                        }
+                    }
 
-            GC.setGameState(msg.guild, state);
-            msg.edit(embed);
+                    GC.setGameState(msg.guild, state);
+                    msg.edit(embed);
+                })
+                .catch(() => {})
+
         }
         else {
             if (reaction.emoji.name === '✅') {
@@ -116,7 +120,7 @@ or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500
             let state = GC.getGameState(msg.guild)
             state.flushed = true;
             GC.setGameState(msg.guild, state);
-            sheet.updateGame(state);
+            DB.updateGame(state);
         }
     });
 }
@@ -179,23 +183,24 @@ function addBanner(msg) {
 
         }
         else if (reaction.emoji.name === '⏩') {
-            if (!Perm.checkRoles(msg.guild.members.cache.array().find(M => M.user = user), state.Op, { admin: true, op: true }))
-                return;
-
-            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans ended`);
-            let embed = Embeder.get(state, msg.channel);
-            collector.stop("force end");
-            try {
-                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
-                Phaser.StartPicks(state, embed, msg.channel);
-                addReroller(msg);
-                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
-            } catch (error) {
-                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
-            }
-
-            GC.setGameState(msg.guild, state);
-            msg.edit(embed);
+            Perm.checkRoles(msg.guild.members.cache.array().find(M => M.user = user), state.Op, { admin: true, op: true })
+            .then(()=>{
+                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans ended`);
+                let embed = Embeder.get(state, msg.channel);
+                collector.stop("force end");
+                try {
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
+                    Phaser.StartPicks(state, embed, msg.channel);
+                    addReroller(msg);
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
+                } catch (error) {
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
+                }
+    
+                GC.setGameState(msg.guild, state);
+                msg.edit(embed);
+            })
+            .catch(() => {})
         }
     });
     collector.on('end', (collected, reason) => {
@@ -205,7 +210,7 @@ function addBanner(msg) {
             let state = GC.getGameState(msg.guild)
             state.flushed = true;
             GC.setGameState(msg.guild, state);
-            sheet.updateGame(state);
+            DB.updateGame(state);
         }
     });
 }
@@ -269,7 +274,7 @@ function addReroller(msg) {
                 state.flushed = true;
                 GC.setGameState(msg.guild, state);
             }
-            sheet.updateGame(state);
+            DB.updateGame(state);
         } catch (error) {
             logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] Error on ending re ${error.stack}`);
         }

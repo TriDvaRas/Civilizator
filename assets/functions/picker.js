@@ -3,7 +3,7 @@ const GC = require(`./guildConfig.js`);
 const logger = require(`../../logger`);
 const Embeder = require(`./embeder.js`);
 const chalk = require('chalk');
-const sheet = require(`./sheet`);
+const DB = require(`./db`);
 
 module.exports = {
     add: addPicker
@@ -62,7 +62,7 @@ function addPicker(msg, player, playerSlot) {
                     let state = GC.getGameState(msg.guild)
                     state.flushed = true;
                     GC.setGameState(msg.guild, state);
-                    sheet.updateGame(state);
+                    DB.updateGame(state);
                 }
 
             } catch (error) {

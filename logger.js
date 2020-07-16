@@ -61,8 +61,9 @@ let logger = new winston.createLogger({
         error: 0,
         warn: 1,
         info: 2,
+        db: 4,
+        cmd: 5,
         sheet: 7,
-        cmd: 6,
         http: 8,
         verbose: 9,
         debug: 10,
@@ -93,6 +94,8 @@ function color(text) {
             return chalk.bold.rgb(255, 87, 20)(text);
         case `SHEET`:
             return chalk.bold.greenBright(text);
+        case `DB`:
+            return chalk.bold.cyanBright(text);
         default:
             return chalk.green(text);
     }
@@ -101,10 +104,10 @@ function color(text) {
 
 function formatLog(log) {
     let msg = `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`
-    if ([`error`,`warn`].includes(log.level)){
-        let guild = globalThis.client.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
-        if(guild)
-            guild.channels.cache.find(channel => channel.name==`error-log`).send(msg);
+    if ([`error`, `warn`].includes(log.level)&&globalThis.discordClient) {
+        let guild = globalThis.discordClient.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
+        if (guild)
+            guild.channels.cache.find(channel => channel.name == `error-log`).send(msg);
     }
     return msg;
 

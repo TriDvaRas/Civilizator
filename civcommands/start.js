@@ -6,7 +6,7 @@ const Reacter = require(`../assets/functions/reactions.js`);
 const Embeder = require("../assets/functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
-const sheet = require(`../assets/functions/sheet`);
+const DB = require(`../assets/functions/db`);
 const Discord = require(`discord.js`)
 
 module.exports = {
@@ -16,69 +16,78 @@ module.exports = {
     execute: function (message, args) {
         if (args.length > 0) {
             //read state
-            var state = GC.getGameState(message.guild);
+            GC.getGameState(message.guild).then(state => {
 
-            //check civ role
-            if (!Perm.checkRoles(message.member, state.Op, { civ: true })) {
-                message.reply("CivRole only");
-                return;
-            }
-            //check if game is started
-            if (state.started == true) {
-                if (!CheckLastGame(message, state))
-                    return;
-                GC.resetGameState(message.guild);
-                //reread State
-                state = GC.getGameState(message.guild);
-            }
-            message.channel.send(new Discord.MessageEmbed()
-                .setColor('#46a832')
-                .setTitle("**Civilization V Game**")
-                .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
-                .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
-                .addFields(
-                    { name: 'Creating game...', value: '\u200B', inline: true }
-                )
-                .setTimestamp()
-                .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-            ).then(mess => {
-                sheet.newGame(state, message.author.username, message.guild.name).then(id => {
-                    state.gameId = id;
-                    state.startTime = Date.now();
-                    //create embed
-                    gameEmbed = Embeder.create();
-                    //start game
-                    if (StartGame(message, args, state, gameEmbed))
+                //check civ role
+                Perm.checkRoles(message.member, state.Op, { civ: true }).then(() => {
+                    CheckLastGame(message, state).then(function () {
+                        //check if game is started
+                        if (state.started == true) {
+
+                            return GC.resetGameState(message.guild).then(function (state) {
+                                return state;
+                            }).catch(err => logger.log(`error`, err));
+                        }
+                        else
+                            return state;
+                    }).then(function (state) {
+                        console.log(state);
+                        message.channel.send(new Discord.MessageEmbed()
+                            .setColor('#46a832')
+                            .setTitle("**Civilization V Game**")
+                            .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
+                            .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
+                            .addFields(
+                                { name: 'Creating game...', value: '\u200B', inline: true }
+                            )
+                            .setTimestamp()
+                            .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
+                        ).then(mess => {
+                            DB.newGame(state, message.author.username, message.guild.name).then(id => {
+                                state.gameId = id;
+                                state.guildId = message.guild.id;
+                                state.startTime = Date.now();
+                                //create embed
+                                gameEmbed = Embeder.create();
+                                //start game
+                                if (StartGame(message, args, state, gameEmbed))
+                                    return;
+
+                                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
+                                mess.edit(gameEmbed).then(msg => {
+                                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
+                                    state.embedId = msg.id;
+                                    GC.setGameState(message.guild, state);
+                                    Reacter.addJoiner(msg);
+                                });
+                            }).catch(error => {
+                                logger.log(`warn`, `[${chalk.magentaBright(message.guild.name)}] Civilizator machine broke...\n${error}`)
+                                mess.edit(new Discord.MessageEmbed()
+                                    .setColor('#46a832')
+                                    .setTitle("**Civilization V Game**")
+                                    .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
+                                    .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
+                                    .addFields(
+                                        { name: `Civilizator machine broke...\nTry starting a new game\nIf this doesn't help please submit a bug report in bot's Discord server https://discord.gg/nFMFs2e or to Bot's DM`, value: '\u200B', inline: true }
+                                    )
+                                    .setTimestamp()
+                                    .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
+                                )
+                            })
+                        })
                         return;
+                    }).catch(err => logger.log(`error`, err))
+                }).catch(() => {
+                    message.reply("CivRole only");
+                    return;
 
-                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
-                    mess.edit(gameEmbed).then(msg => {
-                        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
-                        state.embedId = msg.id;
-                        GC.setGameState(message.guild, state);
-                        Reacter.addJoiner(msg);
-                    });
-                }).catch(error=>{
-                    logger.log(`warn`,`[${chalk.magentaBright(message.guild.name)}] Civilizator machine broke...\n${error}`)
-                    mess.edit(new Discord.MessageEmbed()
-                    .setColor('#46a832')
-                    .setTitle("**Civilization V Game**")
-                    .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
-                    .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
-                    .addFields(
-                        { name: `Civilizator machine broke...\nTry starting a new game\nIf this doesn't help submit a bug report [here](https://discord.gg/nFMFs2e) or to Bot's DM`, value: '\u200B', inline: true }
-                    )
-                    .setTimestamp()
-                    .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-                    )
                 })
-            })
+            });
 
-
-            return;
         }
-        //send help on 0 args
-        message.channel.send(`${this.description}\nUsage:\n${this.usage}`);
+        else
+            //send help on 0 args
+            message.channel.send(`${this.description}\nUsage:\n${this.usage}`);
     },
 };
 function StartGame(message, args, state, gameEmbed) {
@@ -118,29 +127,32 @@ function StartGame(message, args, state, gameEmbed) {
 }
 
 function CheckLastGame(message, state) {
-    if (Perm.checkRoles(message.member)) 
-        return true;
-        
-    let ms = Date.now() - state.startTime;
-    let m = Math.floor(ms / 60000);
-    if (m < 3) {
-        message.channel.send(`Wait at least 10 minutes (3 for admin/op) before starting a new game`)
-        if (Perm.checkRoles(message.member, state.Op, { admin: true, op: true })) {
-            return false;
-        }
-        else {
-            return false;
-        }
-    } else if (m < 10) {
-        if (Perm.checkRoles(message.member, state.Op, { admin: true, op: true })) {
-            return true;
-        }
-        else {
-            message.channel.send(`Wait at least 10 minutes before starting a new game`)
-            return false;
-        }
-    } else {
-        return true;
-    }
+    return new Promise((resolve, reject) => {
+        Perm.checkRoles(message.member)
+            .then(
+                () => {
+                    resolve();
+                },
+                () => {
+                    let ms = Date.now() - state.startTime;
+                    let m = ms / 60000;
 
+                    if (m < 3) {
+                        message.channel.send(`Wait at least 10 minutes (3 for admin/op) before starting a new game`)
+                        reject();
+                    } else if (m < 10) {
+                        Perm.checkRoles(message.member, state.Op, { admin: true, op: true })
+                            .then(
+                                () => {
+                                    resolve();
+                                },
+                                () => {
+                                    message.channel.send(`Wait at least 10 minutes before starting a new game`)
+                                    reject();
+                                })
+                    } else {
+                        resolve();
+                    }
+                })
+    });
 }

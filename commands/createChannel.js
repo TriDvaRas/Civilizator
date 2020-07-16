@@ -6,15 +6,21 @@ module.exports = {
     description: 'Create Civilizator channel (Admin)',
     usage: `\`createChannel\``,
     execute: async function (message, args) {
-        if (!Perm.checkRoles(message.member, null, { admin: true })) {
+        Perm.checkRoles(message.member, null, { admin: true })
+        .then(()=>{
+            
+            createBaseChannel(message.guild, undefined, message)
+                .then(channel => {
+                    message.channel.send(`Successfuly created ${channel}`)
+                }).catch(err => {
+                    message.channel.send(err)
+                });
+
+        })
+        .catch(()=>{
             message.reply("Server admin command");
             return;
-        }
-        createBaseChannel(message.guild, undefined, message)
-            .then(channel => {
-                message.channel.send(`Successfuly created ${channel}`)
-            }).catch(err => {
-                message.channel.send(err)
-            });
+            
+        })
     },
 };

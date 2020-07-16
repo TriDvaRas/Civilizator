@@ -3,14 +3,14 @@
 //Setup
 const fs = require('fs');
 const IO = require('./assets/functions/IO');
-const sheet = require('./assets/functions/sheet');
+const DB = require('./assets/functions/db');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
 const GC = require("./assets/functions/guildConfig.js");
 let pressences = JSON.parse(fs.readFileSync("pressence.json", "utf8"))
 
 
-globalThis.client = new Discord.Client({
+globalThis.discordClient = new Discord.Client({
 	presence: {
 		activity: {
 			name: "Star Beat!",
@@ -21,12 +21,14 @@ globalThis.client = new Discord.Client({
 //Set logger
 const logger = require("./logger");
 const chalk = require('chalk');
+const db = require('./assets/functions/db');
 
-client.on('ready', () => {
+discordClient.on('ready', () => {
 	logger.log('info', 'Logged in');
 	updateGameCount();
-	client.setInterval(setPressence, 15532 * 1.68);
-	client.setInterval(updateGameCount, 630250);
+	discordClient.setInterval(setPressence, 15532 * 1.68);
+	discordClient.setInterval(updateStats, 98 * 1008);
+	discordClient.setInterval(updateGameCount, 630250);
 })
 	.on('warn', error => logger.log('warn', `[*]\n${error.stack}`))
 	.on('error', error => {
@@ -45,74 +47,77 @@ process
 	})
 
 //read CommandList
-client.commands = new Discord.Collection();
+discordClient.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+	discordClient.commands.set(command.name, command);
 }
 //read civCommands
-client.civcommands = new Discord.Collection();
+discordClient.civcommands = new Discord.Collection();
 const civCommandFiles = fs.readdirSync('./civcommands').filter(file => file.endsWith('.js'));
 for (const file of civCommandFiles) {
 	const command = require(`./civcommands/${file}`);
-	client.civcommands.set(command.name, command);
+	discordClient.civcommands.set(command.name, command);
 }
 
 
 logger.log(`info`, `Logging in...`)
-client.login(token);///////////////////////////////////////
+discordClient.login(token);///////////////////////////////////////
 
 //guild join/leave event
-GC.initGuildEvents(client);
+GC.initGuildEvents(discordClient);
 
-client.on('message', message => {
+discordClient.on('message', message => {
 	if (message.author.bot)
 		return;
 	if (message.guild == null) {
-		client.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`**FEED**
+		discordClient.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`**FEED**
 From: ${message.author}
 Text: ${message.toString()}
 Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`))
 		message.channel.send(`Your message was successfully submited 👍`)
 		return;
 	}
-	let args, command;
-	const prefix = GC.getConfig(message.guild).prefix;
-	if (message.content.startsWith(prefix)) {
-		args = message.content.slice(prefix.length).split(/ +/);
-		command = args.shift().toLowerCase();
-	}
-	else if (message.content.startsWith(`<@!${client.user.id}>`)) {
-		args = message.content.split(/ +/);
-		args.shift();
-		command = args.shift().toLowerCase();
-	}
-	else
-		return;
-	//exit if command doesn't exist
-	if (client.commands.has(command))
-		//execute command		
-		try {
-			logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
-			if (args[0] == "help") {
-				message.channel.send(`${client.commands.get(command).description}\nUsage:\n${client.commands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
-			} else
-				client.commands.get(command).execute(message, args);
-		} catch (error) {
-			logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
-		}
-	else if (client.civcommands.has(command) && GC.getConfig(message.guild).channelId == message.channel.id)
-		try {
-			logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
-			if (args[0] == "help") {
-				message.channel.send(`${client.civcommands.get(command).description}\nUsage:\n${client.civcommands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
-			} else
-				client.civcommands.get(command).execute(message, args);
-		} catch (error) {
-			logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
-		}
-
+	GC.getConfig(message.guild)
+		.then(cfg => {
+			let args, command;
+			const prefix = cfg.prefix;
+			if (message.content.startsWith(prefix)) {
+				args = message.content.slice(prefix.length).split(/ +/);
+				command = args.shift().toLowerCase();
+			}
+			else if (message.content.startsWith(`<@!${discordClient.user.id}>`)) {
+				args = message.content.split(/ +/);
+				args.shift();
+				command = args.shift().toLowerCase();
+			}
+			else
+				return;
+			//exit if command doesn't exist
+			if (discordClient.commands.has(command))
+				//execute command		
+				try {
+					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
+					if (args[0] == "help") {
+						message.channel.send(`${discordClient.commands.get(command).description}\nUsage:\n${discordClient.commands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+					} else
+						discordClient.commands.get(command).execute(message, args);
+				} catch (error) {
+					logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
+				}
+			else if (discordClient.civcommands.has(command) && cfg.channelId == message.channel.id)
+				try {
+					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
+					if (args[0] == "help") {
+						message.channel.send(`${discordClient.civcommands.get(command).description}\nUsage:\n${discordClient.civcommands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+					} else
+						discordClient.civcommands.get(command).execute(message, args);
+				} catch (error) {
+					logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
+				}
+		})
+		.catch(err => logger.log(`error`, `${err}`));
 });
 
 
@@ -121,15 +126,15 @@ function setPressence() {
 	pressences.push(act);
 	let name = act.name;
 	if (name.includes(`{guildCount}`))
-		name = name.replace(`{guildCount}`, `${client.guilds.cache.array().length}`);
+		name = name.replace(`{guildCount}`, `${discordClient.guilds.cache.array().length}`);
 	else if (name.includes(`{gamesCount}`))
 		name = name.replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`)
 	else if (name.includes(`{uptime}`))
 		name = name.replace(`{uptime}`, `${getUptime()}`)
 	else if (name.includes(`{civilizedCount}`))
-		name = name.replace(`{civilizedCount}`, `${getCivilizedCount()}`);
+		name = name.replace(`{civilizedCount}`, `${IO.Read(`./stats.json`).userCount}}`);
 
-	client.user.setPresence({
+	discordClient.user.setPresence({
 		activity: {
 			name: name,
 			type: act.type
@@ -138,7 +143,7 @@ function setPressence() {
 }
 function updateGameCount() {
 
-	sheet.getGameCount().then(count => {
+	DB.getGameId(false).then(count => {
 		let stats = IO.Read(`./stats.json`);
 		stats.gameCount = +count;
 		IO.Write(`./stats.json`, stats);
@@ -146,7 +151,7 @@ function updateGameCount() {
 }
 
 function getUptime() {
-	let ms = client.uptime;
+	let ms = discordClient.uptime;
 	let s = Math.floor(ms / 1000) % 60;
 	let m = Math.floor(ms / 60000) % 60;
 	let h = Math.floor(ms / 3600000);
@@ -154,14 +159,34 @@ function getUptime() {
 }
 
 function getCivilizedCount() {
-	let sum = 0;
-	client.guilds.cache.each(guild => {
-		let roleId = GC.getConfig(guild).roleId;
-		guild.members.cache.each(member => {
-			if (member.roles.cache.has(roleId)) 
-				sum++;
-		});
+	return new Promise((resolve, reject) => {
+		let sum = 0;
+		discordClient.guilds.cache.each(guild => {
+			GC.getConfig(guild).then(cfg => {
+				let roleId = cfg.roleId;
+				guild.members.cache.each(member => {
+					if (member.roles.cache.has(roleId))
+						sum++;
+				});
+			})
+				.catch(err => logger.log(`error`, `${err}`))
 
-	});
-	return sum;
+
+		});
+		resolve(sum);
+	})
+
+}
+
+function updateStats() {
+	let stats = {}
+	getCivilizedCount().then(count => {
+		stats[`userCount`] = count;
+		db.getGameId(false).then(count => {
+
+			stats[`gameCount`] = count;
+
+		})
+
+	})
 }
