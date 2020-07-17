@@ -25,7 +25,7 @@ const db = require('./assets/functions/db');
 
 discordClient.on('ready', () => {
 	logger.log('info', 'Logged in');
-	updateGameCount();
+	updateStats();
 	discordClient.setInterval(setPressence, 15532 * 1.68);
 	discordClient.setInterval(updateStats, 98 * 1008);
 	discordClient.setInterval(updateGameCount, 630250);
@@ -138,9 +138,9 @@ function setPressence() {
 	else if (name.includes(`{civilizedCount}`))
 		name = name.replace(`{civilizedCount}`, `${stats.userCount}`);
 
-	if (pressences.length == 0 || pressences.length == pressI){
+	if (pressences.length == 0 || pressences.length == pressI) {
 		pressences = IO.Read(`./pressence.json`);
-		pressI=0;
+		pressI = 0;
 	}
 	pressI++;
 	discordClient.user.setPresence({
@@ -148,14 +148,6 @@ function setPressence() {
 			name: name,
 			type: act.type
 		}
-	})
-}
-function updateGameCount() {
-
-	DB.getGameId(false).then(count => {
-		let stats = IO.Read(`./stats.json`);
-		stats.gameCount = +count;
-		IO.Write(`./stats.json`, stats);
 	})
 }
 
@@ -169,20 +161,28 @@ function getUptime() {
 
 function getCivilizedCount() {
 	return new Promise((resolve, reject) => {
-		let sum = 0;
+		let Qs = [];
 		discordClient.guilds.cache.each(guild => {
-			GC.getConfig(guild).then(cfg => {
-				let roleId = cfg.roleId;
-				guild.members.cache.each(member => {
-					if (member.roles.cache.has(roleId))
-						sum++;
-				});
-			})
-				.catch(err => logger.log(`error`, `${err}`))
+			Qs.push(new Promise((resolve, reject) => {
+				GC.getConfig(guild).then(cfg => {
+					let roleId = cfg.roleId;
+					let sum = 0;
+					guild.members.cache.each(member => {
+						if (member.roles.cache.has(roleId))
+							sum++;
+					});
+					resolve(sum)
+				}).catch(err => logger.log(`error`, `${err}`))
+			}))
+
 
 
 		});
-		resolve(sum);
+		Promise.all(Qs).then(values => {
+			let sum = 0;
+			values.forEach(v => sum += v);
+			resolve(sum);
+		});
 	})
 
 }
