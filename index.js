@@ -28,7 +28,6 @@ discordClient.on('ready', () => {
 	updateStats();
 	discordClient.setInterval(setPressence, 15532 * 1.68);
 	discordClient.setInterval(updateStats, 98 * 1008);
-	discordClient.setInterval(updateGameCount, 630250);
 })
 	.on('warn', error => logger.log('warn', `[*]\n${error.stack}`))
 	.on('error', error => {

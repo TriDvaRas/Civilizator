@@ -30,7 +30,7 @@ function initGuildEvents() {
     globalThis.discordClient.on('guildCreate', guild => {
         let logguild = discordClient.guilds.cache.array().find(g => g.id == `727081958823165963`);
         if (logguild)
-            logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Joined guild [${guild.id}] [${guild.name}]`);
+            logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Joined guild [${guild.id}] [${guild.name}]\n guildCount: ${discordClient.guilds.cache.array().length}`);
         logger.log(`info`, `[${chalk.magentaBright(guild.name)}] joined guild `);
 
         createConfig(guild)

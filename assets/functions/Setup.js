@@ -32,7 +32,7 @@ function createBaseChannel(guild, role, message) {
                 channel.send(welcome).then(msg => {
                     msg.pin();
                 });
-                channel.send(`Bound bot role to \`${role.name}\` ✅`);
+                channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`);
             }
             channel.send(`Bound bot channel to ${channel} ✅`);
             config.channelId = channel.id;
@@ -42,19 +42,18 @@ function createBaseChannel(guild, role, message) {
     });
 }
 
-function createBaseRole(guild) {
+function createBaseRole(guild, ignoreOld) {
     return new Promise(function (resolve, reject) {
         let config = IO.Read(`guilds/${guild.id}/config.json`);
         let oldRole = guild.roles.cache.find(role => role.id === config.roleId);
-        if (oldRole) {
-            reject(`Role already exists (\`${oldRole.name}\`)`);
-            return;
+        if (oldRole && !ignoreOld) {
+            return reject(`Role already exists (\`${oldRole.name}\`)`);
         }
         guild.roles.create({
             data: {
                 name: "Civilized",
                 mentionable: true,
-                color: [64, 255, 159]
+                color: [64, 255, Math.floor(90 + Math.random() * 40)]
             }
         }).then(role => {
             config.roleId = role.id;
@@ -65,7 +64,7 @@ function createBaseRole(guild) {
 }
 function createBase(guild) {
     return new Promise((resolve, reject) => {
-        createBaseRole(guild).then(role => {
+        createBaseRole(guild, true).then(role => {
             createBaseChannel(guild, role).then(channel => {
                 guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
                 resolve()
