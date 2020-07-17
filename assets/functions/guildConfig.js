@@ -6,52 +6,62 @@ const DB = require(`./db`);
 
 
 function createConfig(guild) {
-    let config = {
-        prefix: "``",
-        roleId: "",
-        channelId: "",
-        allowGetRole: true
-    }
-    IO.createDir(`guilds/${guild.id}`);
-    IO.Write(`guilds/${guild.id}/config.json`, config);
-    IO.Write(`guilds/${guild.id}/gameState.json`, IO.Read(`assets/BaseState.json`));
-    IO.Write(`guilds/${guild.id}/pickMsgs.json`, []);
+    return new Promise((resolve, reject) => {
+        let config = {
+            guildId: guild.id,
+            guildName: guild.name,
+            prefix: "!",
+            roleId: "",
+            channelId: "",
+            allowGetRole: true
+        }
+        Promise.all([
+            DB.addDoc(`guilds`, config),
+            DB.addDoc(`states`, IO.Read(`assets/BaseState.json`))
+        ])
+            .then(() => resolve())
+            .catch(err => reject(err))
+    })
+
 
 }
 
 function initGuildEvents() {
     globalThis.discordClient.on('guildCreate', guild => {
-        try {
-            let logguild = discordClient.guilds.cache.array().find(g => g.id == `727081958823165963`);
-            if (logguild)
-                logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Joined guild [${guild.id}] [${guild.name}]`);
-            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] joined guild `);
-            createConfig(guild);
-            createBase(guild);
-            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created config `);
-        } catch (error) {
-            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating config \n${error}`);
-        }
+        let logguild = discordClient.guilds.cache.array().find(g => g.id == `727081958823165963`);
+        if (logguild)
+            logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Joined guild [${guild.id}] [${guild.name}]`);
+        logger.log(`info`, `[${chalk.magentaBright(guild.name)}] joined guild `);
+
+        createConfig(guild)
+            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created config `))
+            .catch(error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating config \n${error}`))
+        createBase(guild)
+            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created base `))
+            .catch(error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating base \n${error}`))
+
 
 
     })
     globalThis.discordClient.on('guildDelete', guild => {
-        try {
-            let logguild = discordClient.guilds.cache.array().find(g => g.id == `727081958823165963`);
-            if (logguild)
-                logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Left guild [${guild.id}] [${guild.name}] \n guildCount: ${discordClient.guilds.cache.array().length}`);
-            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] left guild `);
-            deleteConfig(guild);
-            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] deleted config`);
-        } catch (error) {
-            logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed deleting config \n${error}`);
-        }
+
+        let logguild = discordClient.guilds.cache.array().find(g => g.id == `727081958823165963`);
+        if (logguild)
+            logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Left guild [${guild.id}] [${guild.name}] \n guildCount: ${discordClient.guilds.cache.array().length}`);
+        logger.log(`info`, `[${chalk.magentaBright(guild.name)}] left guild `);
+        deleteConfig(guild)
+            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] deleted config`))
+            .catch(error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed deleting config \n${error}`))
+
     })
 }
 
 function deleteConfig(guild) {
-    IO.removeDir(`guilds/${guild.id}`);
-
+    return new Promise((resolve, reject) => {
+        DB.removeDoc(`guilds`, { guildId: guild.id })
+            .then(() => resolve())
+            .catch(err => reject(err))
+    });
 }
 
 
@@ -162,7 +172,7 @@ function setPickMsgs(guild, msgs) {
                 if (err)
                     return reject(err)
                 resolve()
-                coll.updateOne({ guildId: guild.id }, { $set: {pickMsgs:msgs} })
+                coll.updateOne({ guildId: guild.id }, { $set: { pickMsgs: msgs } })
             })
 
         })

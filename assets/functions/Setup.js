@@ -1,5 +1,5 @@
 const IO = require('./IO.js');
-const welcome=require(`../welcome`);
+const welcome = require(`../welcome`);
 function createBaseChannel(guild, role, message) {
     return new Promise(function (resolve, reject) {
         let config = IO.Read(`guilds/${guild.id}/config.json`);
@@ -29,7 +29,7 @@ function createBaseChannel(guild, role, message) {
             ]
         }).then(channel => {
             if (!message) {
-                channel.send(welcome).then(msg=>{
+                channel.send(welcome).then(msg => {
                     msg.pin();
                 });
                 channel.send(`Bound bot role to \`${role.name}\` ✅`);
@@ -64,12 +64,14 @@ function createBaseRole(guild) {
     });
 }
 function createBase(guild) {
-    createBaseRole(guild).then(role => {
-        createBaseChannel(guild, role).then(channel => {
-            guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
-            //TODO something
-        })
-    });
+    return new Promise((resolve, reject) => {
+        createBaseRole(guild).then(role => {
+            createBaseChannel(guild, role).then(channel => {
+                guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
+                resolve()
+            }).catch(err => reject(err));
+        }).catch(err => reject(err));
+    })
 }
 
 module.exports = {

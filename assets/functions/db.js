@@ -2,7 +2,7 @@
 const logger = require("../../logger");
 const dbCreds = require(`../mongo_secret.json`);
 const chalk = require(`chalk`)
-const sheet= require(`./sheet`)
+const sheet = require(`./sheet`)
 const MongoClient = require("mongodb").MongoClient;
 const mongoClient = new MongoClient(dbCreds.login,
     {
@@ -173,6 +173,7 @@ function getCollection(collection) {
 
 
         } else {
+            logger.log(`warn`, `db reconnecting?`)
             connectToDb().then(() => {
                 getCollection(collection)
                     .then(coll => resolve(coll))
@@ -195,23 +196,46 @@ function connectToDb() {
             }
             dbClient = client;
             client
-            .on(`close`,err=>{
-                logger.log(`db`, `${chalk.red(`db close`)}`);
-                logger.log(`warn`, err);
-                logger.log(`warn`, `${err}`);
-                
-            })
-            .on(`timeout`,err=>{
-                logger.log(`warn`, `${chalk.red(`db timedout`)}`);
-                logger.log(`warn`, err);
-                logger.log(`warn`, `${err}`);
-                
-            })
+                .on(`close`, err => {
+                    logger.log(`db`, `${chalk.red(`db close`)}`);
+                    logger.log(`warn`, err);
+                    logger.log(`warn`, `${err}`);
+
+                })
+                .on(`timeout`, err => {
+                    logger.log(`warn`, `${chalk.red(`db timedout`)}`);
+                    logger.log(`warn`, err);
+                    logger.log(`warn`, `${err}`);
+
+                })
             resolve();
         });
     });
 }
-
+function addDoc(collection, doc) {
+    return new Promise((resolve, reject) => {
+        getCollection(collection).then(coll => {
+            coll.insertOne(doc, function (err, res) {
+                if (err)
+                    reject(new Error(`Failed inserting doc into ${collection} \n${err}`));
+                else
+                    resolve(logger.log(`db`, `Inserted doc into ${collection}`));
+            })
+        }).catch(err => reject(err));
+    })
+}
+function removeDoc(collection, query) {
+    return new Promise((resolve, reject) => {
+        getCollection(collection).then(coll => {
+            coll.deleteOne(query, function (err, res) {
+                if (err)
+                    reject(new Error(`Failed deleting doc from ${collection} \n${err}`));
+                else
+                    resolve(logger.log(`db`, `Deleted doc from ${collection}`));
+            })
+        }).catch(err => reject(err));
+    })
+}
 
 module.exports = {
     getGameId,
@@ -219,4 +243,6 @@ module.exports = {
     updateGame,
     updateGameFinal,
     getCollection,
+    addDoc,
+    removeDoc,
 }
