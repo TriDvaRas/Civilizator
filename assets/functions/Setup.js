@@ -1,10 +1,10 @@
 const IO = require('./IO.js');
 const welcome = require(`../welcome`);
-function createBaseChannel(guild, role, message) {
+function createBaseChannel(guild, role, options) {
     return new Promise(function (resolve, reject) {
         let config = IO.Read(`guilds/${guild.id}/config.json`);
         let oldCh = guild.channels.cache.find(channel => channel.id === config.channelId);
-        if (oldCh) {
+        if (oldCh && !options.ignoreOld) {
             reject(`Channel already exists (${oldCh})`);
             return;
         }
@@ -28,7 +28,7 @@ function createBaseChannel(guild, role, message) {
                 },
             ]
         }).then(channel => {
-            if (!message) {
+            if (!options.message) {
                 channel.send(welcome).then(msg => {
                     msg.pin();
                 });
@@ -65,7 +65,7 @@ function createBaseRole(guild, ignoreOld) {
 function createBase(guild) {
     return new Promise((resolve, reject) => {
         createBaseRole(guild, true).then(role => {
-            createBaseChannel(guild, role).then(channel => {
+            createBaseChannel(guild, role, { ignoreOld: true }).then(channel => {
                 guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
                 resolve()
             }).catch(err => reject(err));
