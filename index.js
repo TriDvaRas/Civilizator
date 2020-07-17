@@ -7,8 +7,8 @@ const DB = require('./assets/functions/db');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
 const GC = require("./assets/functions/guildConfig.js");
-let pressences = IO.Read(`./pressence.json`)
-
+let pressences = IO.Read(`./pressence.json`);
+let pressI = 1;
 
 globalThis.discordClient = new Discord.Client({
 	presence: {
@@ -122,18 +122,27 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 
 
 function setPressence() {
+
 	let act = pressences.shift();
 	pressences.push(act);
+
+	let stats = IO.Read(`./stats.json`);
+
 	let name = act.name;
 	if (name.includes(`{guildCount}`))
 		name = name.replace(`{guildCount}`, `${discordClient.guilds.cache.array().length}`);
 	else if (name.includes(`{gamesCount}`))
-		name = name.replace(`{gamesCount}`, `${IO.Read(`./stats.json`).gameCount}`)
+		name = name.replace(`{gamesCount}`, `${stats.gameCount}`)
 	else if (name.includes(`{uptime}`))
 		name = name.replace(`{uptime}`, `${getUptime()}`)
 	else if (name.includes(`{civilizedCount}`))
-		name = name.replace(`{civilizedCount}`, `${IO.Read(`./stats.json`).userCount}}`);
+		name = name.replace(`{civilizedCount}`, `${stats.userCount}`);
 
+	if (pressences.length == 0 || pressences.length == pressI){
+		pressences = IO.Read(`./pressence.json`);
+		pressI=0;
+	}
+	pressI++;
 	discordClient.user.setPresence({
 		activity: {
 			name: name,
