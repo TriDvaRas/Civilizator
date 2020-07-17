@@ -1,6 +1,6 @@
-const IO = require('./IO.js');
+
 const welcome = require(`../welcome`);
-const GC = require(`./guildConfig`);
+const DB = require(`./db`);
 
 function createBaseChannel(guild, role, options) {
     return new Promise(function (resolve, reject) {
