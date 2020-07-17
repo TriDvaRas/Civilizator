@@ -1,65 +1,73 @@
 const IO = require('./IO.js');
 const welcome = require(`../welcome`);
+const GC = require(`./guildConfig`);
+
 function createBaseChannel(guild, role, options) {
     return new Promise(function (resolve, reject) {
-        let config = IO.Read(`guilds/${guild.id}/config.json`);
-        let oldCh = guild.channels.cache.find(channel => channel.id === config.channelId);
-        if (oldCh && !options.ignoreOld) {
-            reject(`Channel already exists (${oldCh})`);
-            return;
-        }
-
-        if (!role)
-            role = guild.roles.cache.find(role => role.id === config.roleId);
-        guild.channels.create("Civilizator", {
-            type: 'text',
-            permissionOverwrites: [
-                {
-                    id: guild.roles.everyone.id,
-                    deny: ['VIEW_CHANNEL'],
-                },
-                {
-                    id: role.id,
-                    allow: ['VIEW_CHANNEL'],
-                },
-                {
-                    id: guild.members.cache.find(member => member.user.id == 719933714423087135).user,
-                    allow: ['VIEW_CHANNEL'],
-                },
-            ]
-        }).then(channel => {
-            if (!options.message) {
-                channel.send(welcome).then(msg => {
-                    msg.pin();
-                });
-                channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`);
+        getConfig(guild).then(config => {
+            let oldCh = guild.channels.cache.find(channel => channel.id === config.channelId);
+            if (oldCh && !options.ignoreOld) {
+                reject(`Channel already exists (${oldCh})`);
+                return;
             }
-            channel.send(`Bound bot channel to ${channel} ✅`);
-            config.channelId = channel.id;
-            IO.Write(`guilds/${guild.id}/config.json`, config);
-            resolve(channel);
-        });
+
+            if (!role)
+                role = guild.roles.cache.find(role => role.id === config.roleId);
+            guild.channels.create("Civilizator", {
+                type: 'text',
+                permissionOverwrites: [
+                    {
+                        id: guild.roles.everyone.id,
+                        deny: ['VIEW_CHANNEL'],
+                    },
+                    {
+                        id: role.id,
+                        allow: ['VIEW_CHANNEL'],
+                    },
+                    {
+                        id: guild.members.cache.find(member => member.user.id == 719933714423087135).user,
+                        allow: ['VIEW_CHANNEL'],
+                    },
+                ]
+            }).then(channel => {
+                if (!options.message) {
+                    channel.send(welcome).then(msg => {
+                        msg.pin();
+                    });
+                    channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`);
+                }
+                channel.send(`Bound bot channel to ${channel} ✅`);
+                config.channelId = channel.id;
+                setConfig(guild, config);
+                resolve(channel);
+            });
+
+        }).catch(err => reject(err));
+
+        
     });
 }
 
 function createBaseRole(guild, ignoreOld) {
     return new Promise(function (resolve, reject) {
-        let config = IO.Read(`guilds/${guild.id}/config.json`);
-        let oldRole = guild.roles.cache.find(role => role.id === config.roleId);
-        if (oldRole && !ignoreOld) {
-            return reject(`Role already exists (\`${oldRole.name}\`)`);
-        }
-        guild.roles.create({
-            data: {
-                name: "Civilized",
-                mentionable: true,
-                color: [64, 255, Math.floor(90 + Math.random() * 40)]
+        getConfig(guild).then(config => {
+            let oldRole = guild.roles.cache.find(role => role.id === config.roleId);
+            if (oldRole && !ignoreOld) {
+                return reject(`Role already exists (\`${oldRole.name}\`)`);
             }
-        }).then(role => {
-            config.roleId = role.id;
-            IO.Write(`guilds/${guild.id}/config.json`, config);
-            resolve(role);
-        });
+            guild.roles.create({
+                data: {
+                    name: "Civilized",
+                    mentionable: true,
+                    color: [64, 255, Math.floor(90 + Math.random() * 40)]
+                }
+            }).then(role => {
+                config.roleId = role.id;
+                setConfig(guild, config);
+                resolve(role);
+            });
+
+        }).catch(err => reject(err));
     });
 }
 function createBase(guild) {
@@ -77,4 +85,37 @@ module.exports = {
     createBase,
     createBaseChannel,
     createBaseRole
+}
+
+function getConfig(guild) {
+    return new Promise((resolve, reject) => {
+        DB.getCollection(`guilds`).then(coll => {
+            coll.findOne({ guildId: guild.id }, function (err, config) {
+                if (err)
+                    return reject(err);
+                resolve(config);
+            })
+
+        })
+    });
+}
+function setConfig(guild, newConfig) {
+    return new Promise((resolve, reject) => {
+        DB.getCollection(`guilds`).then(coll => {
+            coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
+                if (err)
+                    return reject(err);
+
+                resolve();
+                for (const key in newConfig) {
+                    if (newConfig.hasOwnProperty(key)) {
+                        if (newConfig[key] === oldConfig[key])
+                            delete newConfig[key];
+                    }
+                }
+                coll.updateOne({ guildId: guild.id }, { $set: newConfig })
+            })
+
+        })
+    });
 }
