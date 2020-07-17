@@ -7,7 +7,7 @@ const DB = require('./assets/functions/db');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
 const GC = require("./assets/functions/guildConfig.js");
-let pressences = JSON.parse(fs.readFileSync("pressence.json", "utf8"))
+let pressences = IO.Read(`./pressence.json`)
 
 
 globalThis.discordClient = new Discord.Client({
@@ -185,7 +185,7 @@ function updateStats() {
 		db.getGameId(false).then(count => {
 
 			stats[`gameCount`] = count;
-
+			IO.Write(`./stats.json`, stats);
 		})
 
 	})
