@@ -23,7 +23,7 @@ function addJoiner(msg) {
     const filter = (reaction, user) => {
         return [`✅`, `❎`, `⏩`].includes(reaction.emoji.name) && !user.bot;
     };
-    const collector = msg.createReactionCollector(filter, { idle: 900000 });
+    const collector = msg.createReactionCollector(filter, { idle: globalThis.reactionsMaxTime });
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created join collector`);
 
     collector.on('collect', (reaction, user) => {
@@ -123,7 +123,7 @@ function addJoiner(msg) {
                 state.flushed = true;
                 GC.setGameState(msg.guild, state);
                 DB.updateGame(state);
-
+                setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
             }).catch(error => logger.log(`error`, `${error}`))
         }
     });
@@ -137,7 +137,7 @@ function addBanner(msg) {
     const filter = (reaction, user) => {
         return [`➡️`, `⏩`, `✔️`].includes(reaction.emoji.name) && (!user.bot || user.id == 719933714423087135);
     };
-    const collector = msg.createReactionCollector(filter, { idle: 900000 });
+    const collector = msg.createReactionCollector(filter, { idle: globalThis.reactionsMaxTime });
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created banner collector`);
 
     collector.on('collect', (reaction, user) => {
@@ -217,7 +217,7 @@ function addBanner(msg) {
                 state.flushed = true;
                 GC.setGameState(msg.guild, state);
                 DB.updateGame(state);
-
+                setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
             }).catch(error => logger.log(`error`, `${error}`))
         }
     });
@@ -229,7 +229,7 @@ function addReroller(msg) {
     const filter = (reaction, user) => {
         return [`🔁`].includes(reaction.emoji.name) && !user.bot;
     };
-    const collector = msg.createReactionCollector(filter, { idle: 900000 });
+    const collector = msg.createReactionCollector(filter, { idle: globalThis.reactionsMaxTime });
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created re collector`);
 
     collector.on('collect', (reaction, user) => {
@@ -284,6 +284,7 @@ function addReroller(msg) {
                 if ([`idle`, `new game`].includes(reason)) {
                     state.flushed = true;
                     GC.setGameState(msg.guild, state);
+                    setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
                 }
                 DB.updateGame(state);
             }).catch(error => logger.log(`error`, `${error}`))

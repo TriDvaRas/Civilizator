@@ -10,6 +10,8 @@ const GC = require("./assets/functions/guildConfig.js");
 let pressences = IO.Read(`./pressence.json`);
 let pressI = 1;
 
+globalThis.reactionsMaxTime = 900000;
+globalThis.finalDelay = 1000;
 globalThis.discordClient = new Discord.Client({
 	presence: {
 		activity: {
