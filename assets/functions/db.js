@@ -62,16 +62,17 @@ function updateGame(state) {
             coll.findOne(
                 { id: state.gameId },
                 function (err, doc) {
-                    let newState = {
-                        flushed: state.flushed,
-                        lastPhase: state.Phase,
-                        rerolls: state.rerolls,
-                        CPP: state.playerSize,
-                        BPP: state.banSize,
-                        disabledDLCs: state.disabledDLC.length > 0 ? state.disabledDLC.join(`\n`) : `-`,
-                        playerCount: state.Players.length
-                    };
-
+                    let newState = {};
+                    newState.flushed = state.flushed;
+                    newState.lastPhase = state.Phase;
+                    newState.rerolls = state.rerolls;
+                    newState.CPP = state.playerSize;
+                    newState.BPP = state.banSize;
+                    if (state.disabledDLC.length > 0)
+                        newState.disabledDLCs = state.disabledDLC.join(`\n`);
+                    else
+                        newState.disabledDLCs = `-`;
+                    newState.playerCount = state.Players.length;
                     for (let i = 0; i < state.Players.length; i++) {
                         const player = state.Players[i];
                         newState[`p${i + 1}`] = {
@@ -81,22 +82,15 @@ function updateGame(state) {
                             pick: player.pick == `-` ? `-` : player.pick.Name,
                         }
                     }
-                    try {
-                        for (const key in newState) {
-                            if (newState.hasOwnProperty(key)) {
-                                if (newState[key] === doc[key])
-                                    delete newState[key];
-                            }
+                    for (const key in newState) {
+                        if (newState.hasOwnProperty(key)) {
+                            if (newState[key] === doc[key])
+                                delete newState[key];
                         }
-                    } catch (error) {
-
                     }
-                    coll.updateOne({ id: state.gameId }, { $set: newState }, function (err, res) {
-                        if (err)
-                            return reject(err);
-                        resolve()
-                        logger.log(`db`, `updated game info`);
-                    })
+                    coll.updateOne({ id: state.gameId }, { $set: newState })
+                    resolve()
+                    logger.log(`db`, `updated game info`);
                 }
             )
         }).catch(error => { reject(error) })
@@ -109,29 +103,7 @@ function updateGameFinal(guild) {
             coll.findOne({ guildId: `${guild.id}` }, function (err, state) {
                 if (err)
                     return reject(err);
-                updateGame(state).then(() => {
-                    logger.log(`db`, `updated game info FINAL`)
-
-                    getCollection(`games`).then(coll => {
-                        coll.findOne(
-                            { id: state.gameId },
-                            function (err, game) {
-                                if (err)
-                                    return reject(err);
-                                sheet.SubmitGame(game)
-                                    .then(() => {
-                                        coll.updateOne({ id: state.gameId }, { $set: { sheetSync: true } }, function (err, res) {
-                                            if (err)
-                                                return logger.log(`error`, `${err}`);
-                                            logger.log(`db`, `updated sheet game info FINAL`)
-                                        })
-                                    })
-                                    .catch(err => logger.log(`warn`, `failed update sheet game info FINAL\n${err}`))
-                            }
-                        )
-                    }).catch(error => { reject(error) })
-                    resolve()
-                }).catch(err => reject(err))
+                updateGame(state).then(() => resolve(logger.log(`db`, `updated game info FINAL`))).catch(err => reject(err))
             })
 
         })

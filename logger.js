@@ -61,7 +61,7 @@ let logger = new winston.createLogger({
         error: 0,
         warn: 1,
         info: 2,
-        sheet: 7,
+        sheet: 4,
         cmd: 5,
         db: 6,
         http: 8,

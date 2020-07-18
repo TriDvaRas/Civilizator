@@ -6,51 +6,71 @@ const creds = require(`../sheet_secret.json`);
 
 
 module.exports = {
-    SubmitGame,
+    updateGame,
 }
 
-function SubmitGame(newRow) {
+
+function updateGame(state) {
     return new Promise((resolve, reject) => {
-        logger.log(`sheet`, `Submitting final game state`);
-        getSheet().then(sheet => {
-            delete newRow._id;
-            for (let i = 1; i <= 16; i++) {
-                if (newRow.hasOwnProperty(`p${i}`)) {
-                    const player = newRow[`p${i}`];
-                    newRow[`p${i}bans`] = player.bans;
-                    newRow[`p${i}civs`] = player.civs;
-                    newRow[`p${i}pick`] = player.pick;
-                    newRow[`p${i}`] = player.name;
+        logger.log(`sheet`, `updating game info...`);
+        getGameRow(state.gameId).then(x => {
+            x.flushed = state.flushed;
+            x.lastPhase = state.Phase;
+            x.rerolls = state.rerolls;
+            x.CPP = state.playerSize;
+            x.BPP = state.banSize;
+            if (state.disabledDLC.length > 0)
+                x.disabledDLCs = state.disabledDLC.join(`\n`);
+            else
+                x.disabledDLCs = `-`;
+            x.playerCount = state.Players.length;
+            for (let i = 0; i < state.Players.length; i++) {
+                const player = state.Players[i];
+                for (let j = 0; j < x._sheet.headerValues.length; j++) {
+                    const element = x._sheet.headerValues[j];
+                    if (element == `p${i + 1}`)
+                        x._rawData[j] = player.tag.split(`#`)[0];
+                    else if (element == `p${i + 1}bans` && player.bans.length > 0)
+                        x._rawData[j] = player.bans.map(x => x.Name).join(`\n`);
+                    else if (element == `p${i + 1}civs` && player.civs.length > 0)
+                        x._rawData[j] = player.civs.map(x => x.Name).join(`\n`);
+                    else if (element == `p${i + 1}pick` && player.pick)
+                        x._rawData[j] = player.pick == `-` ? `-` : player.pick.Name
                 }
-
             }
-            if (newRow.sheetSync === true) {
-                sheet.getRows()
-                    .then(rows => {
-                        let row = rows.find(row => row.id == newRow.id);
+            x.save()
+            logger.log(`sheet`, `updated game info`);
+            resolve();
 
-                        for (const key in newRow) {
-                            if (newRow.hasOwnProperty(key)) {
-                                if (row[key] && newRow[key] != row[key])
-                                    row[key] = newRow[key];
-                            }
-                        }
-                        row.save()
-                        resolve()
-                    })
-                    .catch(err => reject(err));
-            }
-            else {
-                newRow.sheetSync = true;
-                sheet.addRow(newRow)
-                    .then(() => resolve())
-                    .catch(err => reject(err));
+        }).catch(error => { reject(error) });
+    });
 
-            }
-        }).catch(err => reject(err));
+}
+
+function getGameRow(id) {
+    return new Promise((resolve, reject) => {
+        getRows().then(rows => {
+            resolve(rows.find(row => row.id == id));
+        }).catch(error => { reject(error) });
+
     });
 }
+function getRows(sheet) {
+    return new Promise((resolve, reject) => {
+        if (!sheet)
+            getSheet().then(sheet => {
+                sheet.getRows().then(rows => {
+                    resolve(rows)
+                }).catch(error => { reject(error) });
+            }).catch(error => { reject(error) });
+        else {
+            sheet.getRows().then(rows => {
+                resolve(rows)
+            }).catch(error => { reject(error) });
+        }
 
+    });
+}
 function getSheet() {
     return new Promise((resolve, reject) => {
         logger.log(`sheet`, `Fetching sheet...`)
@@ -60,7 +80,7 @@ function getSheet() {
                 const sheet = doc.sheetsByIndex[0];
                 resolve(sheet);
             }).catch(error => { reject(error) });
-        }).catch(error => { reject(error) });
+        });
 
     });
 }
