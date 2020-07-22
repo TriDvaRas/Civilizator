@@ -127,8 +127,8 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 - **Q: How do I start a game?**
     - A: Just use `start` command.
 - **Q: Why can't I use `start` command?**
-    - A: You need to get the Civilizator role to use it. Also it can only be used in the channel the bot is locked to.
-- **Q: Bot's reactions semm to appear slow. Is this ok?**
+    - A: You need to get the Civilizator role to start a game. Also it can only be used in the channel the bot is locked to.
+- **Q: Bot's reactions seem to appear slow. Is this ok?**
     - A: Yes, Discord API has a limit of 4 reactions per second.
 - **Q: Can I start multiple games at the same time?**
     - A: No, bot was primarily made for small servers to play with your friends, so  the support of multiple simultaneous games per server is not planned.
