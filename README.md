@@ -127,7 +127,7 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 - **Q: How do I start a game?**
     - A: Just use `start` command.
 - **Q: Why can't I use `start` command?**
-    - A: You need to get the Civilizator role to start a game. Also it can only be used in the channel the bot is locked to.
+    - A: You need to get the Civilizator role to start a game. You can get it using `getrole` command, if server alows it. Also it can only be used in the channel the bot is locked to.
 - **Q: Bot's reactions seem to appear slow. Is this ok?**
     - A: Yes, Discord API has a limit of 4 reactions per second.
 - **Q: Can I start multiple games at the same time?**
@@ -135,8 +135,8 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 - **Q: Is there Civilization VI support?**
     - A: No.
 - **Q: Will there be Civilization VI support?**
-    - A: Not planned but maybe someday...
-- **Q: Can players join game after join phase has ended?**
+    - A: Not planned yet...
+- **Q: Can users join game after join phase has ended?**
     - A: No.
 - **Q: Can I get back to previous phase?**
     - A: No, you need to `start` a new game.
