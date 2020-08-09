@@ -122,20 +122,22 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 
 ## FAQ
 
+- **Q: What prefix does bot use?**
+    - A: Default bot prefix is `!` You can view bot's current settings(including prefix) by mentioning it (just `@Civilizator` without any args)
 - **Q: Can I try using a bot without adding it to my server?**
     - A: Yes, you can try out bot in `#civilizator` channel of [bot's discord server](https://discord.gg/nFMFs2e).
 - **Q: How do I start a game?**
     - A: Just use `start` command.
 - **Q: Why can't I use `start` command?**
     - A: You need to get the Civilizator role to start a game. You can get it using `getrole` command, if server alows it. Also it can only be used in the channel the bot is locked to.
-- **Q: Bot's reactions seem to appear slow. Is this ok?**
+- **Q: Bot's reactions seem to appear slowly. Is this ok?**
     - A: Yes, Discord API has a limit of 4 reactions per second.
 - **Q: Can I start multiple games at the same time?**
     - A: No, bot was primarily made for small servers to play with your friends, so  the support of multiple simultaneous games per server is not planned.
 - **Q: Is there Civilization VI support?**
     - A: No.
 - **Q: Will there be Civilization VI support?**
-    - A: Not planned yet...
+    - A: WIP.
 - **Q: Can users join game after join phase has ended?**
     - A: No.
 - **Q: Can I get back to previous phase?**
