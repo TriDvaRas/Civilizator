@@ -81,6 +81,9 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 		message.channel.send(`Your message was successfully submited 👍`)
 		return;
 	}
+
+
+
 	GC.getConfig(message.guild)
 		.then(cfg => {
 			let args, command;
@@ -89,7 +92,20 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 				args = message.content.slice(prefix.length).split(/ +/);
 				command = args.shift().toLowerCase();
 			}
-			else if (message.content.startsWith(`<@!${discordClient.user.id}>`)) {
+			else if (message.content == `<@!${discordClient.user.id}>` || message.content == `<@${discordClient.user.id}>`) {
+				message.channel.send(new Discord.MessageEmbed()
+					.setTitle(`Bot Settings`)
+					.setColor('#46a832')
+					.addField(`Server`, message.guild.name, false)
+					.addField(`Prefix`, prefix, true)
+					.addField(`Role`, `<@&${cfg.roleId}>`, true)
+					.addField(`Channel`, `<#${cfg.channelId}>`, true)
+					.addField(`Games Count`, cfg.gameCount, false)
+					.setTimestamp()
+					.setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
+				)
+			}
+			else if (message.content.startsWith(`<@!${discordClient.user.id}>`) || message.content.startsWith(`<@${discordClient.user.id}>`)) {
 				args = message.content.split(/ +/);
 				args.shift();
 				command = args.shift().toLowerCase();
