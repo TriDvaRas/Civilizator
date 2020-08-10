@@ -118,7 +118,7 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 				try {
 					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 					if (args[0] == "help") {
-						message.channel.send(`${discordClient.commands.get(command).description}\nUsage:\n${discordClient.commands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+						message.channel.send(`${discordClient.commands.get(command).description}\nUsage:\n${discordClient.commands.get(command).usage}\n${discordClient.civcommands.get(command).example?'Example:\n'+discordClient.civcommands.get(command).example:""}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
 					} else
 						discordClient.commands.get(command).execute(message, args);
 				} catch (error) {
@@ -128,7 +128,7 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 				try {
 					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 					if (args[0] == "help") {
-						message.channel.send(`${discordClient.civcommands.get(command).description}\nUsage:\n${discordClient.civcommands.get(command).usage}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+						message.channel.send(`${discordClient.civcommands.get(command).description}\nUsage:\n${discordClient.civcommands.get(command).usage}\n${discordClient.civcommands.get(command).example?'Example:\n'+discordClient.civcommands.get(command).example:""}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
 					} else
 						discordClient.civcommands.get(command).execute(message, args);
 				} catch (error) {
