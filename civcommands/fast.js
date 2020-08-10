@@ -3,6 +3,7 @@ var Perm = require('../assets/functions/Permissions.js');
 const logger = require("../logger");
 const chalk = require('chalk');
 var IO = require('../assets/functions/IO.js');
+const Discord = require('discord.js');
 module.exports = {
     name: 'fast',
     description: 'Fast game (original CivRandomizer) (has 5m cooldown)',
@@ -41,7 +42,7 @@ module.exports = {
                     return;
                 }
                 //set dlcs
-                if (white) {
+                if (white != undefined) {
                     checkDLCs(state, args.slice(3), white);
                     checkCivs(state);
                 }
@@ -53,6 +54,16 @@ module.exports = {
                     });
                     return;
                 }
+                //send embed
+                message.channel.send(new Discord.MessageEmbed()
+                    .setTitle(`Fast Game`)
+                    .setColor('#66D018')
+                    .addField(`DLCs`, state.DLCs.length == 9 ? `All` : state.DLCs.join(`\n`), true)
+                    .addField(`Players`, args[0], true)
+                    .addField(`CPP`, args[1], true)
+                    .setTimestamp()
+                    .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
+                )
                 //send civs
                 GeneratePicks(state, message.channel, +args[0], +args[1]);
 
