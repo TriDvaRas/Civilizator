@@ -13,7 +13,10 @@ function createConfig(guild) {
             prefix: "!",
             roleId: "",
             channelId: "",
-            allowGetRole: true
+            allowGetRole: true,
+            gamecount: 0,
+            fastCount: 0,
+            lastFast: 0
         }
         Promise.all([
             DB.addDoc(`guilds`, config),

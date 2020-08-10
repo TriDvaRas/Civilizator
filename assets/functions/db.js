@@ -298,7 +298,28 @@ function addGameCount(guild) {
 
     })
 }
+function addFastCount(guild) {
+    getCollection(`guilds`).then(coll => {
+        coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
+            if (err)
+                return err;
+            oldConfig.fastCount += 1;
+            coll.updateOne({ guildId: guild.id }, { $set: oldConfig })
+        })
 
+    })
+}
+function setLastFast(guild) {
+    getCollection(`guilds`).then(coll => {
+        coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
+            if (err)
+                return err;
+            oldConfig.lastFast = Date.now();
+            coll.updateOne({ guildId: guild.id }, { $set: oldConfig })
+        })
+
+    })
+}
 module.exports = {
     getGameId,
     newGame,
@@ -307,5 +328,7 @@ module.exports = {
     getCollection,
     addDoc,
     removeDoc,
-    addGameCount
+    addGameCount,
+    addFastCount,
+    setLastFast,
 }

@@ -10,14 +10,14 @@ module.exports = {
     Write: function Write(Path, data) {
         fs.writeFileSync(Path, JSON.stringify(data, null, 2), function (err) {
             if (err) {
-                logger.log(`error`, err);
+                logger.log(`error`, `${err}`);
             }
         });
     },
     createDir(path) {
         fs.mkdirSync(path, { recursive: true }, function (err) {
             if (err) {
-                logger.log(`error`, err);
+                logger.log(`error`, `${err}`);
             }
         });
     },
@@ -32,7 +32,7 @@ module.exports = {
                 }
             }, function (err) {
                 if (err) {
-                    logger.log(`error`, err);
+                    logger.log(`error`, `${err}`);
                 }
             });
             fs.rmdirSync(path);

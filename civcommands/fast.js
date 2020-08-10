@@ -2,81 +2,100 @@
 var Perm = require('../assets/functions/Permissions.js');
 const logger = require("../logger");
 const chalk = require('chalk');
+const GC = require(`../assets/functions/guildConfig.js`);
 var IO = require('../assets/functions/IO.js');
 const Discord = require('discord.js');
+const db = require('../assets/functions/db.js');
 module.exports = {
     name: 'fast',
-    description: 'Fast game (original CivRandomizer) (has 5m cooldown)',
+    description: 'Fast game (original CivRandomizer) (has 3m cooldown)',
     usage: '`fast <Players(1-16)> <CivPerPlayer(1-6)> [-/+] [DLCs to enable/disable]`',
     example: `\`fast 4 3\` - 4 players 3 civs each, all DLCs enabled
 \`fast 4 3 - bnw mon\` - 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
 \`fast 4 3 + van korea\` - 4 players 3 civs each, only Vanilla and Korea enabled`,
     execute: async function (message, args) {
-
-        //check perm
-        Perm.checkRoles(message.member, null, { admin: true, civ: true })
-            .then(() => {
-                //check 0/1 args
-                if (args.length < 2 || !(args[0] >= 1 && args[0] <= 16 && args[1] >= 1 && args[1] <= 6)) {
-
-                    message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(botMsg => {
+        GC.getConfig(message.guild).then(
+            config => {
+                //check cd
+                if (Date.now() - config.lastFast < globalThis.fastCD) {
+                    message.channel.send(`Command is on cooldown. Try again later.`).then(botMsg => {
                         message.delete({ timeout: 5000 })
                         botMsg.delete({ timeout: 5000 });
                     });
-                    return;
+                    return
                 }
+                //check perm
+                Perm.checkRoles(message.member, null, { admin: true, civ: true })
+                    .then(
+                        () => {
+                            //check 0/1 args
+                            if (args.length < 2 || !(args[0] >= 1 && args[0] <= 16 && args[1] >= 1 && args[1] <= 6)) {
 
-                //get default state
-                let state = IO.Read(`./assets/BaseState.json`)
-                //check dlcs settings
-                let white;
-                if (args[2] == "+")
-                    white = true;
-                else if (args[2] == "-")
-                    white = false;
-                else if (args[2]) {
-                    message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(botMsg => {
-                        message.delete({ timeout: 5000 })
-                        botMsg.delete({ timeout: 5000 });
-                    });
-                    return;
-                }
-                //set dlcs
-                if (white != undefined) {
-                    checkDLCs(state, args.slice(3), white);
-                    checkCivs(state);
-                }
-                //check if enough civs 
-                if (state.Civs.length < +args[0] * +args[1]) {
-                    message.channel.send(`Not enough civs for ${args[0]}x${args[1]} game`).then(botMsg => {
-                        message.delete({ timeout: 5000 })
-                        botMsg.delete({ timeout: 5000 });
-                    });
-                    return;
-                }
-                //send embed
-                message.channel.send(new Discord.MessageEmbed()
-                    .setTitle(`Fast Game`)
-                    .setColor('#66D018')
-                    .addField(`DLCs`, state.DLCs.length == 9 ? `All` : state.DLCs.join(`\n`), true)
-                    .addField(`Players`, args[0], true)
-                    .addField(`CPP`, args[1], true)
-                    .setTimestamp()
-                    .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-                )
-                //send civs
-                GeneratePicks(state, message.channel, +args[0], +args[1]);
+                                message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(botMsg => {
+                                    message.delete({ timeout: 5000 })
+                                    botMsg.delete({ timeout: 5000 });
+                                });
+                                return;
+                            }
 
+                            //get default state
+                            let state = IO.Read(`./assets/BaseState.json`)
+                            //check dlcs settings
+                            let white;
+                            if (args[2] == "+")
+                                white = true;
+                            else if (args[2] == "-")
+                                white = false;
+                            else if (args[2]) {
+                                message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(botMsg => {
+                                    message.delete({ timeout: 5000 })
+                                    botMsg.delete({ timeout: 5000 });
+                                });
+                                return;
+                            }
+                            //set dlcs
+                            if (white != undefined) {
+                                checkDLCs(state, args.slice(3), white);
+                                checkCivs(state);
+                            }
+                            //check if enough civs 
+                            if (state.Civs.length < +args[0] * +args[1]) {
+                                message.channel.send(`Not enough civs for ${args[0]}x${args[1]} game`).then(botMsg => {
+                                    message.delete({ timeout: 5000 })
+                                    botMsg.delete({ timeout: 5000 });
+                                });
+                                return;
+                            }
+                            //send embed
+                            message.channel.send(new Discord.MessageEmbed()
+                                .setTitle(`Fast Game`)
+                                .setColor('#66D018')
+                                .addField(`DLCs`, state.DLCs.length == 9 ? `All` : state.DLCs.join(`\n`), true)
+                                .addField(`Players`, args[0], true)
+                                .addField(`CPP`, args[1], true)
+                                .setTimestamp()
+                                .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
+                            )
+                            //send civs
+                            GeneratePicks(state, message.channel, +args[0], +args[1]);
+                            db.setLastFast(message.guild)
+                            db.addFastCount(message.guild)
+                        },
+                        err => {
+                            logger.log(`error`, `${err}\n${err.stack}`);
+                            message.channel.send("Civ role required").then(botMsg => {
+                                message.delete({ timeout: 5000 })
+                                botMsg.delete({ timeout: 5000 })
+                            });
+                            return;
+                        }
+                    );
             },
-                err => {
-                    logger.log(`error`, `${err}\n${err.stack}`);
-                    message.channel.send("Civ role required").then(botMsg => {
-                        message.delete({ timeout: 5000 })
-                        botMsg.delete({ timeout: 5000 })
-                    });
-                    return;
-                }
-            );
+            error => {
+                logger.log(`error`, error)
+            }
+        );
+
 
     },
 };
