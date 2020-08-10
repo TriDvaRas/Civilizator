@@ -30,6 +30,11 @@ module.exports = {
         }
         return false;
     },
+    CheckDisabled(state, C) {
+        if (state.disabled.find(x => x == C.id))
+            return true;
+        return false;
+    },
     //remove civ from pool
     opBan(C, state) {
 

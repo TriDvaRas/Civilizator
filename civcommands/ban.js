@@ -82,7 +82,22 @@ module.exports = {
                     //if found 
                     if (C) {
                         //check if banned
-                        if (!BanF.CheckBanned(state, C)) {
+                        if (BanF.CheckBanned(state, C)) {
+                            message.reply(`${C.Name} (${C.id}) is already banned `, {
+                                files: [`./assets/${C.picPath}`]
+                            }).then(botMsg => {
+                                botMsg.delete({ timeout: 5000 });
+                            });
+
+                        } 
+                        else if (BanF.CheckDisabled(state, C)) {
+                            message.reply(`${C.Name} (${C.id}) is already disabled by DLCs settings`, {
+                                files: [`./assets/${C.picPath}`]
+                            }).then(botMsg => {
+                                botMsg.delete({ timeout: 5000 });
+                            });
+                        }
+                        else {
                             let player = state.Players.find(u => u.id == `${message.author}`);
                             if (player.bans.length >= state.banSize) {
                                 message.reply(`Out of bans`).then(botMsg => {
@@ -109,13 +124,6 @@ module.exports = {
                                 logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] Last ban, proceeding to picks`);
                                 msg.react(`✔️`);
                             }
-
-                        } else {
-                            message.reply(`${C.Name} (${C.id}) is already banned `, {
-                                files: [`./assets/${C.picPath}`]
-                            }).then(botMsg => {
-                                botMsg.delete({ timeout: 5000 });
-                            });
                         }
                     }
                 }
