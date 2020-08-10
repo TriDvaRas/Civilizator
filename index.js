@@ -28,7 +28,7 @@ const chalk = require('chalk');
 const db = require('./assets/functions/db');
 
 discordClient.on('ready', () => {
-	logger.log('info', 'Logged in');
+	logger.log('warn', 'Bot logged in');
 	updateStats();
 	discordClient.setInterval(setPressence, 15532 * 1.68);
 	discordClient.setInterval(updateStats, 98 * 1008);
