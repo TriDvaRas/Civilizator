@@ -35,8 +35,8 @@ If your server has a bot with  \`!ban\` command you should change <@719933714423
     {
         head:`**TL;DR**`,
         text:`CivRandomizer Discord Bot
-Default prefix is \`!\`
-Avoid banning users with \`!ban\` command
-Use \`!start <CivPerPlayer> [BansPerPlayer]\` in \`#civilizator\` to start`
+Default prefix is \`!\`. Can be changed with \`prefix <NewPrefix>\`
+Avoid banning users with another bot's \`!ban\` command
+To start a game go to \`#civilizator\` and use \`start <CivPerPlayer> [BansPerPlayer]\` to start a normal game, or \`fast <Players> <CivsPerPlayer>\` to start a fast game(no bans, no picks, no statistics)`
     }
 ]
