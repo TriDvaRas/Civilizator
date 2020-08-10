@@ -19,8 +19,9 @@ function createConfig(guild) {
             DB.addDoc(`guilds`, config),
             DB.addDoc(`states`, IO.Read(`assets/BaseState.json`))
         ])
-            .then(() => resolve())
-            .catch(err => reject(err))
+            .then(() => resolve(),
+                err => reject(err)
+            )
     })
 
 
@@ -34,11 +35,11 @@ function initGuildEvents() {
         logger.log(`info`, `[${chalk.magentaBright(guild.name)}] joined guild `);
 
         createConfig(guild)
-            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created config `))
-            .catch(error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating config \n${error}`))
+            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created config `),
+                error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating config \n${error}`))
         createBase(guild)
-            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created base `))
-            .catch(error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating base \n${error}`))
+            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] created base `),
+                error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed creating base \n${error}`))
 
 
 
@@ -50,8 +51,8 @@ function initGuildEvents() {
             logguild.channels.cache.find(channel => channel.name == `guilds-log`).send(`Left guild [${guild.id}] [${guild.name}] \n guildCount: ${discordClient.guilds.cache.array().length}`);
         logger.log(`info`, `[${chalk.magentaBright(guild.name)}] left guild `);
         deleteConfig(guild)
-            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] deleted config`))
-            .catch(error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed deleting config \n${error}`))
+            .then(() => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] deleted config`),
+                error => logger.log(`info`, `[${chalk.magentaBright(guild.name)}] failed deleting config \n${error}`))
 
     })
 }
@@ -59,8 +60,8 @@ function initGuildEvents() {
 function deleteConfig(guild) {
     return new Promise((resolve, reject) => {
         DB.removeDoc(`guilds`, { guildId: guild.id })
-            .then(() => resolve())
-            .catch(err => reject(err))
+            .then(() => resolve(),
+                err => reject(err))
     });
 }
 

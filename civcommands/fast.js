@@ -46,7 +46,7 @@ module.exports = {
                     checkCivs(state);
                 }
                 //check if enough civs 
-                if (state.Civs.length<+args[0]*+args[1]){
+                if (state.Civs.length < +args[0] * +args[1]) {
                     message.channel.send(`Not enough civs for ${args[0]}x${args[1]} game`).then(botMsg => {
                         message.delete({ timeout: 5000 })
                         botMsg.delete({ timeout: 5000 });
@@ -56,15 +56,16 @@ module.exports = {
                 //send civs
                 GeneratePicks(state, message.channel, +args[0], +args[1]);
 
-            })
-            .catch(err => {
-                logger.log(`error`, `${err}\n${err.stack}`);
-                message.channel.send("Civ role required").then(botMsg => {
-                    message.delete({ timeout: 5000 })
-                    botMsg.delete({ timeout: 5000 })
-                });
-                return;
-            })
+            },
+                err => {
+                    logger.log(`error`, `${err}\n${err.stack}`);
+                    message.channel.send("Civ role required").then(botMsg => {
+                        message.delete({ timeout: 5000 })
+                        botMsg.delete({ timeout: 5000 })
+                    });
+                    return;
+                }
+            );
 
     },
 };
@@ -142,8 +143,9 @@ function GetCivLine(state, channel, i, cpp) {
                 })
             });
 
-        })
-        .catch(err => logger.log(`error`, `mergeImg error\n${err}`));
+        },
+            err => logger.log(`error`, `mergeImg error\n${err}`)
+        );
     if (state.repeat == true)
         for (let i = state.picked.length - 1; i >= 0; i--) {
             state.Civs.push(state.picked.splice(i, 1)[0]);

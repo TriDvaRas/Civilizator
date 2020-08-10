@@ -10,31 +10,32 @@ module.exports = {
     execute: async function (message, args) {
         try {
             Perm.checkRoles(message.member, null, { admin: true })
-            .then(()=>{
-                
-                GC.getConfig(message.guild).then(config=>{
-                    if (config.allowGetRole == false) {
-                        message.delete({timeout:30000});
-                        message.channel.send(`\`getrole\` is already disabled`).then(msg=>msg.delete({timeout:30000}));
-                        return;
-                    }
-                    config.allowGetRole = false;
-                    GC.setConfig(message.guild, config);
-                    message.channel.send(`Disabled \`getrole\``);
-                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] disabled getrole`);
-                    
-                })
+                .then(() => {
 
-            })
-            .catch(()=>{
-                message.delete({timeout:30000});
-                message.reply(`Server admin command`).then(msg=>msg.delete({timeout:30000}));
-                return;
-                
-            })
+                    GC.getConfig(message.guild).then(config => {
+                        if (config.allowGetRole == false) {
+                            message.delete({ timeout: 30000 });
+                            message.channel.send(`\`getrole\` is already disabled`).then(msg => msg.delete({ timeout: 30000 }));
+                            return;
+                        }
+                        config.allowGetRole = false;
+                        GC.setConfig(message.guild, config);
+                        message.channel.send(`Disabled \`getrole\``);
+                        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] disabled getrole`);
+
+                    })
+
+                },
+                    () => {
+                        message.delete({ timeout: 30000 });
+                        message.reply(`Server admin command`).then(msg => msg.delete({ timeout: 30000 }));
+                        return;
+
+                    }
+                );
         } catch (error) {
-            message.delete({timeout:30000});
-            message.channel.send(`Failed disabling \`getrole\``).then(msg=>msg.delete({timeout:30000}));
+            message.delete({ timeout: 30000 });
+            message.channel.send(`Failed disabling \`getrole\``).then(msg => msg.delete({ timeout: 30000 }));
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] failed disabling getrole ${error}`);
         }
 

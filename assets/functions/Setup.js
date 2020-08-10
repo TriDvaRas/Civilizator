@@ -42,9 +42,11 @@ function createBaseChannel(guild, role, options) {
                 resolve(channel);
             });
 
-        }).catch(err => reject(err));
+        },
+            err => reject(err)
+        );
 
-        
+
     });
 }
 
@@ -67,7 +69,9 @@ function createBaseRole(guild, ignoreOld) {
                 resolve(role);
             });
 
-        }).catch(err => reject(err));
+        },
+            err => reject(err)
+        );
     });
 }
 function createBase(guild) {
@@ -76,8 +80,12 @@ function createBase(guild) {
             createBaseChannel(guild, role, { ignoreOld: true }).then(channel => {
                 guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
                 resolve()
-            }).catch(err => reject(err));
-        }).catch(err => reject(err));
+            },
+                err => reject(err)
+            );
+        },
+            err => reject(err)
+        );
     })
 }
 

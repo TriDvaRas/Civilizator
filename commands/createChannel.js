@@ -7,20 +7,23 @@ module.exports = {
     usage: `\`createChannel\``,
     execute: async function (message, args) {
         Perm.checkRoles(message.member, null, { admin: true })
-        .then(()=>{
-            
-            createBaseChannel(message.guild, undefined, {message:message})
-                .then(channel => {
-                    message.channel.send(`Successfuly created ${channel}`)
-                }).catch(err => {
-                    message.channel.send(err)
-                });
+            .then(() => {
 
-        })
-        .catch(()=>{
-            message.reply("Server admin command");
-            return;
-            
-        })
+                createBaseChannel(message.guild, undefined, { message: message })
+                    .then(channel => {
+                        message.channel.send(`Successfuly created ${channel}`)
+                    },
+                        err => {
+                            message.channel.send(err)
+                        }
+                    );
+
+            },
+                () => {
+                    message.reply("Server admin command");
+                    return;
+
+                }
+            );
     },
 };

@@ -37,17 +37,21 @@ function SubmitGame(newRow) {
                         }
                         row.save()
                         resolve()
-                    })
-                    .catch(err => reject(err));
+                    },
+                        err => reject(err)
+                    );
             }
             else {
                 newRow.sheetSync = true;
                 sheet.addRow(newRow)
-                    .then(() => resolve())
-                    .catch(err => reject(err));
+                    .then(() => resolve(),
+                        err => reject(err)
+                    );
 
             }
-        }).catch(err => reject(err));
+        },
+            err => reject(err)
+        );
     });
 }
 
@@ -59,8 +63,12 @@ function getSheet() {
             doc.getInfo().then(() => {
                 const sheet = doc.sheetsByIndex[0];
                 resolve(sheet);
-            }).catch(error => { reject(error) });
-        }).catch(error => { reject(error) });
+            },
+                err => reject(err)
+            );
+        },
+            err => reject(err)
+        );
 
     });
 }

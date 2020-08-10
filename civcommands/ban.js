@@ -121,7 +121,9 @@ module.exports = {
                 }
 
             }
-        }).catch(error => logger.log(`error`, `${error}`))
+        },
+            error => logger.log(`error`, `${error}`)
+        )
 
 
     },

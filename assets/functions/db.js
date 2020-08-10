@@ -14,8 +14,11 @@ const mongoClient = new MongoClient(dbCreds.login,
 let dbClient;
 logger.log(`db`, `connecting to db`);
 connectToDb()
-    .then(() => logger.log(`db`, `Connected to db`))
-    .catch(err => logger.log(`error`, `Failed connecting to db \n${err}`))
+    .then(() =>
+        logger.log(`db`, `Connected to db`)
+        ,
+        err =>
+            logger.log(`error`, `Failed connecting to db \n${err}`))
 
 
 
@@ -48,8 +51,12 @@ function newGame(state, op, guild) {
                     }
                     logger.log(`db`, `created new game ${id}`);
                 });
-            }).catch(error => { reject(error) });
-        }).catch(error => { reject(error) });
+            },
+                error => { reject(error) }
+            );
+        },
+            error => { reject(error) }
+        );
     });
 
 }
@@ -99,7 +106,9 @@ function updateGame(state) {
                     })
                 }
             )
-        }).catch(error => { reject(error) })
+        },
+            error => { reject(error) }
+        );
     });
 
 }
@@ -125,13 +134,18 @@ function updateGameFinal(guild) {
                                                 return logger.log(`error`, `${err}`);
                                             logger.log(`db`, `updated sheet game info FINAL`)
                                         })
-                                    })
-                                    .catch(err => logger.log(`warn`, `failed update sheet game info FINAL\n${err}`))
+                                    },
+                                        err => logger.log(`warn`, `failed update sheet game info FINAL\n${err}`)
+                                    );
                             }
                         )
-                    }).catch(error => { reject(error) })
+                    },
+                        error => { reject(error) }
+                    );
                     resolve()
-                }).catch(err => reject(err))
+                },
+                    err => reject(err)
+                )
             })
 
         })
@@ -166,7 +180,9 @@ function getGameId(increment) {
                 }
 
             })
-        }).catch(err => reject(err));
+        },
+            err => reject(err)
+        );
     })
 }
 
@@ -204,8 +220,10 @@ function getCollection(collection) {
             logger.log(`warn`, `db reconnecting?`)
             connectToDb().then(() => {
                 getCollection(collection)
-                    .then(coll => resolve(coll))
-                    .catch(err => reject(err))
+                    .then(coll => resolve(coll)
+                        ,
+                        err => reject(err)
+                    )
             });
         }
 
@@ -249,7 +267,9 @@ function addDoc(collection, doc) {
                 else
                     resolve(logger.log(`db`, `Inserted doc into ${collection}`));
             })
-        }).catch(err => reject(err));
+        },
+            err => reject(err)
+        );
     })
 }
 function removeDoc(collection, query) {
@@ -261,7 +281,9 @@ function removeDoc(collection, query) {
                 else
                     resolve(logger.log(`db`, `Deleted doc from ${collection}`));
             })
-        }).catch(err => reject(err));
+        },
+            err => reject(err)
+        );
     })
 }
 

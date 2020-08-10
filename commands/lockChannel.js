@@ -11,19 +11,20 @@ module.exports = {
         Perm.checkRoles(message.member, null, { admin: true })
             .then(() => {
 
-                GC.getConfig(message.guild).then(config=>{
+                GC.getConfig(message.guild).then(config => {
                     config.channelId = message.channel.id;
                     GC.setConfig(message.guild, config);
                     message.channel.send(`Bound bot to ${message.channel} ✅`);
-            
+
                 })
 
-            })
-            .catch(() => {
-                message.reply("Server admin command");
-                return;
+            },
+                () => {
+                    message.reply("Server admin command");
+                    return;
 
-            })
+                }
+            );
 
     },
 }

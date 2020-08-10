@@ -16,7 +16,7 @@ module.exports = {
     execute: function (message, args) {
         message.delete({ timeout: 5000 });
         //read GameState
-        GC.getGameState(message.guild).then(state=>{
+        GC.getGameState(message.guild).then(state => {
             Perm.checkRoles(message.member, state.Op, { admin: true, op: true })
                 .then(() => {
                     //check phase
@@ -30,9 +30,9 @@ module.exports = {
                             botMsg.delete({ timeout: 5000 });
                         });
                         return;
-    
+
                     } else {
-    
+
                         if (args[0] == "r" || args[0] == "reset") {
                             state.DLCs = state.DLCs.concat(state.disabledDLC);
                             state.disabledDLC = [];
@@ -45,7 +45,7 @@ module.exports = {
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => all`);
                             return;
                         }
-    
+
                         if (!args[0] || !args[1]) {
                             message.channel.send(`Wrong arguments`).then(botMsg => {
                                 botMsg.delete({ timeout: 5000 });
@@ -82,15 +82,17 @@ module.exports = {
                         Embeder.set(state, message.channel, embed);
                         GC.setGameState(message.guild, state);
                     }
-    
-                })
-                .catch(() => {
-                    message.channel.send("Operator command").then(botMsg => {
-                        botMsg.delete({ timeout: 5000 })
-                    });
-                    return;
-                }) 
-        }).catch(error=>logger.log(`error`,`${error}`))
+
+                },
+                    () => {
+                        message.channel.send("Operator command").then(botMsg => {
+                            botMsg.delete({ timeout: 5000 })
+                        });
+                        return;
+                    })
+        },
+            error => logger.log(`error`, `${error}`)
+        )
         //check if Player is OP
 
 

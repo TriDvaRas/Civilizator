@@ -25,7 +25,7 @@ function addPicker(msg, player, playerSlot) {
             try {
                 if (msg.deleted)
                     return;
-                reaction.users.remove(user).catch(() => { });
+                reaction.users.remove(user).then(() => { }, () => { });
 
                 if (!msg.mentions.users.has(user.id)) {
                     return;
@@ -48,7 +48,9 @@ function addPicker(msg, player, playerSlot) {
                     Embeder.set(state, msg.channel, embed);
                     GC.setGameState(msg.guild, state);
 
-                }).catch(error => logger.log(`error`, `${error}`))
+                },
+                    error => logger.log(`error`, `${error}`)
+                )
 
             } catch (error) {
 
@@ -68,7 +70,9 @@ function addPicker(msg, player, playerSlot) {
                         GC.setGameState(msg.guild, state);
                         setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
 
-                    }).catch(error => logger.log(`error`, `${error}`))
+                    },
+                        error => logger.log(`error`, `${error}`)
+                    )
                 }
 
             } catch (error) {
@@ -86,7 +90,7 @@ async function numReact(msg, player) {
     try {
         for (let i = 0; i < player.civs.length; i++)
             if (!msg.deleted)
-                msg.react([`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][i]).catch(error => {
+                msg.react([`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][i]).then(()=>{},error => {
                     logger.log(`error`, ` Error on numReact ${msg} ${i} ${player.civs.length} \n${error.stack}`);
 
                 })

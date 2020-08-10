@@ -81,7 +81,7 @@ function addJoiner(msg) {
                         GC.setGameState(msg.guild, state);
                         msg.edit(embed);
                     })
-                    .catch(() => { })
+                    .then(() => { }, () => { });
 
             }
             else {
@@ -113,7 +113,9 @@ function addJoiner(msg) {
                 embed.fields.find(field => field.name == "Players").value = state.Players.map(user => user.id).join('\n') + '\u200B';
                 msg.edit(embed);
             }
-        }).catch(error => logger.log(`error`, `${error}`))
+        },
+            error => logger.log(`error`, `${error}`)
+        )
     });
     collector.on('end', (collected, reason) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] join collector committed die | reason ${reason}`);
@@ -124,7 +126,9 @@ function addJoiner(msg) {
                 GC.setGameState(msg.guild, state);
                 DB.updateGame(state);
                 setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
-            }).catch(error => logger.log(`error`, `${error}`))
+            },
+                error => logger.log(`error`, `${error}`)
+            )
         }
     });
 }
@@ -205,9 +209,11 @@ function addBanner(msg) {
                         GC.setGameState(msg.guild, state);
                         msg.edit(embed);
                     })
-                    .catch(() => { })
+                    .then(() => { }, () => { });
             }
-        }).catch(error => logger.log(`error`, `${error}`))
+        },
+            error => logger.log(`error`, `${error}`)
+        )
     });
     collector.on('end', (collected, reason) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] banner collector committed die | reason ${reason}`);
@@ -218,7 +224,9 @@ function addBanner(msg) {
                 GC.setGameState(msg.guild, state);
                 DB.updateGame(state);
                 setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
-            }).catch(error => logger.log(`error`, `${error}`))
+            },
+                error => logger.log(`error`, `${error}`)
+            )
         }
     });
 }
@@ -266,7 +274,9 @@ function addReroller(msg) {
                 }
                 GC.setGameState(msg.guild, state);
 
-            }).catch(error => logger.log(`error`, `${error}`))
+            },
+                error => logger.log(`error`, `${error}`)
+            )
 
         } catch (error) {
             logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] Error on collecting re ${error.stack}`);
@@ -287,7 +297,9 @@ function addReroller(msg) {
                     setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
                 }
                 DB.updateGame(state);
-            }).catch(error => logger.log(`error`, `${error}`))
+            },
+                error => logger.log(`error`, `${error}`)
+            )
         } catch (error) {
             logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] Error on ending re ${error.stack}`);
         }
