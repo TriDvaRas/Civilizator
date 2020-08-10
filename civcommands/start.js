@@ -13,80 +13,85 @@ module.exports = {
     name: 'start',
     description: 'Starts Civilizator Game',
     usage: '`start <CivPerPlayer(1-6)> [BansPerPlayer(0-4)]`',
+    example: `\`start 3\` - 3 civs for each player, no bans
+\`fast 4 3 - bnw mon\` - 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
+\`fast 4 3 + van korea\` - 4 players 3 civs each, only Vanilla and Korea enabled`,
     execute: function (message, args) {
-        if (args.length > 0) {
-            //read state
-            GC.getGameState(message.guild).then(state => {
-
-                //check civ role
-                Perm.checkRoles(message.member, state.Op, { civ: true }).then(() => {
-                    CheckLastGame(message, state).then(function () {
-                        //check if game is started
-                        if (state.started == true) {
-
-                            return GC.resetGameState(message.guild).then(function (state) {
-                                return state;
-                            }).catch(err => logger.log(`error`, err));
-                        }
-                        else
-                            return state;
-                    }).then(function (state) {
-                        message.channel.send(new Discord.MessageEmbed()
-                            .setColor('#46a832')
-                            .setTitle("**Civilization V Game**")
-                            .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
-                            .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
-                            .addFields(
-                                { name: 'Creating game...', value: '\u200B', inline: true }
-                            )
-                            .setTimestamp()
-                            .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-                        ).then(mess => {
-                            DB.newGame(state, message.author.username, message.guild.name).then(id => {
-                                state.gameId = id;
-                                state.guildId = message.guild.id;
-                                state.startTime = Date.now();
-                                //create embed
-                                gameEmbed = Embeder.create();
-                                //start game
-                                if (StartGame(message, args, state, gameEmbed))
-                                    return;
-
-                                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
-                                mess.edit(gameEmbed).then(msg => {
-                                    logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
-                                    state.embedId = msg.id;
-                                    GC.setGameState(message.guild, state);
-                                    Reacter.addJoiner(msg);
-                                });
-                            }).catch(error => {
-                                logger.log(`warn`, `[${chalk.magentaBright(message.guild.name)}] Civilizator machine broke...\n${error}`)
-                                mess.edit(new Discord.MessageEmbed()
-                                    .setColor('#46a832')
-                                    .setTitle("**Civilization V Game**")
-                                    .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
-                                    .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
-                                    .addFields(
-                                        { name: `Civilizator machine broke...\nTry starting a new game\nIf this doesn't help please submit a bug report in bot's Discord server https://discord.gg/nFMFs2e or to Bot's DM`, value: '\u200B', inline: true }
-                                    )
-                                    .setTimestamp()
-                                    .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-                                )
-                            })
-                        })
-                        return;
-                    }).catch(err => logger.log(`error`, err))
-                }).catch(() => {
-                    message.reply("CivRole only");
-                    return;
-
-                })
-            });
-
-        }
-        else
+        if (args.length == 0)
             //send help on 0 args
-            message.channel.send(`${this.description}\nUsage:\n${this.usage}`);
+            return message.channel.send(`Wrong arguments. Try \`${this.name} help\` `);
+        //read state
+        GC.getGameState(message.guild).then(state => {
+
+            //check civ role
+            Perm.checkRoles(message.member, state.Op, { civ: true })
+            .then(() => {
+                CheckLastGame(message, state).then(function () {
+                    //check if game is started
+                    if (state.started == true) {
+
+                        return GC.resetGameState(message.guild).then(function (state) {
+                            return state;
+                        }).catch(err => logger.log(`error`, err));
+                    }
+                    else
+                        return state;
+                }).then(function (state) {
+                    message.channel.send(new Discord.MessageEmbed()
+                        .setColor('#46a832')
+                        .setTitle("**Civilization V Game**")
+                        .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
+                        .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
+                        .addFields(
+                            { name: 'Creating game...', value: '\u200B', inline: true }
+                        )
+                        .setTimestamp()
+                        .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
+                    ).then(mess => {
+                        DB.newGame(state, message.author.username, message.guild.name).then(id => {
+                            state.gameId = id;
+                            state.guildId = message.guild.id;
+                            state.startTime = Date.now();
+                            //create embed
+                            gameEmbed = Embeder.create();
+                            //start game
+                            if (StartGame(message, args, state, gameEmbed))
+                                return;
+
+                            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
+                            mess.edit(gameEmbed).then(msg => {
+                                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
+                                state.embedId = msg.id;
+                                GC.setGameState(message.guild, state);
+                                Reacter.addJoiner(msg);
+                            });
+                        }).catch(error => {
+                            logger.log(`warn`, `[${chalk.magentaBright(message.guild.name)}] Civilizator machine broke...\n${error}`)
+                            mess.edit(new Discord.MessageEmbed()
+                                .setColor('#46a832')
+                                .setTitle("**Civilization V Game**")
+                                .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
+                                .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
+                                .addFields(
+                                    { name: `Civilizator machine broke...\nTry starting a new game\nIf this doesn't help please submit a bug report in bot's Discord server https://discord.gg/nFMFs2e or to Bot's DM`, value: '\u200B', inline: true }
+                                )
+                                .setTimestamp()
+                                .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
+                            )
+                        })
+                    })
+                    return;
+                }).catch(err => logger.log(`error`, err))
+            })
+            .catch(() => {
+                message.reply("CivRole only");
+                return;
+
+            })
+        });
+
+
+
     },
 };
 function StartGame(message, args, state, gameEmbed) {
