@@ -2,7 +2,8 @@
 const logger = require("../../logger");
 const dbCreds = require(`../mongo_secret.json`);
 const chalk = require(`chalk`)
-const sheet = require(`./sheet`)
+const sheet = require(`./sheet`);
+const { config } = require("winston");
 const MongoClient = require("mongodb").MongoClient;
 const mongoClient = new MongoClient(dbCreds.login,
     {
@@ -286,6 +287,17 @@ function removeDoc(collection, query) {
         );
     })
 }
+function addGameCount(guild) {
+    getCollection(`guilds`).then(coll => {
+        coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
+            if (err)
+                return err;
+            oldConfig.gameCount += 1;
+            coll.updateOne({ guildId: guild.id }, { $set: oldConfig })
+        })
+
+    })
+}
 
 module.exports = {
     getGameId,
@@ -295,4 +307,5 @@ module.exports = {
     getCollection,
     addDoc,
     removeDoc,
+    addGameCount
 }

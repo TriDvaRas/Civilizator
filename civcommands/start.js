@@ -7,7 +7,8 @@ const Embeder = require("../assets/functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
 const DB = require(`../assets/functions/db`);
-const Discord = require(`discord.js`)
+const Discord = require(`discord.js`);
+const db = require('../assets/functions/db.js');
 
 module.exports = {
     name: 'start',
@@ -39,6 +40,7 @@ module.exports = {
                         else
                             return state;
                     }).then(function (state) {
+                        db.addGameCount(message.guild)
                         message.channel.send(new Discord.MessageEmbed()
                             .setColor('#46a832')
                             .setTitle("**Civilization V Game**")
