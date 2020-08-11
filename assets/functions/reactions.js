@@ -124,7 +124,8 @@ or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500
     });
     collector.on('end', (collected, reason) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] join collector committed die | reason ${reason}`);
-        msg.reactions.removeAll();
+        if (reason != `messageDelete`)
+            msg.reactions.removeAll();
         if ([`idle`, `new game`].includes(reason)) {
             GC.getGameState(msg.guild).then(state => {
                 state.flushed = true;
@@ -224,7 +225,8 @@ function addBanner(msg) {
     });
     collector.on('end', (collected, reason) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] banner collector committed die | reason ${reason}`);
-        msg.reactions.removeAll();
+        if (reason != `messageDelete`)
+            msg.reactions.removeAll();
         if ([`idle`, `new game`].includes(reason)) {
             GC.getGameState(msg.guild).then(state => {
                 state.flushed = true;
