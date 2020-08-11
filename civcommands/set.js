@@ -7,8 +7,8 @@ const chalk = require('chalk');
 module.exports = {
     name: 'set',
     description: 'change current game settings',
-    usage: `\`set bans <0-4>\' - change bans per player 
-\`set civs <1-6>\' - change civs per player
+    usage: `\`set bans <0-4>\` - change bans per player 
+\`set civs <1-6>\` - change civs per player
 `,
     execute: function (message, args) {
         message.delete({ timeout: 5000 });
@@ -26,6 +26,7 @@ module.exports = {
                     }
                     let embed;
                     switch (args[0]) {
+                        case "b":
                         case "bans":
                             let newBans = parseInt(args[1]);
                             if (!newBans) {
@@ -40,6 +41,7 @@ module.exports = {
                             Embeder.set(state, message.channel, embed)
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] changed bans to ${state.banSize}`);
                             break;
+                        case "c":
                         case "civs":
                             let newCivs = parseInt(args[1]);
                             if (!newCivs) {

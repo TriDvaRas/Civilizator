@@ -9,7 +9,7 @@ module.exports = {
         Perm.checkRoles(message.member, null, { admin: true })
             .then(() => {
 
-                createBaseRole(message.guild, message)
+                createBaseRole(message.guild, false)
                     .then(role => {
                         message.channel.send(`Successfuly created ${role.name} role`);
                     },

@@ -9,7 +9,7 @@ const chalk = require('chalk');
 
 module.exports = {
     StartJoins: function StartJoins(state, gameEmbed) {
-        gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n `dlc` to manage DLCs (Operator)\n\u200B";
+        gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Joining** \n Click  ✅  to join \n Click  ❎  to leave\n Click  ⏩  to end phase (Operator)\n `dlc` to manage DLCs (Operator)\n `set` to change CPP/BPP (Operator)\n\u200B";
         state.Phase = "join";
         DB.updateGame(state);
     },
@@ -83,7 +83,7 @@ module.exports = {
             GeneratePicks(state, channel);
             DB.updateGame(state);
         } catch (error) {
-            logger.log(`error`, `[${chalk.magentaBright(channel.guild.name)}] Error on starting game ${error.stack}`);
+            logger.log(`error`, `[${chalk.magentaBright(channel.guild.name)}] Error on starting picks ${error.stack}`);
 
         }
 
@@ -111,7 +111,7 @@ function GetCivLine(state, channel, i) {
     var CivList = IO.Read('assets/CivList.json');
     let txt = `${Player.id}:\n`;
     images = [];
-    for (let i = 0; i < state.playerSize; i++) {
+    for (let j = 0; j < state.playerSize; j++) {
         let Id = GetRandomCivId(state);
         txt += `${CivList[Id - 1].Name}/`;
         images.push(`./assets/${CivList[Id - 1].picPath}`);
