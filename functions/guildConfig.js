@@ -3,6 +3,7 @@ const { createBase } = require('./Setup.js');
 const logger = require(`../logger`);
 const chalk = require('chalk');
 const DB = require(`./db`);
+const getBaseState = require(`../functions/baseState`)
 
 
 function createConfig(guild) {
@@ -18,7 +19,7 @@ function createConfig(guild) {
             fastCount: 0,
             lastFast: 0
         }
-        let state = IO.Read(`assets/BaseState.json`);
+        let state = getBaseState(`civ5`)
         state.guildId = guild.id;
         Promise.all([
             DB.addDoc(`guilds`, config),
@@ -152,13 +153,13 @@ function setGameState(guild, newState) {
         })
     });
 }
-function resetGameState(guild) {
+function resetGameState(guild, game) {
     return new Promise((resolve, reject) => {
         DB.getCollection(`states`).then(coll => {
             coll.findOne({ guildId: `${guild.id}` }, function (err, oldState) {
                 if (err)
                     return reject(err);
-                let newState = IO.Read(`./assets/BaseState.json`);
+                let newState = getBaseState(game ? game : `civ5`)
                 newState.guildId = guild.id;
                 resolve(newState);
                 for (const key in newState) {

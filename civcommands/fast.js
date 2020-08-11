@@ -6,6 +6,9 @@ const GC = require(`../functions/guildConfig.js`);
 var IO = require('../functions/IO.js');
 const Discord = require('discord.js');
 const db = require('../functions/db.js');
+const mergeImg = require('merge-img');
+const getBaseState = require(`../functions/baseState`)
+const getCivList = require(`../functions/civList`)
 module.exports = {
     name: 'fast',
     description: 'Fast game (original CivRandomizer) (has 3m cooldown)',
@@ -28,6 +31,12 @@ module.exports = {
                 Perm.checkRoles(message.member, null, { admin: true, civ: true })
                     .then(
                         () => {
+                            //check game
+                            let game;
+                            if ([`civ5`, `lek`].includes(args[0].toLowerCase())) {
+                                game = args.shift();
+                                
+                            }
                             //check 0/1 args
                             if (args.length < 2 || !(args[0] >= 1 && args[0] <= 16 && args[1] >= 1 && args[1] <= 6)) {
 
@@ -39,7 +48,7 @@ module.exports = {
                             }
 
                             //get default state
-                            let state = IO.Read(`./assets/BaseState.json`)
+                            let state = getBaseState(game ? game : `civ5`)
                             //check dlcs settings
                             let white;
                             if (args[2] == "+")
@@ -125,7 +134,7 @@ function checkDLCs(state, args, white) {
 
 }
 function checkCivs(state) {
-    const CivList = IO.Read('./assets/CivList.json');
+    const CivList = getCivList(state.game)
     let newCivs = [];
     state.Civs.forEach(Civ => {
         civObj = CivList.find(C => C.id == Civ);
@@ -152,8 +161,7 @@ function GeneratePicks(state, channel, players, cpp) {
 }
 //get player civ set
 function GetCivLine(state, channel, i, cpp) {
-    const mergeImg = require('merge-img');
-    var CivList = IO.Read('assets/CivList.json');
+    var CivList = getCivList(state.game)
     let txt = `Player ${i + 1}:\n`;
     images = [];
     for (let i = 0; i < cpp; i++) {

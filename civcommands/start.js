@@ -29,17 +29,11 @@ module.exports = {
                 .then(() => {
                     //check cd
                     CheckLastGame(message, state).then(function () {
-                        //check if game is started
-                        if (state.started == true) {
-
-                            return GC.resetGameState(message.guild).then(function (state) {
-                                return preStart(message, args, state);
-                            },
-                                err => logger.log(`error`, err)
-                            );
-                        }
-                        else
+                        GC.resetGameState(message.guild).then(function (state) {
                             return preStart(message, args, state);
+                        },
+                            err => logger.log(`error`, err)
+                        );
                     }, () => { })
                 },
                     () => {

@@ -4,6 +4,7 @@ const GC = require(`../functions/guildConfig.js`);
 var Perm = require('../functions/Permissions.js');
 var IO = require('../functions/IO.js');
 const Embeder = require("../functions/embeder.js");
+const getCivList = require(`../functions/civList`)
 const logger = require("../logger");
 const chalk = require('chalk');
 module.exports = {
@@ -120,7 +121,7 @@ function checkDLCs(state, args, white) {
 
 }
 function checkCivs(state) {
-    const CivList = IO.Read('./assets/CivList.json');
+    const CivList = getCivList(state.game)
     let newCivs = [];
     state.Civs.forEach(Civ => {
         civObj = CivList.find(C => C.id == Civ);

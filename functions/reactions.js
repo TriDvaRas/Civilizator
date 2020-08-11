@@ -7,6 +7,7 @@ const logger = require(`../logger`);
 const chalk = require('chalk');
 const DB = require(`./db`);
 const IO = require('./IO.js');
+const getCivList = require(`../functions/civList`)
 
 module.exports = {
     addJoiner,
@@ -187,7 +188,7 @@ function addBanner(msg) {
                 state.bansActual = parseInt(state.bansActual) + 1;
 
                 logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] ban skip [${state.bansActual}/${state.bansFull}]`);
-                let civList = IO.Read(`assets/CivList.json`);
+                let civList = getCivList(state.game)
                 let embed = Embeder.get(state, msg.channel);
                 embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
                 embed.fields.find(field => field.name == "Banned civs").value = state.banned.map(id => civList.find(x => x.id == id).Name).join('\n') + '\u200B';
