@@ -6,7 +6,7 @@ module.exports = {
     usage: '`help`',
     execute: async function (message, args) {
         message.delete({timeout:30000});
-        let text=`**List of Civilizator bot Commands**\nAll commands start with prefix(default \`!\`) or bot mention\n\n      **Standard Commands**\n`
+        let text=`**List of Civilizator bot Commands**\nAll commands start with prefix(default \`!\`) or bot mention\nTo get more info about a specific command use \`<command> help\` (e.g. \`start help\`)\n\n      **Standard Commands**\n`
         const commands = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
         for (const file of commands) {
             const command = require(`../commands/${file}`);

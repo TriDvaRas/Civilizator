@@ -101,7 +101,8 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 					.addField(`Prefix`, prefix, true)
 					.addField(`Role`, `<@&${cfg.roleId}>`, true)
 					.addField(`Channel`, `<#${cfg.channelId}>`, true)
-					.addField(`Games Count`, cfg.gameCount, false)
+					.addField(`Normal Games Count`, cfg.gameCount, false)
+					.addField(`Fast Games Count`, cfg.fastCount, true)
 					.setTimestamp()
 					.setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
 				)
@@ -119,18 +120,18 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 				try {
 					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 					if (args[0] == "help") {
-						message.channel.send(`${discordClient.commands.get(command).description}\nUsage:\n${discordClient.commands.get(command).usage}\n${discordClient.civcommands.get(command).example ? 'Example:\n' + discordClient.civcommands.get(command).example : ""}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+						message.channel.send(`${discordClient.commands.get(command).description}\nUsage:\n${discordClient.commands.get(command).usage}\n${discordClient.commands.get(command).example ? 'Example:\n' + discordClient.commands.get(command).example : ""}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
 					} else
 						discordClient.commands.get(command).execute(message, args);
 				} catch (error) {
 					logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
 				}
-			else if (discordClient.civcommands.has(command) && cfg.channelId == message.channel.id)
+			else if (discordClient.civcommands.has(command))
 				try {
 					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 					if (args[0] == "help") {
 						message.channel.send(`${discordClient.civcommands.get(command).description}\nUsage:\n${discordClient.civcommands.get(command).usage}\n${discordClient.civcommands.get(command).example ? 'Example:\n' + discordClient.civcommands.get(command).example : ""}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
-					} else
+					} else if (cfg.channelId == message.channel.id)
 						discordClient.civcommands.get(command).execute(message, args);
 				} catch (error) {
 					logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
