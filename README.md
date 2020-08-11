@@ -5,11 +5,12 @@
 
 ## About
 
-Discord bot for randoming sets of Civilization V civs for each player.
+Discord bot for randoming sets of Civilization V civs for each player (also known as CivRandomizer).
 Bot is primarily meant to be used in small servers by friends companies and just to make the game fun and increase variety of picks.  
 
 Bot's idea is to make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll each player's pool would be rerandomed! 
 
+There is also original CivRandomizer(`fast` command) without picks, rerolls, bans or stats.
 
 [Invite Link](https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952)
 
@@ -94,6 +95,7 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 | getrole+ | | Enables getrole command | !getrole+ | Admin |
 | getrole- | | Disables getrole command | !getrole- | Admin |
 | help | | DMs you the command list | !help | anyone |
+| info | | Gives info about what Civilizator is and how to use it | !info | anyone |
 | invite | | Gives bot invite link | !invite | anyone |
 | lockchannel | | Changes channellock to this channel. Civilization commands only work in locked channel | !lockchannel | Admin |
 | ping | | Ping! | !ping | everyone |
@@ -110,6 +112,7 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | start | \<CivPerPlayer(1-6)\> \[BansPerPlayer(0-4)\] | Starts a new game | !start 3 1 | Civilized |
 | | | By default BansPerPlayer is 0 |  | Civilized |
+| fast | \<Players(1-16)\> \<CivPerPlayer(1-6)\> \[-/+\] \[DLCs to enable/disable\] | Fast game (original CivRandomizer) | !fast 3 3 | Civilized |
 | dlc | \<whitelist/white/w/+\> \<DLCs\> | Disables all **not** metioned DLCs | !dlc w vanila g&k Mong | Operator |
 |   | \<blacklist/black/b/-\> \<DLCs\> | Disables all metioned DLCs | !dlc b bnw gods korea | Operator |
 |   | \<reset/r\> | Enables all DLCs | !dlc b bnw gods korea | Operator |
