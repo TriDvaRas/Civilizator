@@ -5,7 +5,7 @@
 
 ## About
 
-Discord bot for randoming sets of Civilization V civs for each player (also known as CivRandomizer).
+Civilizator is a Discord Bot implementation of CivRandomizer (random set of civs to pick from for each player).
 Bot is primarily meant to be used in small servers by friends companies and just to make the game fun and increase variety of picks.  
 
 Bot's idea is to make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll each player's pool would be rerandomed! 
