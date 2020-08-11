@@ -1,11 +1,11 @@
 
-var Perm = require('../assets/functions/Permissions.js');
+var Perm = require('../functions/Permissions.js');
 const logger = require("../logger");
 const chalk = require('chalk');
-const GC = require(`../assets/functions/guildConfig.js`);
-var IO = require('../assets/functions/IO.js');
+const GC = require(`../functions/guildConfig.js`);
+var IO = require('../functions/IO.js');
 const Discord = require('discord.js');
-const db = require('../assets/functions/db.js');
+const db = require('../functions/db.js');
 module.exports = {
     name: 'fast',
     description: 'Fast game (original CivRandomizer) (has 3m cooldown)',

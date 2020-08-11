@@ -2,11 +2,11 @@
 
 //Setup
 const fs = require('fs');
-const IO = require('./assets/functions/IO');
-const DB = require('./assets/functions/db');
+const IO = require('./functions/IO');
+const DB = require('./functions/db');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
-const GC = require("./assets/functions/guildConfig.js");
+const GC = require("./functions/guildConfig.js");
 let pressences = IO.Read(`./pressence.json`);
 let pressI = 1;
 
@@ -25,7 +25,7 @@ globalThis.discordClient = new Discord.Client({
 //Set logger
 const logger = require("./logger");
 const chalk = require('chalk');
-const db = require('./assets/functions/db');
+const db = require('./functions/db');
 
 discordClient.on('ready', () => {
 	logger.log('warn', 'Bot logged in');
@@ -131,8 +131,12 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 					if (args[0] == "help") {
 						message.channel.send(`${discordClient.civcommands.get(command).description}\nUsage:\n${discordClient.civcommands.get(command).usage}\n${discordClient.civcommands.get(command).example ? 'Example:\n' + discordClient.civcommands.get(command).example : ""}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
-					} else if (cfg.channelId == message.channel.id)
+					} else if (cfg.channelId == message.channel.id || process.argv.includes(`test`))
 						discordClient.civcommands.get(command).execute(message, args);
+					else {
+						logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] bad channel`);
+						message.reply(`Randomizer-related commands only work in set channel. You can check current channel and role settings by mentioning bot.`);
+					}
 				} catch (error) {
 					logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
 				}

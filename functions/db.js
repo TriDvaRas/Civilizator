@@ -1,6 +1,6 @@
 
-const logger = require("../../logger");
-const dbCreds = require(`../mongo_secret.json`);
+const logger = require("../logger");
+const dbCreds = require(`../assets/mongo_secret.json`);
 const chalk = require(`chalk`)
 const sheet = require(`./sheet`);
 const { config } = require("winston");
@@ -328,7 +328,6 @@ function addFastCount(guild) {
     getCollection(`stats`).then(coll => {
         coll.findOne({}, function (err, doc) {
             if (err) {
-                reject(err);
                 return logger.log(`error`, `${err}`);
             }
             coll.updateOne(
@@ -336,11 +335,8 @@ function addFastCount(guild) {
                 { $set: { globalFastCount: doc.globalFastCount + 1 } },
                 function (err) {
                     if (err) {
-                        reject(err);
                         return logger.log(`error`, `${err}`);
                     }
-                    else
-                        resolve()
                 }
             );
 
