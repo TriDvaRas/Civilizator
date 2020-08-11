@@ -38,16 +38,21 @@ function addJoiner(msg) {
                 //check perm
                 Perm.checkRoles(msg.guild.members.cache.get(user.id), state.Op, { admin: true, op: true })
                     .then(() => {
-                        collector.stop(`old game`);
+                        //check if players
+                        if (state.Players.length < 1) {
+                            msg.channel.send(`Can't start game without players`).then(m => m.delete({ timeout: 7500 }));
+                            return;
+                        }
                         //check size
                         let size = state.Players.length * (state.banSize + state.playerSize)
                         let maxSize = state.Civs.length;
                         if (size > maxSize) {
                             msg.channel.send(`Not enough civs for all players
-    Civs in pool: \`${maxSize}\`
-    Civs needed to start: \`${size}\`(players count*(CPP+BPP))
-    Try lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command 
-    or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500 }));
+Civs in pool: \`${maxSize}\`
+Civs needed to start: \`${size}\`(players count*(CPP+BPP))
+Try lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command 
+or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500 }));
+                            return;
                         }
                         //go to next phase
                         collector.stop("force end");
@@ -145,6 +150,7 @@ function addBanner(msg) {
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created banner collector`);
 
     collector.on('collect', (reaction, user) => {
+
         GC.getGameState(msg.guild).then(state => {
 
             if (state.embedId != msg.id) {
@@ -154,9 +160,10 @@ function addBanner(msg) {
             if (reaction.emoji.name === '✔️') {
                 if (user.id != 719933714423087135)
                     return;
-                reaction.users.remove(user);
+                if (collector.ended)
+                    return;
+                collector.stop(`tick`);
                 let embed = Embeder.get(state, msg.channel);
-                collector.stop();
                 Phaser.StartPicks(state, embed, msg.channel);
                 addReroller(msg);
 
