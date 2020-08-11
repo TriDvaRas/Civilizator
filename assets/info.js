@@ -11,8 +11,8 @@ After everyone got their civs they can vote to reroll. If 70%+ of players has vo
     },
     {
         head:`**Commands usage and Prefix**`,
-        text:`To use bot's commands you need to start your message with the prefix or bot mention (e.g. !start or <@719933714423087135>start)
-Bot's default prefix is \`!\`, but you can change it using \`prefix\` command. To view full command list you can use \`help\` or visit bot's [github page](https://github.com/TriDvaRas/Civilizator)
+        text:`To use bot's commands you need to start your message with the prefix or bot mention (e.g. \`!start\` or \`@Civilizatorstart\`)
+Bot's default prefix is \`!\`, but you can change it using \`prefix\` command. To view full command list you can use \`help\` or visit bot's [github page](https://github.com/TriDvaRas/Civilizator). To get more info about a specific command use \`<command> help\` (e.g. \`!start help\`)
 **__IMPORTANT!__
 If your server has a bot with  \`!ban\` command you should change <@719933714423087135>'s prefix to avoid actually banning someone** 
 `
@@ -22,7 +22,7 @@ If your server has a bot with  \`!ban\` command you should change <@719933714423
         text:`Then you add <@719933714423087135> to your server bot automatically creates \`#civilizator\` channel and \`Civilized\` role
 - By default \`#civilizator\` channel is only visible to users with \`Civilized\` role (you can change this in channel permissions)
 - CivRandomizer-related commands are bound to your \`#civilizator\` channel and are ignored in other ones. 
-- You need to have a \`Civilized\` role (or be server admin) to \`start\` a game. (anyone can join). Also by default this channel is only visible to users with \`Civilized\` role. You can change it in channels settings
+- You need to have a \`Civilized\` role (or be server admin) to \`start\` a game (anyone can join) or use \`fast\` command. Also by default this channel is only visible to users with \`Civilized\` role. You can change it in channels settings
 - All members of your server can get the role with \`getrole\` command. You can enable/disable this command with \`getrole+\`/\`getrole-\`. You can change bound channel using \`lockchannel\` command in a channel you want to set bond to. 
 - Channel and role names can be changed as you wish. If you accidentally delete them you can recreate them using \`createrole\` and \`createchannel\`.
 `
