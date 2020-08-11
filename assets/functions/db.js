@@ -4,6 +4,7 @@ const dbCreds = require(`../mongo_secret.json`);
 const chalk = require(`chalk`)
 const sheet = require(`./sheet`);
 const { config } = require("winston");
+const { resolve } = require("app-root-path");
 const MongoClient = require("mongodb").MongoClient;
 const mongoClient = new MongoClient(dbCreds.login,
     {
@@ -186,7 +187,23 @@ function getGameId(increment) {
         );
     })
 }
+function getStats() {
+    return new Promise((resolve, reject) => {
+        getCollection(`stats`).then(coll => {
+            coll.findOne({}, function (err, doc) {
+                if (err) {
+                    reject(err);
+                    return logger.log(`error`, `${err}`);
+                }
 
+                resolve(doc)
+
+            })
+        },
+            err => reject(err)
+        );
+    })
+}
 //+
 function getCollection(collection) {
     return new Promise((resolve, reject) => {
@@ -308,6 +325,30 @@ function addFastCount(guild) {
         })
 
     })
+    getCollection(`stats`).then(coll => {
+        coll.findOne({}, function (err, doc) {
+            if (err) {
+                reject(err);
+                return logger.log(`error`, `${err}`);
+            }
+            coll.updateOne(
+                {},
+                { $set: { globalFastCount: doc.globalFastCount + 1 } },
+                function (err) {
+                    if (err) {
+                        reject(err);
+                        return logger.log(`error`, `${err}`);
+                    }
+                    else
+                        resolve()
+                }
+            );
+
+
+        })
+    },
+        err => reject(err)
+    );
 }
 function setLastFast(guild) {
     getCollection(`guilds`).then(coll => {
@@ -331,4 +372,5 @@ module.exports = {
     addGameCount,
     addFastCount,
     setLastFast,
+    getStats,
 }

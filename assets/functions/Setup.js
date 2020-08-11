@@ -37,8 +37,7 @@ function createBaseChannel(guild, role, options) {
                     channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`);
                 }
                 channel.send(`Bound bot channel to ${channel} ✅`);
-                config.channelId = channel.id;
-                setConfig(guild, config);
+                setConfig(guild, { channelId: channel.id });
                 resolve(channel);
             });
 
@@ -64,8 +63,7 @@ function createBaseRole(guild, ignoreOld) {
                     color: [64, 255, Math.floor(90 + Math.random() * 40)]
                 }
             }).then(role => {
-                config.roleId = role.id;
-                setConfig(guild, config);
+                setConfig(guild, { roleId: role.id});
                 resolve(role);
             });
 
@@ -79,6 +77,7 @@ function createBase(guild) {
         createBaseRole(guild, true).then(role => {
             createBaseChannel(guild, role, { ignoreOld: true }).then(channel => {
                 guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
+                setConfig(guild, { roleId: role.id, channelId: channel.id })
                 resolve()
             },
                 err => reject(err)
@@ -113,7 +112,6 @@ function setConfig(guild, newConfig) {
             coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
                 if (err)
                     return reject(err);
-
                 resolve();
                 for (const key in newConfig) {
                     if (newConfig.hasOwnProperty(key)) {

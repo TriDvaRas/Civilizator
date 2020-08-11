@@ -154,6 +154,8 @@ function setPressence() {
 		name = name.replace(`{guildCount}`, `${discordClient.guilds.cache.array().length}`);
 	else if (name.includes(`{gamesCount}`))
 		name = name.replace(`{gamesCount}`, `${stats.gameCount}`)
+	else if (name.includes(`{fastCount}`))
+		name = name.replace(`{fastCount}`, `${stats.fastCount}`)
 	else if (name.includes(`{uptime}`))
 		name = name.replace(`{uptime}`, `${getUptime()}`)
 	else if (name.includes(`{civilizedCount}`))
@@ -215,9 +217,9 @@ function updateStats() {
 	let stats = {}
 	getCivilizedCount().then(count => {
 		stats[`userCount`] = count;
-		db.getGameId(false).then(count => {
-
-			stats[`gameCount`] = count;
+		db.getStats().then(doc => {
+			stats[`gameCount`] = doc.lastGameId;
+			stats[`fastCount`] = doc.globalFastCount;
 			IO.Write(`./stats.json`, stats);
 		})
 

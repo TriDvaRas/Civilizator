@@ -1,9 +1,5 @@
 [
     {
-        "name": "uptime: {uptime}",
-        "type": "LISTENING"
-    },
-    {
         "name": "{guildCount} servers",
         "type": "LISTENING"
     },
@@ -12,7 +8,11 @@
         "type": "LISTENING"
     },
     {
-        "name": "{gamesCount} games played",
+        "name": "Normal games: {gamesCount}",
+        "type": "LISTENING"
+    },
+    {
+        "name": "Fast games: {fastCount}",
         "type": "LISTENING"
     }
 ]
