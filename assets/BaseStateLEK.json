@@ -1,6 +1,6 @@
 {
 	"gameId":0,
-	"game":"civ5",
+	"game":"lek",
 	"guildId":0,
 	"pickMsgs":[],
 	"flushed":false,
@@ -29,7 +29,8 @@
         "Spain and the Inca",
         "Korea",
         "Mongolia",
-        "Polynesia"
+        "Polynesia",
+        "LEK"
     ],
     "disabledDLC":[],
     "Civs": [

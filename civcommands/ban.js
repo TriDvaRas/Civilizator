@@ -1,7 +1,7 @@
-var IO = require('../assets/functions/IO.js');
-const GC = require(`../assets/functions/guildConfig.js`);
-var BanF = require('../assets/functions/BansFunctions.js');
-const Embeder = require("../assets/functions/embeder.js");
+var IO = require('../functions/IO.js');
+const GC = require(`../functions/guildConfig.js`);
+var BanF = require('../functions/BansFunctions.js');
+const Embeder = require("../functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
 module.exports = {
