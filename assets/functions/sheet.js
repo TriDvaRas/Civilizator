@@ -1,8 +1,8 @@
 const GSS = require(`google-spreadsheet`);
-const logger = require("../logger");
+const logger = require("../../logger");
 const chalk = require('chalk');
 
-const creds = require(`../assets/sheet_secret.json`);
+const creds = require(`../sheet_secret.json`);
 
 
 module.exports = {

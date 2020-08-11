@@ -1,6 +1,6 @@
 const IO = require('./IO.js');
 const { createBase } = require('./Setup.js');
-const logger = require(`../logger`);
+const logger = require(`../../logger`);
 const chalk = require('chalk');
 const DB = require(`./db`);
 

@@ -1,6 +1,6 @@
 
-var Perm = require('../functions/Permissions.js');
-const { createBaseChannel } = require('../functions/Setup.js');
+var Perm = require('../assets/functions/Permissions.js');
+const { createBaseChannel } = require('../assets/functions/Setup.js');
 module.exports = {
     name: 'createchannel',
     description: 'Create Civilizator channel (Admin)',

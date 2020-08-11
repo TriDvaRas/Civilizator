@@ -1,5 +1,5 @@
 
-const welcome = require(`../assets/welcome`);
+const welcome = require(`../welcome`);
 const DB = require(`./db`);
 
 function createBaseChannel(guild, role, options) {

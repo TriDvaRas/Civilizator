@@ -1,6 +1,6 @@
 
 const Discord = require('discord.js');
-const logger=require(`../logger`);
+const logger=require(`../../logger`);
 const chalk = require('chalk');
 module.exports = {
     create: createEmbed,

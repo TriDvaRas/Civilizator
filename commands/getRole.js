@@ -1,5 +1,5 @@
 
-const GC = require("../functions/guildConfig.js");
+const GC = require("../assets/functions/guildConfig.js");
 module.exports = {
     name: 'getrole',
     description: 'Gives you Civilized role if enabled on server',

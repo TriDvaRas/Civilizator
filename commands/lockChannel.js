@@ -1,6 +1,6 @@
 //imports
-var Perm = require('../functions/Permissions.js');
-const GC = require(`../functions/guildConfig.js`);
+var Perm = require('../assets/functions/Permissions.js');
+const GC = require(`../assets/functions/guildConfig.js`);
 module.exports = {
     name: 'lockchannel',
     description:

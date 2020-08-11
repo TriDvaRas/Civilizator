@@ -1,9 +1,9 @@
 //imports 
 
-const GC = require(`../functions/guildConfig.js`);
-var Perm = require('../functions/Permissions.js');
-var IO = require('../functions/IO.js');
-const Embeder = require("../functions/embeder.js");
+const GC = require(`../assets/functions/guildConfig.js`);
+var Perm = require('../assets/functions/Permissions.js');
+var IO = require('../assets/functions/IO.js');
+const Embeder = require("../assets/functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
 module.exports = {

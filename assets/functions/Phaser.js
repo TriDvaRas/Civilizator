@@ -4,7 +4,7 @@ const DB = require(`./db`);
 const GC = require(`./guildConfig`);
 const Picker = require(`./picker`);
 var IO = require('./IO.js');
-const logger = require('../logger.js');
+const logger = require('../../logger.js');
 const chalk = require('chalk');
 
 module.exports = {

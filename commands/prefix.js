@@ -1,6 +1,6 @@
 
-const GC = require("../functions/guildConfig.js");
-const Perm = require('../functions/Permissions.js');
+const GC = require("../assets/functions/guildConfig.js");
+const Perm = require('../assets/functions/Permissions.js');
 const logger = require("../logger");
 const chalk = require('chalk');
 module.exports = {

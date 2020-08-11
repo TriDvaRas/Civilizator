@@ -1,14 +1,14 @@
 
-const Phaser = require('../functions/Phaser.js');
-const Perm = require('../functions/Permissions.js');
-const GC = require(`../functions/guildConfig.js`);
-const Reacter = require(`../functions/reactions.js`);
-const Embeder = require("../functions/embeder.js");
+const Phaser = require('../assets/functions/Phaser.js');
+const Perm = require('../assets/functions/Permissions.js');
+const GC = require(`../assets/functions/guildConfig.js`);
+const Reacter = require(`../assets/functions/reactions.js`);
+const Embeder = require("../assets/functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
-const DB = require(`../functions/db`);
+const DB = require(`../assets/functions/db`);
 const Discord = require(`discord.js`);
-const db = require('../functions/db.js');
+const db = require('../assets/functions/db.js');
 
 module.exports = {
     name: 'start',
