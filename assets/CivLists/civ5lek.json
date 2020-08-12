@@ -6,7 +6,7 @@
       "American",
       "Washington"
     ],
-    "picPath": "Imgs/Civs/1.png",
+    "picPath": "Imgs/civ5/1.png",
     "DLC": "Vanilla"
   },
   {
@@ -17,7 +17,7 @@
       "Arabic",
       "Harun al-Rashid"
     ],
-    "picPath": "Imgs/Civs/2.png",
+    "picPath": "Imgs/civ5/2.png",
     "DLC": "Vanilla"
   },
   {
@@ -27,7 +27,7 @@
       "Assyrian",
       "Ashurbanipal"
     ],
-    "picPath": "Imgs/Civs/3.png",
+    "picPath": "Imgs/civ5/3.png",
     "DLC": "BNW"
   },
   {
@@ -37,7 +37,7 @@
       "Austrian",
       "Maria Theresa"
     ],
-    "picPath": "Imgs/Civs/4.png",
+    "picPath": "Imgs/civ5/4.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -47,7 +47,7 @@
       "Aztec",
       "Montezuma"
     ],
-    "picPath": "Imgs/Civs/5.png",
+    "picPath": "Imgs/civ5/5.png",
     "DLC": "Vanilla"
   },
   {
@@ -57,7 +57,7 @@
       "Babylonian",
       "Nebuchadnezzar II"
     ],
-    "picPath": "Imgs/Civs/6.png",
+    "picPath": "Imgs/civ5/6.png",
     "DLC": "Babylon"
   },
   {
@@ -67,7 +67,7 @@
       "Brazilian",
       "Pedro II"
     ],
-    "picPath": "Imgs/Civs/7.png",
+    "picPath": "Imgs/civ5/7.png",
     "DLC": "BNW"
   },
   {
@@ -78,7 +78,7 @@
       "Byzantium",
       "Theodora"
     ],
-    "picPath": "Imgs/Civs/8.png",
+    "picPath": "Imgs/civ5/8.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -89,7 +89,7 @@
       "Dido",
       "Didona"
     ],
-    "picPath": "Imgs/Civs/9.png",
+    "picPath": "Imgs/civ5/9.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -99,7 +99,7 @@
       "Celtic",
       "Boudicca"
     ],
-    "picPath": "Imgs/Civs/10.png",
+    "picPath": "Imgs/civ5/10.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -110,7 +110,7 @@
       "China",
       "Wu Zetian"
     ],
-    "picPath": "Imgs/Civs/11.png",
+    "picPath": "Imgs/civ5/11.png",
     "DLC": "Vanilla"
   },
   {
@@ -121,7 +121,7 @@
       "Denmark",
       "Harald Bluetooth"
     ],
-    "picPath": "Imgs/Civs/12.png",
+    "picPath": "Imgs/civ5/12.png",
     "DLC": "Denmark"
   },
   {
@@ -132,7 +132,7 @@
       "Netherlands",
       "William"
     ],
-    "picPath": "Imgs/Civs/13.png",
+    "picPath": "Imgs/civ5/13.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -142,7 +142,7 @@
       "Egyptian",
       "Ramesses II"
     ],
-    "picPath": "Imgs/Civs/14.png",
+    "picPath": "Imgs/civ5/14.png",
     "DLC": "Vanilla"
   },
   {
@@ -153,7 +153,7 @@
       "England",
       "Elizabeth"
     ],
-    "picPath": "Imgs/Civs/15.png",
+    "picPath": "Imgs/civ5/15.png",
     "DLC": "Vanilla"
   },
   {
@@ -163,7 +163,7 @@
       "Ethiopian",
       "Haile Selassie"
     ],
-    "picPath": "Imgs/Civs/16.png",
+    "picPath": "Imgs/civ5/16.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -174,7 +174,7 @@
       "France",
       "Napoleon"
     ],
-    "picPath": "Imgs/Civs/17.png",
+    "picPath": "Imgs/civ5/17.png",
     "DLC": "Vanilla"
   },
   {
@@ -184,7 +184,7 @@
       "Germany",
       "Bismarck"
     ],
-    "picPath": "Imgs/Civs/18.png",
+    "picPath": "Imgs/civ5/18.png",
     "DLC": "Vanilla"
   },
   {
@@ -195,7 +195,7 @@
       "Greece",
       "Pericles"
     ],
-    "picPath": "Imgs/Civs/19.png",
+    "picPath": "Imgs/civ5/19.png",
     "DLC": "Vanilla"
   },
   {
@@ -206,7 +206,7 @@
       "Huns",
       "Attila"
     ],
-    "picPath": "Imgs/Civs/20.png",
+    "picPath": "Imgs/civ5/20.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -217,7 +217,7 @@
       "Incas",
       "Pachacuti"
     ],
-    "picPath": "Imgs/Civs/21.png",
+    "picPath": "Imgs/civ5/21.png",
     "DLC": "Spain and the Inca"
   },
   {
@@ -227,7 +227,7 @@
       "Indian",
       "Gandhi"
     ],
-    "picPath": "Imgs/Civs/22.png",
+    "picPath": "Imgs/civ5/22.png",
     "DLC": "Vanilla"
   },
   {
@@ -237,7 +237,7 @@
       "Indonesian",
       "Gajah Mada"
     ],
-    "picPath": "Imgs/Civs/23.png",
+    "picPath": "Imgs/civ5/23.png",
     "DLC": "BNW"
   },
   {
@@ -247,7 +247,7 @@
       "Iroquois",
       "Hiawatha"
     ],
-    "picPath": "Imgs/Civs/24.png",
+    "picPath": "Imgs/civ5/24.png",
     "DLC": "BNW"
   },
   {
@@ -257,7 +257,7 @@
       "Japanese",
       "Oda Nobunaga"
     ],
-    "picPath": "Imgs/Civs/25.png",
+    "picPath": "Imgs/civ5/25.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -267,7 +267,7 @@
       "Korean",
       "Sejong"
     ],
-    "picPath": "Imgs/Civs/26.png",
+    "picPath": "Imgs/civ5/26.png",
     "DLC": "Korea"
   },
   {
@@ -277,7 +277,7 @@
       "Mayan",
       "Pacal"
     ],
-    "picPath": "Imgs/Civs/27.png",
+    "picPath": "Imgs/civ5/27.png",
     "DLC": "G&K/Gods&Kings"
   },
   {
@@ -287,7 +287,7 @@
       "Mongolian",
       "Genghis Khan"
     ],
-    "picPath": "Imgs/Civs/28.png",
+    "picPath": "Imgs/civ5/28.png",
     "DLC": "Mongolia"
   },
   {
@@ -298,7 +298,7 @@
       "Morocco",
       "Ahmad al-Mansur"
     ],
-    "picPath": "Imgs/Civs/29.png",
+    "picPath": "Imgs/civ5/29.png",
     "DLC": "BNW"
   },
   {
@@ -308,7 +308,7 @@
       "Ottoman",
       "Suleiman"
     ],
-    "picPath": "Imgs/Civs/30.png",
+    "picPath": "Imgs/civ5/30.png",
     "DLC": "Vanilla"
   },
   {
@@ -318,7 +318,7 @@
       "Persian",
       "Darius I"
     ],
-    "picPath": "Imgs/Civs/31.png",
+    "picPath": "Imgs/civ5/31.png",
     "DLC": "Vanilla"
   },
   {
@@ -329,7 +329,7 @@
       "Poland",
       "Casimir III"
     ],
-    "picPath": "Imgs/Civs/32.png",
+    "picPath": "Imgs/civ5/32.png",
     "DLC": "BNW"
   },
   {
@@ -339,7 +339,7 @@
       "Polynesian",
       "Kamehameha"
     ],
-    "picPath": "Imgs/Civs/33.png",
+    "picPath": "Imgs/civ5/33.png",
     "DLC": "Polynesia"
   },
   {
@@ -349,7 +349,7 @@
       "Portuguese",
       "Maria I"
     ],
-    "picPath": "Imgs/Civs/34.png",
+    "picPath": "Imgs/civ5/34.png",
     "DLC": "BNW"
   },
   {
@@ -360,7 +360,7 @@
       "Rome",
       "Augustus Caesar"
     ],
-    "picPath": "Imgs/Civs/35.png",
+    "picPath": "Imgs/civ5/35.png",
     "DLC": "Vanilla"
   },
   {
@@ -370,7 +370,7 @@
       "Russian",
       "Catherine"
     ],
-    "picPath": "Imgs/Civs/36.png",
+    "picPath": "Imgs/civ5/36.png",
     "DLC": "Vanilla"
   },
   {
@@ -380,7 +380,7 @@
       "Shoshone",
       "Pocatello"
     ],
-    "picPath": "Imgs/Civs/37.png",
+    "picPath": "Imgs/civ5/37.png",
     "DLC": "BNW"
   },
   {
@@ -390,7 +390,7 @@
       "Siamese",
       "Ramkhamhaeng"
     ],
-    "picPath": "Imgs/Civs/38.png",
+    "picPath": "Imgs/civ5/38.png",
     "DLC": "Vanilla"
   },
   {
@@ -400,7 +400,7 @@
       "Songhai",
       "Askia"
     ],
-    "picPath": "Imgs/Civs/39.png",
+    "picPath": "Imgs/civ5/39.png",
     "DLC": "Vanilla"
   },
   {
@@ -411,7 +411,7 @@
       "Spain",
       "Isabella"
     ],
-    "picPath": "Imgs/Civs/40.png",
+    "picPath": "Imgs/civ5/40.png",
     "DLC": "Spain and the Inca"
   },
   {
@@ -422,7 +422,7 @@
       "Sweden",
       "Gustavus Adolphus"
     ],
-    "picPath": "Imgs/Civs/41.png",
+    "picPath": "Imgs/civ5/41.png",
     "DLC": "Vanilla"
   },
   {
@@ -432,7 +432,7 @@
       "Venetian",
       "Enrico Dandolo"
     ],
-    "picPath": "Imgs/Civs/42.png",
+    "picPath": "Imgs/civ5/42.png",
     "DLC": "BNW"
   },
   {
@@ -442,7 +442,7 @@
       "Zulu",
       "Shaka"
     ],
-    "picPath": "Imgs/Civs/43.png",
+    "picPath": "Imgs/civ5/43.png",
     "DLC": "BNW"
   },
   {
@@ -452,7 +452,7 @@
       "Akkad",
       "Sargon"
     ],
-    "picPath": "Imgs/Civs/44.png",
+    "picPath": "Imgs/civ5/44.png",
     "DLC": "LEK"
   },
   {
@@ -463,7 +463,7 @@
       "Eva Perón",
       "Eva Peron"
     ],
-    "picPath": "Imgs/Civs/45.png",
+    "picPath": "Imgs/civ5/45.png",
     "DLC": "LEK"
   },
   {
@@ -473,7 +473,7 @@
       "Armenia",
       "Artaxias I"
     ],
-    "picPath": "Imgs/Civs/46.png",
+    "picPath": "Imgs/civ5/46.png",
     "DLC": "LEK"
   },
   {
@@ -483,7 +483,7 @@
       "Australia",
       "Edmund Barton"
     ],
-    "picPath": "Imgs/Civs/47.png",
+    "picPath": "Imgs/civ5/47.png",
     "DLC": "LEK"
   },
   {
@@ -493,7 +493,7 @@
       "Ayyubids",
       "Saladin"
     ],
-    "picPath": "Imgs/Civs/48.png",
+    "picPath": "Imgs/civ5/48.png",
     "DLC": "LEK"
   },
   {
@@ -503,7 +503,7 @@
       "Belgium",
       "Leopold II"
     ],
-    "picPath": "Imgs/Civs/49.png",
+    "picPath": "Imgs/civ5/49.png",
     "DLC": "LEK"
   },
   {
@@ -513,7 +513,7 @@
       "Boers",
       "Stephanus Johannes Paulus Kruger"
     ],
-    "picPath": "Imgs/Civs/50.png",
+    "picPath": "Imgs/civ5/50.png",
     "DLC": "LEK"
   },
   {
@@ -523,7 +523,7 @@
       "Bulgaria",
       "Asparukh Khan"
     ],
-    "picPath": "Imgs/Civs/51.png",
+    "picPath": "Imgs/civ5/51.png",
     "DLC": "LEK"
   },
   {
@@ -533,7 +533,7 @@
       "Brunei",
       "Bolkiah"
     ],
-    "picPath": "Imgs/Civs/52.png",
+    "picPath": "Imgs/civ5/52.png",
     "DLC": "LEK"
   },
   {
@@ -543,7 +543,7 @@
       "Burma",
       "Anawrahta"
     ],
-    "picPath": "Imgs/Civs/53.png",
+    "picPath": "Imgs/civ5/53.png",
     "DLC": "LEK"
   },
   {
@@ -553,7 +553,7 @@
       "Canada",
       "John A. MacDonald"
     ],
-    "picPath": "Imgs/Civs/54.png",
+    "picPath": "Imgs/civ5/54.png",
     "DLC": "LEK"
   },
   {
@@ -563,7 +563,7 @@
       "Finland",
       "Mannerheim"
     ],
-    "picPath": "Imgs/Civs/55.png",
+    "picPath": "Imgs/civ5/55.png",
     "DLC": "LEK"
   },
   {
@@ -573,7 +573,7 @@
       "Franks",
       "Charlemagne"
     ],
-    "picPath": "Imgs/Civs/56.png",
+    "picPath": "Imgs/civ5/56.png",
     "DLC": "LEK"
   },
   {
@@ -583,7 +583,7 @@
       "Gaul",
       "Vercingetorix"
     ],
-    "picPath": "Imgs/Civs/57.png",
+    "picPath": "Imgs/civ5/57.png",
     "DLC": "LEK"
   },
   {
@@ -593,7 +593,7 @@
       "Golden Horde",
       "Batu Khan"
     ],
-    "picPath": "Imgs/Civs/58.png",
+    "picPath": "Imgs/civ5/58.png",
     "DLC": "LEK"
   },
   {
@@ -603,7 +603,7 @@
       "Goths",
       "Alaric I"
     ],
-    "picPath": "Imgs/Civs/59.png",
+    "picPath": "Imgs/civ5/59.png",
     "DLC": "LEK"
   },
   {
@@ -613,7 +613,7 @@
       "Hittites",
       "Muwatallis"
     ],
-    "picPath": "Imgs/Civs/60.png",
+    "picPath": "Imgs/civ5/60.png",
     "DLC": "LEK"
   },
   {
@@ -624,7 +624,7 @@
       "András II",
       "Andras II"
     ],
-    "picPath": "Imgs/Civs/61.png",
+    "picPath": "Imgs/civ5/61.png",
     "DLC": "LEK"
   },
   {
@@ -634,7 +634,7 @@
       "Ireland",
       "Michael Collins"
     ],
-    "picPath": "Imgs/Civs/62.png",
+    "picPath": "Imgs/civ5/62.png",
     "DLC": "LEK"
   },
   {
@@ -644,7 +644,7 @@
       "Israel",
       "David"
     ],
-    "picPath": "Imgs/Civs/63.png",
+    "picPath": "Imgs/civ5/63.png",
     "DLC": "LEK"
   },
   {
@@ -654,7 +654,7 @@
       "Italy",
       "Vittorio Emmanuel III"
     ],
-    "picPath": "Imgs/Civs/64.png",
+    "picPath": "Imgs/civ5/64.png",
     "DLC": "LEK"
   },
   {
@@ -664,7 +664,7 @@
       "Jerusalem",
       "Fulk V"
     ],
-    "picPath": "Imgs/Civs/65.png",
+    "picPath": "Imgs/civ5/65.png",
     "DLC": "LEK"
   },
   {
@@ -674,7 +674,7 @@
       "Kongo",
       "Mvemba a Nzinga"
     ],
-    "picPath": "Imgs/Civs/66.png",
+    "picPath": "Imgs/civ5/66.png",
     "DLC": "LEK"
   },
   {
@@ -684,7 +684,7 @@
       "Khmer",
       "Suryavarman II"
     ],
-    "picPath": "Imgs/Civs/67.png",
+    "picPath": "Imgs/civ5/67.png",
     "DLC": "LEK"
   },
   {
@@ -694,7 +694,7 @@
       "Lithuania",
       "Vytautas"
     ],
-    "picPath": "Imgs/Civs/68.png",
+    "picPath": "Imgs/civ5/68.png",
     "DLC": "LEK"
   },
   {
@@ -704,7 +704,7 @@
       "Macedon",
       "Alexander"
     ],
-    "picPath": "Imgs/Civs/69.png",
+    "picPath": "Imgs/civ5/69.png",
     "DLC": "LEK"
   },
   {
@@ -714,7 +714,7 @@
       "Madagascar",
       "Ralambo"
     ],
-    "picPath": "Imgs/Civs/70.png",
+    "picPath": "Imgs/civ5/70.png",
     "DLC": "LEK"
   },
   {
@@ -724,7 +724,7 @@
       "Manchuria",
       "Nurhaci"
     ],
-    "picPath": "Imgs/Civs/71.png",
+    "picPath": "Imgs/civ5/71.png",
     "DLC": "LEK"
   },
   {
@@ -734,7 +734,7 @@
       "Mexico",
       "Benito Juarez"
     ],
-    "picPath": "Imgs/Civs/72.png",
+    "picPath": "Imgs/civ5/72.png",
     "DLC": "LEK"
   },
   {
@@ -744,7 +744,7 @@
       "Normandy",
       "William the Conqueror"
     ],
-    "picPath": "Imgs/Civs/73.png",
+    "picPath": "Imgs/civ5/73.png",
     "DLC": "LEK"
   },
   {
@@ -754,7 +754,7 @@
       "Norway",
       "Harald Hardrada"
     ],
-    "picPath": "Imgs/Civs/74.png",
+    "picPath": "Imgs/civ5/74.png",
     "DLC": "LEK"
   },
   {
@@ -764,7 +764,7 @@
       "Nubia",
       "Amanitore"
     ],
-    "picPath": "Imgs/Civs/75.png",
+    "picPath": "Imgs/civ5/75.png",
     "DLC": "LEK"
   },
   {
@@ -772,9 +772,10 @@
     "Name": "Papal State",
     "Alias": [
       "Papal State",
+      "Vatican",
       "Urban II"
     ],
-    "picPath": "Imgs/Civs/76.png",
+    "picPath": "Imgs/civ5/76.png",
     "DLC": "LEK"
   },
   {
@@ -784,7 +785,7 @@
       "Phoenician",
       "Hiram"
     ],
-    "picPath": "Imgs/Civs/77.png",
+    "picPath": "Imgs/civ5/77.png",
     "DLC": "LEK"
   },
   {
@@ -794,7 +795,7 @@
       "Prussia",
       "Frederick"
     ],
-    "picPath": "Imgs/Civs/78.png",
+    "picPath": "Imgs/civ5/78.png",
     "DLC": "LEK"
   },
   {
@@ -804,7 +805,7 @@
       "Romania",
       "Carol 1"
     ],
-    "picPath": "Imgs/Civs/79.png",
+    "picPath": "Imgs/civ5/79.png",
     "DLC": "LEK"
   },
   {
@@ -814,7 +815,7 @@
       "Scotland",
       "Robert the Bruce"
     ],
-    "picPath": "Imgs/Civs/80.png",
+    "picPath": "Imgs/civ5/80.png",
     "DLC": "LEK"
   },
   {
@@ -824,7 +825,7 @@
       "Sioux",
       "Sitting Bull"
     ],
-    "picPath": "Imgs/Civs/81.png",
+    "picPath": "Imgs/civ5/81.png",
     "DLC": "LEK"
   },
   {
@@ -834,7 +835,7 @@
       "Sumeria",
       "Gilgamesh"
     ],
-    "picPath": "Imgs/Civs/82.png",
+    "picPath": "Imgs/civ5/82.png",
     "DLC": "LEK"
   },
   {
@@ -844,7 +845,7 @@
       "Tibet",
       "Ngawang Lobsang Gyatso"
     ],
-    "picPath": "Imgs/Civs/83.png",
+    "picPath": "Imgs/civ5/83.png",
     "DLC": "LEK"
   },
   {
@@ -854,7 +855,7 @@
       "Timurids",
       "Timur"
     ],
-    "picPath": "Imgs/Civs/84.png",
+    "picPath": "Imgs/civ5/84.png",
     "DLC": "LEK"
   },
   {
@@ -864,7 +865,7 @@
       "Turkey",
       "Ataturk"
     ],
-    "picPath": "Imgs/Civs/85.png",
+    "picPath": "Imgs/civ5/85.png",
     "DLC": "LEK"
   },
   {
@@ -874,7 +875,7 @@
       "Ukraine",
       "Yaroslav I"
     ],
-    "picPath": "Imgs/Civs/86.png",
+    "picPath": "Imgs/civ5/86.png",
     "DLC": "LEK"
   },
   {
@@ -884,7 +885,7 @@
       "Vietnam",
       "Hai Ba Trung"
     ],
-    "picPath": "Imgs/Civs/87.png",
+    "picPath": "Imgs/civ5/87.png",
     "DLC": "LEK"
   },
   {
@@ -894,7 +895,7 @@
       "Wales",
       "Owain Glyndwr"
     ],
-    "picPath": "Imgs/Civs/88.png",
+    "picPath": "Imgs/civ5/88.png",
     "DLC": "LEK"
   }
 ]

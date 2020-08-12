@@ -113,7 +113,12 @@ function setConfig(guild, newConfig) {
                             delete newConfig[key];
                     }
                 }
-                coll.updateOne({ guildId: guild.id }, { $set: newConfig })
+                if (newConfig != {})
+                    coll.updateOne({ guildId: guild.id }, { $set: newConfig }, function (err, res) {
+                        if (err)
+                            return reject(err);
+                        logger.log(`db`, `set config`);
+                    })
             })
 
         })
@@ -147,7 +152,12 @@ function setGameState(guild, newState) {
                             delete newState[key];
                     }
                 }
-                coll.updateOne({ guildId: guild.id }, { $set: newState })
+                if (newState != {})
+                    coll.updateOne({ guildId: guild.id }, { $set: newState }, function (err, res) {
+                        if (err)
+                            return reject(err);
+                        logger.log(`db`, `set game state`);
+                    })
             })
 
         })
@@ -159,16 +169,21 @@ function resetGameState(guild, game) {
             coll.findOne({ guildId: `${guild.id}` }, function (err, oldState) {
                 if (err)
                     return reject(err);
-                let newState = getBaseState(game ? game : `civ5`)
+                let newState = getBaseState(game)
                 newState.guildId = guild.id;
                 resolve(newState);
-                for (const key in newState) {
-                    if (newState.hasOwnProperty(key)) {
-                        if (newState[key] === oldState[key])
-                            delete newState[key];
-                    }
-                }
-                coll.updateOne({ guildId: guild.id }, { $set: newState })
+                // for (const key in newState) {
+                //     if (newState.hasOwnProperty(key)) {
+                //         if (newState[key] === oldState[key])
+                //             delete newState[key];
+                //     }
+                // }
+                if (newState != {})
+                    coll.updateOne({ guildId: guild.id }, { $set: newState }, function (err, res) {
+                        if (err)
+                            return reject(err);
+                        logger.log(`db`, `reset game state`);
+                    })
             })
 
         })
@@ -194,7 +209,12 @@ function setPickMsgs(guild, msgs) {
                 if (err)
                     return reject(err)
                 resolve()
-                coll.updateOne({ guildId: guild.id }, { $set: { pickMsgs: msgs } })
+                coll.updateOne({ guildId: guild.id }, { $set: { pickMsgs: msgs } }, function (err, res) {
+                    if (err)
+                        return reject(err);
+                    resolve()
+                    logger.log(`db`, `set pcik msgs`);
+                })
             })
 
         })

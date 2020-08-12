@@ -3,8 +3,6 @@ const logger = require("../logger");
 const dbCreds = require(`../assets/mongo_secret.json`);
 const chalk = require(`chalk`)
 const sheet = require(`./sheet`);
-const { config } = require("winston");
-const { resolve } = require("app-root-path");
 const MongoClient = require("mongodb").MongoClient;
 const mongoClient = new MongoClient(dbCreds.login,
     {
@@ -34,6 +32,7 @@ function newGame(state, op, guild) {
                 resolve(id);
                 let newDoc = {
                     id: id,
+                    game: state.game,
                     date: new Date(),
                     flushed: false,
                     sheetSync: false,
@@ -48,7 +47,6 @@ function newGame(state, op, guild) {
                 }
                 coll.insertOne(newDoc, function (err, result) {
                     if (err) {
-                        reject(err);
                         return logger.log(`error`, `${err}`);
                     }
                     logger.log(`db`, `created new game ${id}`);
@@ -100,12 +98,13 @@ function updateGame(state) {
                     } catch (error) {
 
                     }
-                    coll.updateOne({ id: state.gameId }, { $set: newState }, function (err, res) {
-                        if (err)
-                            return reject(err);
-                        resolve()
-                        logger.log(`db`, `updated game info`);
-                    })
+                    if (newState != {})
+                        coll.updateOne({ id: state.gameId }, { $set: newState }, function (err, res) {
+                            if (err)
+                                return reject(err);
+                            resolve()
+                            logger.log(`db`, `updated game info`);
+                        })
                 }
             )
         },
@@ -310,7 +309,12 @@ function addGameCount(guild) {
             if (err)
                 return err;
             oldConfig.gameCount += 1;
-            coll.updateOne({ guildId: guild.id }, { $set: oldConfig })
+            if (oldConfig != {})
+                coll.updateOne({ guildId: guild.id }, { $set: oldConfig }, function (err, res) {
+                    if (err)
+                        return logger.log(`error`, `add game count err: \n${err}`);
+                    logger.log(`db`, `add game count`);
+                })
         })
 
     })
@@ -321,7 +325,12 @@ function addFastCount(guild) {
             if (err)
                 return err;
             oldConfig.fastCount += 1;
-            coll.updateOne({ guildId: guild.id }, { $set: oldConfig })
+            if (oldConfig != {})
+                coll.updateOne({ guildId: guild.id }, { $set: oldConfig }, function (err, res) {
+                    if (err)
+                        return logger.log(`error`, `add fast count err: \n${err}`);
+                    logger.log(`db`, `add fast count`);
+                })
         })
 
     })
@@ -352,7 +361,12 @@ function setLastFast(guild) {
             if (err)
                 return err;
             oldConfig.lastFast = Date.now();
-            coll.updateOne({ guildId: guild.id }, { $set: oldConfig })
+            if (oldConfig != {})
+                coll.updateOne({ guildId: guild.id }, { $set: oldConfig }, function (err, res) {
+                    if (err)
+                        return logger.log(`error`, `set last fast err: \n${err}`);
+                    logger.log(`db`, `set last fast`);
+                })
         })
 
     })

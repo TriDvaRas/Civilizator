@@ -27,9 +27,16 @@ module.exports = {
             //check civ role
             Perm.checkRoles(message.member, state.Op, { civ: true })
                 .then(() => {
+                    //check game
+                    let game;
+                    if ([`civ5`, `lek`].includes(args[0].toLowerCase())) {
+                        game = args.shift();
+                    }
+                    else
+                        game = "Civ5";
                     //check cd
                     CheckLastGame(message, state).then(function () {
-                        GC.resetGameState(message.guild).then(function (state) {
+                        GC.resetGameState(message.guild, game).then(function (state) {
                             return preStart(message, args, state);
                         },
                             err => logger.log(`error`, err)
@@ -69,7 +76,7 @@ function preStart(message, args, state) {
             if (StartGame(message, args, state, gameEmbed))
                 return;
 
-            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
+            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new ${state.game} game started CPP-${state.playerSize} BPP-${state.banSize}`);
             mess.edit(gameEmbed).then(msg => {
                 logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
                 state.embedId = msg.id;
@@ -112,6 +119,7 @@ function StartGame(message, args, state, gameEmbed) {
 
     gameEmbed.fields.find(field => field.name == "Civs per player").value = parseInt(args[0]);
     gameEmbed.fields.find(field => field.name == "Game Id").value = parseInt(state.gameId);
+    gameEmbed.fields.find(field => field.name == "Game").value = state.game;
     state.playerSize = parseInt(args[0]);
     state.started = true;
     //Start join phase

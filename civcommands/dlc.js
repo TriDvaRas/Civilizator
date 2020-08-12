@@ -68,11 +68,11 @@ module.exports = {
                         checkDLCs(state, args, white);
                         checkCivs(state);
                         let embed = Embeder.get(state, message.channel);
-                        if (state.DLCs.length < 9) {
+                        if (state.disabledDLC.length > 0) {
                             embed.fields.find(field => field.name == "DLCs").value = state.DLCs.join('\n') + '\u200B';
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => ${state.DLCs.join('\n')}`);
                         }
-                        else if (state.DLCs.length == 9) {
+                        else if (state.disabledDLC.length == 0) {
                             embed.fields.find(field => field.name == "DLCs").value = "All" + '\u200B';
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => all`);
                         }

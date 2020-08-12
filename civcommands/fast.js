@@ -11,7 +11,7 @@ const getBaseState = require(`../functions/baseState`)
 const getCivList = require(`../functions/civList`)
 module.exports = {
     name: 'fast',
-    description: 'Fast game (original CivRandomizer) (has 3m cooldown)',
+    description: 'Fast game (original CivRandomizer) (has 1m cooldown)',
     usage: '`fast <Players(1-16)> <CivPerPlayer(1-6)> [-/+] [DLCs to enable/disable]`',
     example: `\`fast 4 3\` - 4 players 3 civs each, all DLCs enabled
 \`fast 4 3 - bnw mon\` - 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
@@ -37,6 +37,8 @@ module.exports = {
                                 game = args.shift();
                                 
                             }
+                            else
+                                game = "Civ5";
                             //check 0/1 args
                             if (args.length < 2 || !(args[0] >= 1 && args[0] <= 16 && args[1] >= 1 && args[1] <= 6)) {
 
@@ -48,7 +50,7 @@ module.exports = {
                             }
 
                             //get default state
-                            let state = getBaseState(game ? game : `civ5`)
+                            let state = getBaseState(game ? game : `Civ5`)
                             //check dlcs settings
                             let white;
                             if (args[2] == "+")
@@ -79,7 +81,7 @@ module.exports = {
                             message.channel.send(new Discord.MessageEmbed()
                                 .setTitle(`Fast Game`)
                                 .setColor('#66D018')
-                                .addField(`DLCs`, state.DLCs.length == 9 ? `All` : state.DLCs.join(`\n`), true)
+                                .addField(`DLCs`, state.disabledDLC.length == 0 ? `All` : state.DLCs.join(`\n`), true)
                                 .addField(`Players`, args[0], true)
                                 .addField(`CPP`, args[1], true)
                                 .setTimestamp()
