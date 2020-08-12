@@ -13,10 +13,10 @@ const db = require('../functions/db.js');
 module.exports = {
     name: 'start',
     description: 'Starts Civilizator Game',
-    usage: '`start <CivPerPlayer(1-6)> [BansPerPlayer(0-4)]`',
-    example: `\`start 3\` - 3 civs for each player, no bans
-\`fast 4 3 - bnw mon\` - 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
-\`fast 4 3 + van korea\` - 4 players 3 civs each, only Vanilla and Korea enabled`,
+    usage: '`start [game] <CivPerPlayer(1-6)> [BansPerPlayer(0-4)]`\n [game] is optional argument to choose the game you play (available: civ5, lek)',
+    example: `\`start 3\` - civ5, 3 civs for each player, no bans
+\`start 4 1\` - civ5, 4 civs and 1 ban for each player
+\`start lek 3 2\` - civ5 + lek mod, 3 civs and 2 bans for each player`,
     execute: function (message, args) {
         if (args.length == 0)
             //send help on 0 args

@@ -6,6 +6,7 @@
 ## About
 
 Civilizator is a Discord Bot implementation of CivRandomizer (random set of civs to pick from for each player).
+Currently supported games: Civ5, Civ5+LEK. Use \`start help\` or \`fast help\` for more info about choosing game.
 Bot is primarily meant to be used in small servers by friends companies and just to make the game fun and increase variety of picks.  
 
 Bot's idea is to make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll each player's pool would be rerandomed! 
@@ -110,9 +111,13 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 
 | Command | Arguments | Description | Usage example | Permissions |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| start | \<CivPerPlayer(1-6)\> \[BansPerPlayer(0-4)\] | Starts a new game | !start 3 1 | Civilized |
+| start | \[game\] \<CivPerPlayer(1-6)\> \[BansPerPlayer(0-4)\] | Starts a new game | !start 3 1 | Civilized |
 | | | By default BansPerPlayer is 0 |  | Civilized |
-| fast | \<Players(1-16)\> \<CivPerPlayer(1-6)\> \[-/+\] \[DLCs to enable/disable\] | Fast game (original CivRandomizer) | !fast 3 3 | Civilized |
+| | | \[game\] is optional argument to choose the game you play |  | Civilized |
+| | | Available games are: civ5(default), lek |  | Civilized |
+| fast | \[game\] \<Players(1-16)\> \<CivPerPlayer(1-6)\> \[-/+\] \[DLCs to enable/disable\] | Fast game (original CivRandomizer) | !fast 3 3 | Civilized |
+| | | \[game\] is optional argument to choose the game you play |  | Civilized |
+| | | Available games are: civ5(default), lek |  | Civilized |
 | dlc | \<whitelist/white/w/+\> \<DLCs\> | Disables all **not** metioned DLCs | !dlc w vanila g&k Mong | Operator |
 |   | \<blacklist/black/b/-\> \<DLCs\> | Disables all metioned DLCs | !dlc b bnw gods korea | Operator |
 |   | \<reset/r\> | Enables all DLCs | !dlc b bnw gods korea | Operator |
