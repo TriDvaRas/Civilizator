@@ -1,8 +1,9 @@
 const IO = require('./IO.js');
 const { createBase } = require('./Setup.js');
-const logger = require(`../../logger`);
+const logger = require(`../logger`);
 const chalk = require('chalk');
 const DB = require(`./db`);
+const getBaseState = require(`../functions/baseState`)
 
 
 function createConfig(guild) {
@@ -18,7 +19,7 @@ function createConfig(guild) {
             fastCount: 0,
             lastFast: 0
         }
-        let state = IO.Read(`assets/BaseState.json`);
+        let state = getBaseState(`civ5`)
         state.guildId = guild.id;
         Promise.all([
             DB.addDoc(`guilds`, config),
@@ -112,7 +113,12 @@ function setConfig(guild, newConfig) {
                             delete newConfig[key];
                     }
                 }
-                coll.updateOne({ guildId: guild.id }, { $set: newConfig })
+                if (newConfig != {})
+                    coll.updateOne({ guildId: guild.id }, { $set: newConfig }, function (err, res) {
+                        if (err)
+                            return reject(err);
+                        logger.log(`db`, `set config`);
+                    })
             })
 
         })
@@ -146,28 +152,38 @@ function setGameState(guild, newState) {
                             delete newState[key];
                     }
                 }
-                coll.updateOne({ guildId: guild.id }, { $set: newState })
+                if (newState != {})
+                    coll.updateOne({ guildId: guild.id }, { $set: newState }, function (err, res) {
+                        if (err)
+                            return reject(err);
+                        logger.log(`db`, `set game state`);
+                    })
             })
 
         })
     });
 }
-function resetGameState(guild) {
+function resetGameState(guild, game) {
     return new Promise((resolve, reject) => {
         DB.getCollection(`states`).then(coll => {
             coll.findOne({ guildId: `${guild.id}` }, function (err, oldState) {
                 if (err)
                     return reject(err);
-                let newState = IO.Read(`./assets/BaseState.json`);
+                let newState = getBaseState(game)
                 newState.guildId = guild.id;
                 resolve(newState);
-                for (const key in newState) {
-                    if (newState.hasOwnProperty(key)) {
-                        if (newState[key] === oldState[key])
-                            delete newState[key];
-                    }
-                }
-                coll.updateOne({ guildId: guild.id }, { $set: newState })
+                // for (const key in newState) {
+                //     if (newState.hasOwnProperty(key)) {
+                //         if (newState[key] === oldState[key])
+                //             delete newState[key];
+                //     }
+                // }
+                if (newState != {})
+                    coll.updateOne({ guildId: guild.id }, { $set: newState }, function (err, res) {
+                        if (err)
+                            return reject(err);
+                        logger.log(`db`, `reset game state`);
+                    })
             })
 
         })
@@ -193,7 +209,12 @@ function setPickMsgs(guild, msgs) {
                 if (err)
                     return reject(err)
                 resolve()
-                coll.updateOne({ guildId: guild.id }, { $set: { pickMsgs: msgs } })
+                coll.updateOne({ guildId: guild.id }, { $set: { pickMsgs: msgs } }, function (err, res) {
+                    if (err)
+                        return reject(err);
+                    resolve()
+                    logger.log(`db`, `set pcik msgs`);
+                })
             })
 
         })

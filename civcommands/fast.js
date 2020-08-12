@@ -1,18 +1,22 @@
 
-var Perm = require('../assets/functions/Permissions.js');
+var Perm = require('../functions/Permissions.js');
 const logger = require("../logger");
 const chalk = require('chalk');
-const GC = require(`../assets/functions/guildConfig.js`);
-var IO = require('../assets/functions/IO.js');
+const GC = require(`../functions/guildConfig.js`);
+var IO = require('../functions/IO.js');
 const Discord = require('discord.js');
-const db = require('../assets/functions/db.js');
+const db = require('../functions/db.js');
+const mergeImg = require('merge-img');
+const getBaseState = require(`../functions/baseState`)
+const getCivList = require(`../functions/civList`)
 module.exports = {
     name: 'fast',
-    description: 'Fast game (original CivRandomizer) (has 3m cooldown)',
-    usage: '`fast <Players(1-16)> <CivPerPlayer(1-6)> [-/+] [DLCs to enable/disable]`',
-    example: `\`fast 4 3\` - 4 players 3 civs each, all DLCs enabled
-\`fast 4 3 - bnw mon\` - 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
-\`fast 4 3 + van korea\` - 4 players 3 civs each, only Vanilla and Korea enabled`,
+    description: 'Fast game (original CivRandomizer) (has 1m cooldown)',
+    usage: '`fast [game] <Players(1-16)> <CivPerPlayer(1-6)> [-/+] [DLCs to enable/disable]`\n [game] is optional argument to choose the game you play\n Available games: civ5(default), lek',
+    example: `\`fast 4 3\` - civ5, 4 players 3 civs each, all DLCs enabled
+\`fast 4 3 - bnw mon\` - civ5, 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
+\`fast 4 3 + van korea\` - civ5, 4 players 3 civs each, only Vanilla and Korea enabled
+\`fast lek 2 4\` - civ5 + lek mod, 2 players 4 civs each, all DLCs enabled`,
     execute: async function (message, args) {
         GC.getConfig(message.guild).then(
             config => {
@@ -28,6 +32,14 @@ module.exports = {
                 Perm.checkRoles(message.member, null, { admin: true, civ: true })
                     .then(
                         () => {
+                            //check game
+                            let game;
+                            if ([`civ5`, `lek`].includes(args[0].toLowerCase())) {
+                                game = args.shift();
+                                
+                            }
+                            else
+                                game = "Civ5";
                             //check 0/1 args
                             if (args.length < 2 || !(args[0] >= 1 && args[0] <= 16 && args[1] >= 1 && args[1] <= 6)) {
 
@@ -39,7 +51,7 @@ module.exports = {
                             }
 
                             //get default state
-                            let state = IO.Read(`./assets/BaseState.json`)
+                            let state = getBaseState(game ? game : `Civ5`)
                             //check dlcs settings
                             let white;
                             if (args[2] == "+")
@@ -70,7 +82,7 @@ module.exports = {
                             message.channel.send(new Discord.MessageEmbed()
                                 .setTitle(`Fast Game`)
                                 .setColor('#66D018')
-                                .addField(`DLCs`, state.DLCs.length == 9 ? `All` : state.DLCs.join(`\n`), true)
+                                .addField(`DLCs`, state.disabledDLC.length == 0 ? `All` : state.DLCs.join(`\n`), true)
                                 .addField(`Players`, args[0], true)
                                 .addField(`CPP`, args[1], true)
                                 .setTimestamp()
@@ -125,7 +137,7 @@ function checkDLCs(state, args, white) {
 
 }
 function checkCivs(state) {
-    const CivList = IO.Read('./assets/CivList.json');
+    const CivList = getCivList(state.game)
     let newCivs = [];
     state.Civs.forEach(Civ => {
         civObj = CivList.find(C => C.id == Civ);
@@ -152,8 +164,7 @@ function GeneratePicks(state, channel, players, cpp) {
 }
 //get player civ set
 function GetCivLine(state, channel, i, cpp) {
-    const mergeImg = require('merge-img');
-    var CivList = IO.Read('assets/CivList.json');
+    var CivList = getCivList(state.game)
     let txt = `Player ${i + 1}:\n`;
     images = [];
     for (let i = 0; i < cpp; i++) {

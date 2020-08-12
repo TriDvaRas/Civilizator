@@ -1,5 +1,5 @@
 
-const welcome = require(`../welcome`);
+const welcome = require(`../assets/welcome`);
 const DB = require(`./db`);
 
 function createBaseChannel(guild, role, options) {
@@ -63,7 +63,7 @@ function createBaseRole(guild, ignoreOld) {
                     color: [64, 255, Math.floor(90 + Math.random() * 40)]
                 }
             }).then(role => {
-                setConfig(guild, { roleId: role.id});
+                setConfig(guild, { roleId: role.id });
                 resolve(role);
             });
 
@@ -119,7 +119,13 @@ function setConfig(guild, newConfig) {
                             delete newConfig[key];
                     }
                 }
-                coll.updateOne({ guildId: guild.id }, { $set: newConfig })
+                if (newConfig != {})
+                    coll.updateOne({ guildId: guild.id }, { $set: newConfig }, function (err, res) {
+                        if (err)
+                            return reject(err);
+                        resolve()
+                        logger.log(`db`, `set config setup`);
+                    })
             })
 
         })

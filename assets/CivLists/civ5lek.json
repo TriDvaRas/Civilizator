@@ -1,0 +1,901 @@
+[
+  {
+    "id": "1",
+    "Name": "American",
+    "Alias": [
+      "American",
+      "Washington"
+    ],
+    "picPath": "Imgs/civ5/1.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "2",
+    "Name": "Arabian",
+    "Alias": [
+      "Arabian",
+      "Arabic",
+      "Harun al-Rashid"
+    ],
+    "picPath": "Imgs/civ5/2.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "3",
+    "Name": "Assyrian",
+    "Alias": [
+      "Assyrian",
+      "Ashurbanipal"
+    ],
+    "picPath": "Imgs/civ5/3.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "4",
+    "Name": "Austrian",
+    "Alias": [
+      "Austrian",
+      "Maria Theresa"
+    ],
+    "picPath": "Imgs/civ5/4.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "5",
+    "Name": "Aztec",
+    "Alias": [
+      "Aztec",
+      "Montezuma"
+    ],
+    "picPath": "Imgs/civ5/5.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "6",
+    "Name": "Babylonian",
+    "Alias": [
+      "Babylonian",
+      "Nebuchadnezzar II"
+    ],
+    "picPath": "Imgs/civ5/6.png",
+    "DLC": "Babylon"
+  },
+  {
+    "id": "7",
+    "Name": "Brazilian",
+    "Alias": [
+      "Brazilian",
+      "Pedro II"
+    ],
+    "picPath": "Imgs/civ5/7.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "8",
+    "Name": "Byzantine",
+    "Alias": [
+      "Byzantine",
+      "Byzantium",
+      "Theodora"
+    ],
+    "picPath": "Imgs/civ5/8.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "9",
+    "Name": "Carthaginian",
+    "Alias": [
+      "Carthaginian",
+      "Dido",
+      "Didona"
+    ],
+    "picPath": "Imgs/civ5/9.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "10",
+    "Name": "Celtic",
+    "Alias": [
+      "Celtic",
+      "Boudicca"
+    ],
+    "picPath": "Imgs/civ5/10.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "11",
+    "Name": "Chinese",
+    "Alias": [
+      "Chinese",
+      "China",
+      "Wu Zetian"
+    ],
+    "picPath": "Imgs/civ5/11.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "12",
+    "Name": "Danish",
+    "Alias": [
+      "Danish",
+      "Denmark",
+      "Harald Bluetooth"
+    ],
+    "picPath": "Imgs/civ5/12.png",
+    "DLC": "Denmark"
+  },
+  {
+    "id": "13",
+    "Name": "Dutch",
+    "Alias": [
+      "Dutch",
+      "Netherlands",
+      "William"
+    ],
+    "picPath": "Imgs/civ5/13.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "14",
+    "Name": "Egyptian",
+    "Alias": [
+      "Egyptian",
+      "Ramesses II"
+    ],
+    "picPath": "Imgs/civ5/14.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "15",
+    "Name": "English",
+    "Alias": [
+      "English",
+      "England",
+      "Elizabeth"
+    ],
+    "picPath": "Imgs/civ5/15.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "16",
+    "Name": "Ethiopian",
+    "Alias": [
+      "Ethiopian",
+      "Haile Selassie"
+    ],
+    "picPath": "Imgs/civ5/16.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "17",
+    "Name": "French",
+    "Alias": [
+      "French",
+      "France",
+      "Napoleon"
+    ],
+    "picPath": "Imgs/civ5/17.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "18",
+    "Name": "German",
+    "Alias": [
+      "Germany",
+      "Bismarck"
+    ],
+    "picPath": "Imgs/civ5/18.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "19",
+    "Name": "Greek",
+    "Alias": [
+      "Greek",
+      "Greece",
+      "Pericles"
+    ],
+    "picPath": "Imgs/civ5/19.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "20",
+    "Name": "Hunnic",
+    "Alias": [
+      "Hunnic",
+      "Huns",
+      "Attila"
+    ],
+    "picPath": "Imgs/civ5/20.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "21",
+    "Name": "Incan",
+    "Alias": [
+      "Incan",
+      "Incas",
+      "Pachacuti"
+    ],
+    "picPath": "Imgs/civ5/21.png",
+    "DLC": "Spain and the Inca"
+  },
+  {
+    "id": "22",
+    "Name": "Indian",
+    "Alias": [
+      "Indian",
+      "Gandhi"
+    ],
+    "picPath": "Imgs/civ5/22.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "23",
+    "Name": "Indonesian",
+    "Alias": [
+      "Indonesian",
+      "Gajah Mada"
+    ],
+    "picPath": "Imgs/civ5/23.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "24",
+    "Name": "Iroquois",
+    "Alias": [
+      "Iroquois",
+      "Hiawatha"
+    ],
+    "picPath": "Imgs/civ5/24.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "25",
+    "Name": "Japanese",
+    "Alias": [
+      "Japanese",
+      "Oda Nobunaga"
+    ],
+    "picPath": "Imgs/civ5/25.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "26",
+    "Name": "Korean",
+    "Alias": [
+      "Korean",
+      "Sejong"
+    ],
+    "picPath": "Imgs/civ5/26.png",
+    "DLC": "Korea"
+  },
+  {
+    "id": "27",
+    "Name": "Mayan",
+    "Alias": [
+      "Mayan",
+      "Pacal"
+    ],
+    "picPath": "Imgs/civ5/27.png",
+    "DLC": "G&K/Gods&Kings"
+  },
+  {
+    "id": "28",
+    "Name": "Mongolian",
+    "Alias": [
+      "Mongolian",
+      "Genghis Khan"
+    ],
+    "picPath": "Imgs/civ5/28.png",
+    "DLC": "Mongolia"
+  },
+  {
+    "id": "29",
+    "Name": "Moroccan",
+    "Alias": [
+      "Moroccan",
+      "Morocco",
+      "Ahmad al-Mansur"
+    ],
+    "picPath": "Imgs/civ5/29.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "30",
+    "Name": "Ottoman",
+    "Alias": [
+      "Ottoman",
+      "Suleiman"
+    ],
+    "picPath": "Imgs/civ5/30.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "31",
+    "Name": "Persian",
+    "Alias": [
+      "Persian",
+      "Darius I"
+    ],
+    "picPath": "Imgs/civ5/31.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "32",
+    "Name": "Polish",
+    "Alias": [
+      "Polish",
+      "Poland",
+      "Casimir III"
+    ],
+    "picPath": "Imgs/civ5/32.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "33",
+    "Name": "Polynesian",
+    "Alias": [
+      "Polynesian",
+      "Kamehameha"
+    ],
+    "picPath": "Imgs/civ5/33.png",
+    "DLC": "Polynesia"
+  },
+  {
+    "id": "34",
+    "Name": "Portuguese",
+    "Alias": [
+      "Portuguese",
+      "Maria I"
+    ],
+    "picPath": "Imgs/civ5/34.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "35",
+    "Name": "Roman",
+    "Alias": [
+      "Roman",
+      "Rome",
+      "Augustus Caesar"
+    ],
+    "picPath": "Imgs/civ5/35.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "36",
+    "Name": "Russian",
+    "Alias": [
+      "Russian",
+      "Catherine"
+    ],
+    "picPath": "Imgs/civ5/36.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "37",
+    "Name": "Shoshone",
+    "Alias": [
+      "Shoshone",
+      "Pocatello"
+    ],
+    "picPath": "Imgs/civ5/37.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "38",
+    "Name": "Siamese",
+    "Alias": [
+      "Siamese",
+      "Ramkhamhaeng"
+    ],
+    "picPath": "Imgs/civ5/38.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "39",
+    "Name": "Songhai",
+    "Alias": [
+      "Songhai",
+      "Askia"
+    ],
+    "picPath": "Imgs/civ5/39.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "40",
+    "Name": "Spanish",
+    "Alias": [
+      "Spanish",
+      "Spain",
+      "Isabella"
+    ],
+    "picPath": "Imgs/civ5/40.png",
+    "DLC": "Spain and the Inca"
+  },
+  {
+    "id": "41",
+    "Name": "Swedish",
+    "Alias": [
+      "Swedish",
+      "Sweden",
+      "Gustavus Adolphus"
+    ],
+    "picPath": "Imgs/civ5/41.png",
+    "DLC": "Vanilla"
+  },
+  {
+    "id": "42",
+    "Name": "Venetian",
+    "Alias": [
+      "Venetian",
+      "Enrico Dandolo"
+    ],
+    "picPath": "Imgs/civ5/42.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "43",
+    "Name": "Zulu",
+    "Alias": [
+      "Zulu",
+      "Shaka"
+    ],
+    "picPath": "Imgs/civ5/43.png",
+    "DLC": "BNW"
+  },
+  {
+    "id": "44",
+    "Name": "Akkad",
+    "Alias": [
+      "Akkad",
+      "Sargon"
+    ],
+    "picPath": "Imgs/civ5/44.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "45",
+    "Name": "Argentina",
+    "Alias": [
+      "Argentina",
+      "Eva Perón",
+      "Eva Peron"
+    ],
+    "picPath": "Imgs/civ5/45.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "46",
+    "Name": "Armenia",
+    "Alias": [
+      "Armenia",
+      "Artaxias I"
+    ],
+    "picPath": "Imgs/civ5/46.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "47",
+    "Name": "Australia",
+    "Alias": [
+      "Australia",
+      "Edmund Barton"
+    ],
+    "picPath": "Imgs/civ5/47.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "48",
+    "Name": "Ayyubids",
+    "Alias": [
+      "Ayyubids",
+      "Saladin"
+    ],
+    "picPath": "Imgs/civ5/48.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "49",
+    "Name": "Belgium",
+    "Alias": [
+      "Belgium",
+      "Leopold II"
+    ],
+    "picPath": "Imgs/civ5/49.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "50",
+    "Name": "Boers",
+    "Alias": [
+      "Boers",
+      "Stephanus Johannes Paulus Kruger"
+    ],
+    "picPath": "Imgs/civ5/50.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "51",
+    "Name": "Bulgaria",
+    "Alias": [
+      "Bulgaria",
+      "Asparukh Khan"
+    ],
+    "picPath": "Imgs/civ5/51.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "52",
+    "Name": "Brunei",
+    "Alias": [
+      "Brunei",
+      "Bolkiah"
+    ],
+    "picPath": "Imgs/civ5/52.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "53",
+    "Name": "Burma",
+    "Alias": [
+      "Burma",
+      "Anawrahta"
+    ],
+    "picPath": "Imgs/civ5/53.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "54",
+    "Name": "Canada",
+    "Alias": [
+      "Canada",
+      "John A. MacDonald"
+    ],
+    "picPath": "Imgs/civ5/54.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "55",
+    "Name": "Finland",
+    "Alias": [
+      "Finland",
+      "Mannerheim"
+    ],
+    "picPath": "Imgs/civ5/55.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "56",
+    "Name": "Franks",
+    "Alias": [
+      "Franks",
+      "Charlemagne"
+    ],
+    "picPath": "Imgs/civ5/56.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "57",
+    "Name": "Gaul",
+    "Alias": [
+      "Gaul",
+      "Vercingetorix"
+    ],
+    "picPath": "Imgs/civ5/57.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "58",
+    "Name": "Golden Horde",
+    "Alias": [
+      "Golden Horde",
+      "Batu Khan"
+    ],
+    "picPath": "Imgs/civ5/58.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "59",
+    "Name": "Goths",
+    "Alias": [
+      "Goths",
+      "Alaric I"
+    ],
+    "picPath": "Imgs/civ5/59.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "60",
+    "Name": "Hittites",
+    "Alias": [
+      "Hittites",
+      "Muwatallis"
+    ],
+    "picPath": "Imgs/civ5/60.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "61",
+    "Name": "Hungary",
+    "Alias": [
+      "Hittites",
+      "András II",
+      "Andras II"
+    ],
+    "picPath": "Imgs/civ5/61.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "62",
+    "Name": "Ireland",
+    "Alias": [
+      "Ireland",
+      "Michael Collins"
+    ],
+    "picPath": "Imgs/civ5/62.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "63",
+    "Name": "Israel",
+    "Alias": [
+      "Israel",
+      "David"
+    ],
+    "picPath": "Imgs/civ5/63.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "64",
+    "Name": "Italy",
+    "Alias": [
+      "Italy",
+      "Vittorio Emmanuel III"
+    ],
+    "picPath": "Imgs/civ5/64.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "65",
+    "Name": "Jerusalem",
+    "Alias": [
+      "Jerusalem",
+      "Fulk V"
+    ],
+    "picPath": "Imgs/civ5/65.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "66",
+    "Name": "Kongo",
+    "Alias": [
+      "Kongo",
+      "Mvemba a Nzinga"
+    ],
+    "picPath": "Imgs/civ5/66.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "67",
+    "Name": "Khmer",
+    "Alias": [
+      "Khmer",
+      "Suryavarman II"
+    ],
+    "picPath": "Imgs/civ5/67.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "68",
+    "Name": "Lithuania",
+    "Alias": [
+      "Lithuania",
+      "Vytautas"
+    ],
+    "picPath": "Imgs/civ5/68.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "69",
+    "Name": "Macedon",
+    "Alias": [
+      "Macedon",
+      "Alexander"
+    ],
+    "picPath": "Imgs/civ5/69.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "70",
+    "Name": "Madagascar",
+    "Alias": [
+      "Madagascar",
+      "Ralambo"
+    ],
+    "picPath": "Imgs/civ5/70.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "71",
+    "Name": "Manchuria",
+    "Alias": [
+      "Manchuria",
+      "Nurhaci"
+    ],
+    "picPath": "Imgs/civ5/71.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "72",
+    "Name": "Mexico",
+    "Alias": [
+      "Mexico",
+      "Benito Juarez"
+    ],
+    "picPath": "Imgs/civ5/72.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "73",
+    "Name": "Normandy",
+    "Alias": [
+      "Normandy",
+      "William the Conqueror"
+    ],
+    "picPath": "Imgs/civ5/73.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "74",
+    "Name": "Norway",
+    "Alias": [
+      "Norway",
+      "Harald Hardrada"
+    ],
+    "picPath": "Imgs/civ5/74.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "75",
+    "Name": "Nubia",
+    "Alias": [
+      "Nubia",
+      "Amanitore"
+    ],
+    "picPath": "Imgs/civ5/75.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "76",
+    "Name": "Papal State",
+    "Alias": [
+      "Papal State",
+      "Vatican",
+      "Urban II"
+    ],
+    "picPath": "Imgs/civ5/76.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "77",
+    "Name": "Phoenician",
+    "Alias": [
+      "Phoenician",
+      "Hiram"
+    ],
+    "picPath": "Imgs/civ5/77.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "78",
+    "Name": "Prussia",
+    "Alias": [
+      "Prussia",
+      "Frederick"
+    ],
+    "picPath": "Imgs/civ5/78.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "79",
+    "Name": "Romania",
+    "Alias": [
+      "Romania",
+      "Carol 1"
+    ],
+    "picPath": "Imgs/civ5/79.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "80",
+    "Name": "Scotland",
+    "Alias": [
+      "Scotland",
+      "Robert the Bruce"
+    ],
+    "picPath": "Imgs/civ5/80.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "81",
+    "Name": "Sioux",
+    "Alias": [
+      "Sioux",
+      "Sitting Bull"
+    ],
+    "picPath": "Imgs/civ5/81.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "82",
+    "Name": "Sumeria",
+    "Alias": [
+      "Sumeria",
+      "Gilgamesh"
+    ],
+    "picPath": "Imgs/civ5/82.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "83",
+    "Name": "Tibet",
+    "Alias": [
+      "Tibet",
+      "Ngawang Lobsang Gyatso"
+    ],
+    "picPath": "Imgs/civ5/83.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "84",
+    "Name": "Timurids",
+    "Alias": [
+      "Timurids",
+      "Timur"
+    ],
+    "picPath": "Imgs/civ5/84.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "85",
+    "Name": "Turkey",
+    "Alias": [
+      "Turkey",
+      "Ataturk"
+    ],
+    "picPath": "Imgs/civ5/85.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "86",
+    "Name": "Ukraine",
+    "Alias": [
+      "Ukraine",
+      "Yaroslav I"
+    ],
+    "picPath": "Imgs/civ5/86.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "87",
+    "Name": "Vietnam",
+    "Alias": [
+      "Vietnam",
+      "Hai Ba Trung"
+    ],
+    "picPath": "Imgs/civ5/87.png",
+    "DLC": "LEK"
+  },
+  {
+    "id": "88",
+    "Name": "Wales",
+    "Alias": [
+      "Wales",
+      "Owain Glyndwr"
+    ],
+    "picPath": "Imgs/civ5/88.png",
+    "DLC": "LEK"
+  }
+]

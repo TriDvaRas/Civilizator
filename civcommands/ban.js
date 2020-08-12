@@ -1,7 +1,8 @@
-var IO = require('../assets/functions/IO.js');
-const GC = require(`../assets/functions/guildConfig.js`);
-var BanF = require('../assets/functions/BansFunctions.js');
-const Embeder = require("../assets/functions/embeder.js");
+var IO = require('../functions/IO.js');
+const GC = require(`../functions/guildConfig.js`);
+var BanF = require('../functions/BansFunctions.js');
+const Embeder = require("../functions/embeder.js");
+const getCivList = require(`../functions/civList`)
 const logger = require("../logger");
 const chalk = require('chalk');
 module.exports = {
@@ -39,7 +40,7 @@ module.exports = {
                 for (let j = 0; j < args.length && BanF.CheckCanBan(state, message); j++) {
                     let arg = args[j];
                     //read list
-                    var CivList = IO.Read('./assets/CivList.json');
+                    var CivList = getCivList(state.game)
 
                     //find civ by id
                     C = CivList.find(civ => civ.id == arg);

@@ -4,8 +4,10 @@ const DB = require(`./db`);
 const GC = require(`./guildConfig`);
 const Picker = require(`./picker`);
 var IO = require('./IO.js');
-const logger = require('../../logger.js');
+const getCivList = require(`../functions/civList`)
+const logger = require('../logger.js');
 const chalk = require('chalk');
+const mergeImg = require('merge-img');
 
 module.exports = {
     StartJoins: function StartJoins(state, gameEmbed) {
@@ -107,8 +109,7 @@ function GeneratePicks(state, channel) {
 //get player civ set
 function GetCivLine(state, channel, i) {
     let Player = state.Players[i];
-    const mergeImg = require('merge-img');
-    var CivList = IO.Read('assets/CivList.json');
+    var CivList = getCivList(state.game)
     let txt = `${Player.id}:\n`;
     images = [];
     for (let j = 0; j < state.playerSize; j++) {

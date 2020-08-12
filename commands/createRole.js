@@ -1,6 +1,6 @@
 
-var Perm = require('../assets/functions/Permissions.js');
-const { createBaseRole } = require('../assets/functions/Setup.js');
+var Perm = require('../functions/Permissions.js');
+const { createBaseRole } = require('../functions/Setup.js');
 module.exports = {
     name: 'createrole',
     description: 'Creates role (Admin)',

@@ -1,9 +1,10 @@
 //imports 
 
-const GC = require(`../assets/functions/guildConfig.js`);
-var Perm = require('../assets/functions/Permissions.js');
-var IO = require('../assets/functions/IO.js');
-const Embeder = require("../assets/functions/embeder.js");
+const GC = require(`../functions/guildConfig.js`);
+var Perm = require('../functions/Permissions.js');
+var IO = require('../functions/IO.js');
+const Embeder = require("../functions/embeder.js");
+const getCivList = require(`../functions/civList`)
 const logger = require("../logger");
 const chalk = require('chalk');
 module.exports = {
@@ -67,11 +68,11 @@ module.exports = {
                         checkDLCs(state, args, white);
                         checkCivs(state);
                         let embed = Embeder.get(state, message.channel);
-                        if (state.DLCs.length < 9) {
+                        if (state.disabledDLC.length > 0) {
                             embed.fields.find(field => field.name == "DLCs").value = state.DLCs.join('\n') + '\u200B';
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => ${state.DLCs.join('\n')}`);
                         }
-                        else if (state.DLCs.length == 9) {
+                        else if (state.disabledDLC.length == 0) {
                             embed.fields.find(field => field.name == "DLCs").value = "All" + '\u200B';
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => all`);
                         }
@@ -120,7 +121,7 @@ function checkDLCs(state, args, white) {
 
 }
 function checkCivs(state) {
-    const CivList = IO.Read('./assets/CivList.json');
+    const CivList = getCivList(state.game)
     let newCivs = [];
     state.Civs.forEach(Civ => {
         civObj = CivList.find(C => C.id == Civ);

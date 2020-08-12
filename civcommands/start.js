@@ -1,22 +1,22 @@
 
-const Phaser = require('../assets/functions/Phaser.js');
-const Perm = require('../assets/functions/Permissions.js');
-const GC = require(`../assets/functions/guildConfig.js`);
-const Reacter = require(`../assets/functions/reactions.js`);
-const Embeder = require("../assets/functions/embeder.js");
+const Phaser = require('../functions/Phaser.js');
+const Perm = require('../functions/Permissions.js');
+const GC = require(`../functions/guildConfig.js`);
+const Reacter = require(`../functions/reactions.js`);
+const Embeder = require("../functions/embeder.js");
 const logger = require("../logger");
 const chalk = require('chalk');
-const DB = require(`../assets/functions/db`);
+const DB = require(`../functions/db`);
 const Discord = require(`discord.js`);
-const db = require('../assets/functions/db.js');
+const db = require('../functions/db.js');
 
 module.exports = {
     name: 'start',
     description: 'Starts Civilizator Game',
-    usage: '`start <CivPerPlayer(1-6)> [BansPerPlayer(0-4)]`',
-    example: `\`start 3\` - 3 civs for each player, no bans
-\`fast 4 3 - bnw mon\` - 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
-\`fast 4 3 + van korea\` - 4 players 3 civs each, only Vanilla and Korea enabled`,
+    usage: '`start [game] <CivPerPlayer(1-6)> [BansPerPlayer(0-4)]`\n [game] is optional argument to choose the game you play (available: civ5, lek)',
+    example: `\`start 3\` - civ5, 3 civs for each player, no bans
+\`start 4 1\` - civ5, 4 civs and 1 ban for each player
+\`start lek 3 2\` - civ5 + lek mod, 3 civs and 2 bans for each player`,
     execute: function (message, args) {
         if (args.length == 0)
             //send help on 0 args
@@ -27,19 +27,20 @@ module.exports = {
             //check civ role
             Perm.checkRoles(message.member, state.Op, { civ: true })
                 .then(() => {
+                    //check game
+                    let game;
+                    if ([`civ5`, `lek`].includes(args[0].toLowerCase())) {
+                        game = args.shift();
+                    }
+                    else
+                        game = "Civ5";
                     //check cd
                     CheckLastGame(message, state).then(function () {
-                        //check if game is started
-                        if (state.started == true) {
-
-                            return GC.resetGameState(message.guild).then(function (state) {
-                                return preStart(message, args, state);
-                            },
-                                err => logger.log(`error`, err)
-                            );
-                        }
-                        else
+                        GC.resetGameState(message.guild, game).then(function (state) {
                             return preStart(message, args, state);
+                        },
+                            err => logger.log(`error`, err)
+                        );
                     }, () => { })
                 },
                     () => {
@@ -75,7 +76,7 @@ function preStart(message, args, state) {
             if (StartGame(message, args, state, gameEmbed))
                 return;
 
-            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new game started CPP-${state.playerSize} BPP-${state.banSize}`);
+            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new ${state.game} game started CPP-${state.playerSize} BPP-${state.banSize}`);
             mess.edit(gameEmbed).then(msg => {
                 logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
                 state.embedId = msg.id;
@@ -118,6 +119,7 @@ function StartGame(message, args, state, gameEmbed) {
 
     gameEmbed.fields.find(field => field.name == "Civs per player").value = parseInt(args[0]);
     gameEmbed.fields.find(field => field.name == "Game Id").value = parseInt(state.gameId);
+    gameEmbed.fields.find(field => field.name == "Game").value = state.game;
     state.playerSize = parseInt(args[0]);
     state.started = true;
     //Start join phase
@@ -146,17 +148,17 @@ function CheckLastGame(message, state) {
                     let ms = Date.now() - state.startTime;
                     let m = ms / 60000;
 
-                    if (m < 3) {
-                        message.channel.send(`Wait at least 10 minutes (3 for admin/op) before starting a new game`)
+                    if (m < 1) {
+                        message.channel.send(`Wait at least 5 minutes (1 for last game's op) before starting a new game`)
                         reject();
-                    } else if (m < 10) {
+                    } else if (m < 5) {
                         Perm.checkRoles(message.member, state.Op, { admin: true, op: true })
                             .then(
                                 () => {
                                     resolve();
                                 },
                                 () => {
-                                    message.channel.send(`Wait at least 10 minutes before starting a new game`)
+                                    message.channel.send(`Wait at least 5 minutes (1 for last game's op) before starting a new game`)
                                     reject();
                                 })
                     } else {

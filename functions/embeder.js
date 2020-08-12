@@ -1,6 +1,6 @@
 
 const Discord = require('discord.js');
-const logger=require(`../../logger`);
+const logger=require(`../logger`);
 const chalk = require('chalk');
 module.exports = {
     create: createEmbed,
@@ -17,6 +17,7 @@ function createEmbed() {
         .addFields(
             { name: 'Game Operator', value: '\u200B', inline: true },
             { name: 'Game Id', value: '\u200B', inline: true },
+            { name: 'Game', value: '\u200B', inline: true },
             { name: 'Game Phase', value: '\u200B', inline: false },
             { name: 'DLCs', value: 'All', inline: true },
             { name: 'Civs per player', value: '\u200B', inline: true },

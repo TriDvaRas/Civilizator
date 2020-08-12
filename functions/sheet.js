@@ -1,8 +1,8 @@
 const GSS = require(`google-spreadsheet`);
-const logger = require("../../logger");
+const logger = require("../logger");
 const chalk = require('chalk');
 
-const creds = require(`../sheet_secret.json`);
+const creds = require(`../assets/sheet_secret.json`);
 
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
 function SubmitGame(newRow) {
     return new Promise((resolve, reject) => {
         logger.log(`sheet`, `Submitting final game state`);
-        getSheet().then(sheet => {
+        getSheet(newRow.game).then(sheet => {
             delete newRow._id;
             for (let i = 1; i <= 16; i++) {
                 if (newRow.hasOwnProperty(`p${i}`)) {
@@ -55,14 +55,26 @@ function SubmitGame(newRow) {
     });
 }
 
-function getSheet() {
+function getSheet(game) {
     return new Promise((resolve, reject) => {
         logger.log(`sheet`, `Fetching sheet...`)
         const doc = new GSS.GoogleSpreadsheet(`1db51c8lzs6TVJU7u2eL1_RkxFdMKfjfFYNHDdjgQbTg`);
         doc.useServiceAccountAuth(creds).then(() => {
             doc.getInfo().then(() => {
-                const sheet = doc.sheetsByIndex[0];
+                let sheet;
+                switch (game.toLowerCase()) {
+                    case `civ5`:
+                        sheet = doc.sheetsByIndex[1]
+                        break;
+                    case `lek`:
+                        sheet = doc.sheetsByIndex[2]
+                        break;
+                    default:
+                        sheet = doc.sheetsByIndex[0]
+                        break;
+                }
                 resolve(sheet);
+                logger.log(`sheet`, `Fetched sheet ${sheet.title}`)
             },
                 err => reject(err)
             );
