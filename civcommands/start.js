@@ -148,17 +148,17 @@ function CheckLastGame(message, state) {
                     let ms = Date.now() - state.startTime;
                     let m = ms / 60000;
 
-                    if (m < 3) {
-                        message.channel.send(`Wait at least 10 minutes (3 for admin/op) before starting a new game`)
+                    if (m < 1) {
+                        message.channel.send(`Wait at least 5 minutes (1 for last game's op) before starting a new game`)
                         reject();
-                    } else if (m < 10) {
+                    } else if (m < 5) {
                         Perm.checkRoles(message.member, state.Op, { admin: true, op: true })
                             .then(
                                 () => {
                                     resolve();
                                 },
                                 () => {
-                                    message.channel.send(`Wait at least 10 minutes before starting a new game`)
+                                    message.channel.send(`Wait at least 5 minutes (1 for last game's op) before starting a new game`)
                                     reject();
                                 })
                     } else {
