@@ -10,7 +10,7 @@ const GC = require("./functions/guildConfig.js");
 let pressences = IO.Read(`./pressence.json`);
 let pressI = 1;
 
-globalThis.reactionsMaxTime = 9000;
+globalThis.reactionsMaxTime = 900000;
 globalThis.finalDelay = 1000;
 globalThis.fastCD = 60000;
 
