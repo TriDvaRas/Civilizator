@@ -31,7 +31,7 @@ module.exports = {
     },
     StartPicks: function StartPicks(state, gameEmbed, channel) {
         try {
-            gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Picks** \n Click 🔁 to vote for reroll\n Click 🔁 again to remove vote\n Click 🔢 to pick\n\u200B";
+            gameEmbed.fields.find(field => field.name == "Game Phase").value = "**Picks** \n Click 🔁 to vote for reroll\n Click 🔁 again to remove vote\n Click 🔢 to pick (for stats)\n\u200B";
             gameEmbed.setColor('#09ded0');
             state.reVotesFull = Math.ceil(state.Players.length * 0.65);
             state.reVotes = 0;
