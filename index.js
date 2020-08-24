@@ -87,8 +87,14 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 
 	GC.getConfig(message.guild)
 		.then(cfg => {
+			//check if server has no config
+			if (!cfg && (message.content.startsWith(`!`) || message.content.startsWith(`<@!${discordClient.user.id}>`)))
+				return message.channel.send(`Failed command execution. Your server has no config.\nThis was probably caused by bot being offline then you added it to your server.\nThe easiest way to fix this is to kick and readd the bot to your server.`)
+
+			//exec
 			let args, command;
-			const prefix = cfg.prefix;
+
+			const { prefix } = cfg;
 			if (message.content.startsWith(prefix)) {
 				args = message.content.slice(prefix.length).split(/ +/);
 				command = args.shift().toLowerCase();
@@ -193,6 +199,8 @@ function getCivilizedCount() {
 		discordClient.guilds.cache.each(guild => {
 			Qs.push(new Promise((resolve, reject) => {
 				GC.getConfig(guild).then(cfg => {
+					if (!cfg)
+						return resolve(0)
 					let roleId = cfg.roleId;
 					let sum = 0;
 					guild.members.cache.each(member => {
