@@ -88,9 +88,11 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 	GC.getConfig(message.guild)
 		.then(cfg => {
 			//check if server has no config
-			if (!cfg && (message.content.startsWith(`!`) || message.content.startsWith(`<@!${discordClient.user.id}>`)))
-				return message.channel.send(`Failed command execution. Your server has no config.\nThis was probably caused by bot being offline then you added it to your server.\nThe easiest way to fix this is to kick and readd the bot to your server.`)
-
+			if (!cfg)
+				if (message.content.startsWith(`!`) || message.content.startsWith(`<@!${discordClient.user.id}>`))
+					return message.channel.send(`Failed command execution. Your server has no config.\nThis was probably caused by bot being offline then you added it to your server.\nThe easiest way to fix this is to kick and readd the bot to your server.`)
+				else
+					return;
 			//exec
 			let args, command;
 
