@@ -6,12 +6,12 @@
 ## About
 
 Civilizator is a Discord Bot implementation of CivRandomizer (random set of civs to pick from for each player).
-Currently supported games: Civ5, Civ5+LEK. Use \`start help\` or \`fast help\` for more info about choosing game.
+Currently supported games: Civ5, Civ5+[LEK](https://docs.google.com/document/d/18tsjg2C1wKA7I41GktDRr6R83eUrhn4FHi9EUEtpKvI/edit). Use \`start help\` or \`fast help\` for more info about choosing game.
 Bot is primarily meant to be used in small servers by friends companies and just to make the game fun and increase variety of picks.  
 
 Bot's idea is to make random Civilization games less random and more interesting. Instead of giving each player one random civ bot gives them pool of 1-6 civs to pick from. Prior to this civs can also be baned so no one can get them. Bot also supports rerolling: if more than 70% of players vote to reroll each player's pool would be rerandomed! 
 
-There is also original CivRandomizer(`fast` command) without picks, rerolls, bans or stats.
+There is also original CivRandomizer (`fast` command) without picks, rerolls, bans or stats.
 
 [Invite Link](https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952)
 
@@ -109,6 +109,7 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 ### Civilization Commands
 
 
+
 | Command | Arguments | Description | Usage example | Permissions |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | start | \[game\] \<CivPerPlayer(1-6)\> \[BansPerPlayer(0-4)\] | Starts a new game | !start 3 1 | Civilized |
@@ -131,7 +132,10 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 ## FAQ
 
 - **Q: What prefix does bot use?**
-    - A: Default bot prefix is `!` You can view bot's current settings(including prefix) by mentioning it (just `@Civilizator` without any args)
+    - A: Default bot prefix is `!` You can view bot's current settings(including prefix) by mentioning it (send `@Civilizator` in any channel bot can read/write to)
+- **Q: Bot ignores my commands. What should I do?**
+    - A: First check if you're using **right prefix**. 
+    If the command you're using is in [this list](#Civilization-Commands) you should use it in bot's bound channel. You can check which one it is by mentioning the bot (send `@Civilizator` in any channel bot can read/write to). If bot ignores even mentions then bot probably **can't read or write** messages in your channel/server. Also most functions use **Embeds** so `Embed Links` permission is required. 
 - **Q: Can I try using a bot without adding it to my server?**
     - A: Yes, you can try out bot in `#civilizator` channel of [bot's discord server](https://discord.gg/nFMFs2e).
 - **Q: How do I start a game?**
