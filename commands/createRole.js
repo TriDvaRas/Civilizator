@@ -11,16 +11,16 @@ module.exports = {
 
                 createBaseRole(message.guild, false)
                     .then(role => {
-                        message.channel.send(`Successfuly created ${role.name} role`);
+                        message.channel.send(`Successfuly created ${role.name} role`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                     },
                         err => {
-                            message.channel.send(err);
+                            message.channel.send(err).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                         }
                     );
 
             },
                 () => {
-                    message.reply("Server admin command");
+                    message.channel.send("Server admin command").catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                     return;
 
                 }

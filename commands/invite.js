@@ -5,6 +5,6 @@ module.exports = {
 	usage: '`invite`',
 	execute:async function(message, args) {
         const { invite } = require('../config.json');
-		message.channel.send(invite);
+		message.channel.send(invite).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 	},
 };

@@ -42,9 +42,9 @@ module.exports = {
             for (let i = 0; i < n; i++) {
                 text += ` ${getRandomInt(min, max)}\n`
             }
-            message.reply(text);
+            message.reply(text).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`));
         } catch (error) {
-            message.reply(`wrong arguments`);
+            message.channel.send(`wrong arguments`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`));
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] failed to roll ${error}`);
 
         }

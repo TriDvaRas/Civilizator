@@ -24,12 +24,14 @@ module.exports = {
                     if (state.started != true) {
                         message.channel.send("`start` game first").then(botMsg => {
                             botMsg.delete({ timeout: 5000 });
-                        });
+                        })
+                            .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                         return;
                     } else if (state.Phase != "join") {
                         message.channel.send("Wrong phase").then(botMsg => {
                             botMsg.delete({ timeout: 5000 });
-                        });
+                        })
+                            .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                         return;
 
                     } else {
@@ -50,7 +52,8 @@ module.exports = {
                         if (!args[0] || !args[1]) {
                             message.channel.send(`Wrong arguments`).then(botMsg => {
                                 botMsg.delete({ timeout: 5000 });
-                            });
+                            })
+                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                             return;
                         }
                         let white;
@@ -61,7 +64,8 @@ module.exports = {
                         else {
                             message.channel.send(`Wrong arguments`).then(botMsg => {
                                 botMsg.delete({ timeout: 5000 });
-                            });
+                            })
+                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                             return;
                         }
                         args = args.slice(1);
@@ -88,7 +92,8 @@ module.exports = {
                     () => {
                         message.channel.send("Operator command").then(botMsg => {
                             botMsg.delete({ timeout: 5000 })
-                        });
+                        })
+                            .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                         return;
                     })
         },

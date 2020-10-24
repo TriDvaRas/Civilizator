@@ -75,12 +75,20 @@ discordClient.on('message', message => {
 	if (message.author.bot)
 		return;
 	if (message.guild == null) {
-		discordClient.users.cache.array().find(user => user.id == 272084627794034688).createDM().then(DM => DM.send(`**FEED**
-From: ${message.author}
-Text: ${message.toString()}
-Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`))
-		message.channel.send(`Your message was successfully submited 👍`)
-		return;
+		let guild = globalThis.discordClient.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
+		if (!guild)
+			return
+		guild.channels.cache.find(channel => channel.name == `feed`).send(`**FEED**
+			From: ${message.author}
+			Text: ${message.toString()}
+			Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`
+		)
+			.then(() => {
+				message.channel.send(`Your message was successfully submited 👍`)
+					.catch(err => logger.log(`error`, `[DM] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+			})
+			.catch(err => logger.log(`error`, `[DM] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+		return
 	}
 
 
@@ -91,6 +99,7 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 			if (!cfg)
 				if (message.content.startsWith(`!`) || message.content.startsWith(`<@!${discordClient.user.id}>`))
 					return message.channel.send(`Failed command execution. Your server has no config.\nThis was probably caused by bot being offline then you added it to your server.\nThe easiest way to fix this is to kick and readd the bot to your server.`)
+						.catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 				else
 					return;
 			//exec
@@ -113,7 +122,7 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 					.addField(`Fast Games Count`, cfg.fastCount, true)
 					.setTimestamp()
 					.setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-				)
+				).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 			}
 			else if (message.content.startsWith(`<@!${discordClient.user.id}>`) || message.content.startsWith(`<@${discordClient.user.id}>`)) {
 				args = message.content.split(/ +/);
@@ -128,7 +137,9 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 				try {
 					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 					if (args[0] == "help") {
-						message.channel.send(`${discordClient.commands.get(command).description}\nUsage:\n${discordClient.commands.get(command).usage}\n${discordClient.commands.get(command).example ? 'Example:\n' + discordClient.commands.get(command).example : ""}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+						message.channel.send(`${discordClient.commands.get(command).description}\nUsage:\n${discordClient.commands.get(command).usage}\n${discordClient.commands.get(command).example ? 'Example:\n' + discordClient.commands.get(command).example : ""}`)
+							.then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) })
+							.catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 					} else
 						discordClient.commands.get(command).execute(message, args);
 				} catch (error) {
@@ -138,12 +149,15 @@ Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(
 				try {
 					logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${chalk.bold.rgb(255, 87, 20)(command)} ${chalk.bold.yellowBright(args.join(` `))}`);
 					if (args[0] == "help") {
-						message.channel.send(`${discordClient.civcommands.get(command).description}\nUsage:\n${discordClient.civcommands.get(command).usage}\n${discordClient.civcommands.get(command).example ? 'Example:\n' + discordClient.civcommands.get(command).example : ""}`).then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) });
+						message.channel.send(`${discordClient.civcommands.get(command).description}\nUsage:\n${discordClient.civcommands.get(command).usage}\n${discordClient.civcommands.get(command).example ? 'Example:\n' + discordClient.civcommands.get(command).example : ""}`)
+							.then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) })
+							.catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 					} else if (cfg.channelId == message.channel.id || process.argv.includes(`test`))
 						discordClient.civcommands.get(command).execute(message, args);
 					else {
 						logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] bad channel`);
-						message.reply(`Randomizer-related commands only work in set channel. You can check current channel and role settings by mentioning bot.`);
+						message.channel.send(`Randomizer-related commands only work in set channel. You can check current channel and role settings by mentioning bot.`)
+							.catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 					}
 				} catch (error) {
 					logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)

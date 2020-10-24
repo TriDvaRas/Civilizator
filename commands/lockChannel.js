@@ -14,13 +14,13 @@ module.exports = {
                 GC.getConfig(message.guild).then(config => {
                     config.channelId = message.channel.id;
                     GC.setConfig(message.guild, config);
-                    message.channel.send(`Bound bot to ${message.channel} ✅`);
+                    message.channel.send(`Bound bot to ${message.channel} ✅`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 
                 })
 
             },
                 () => {
-                    message.reply("Server admin command");
+                    message.channel.send("Server admin command").catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                     return;
 
                 }

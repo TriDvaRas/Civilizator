@@ -35,10 +35,10 @@ function createBaseChannel(guild, role, options) {
                 if (!options.message) {
                     channel.send(welcome).then(msg => {
                         msg.pin();
-                    });
-                    channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`);
+                    }).catch(err => logger.log(`error`, `[${chalk.magentaBright(guild.name)}] [SETUP] ${err}`))
+                    channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`).catch(err => logger.log(`error`, `[${chalk.magentaBright(guild.name)}] [SETUP] ${err}`))
                 }
-                channel.send(`Bound bot channel to ${channel} ✅`);
+                channel.send(`Bound bot channel to ${channel} ✅`).catch(err => logger.log(`error`, `[${chalk.magentaBright(guild.name)}] [SETUP] ${err}`))
                 setConfig(guild, { channelId: channel.id });
                 resolve(channel);
             });

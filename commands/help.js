@@ -18,9 +18,9 @@ module.exports = {
             const command = require(`../civcommands/${file}`);
             text+=`\`${command.name}\` - ${command.description}\n`
         }
-        message.reply("sent help to your DM").then(msg=>msg.delete({timeout:30000}));
+        message.channel.send("sent help to your DM").then(msg=>msg.delete({timeout:30000})).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`));
         message.author.createDM().then(dm=>{
-            dm.send(text);
+            dm.send(text).catch(err => logger.log(`error`, `[DM] [${chalk.magentaBright(message.author.tag)}] ${err}`))
         })
     },
 };

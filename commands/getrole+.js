@@ -14,12 +14,12 @@ module.exports = {
                     GC.getConfig(message.guild).then(config => {
                         if (config.allowGetRole == true) {
                             message.delete({ timeout: 30000 });
-                            message.channel.send(`\`getrole\` is already enabled`).then(msg => msg.delete({ timeout: 30000 }));
+                            message.channel.send(`\`getrole\` is already enabled`).then(msg => msg.delete({ timeout: 30000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                             return;
                         }
                         config.allowGetRole = true;
                         GC.setConfig(message.guild, config);
-                        message.channel.send(`Enabled \`getrole\``);
+                        message.channel.send(`Enabled \`getrole\``).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                         logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] Enabled getrole`);
 
                     })
@@ -27,7 +27,7 @@ module.exports = {
                 },
                     () => {
                         message.delete({ timeout: 30000 });
-                        message.reply(`Server admin command`).then(msg => msg.delete({ timeout: 30000 }));
+                        message.channel.send(`Server admin command`).then(msg => msg.delete({ timeout: 30000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                         return;
 
                     }
@@ -35,7 +35,7 @@ module.exports = {
 
         } catch (error) {
             message.delete({ timeout: 30000 });
-            message.channel.send(`Failed enabling \`getrole\``).then(msg => msg.delete({ timeout: 30000 }));
+            message.channel.send(`Failed enabling \`getrole\``).then(msg => msg.delete({ timeout: 30000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] failed enabling getrole ${error}`);
         }
 

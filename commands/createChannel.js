@@ -11,16 +11,18 @@ module.exports = {
 
                 createBaseChannel(message.guild, undefined, { message: message })
                     .then(channel => {
-                        message.channel.send(`Successfuly created ${channel}`)
+                        message.channel.send(`Successfuly created ${channel}`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
                     },
                         err => {
-                            message.channel.send(err)
+                            message.channel.send(err).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
                         }
                     );
 
             },
                 () => {
-                    message.reply("Server admin command");
+                    message.channel.send("Server admin command").catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                     return;
 
                 }

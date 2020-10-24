@@ -15,14 +15,18 @@ module.exports = {
         GC.getGameState(message.guild).then(state => {
             //check phase
             if (state.started != true) {
-                message.channel.send("`start` game first").then(botMsg => {
-                    botMsg.delete({ timeout: 5000 });
-                });
+                message.channel.send("`start` game first")
+                    .then(botMsg => {
+                        botMsg.delete({ timeout: 5000 });
+                    })
+                    .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                 return;
             } else if (state.Phase != "bans") {
-                message.channel.send("Wrong phase").then(botMsg => {
-                    botMsg.delete({ timeout: 5000 });
-                });
+                message.channel.send("Wrong phase")
+                    .then(botMsg => {
+                        botMsg.delete({ timeout: 5000 });
+                    })
+                    .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                 return;
 
             } else {
@@ -32,7 +36,7 @@ module.exports = {
                 });
                 //check if Player can ban
                 if (!BanF.CheckCanBan(state, message)) {
-                    message.reply("Out of bans").then(botMsg => {
+                    message.channel.send("Out of bans").then(botMsg => {
                         botMsg.delete({ timeout: 5000 });
                     });
                     return;
@@ -60,17 +64,21 @@ module.exports = {
                             C.forEach(civ => {
                                 txt += `\n${civ.id}. ${civ.Alias.join(` - `)}`
                             });
-                            message.channel.send(txt).then(botMsg => {
-                                botMsg.delete({ timeout: 7000 });
-                            });;
+                            message.channel.send(txt)
+                                .then(botMsg => {
+                                    botMsg.delete({ timeout: 7000 });
+                                })
+                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                             continue;
                         }
                         else if (C.length == 0) {
                             let txt = `No aliases found for \`${arg}\``;
                             logger.log(`cmd`, txt);
-                            message.channel.send(txt).then(botMsg => {
-                                botMsg.delete({ timeout: 7000 });
-                            });;
+                            message.channel.send(txt)
+                                .then(botMsg => {
+                                    botMsg.delete({ timeout: 7000 });
+                                })
+                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                             continue;
 
                         }
@@ -84,26 +92,26 @@ module.exports = {
                     if (C) {
                         //check if banned
                         if (BanF.CheckBanned(state, C)) {
-                            message.reply(`${C.Name} (${C.id}) is already banned `, {
+                            message.channel.send(`${C.Name} (${C.id}) is already banned `, {
                                 files: [`./assets/${C.picPath}`]
                             }).then(botMsg => {
                                 botMsg.delete({ timeout: 5000 });
-                            });
+                            }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 
-                        } 
+                        }
                         else if (BanF.CheckDisabled(state, C)) {
-                            message.reply(`${C.Name} (${C.id}) is already disabled by DLCs settings`, {
+                            message.channel.send(`${C.Name} (${C.id}) is already disabled by DLCs settings`, {
                                 files: [`./assets/${C.picPath}`]
                             }).then(botMsg => {
                                 botMsg.delete({ timeout: 5000 });
-                            });
+                            }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                         }
                         else {
                             let player = state.Players.find(u => u.id == `${message.author}`);
                             if (player.bans.length >= state.banSize) {
-                                message.reply(`Out of bans`).then(botMsg => {
+                                message.channel.send(`Out of bans`).then(botMsg => {
                                     botMsg.delete({ timeout: 10000 });
-                                });
+                                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                                 return;
                             }
                             BanF.Ban(C, state);
@@ -113,7 +121,8 @@ module.exports = {
                                 files: [`./assets/${C.picPath}`]
                             }).then(botMsg => {
                                 botMsg.delete({ timeout: 10000 });
-                            });
+                            })
+                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] banned ${C.Name} [${state.bansActual}/${state.bansFull}]`);
                             let embed = Embeder.get(state, message.channel);
                             embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';

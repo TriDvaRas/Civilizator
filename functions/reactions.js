@@ -41,7 +41,7 @@ function addJoiner(msg) {
                     .then(() => {
                         //check if players
                         if (state.Players.length < 1) {
-                            msg.channel.send(`Can't start game without players`).then(m => m.delete({ timeout: 7500 }));
+                            msg.channel.send(`Can't start game without players`).then(m => m.delete({ timeout: 7500 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(msg.author.tag)}] ${err}`));
                             return;
                         }
                         //check size
@@ -52,7 +52,7 @@ function addJoiner(msg) {
 Civs in pool: \`${maxSize}\`
 Civs needed to start: \`${size}\`(players count*(CPP+BPP))
 Try lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command 
-or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500 }));
+or enabling more DLCs with \`dlc\` command`).then(m => m.delete({ timeout: 12500 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(msg.author.tag)}] ${err}`))
                             return;
                         }
                         //go to next phase

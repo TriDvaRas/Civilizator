@@ -134,7 +134,7 @@ function GetCivLine(state, channel, i) {
 
                     Picker.add(mess, Player, i + 1);
 
-                })
+                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(channel.guild.name)}] [${chalk.magentaBright(Player.tag)}] ${err}`))
             });
 
         },

@@ -17,6 +17,6 @@ module.exports = {
 		info.forEach(a => {
 			emb.addField(a.head, a.text, false)
 		});
-		message.channel.send(emb);
+		message.channel.send(emb).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
 	},
 };

@@ -25,7 +25,9 @@ module.exports = {
                     message.channel.send(`Command is on cooldown. Try again later.`).then(botMsg => {
                         message.delete({ timeout: 5000 })
                         botMsg.delete({ timeout: 5000 });
-                    });
+                    })
+                    .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
                     return
                 }
                 //check perm
@@ -46,7 +48,8 @@ module.exports = {
                                 message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(botMsg => {
                                     message.delete({ timeout: 5000 })
                                     botMsg.delete({ timeout: 5000 });
-                                });
+                                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
                                 return;
                             }
 
@@ -62,7 +65,8 @@ module.exports = {
                                 message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(botMsg => {
                                     message.delete({ timeout: 5000 })
                                     botMsg.delete({ timeout: 5000 });
-                                });
+                                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
                                 return;
                             }
                             //set dlcs
@@ -75,7 +79,8 @@ module.exports = {
                                 message.channel.send(`Not enough civs for ${args[0]}x${args[1]} game`).then(botMsg => {
                                     message.delete({ timeout: 5000 })
                                     botMsg.delete({ timeout: 5000 });
-                                });
+                                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
                                 return;
                             }
                             //send embed
@@ -87,7 +92,8 @@ module.exports = {
                                 .addField(`CPP`, args[1], true)
                                 .setTimestamp()
                                 .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-                            )
+                            ).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
                             //send civs
                             GeneratePicks(state, message.channel, +args[0], +args[1]);
                             db.setLastFast(message.guild)
@@ -98,7 +104,8 @@ module.exports = {
                             message.channel.send("Civ role required").then(botMsg => {
                                 message.delete({ timeout: 5000 })
                                 botMsg.delete({ timeout: 5000 })
-                            });
+                            }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
                             return;
                         }
                     );
@@ -181,7 +188,8 @@ function GetCivLine(state, channel, i, cpp) {
             img.write(`./assets/Imgs/Players/fast${imgid}.png`, () => {
                 channel.send(txt.slice(0, -1), {
                     files: [`./assets/Imgs/Players/fast${imgid}.png`]
-                })
+                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            
             });
 
         },
