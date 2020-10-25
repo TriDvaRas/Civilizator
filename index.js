@@ -22,6 +22,10 @@ globalThis.discordClient = new Discord.Client({
 		}
 	}
 });
+globalThis.gameNames=[`civ5`,`lek`,`civ6`]
+
+
+
 //Set logger
 const logger = require("./logger");
 const chalk = require('chalk');

@@ -7,7 +7,8 @@ module.exports = function (game) {
             return IO.Read(`./assets/BaseStates/civ5.json`)
         case "lek":
             return IO.Read(`./assets/BaseStates/civ5lek.json`)
-
+        case "civ6":
+            return IO.Read(`./assets/BaseStates/civ6.json`)
 
         default:
             return IO.Read(`./assets/BaseStates/civ5.json`)

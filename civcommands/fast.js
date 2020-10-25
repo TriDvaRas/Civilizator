@@ -34,7 +34,7 @@ module.exports = {
                         () => {
                             //check game
                             let game;
-                            if ([`civ5`, `lek`].includes(args[0].toLowerCase())) {
+                            if (gameNames.includes(args[0].toLowerCase())) {
                                 game = args.shift();
                                 
                             }
