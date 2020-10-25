@@ -65,6 +65,7 @@ function createBaseRole(guild, ignoreOld) {
                     color: [64, 255, Math.floor(90 + Math.random() * 40)]
                 }
             }).then(role => {
+                guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
                 setConfig(guild, { roleId: role.id });
                 resolve(role);
             });
@@ -78,7 +79,6 @@ function createBase(guild) {
     return new Promise((resolve, reject) => {
         createBaseRole(guild, true).then(role => {
             createBaseChannel(guild, role, { ignoreOld: true }).then(channel => {
-                guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
                 setConfig(guild, { roleId: role.id, channelId: channel.id })
                 resolve()
             },
