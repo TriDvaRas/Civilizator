@@ -1,0 +1,593 @@
+[
+    {
+        "id": 1,
+        "Name": "American",
+        "picPath": "Imgs/civ6/american.png",
+        "Aliases": [
+            "American",
+            "Teddy Roosevelt"
+        ],
+        "DLC": "Vanilla",
+        "persona":1
+    },
+    {
+        "id": 2,
+        "Name": "AmericanRR",
+        "picPath": "Imgs/civ6/american.png",
+        "Aliases": [
+            "AmericanRR",
+            "Teddy Roosevelt (Rough Rider)",
+            "AmericaRR",
+            "RoughRider",
+            "TeddyRR"
+        ],
+        "DLC": "PersonaPack",
+        "persona":1
+    },
+    {
+        "id": 3,
+        "Name": "AmericanBM",
+        "picPath": "Imgs/civ6/american_alt.png",
+        "Aliases": [
+            "AmericanBM",
+            "Teddy Roosevelt (Bull Moose)",
+            "AmericaBM",
+            "BullMoose",
+            "TeddyBM"
+        ],
+        "DLC": "PersonaPack",
+        "persona":1
+    },
+    {
+        "id": 4,
+        "Name": "Arabian",
+        "picPath": "Imgs/civ6/arabian.png",
+        "Aliases": [
+            "Arabian",
+            "Saladin"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 5,
+        "Name": "Australian",
+        "picPath": "Imgs/civ6/australian.png",
+        "Aliases": [
+            "Australian",
+            "John Curtin"
+        ],
+        "DLC": "Australian"
+    },
+    {
+        "id": 6,
+        "Name": "Aztec",
+        "picPath": "Imgs/civ6/aztec.png",
+        "Aliases": [
+            "Aztec",
+            "Montezuma"
+        ],
+        "DLC": "Aztec"
+    },
+    {
+        "id": 7,
+        "Name": "Brazilian",
+        "picPath": "Imgs/civ6/brazilian.png",
+        "Aliases": [
+            "Brazilian",
+            "Pedro II"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 8,
+        "Name": "Byzantine",
+        "picPath": "Imgs/civ6/byzantine.png",
+        "Aliases": [
+            "Byzantine",
+            "Basil II",
+            "Byzantium"
+        ],
+        "DLC": "Byzantine&Gaul"
+    },
+    {
+        "id": 9,
+        "Name": "Canadian",
+        "picPath": "Imgs/civ6/canadian.png",
+        "Aliases": [
+            "Canadian",
+            "Wilfrid Laurier",
+            "Canada"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 10,
+        "Name": "Chinese",
+        "picPath": "Imgs/civ6/canadian.png",
+        "Aliases": [
+            "Chinese",
+            "Qin Shi Huang",
+            "China"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 11,
+        "Name": "Cree",
+        "picPath": "Imgs/civ6/canadian.png",
+        "Aliases": [
+            "Cree",
+            "Poundmaker"
+        ],
+        "DLC": "R&F"
+    },
+    {
+        "id": 12,
+        "Name": "Dutch",
+        "picPath": "Imgs/civ6/dutch.png",
+        "Aliases": [
+            "Dutch",
+            "Wilhelmina",
+            "Netherlands"
+        ],
+        "DLC": "R&F"
+    },
+    {
+        "id": 13,
+        "Name": "Egyptian",
+        "picPath": "Imgs/civ6/egyptian.png",
+        "Aliases": [
+            "Egyptian",
+            "Cleopatra"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 14,
+        "Name": "English",
+        "picPath": "Imgs/civ6/english.png",
+        "Aliases": [
+            "English",
+            "Victoria",
+            "EnglandV"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 15,
+        "Name": "EnglishE",
+        "picPath": "Imgs/civ6/english_alt.png",
+        "Aliases": [
+            "EnglishE",
+            "Eleanor of Aquitaine (English)",
+            "EnglandE",
+            "EleanorE"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 16,
+        "Name": "Ethiopian",
+        "picPath": "Imgs/civ6/ethiopian.png",
+        "Aliases": [
+            "Ethiopian",
+            "Menelik II"
+        ],
+        "DLC": "Ethiopia"
+    },
+    {
+        "id": 17,
+        "Name": "French",
+        "picPath": "Imgs/civ6/french.png",
+        "Aliases": [
+            "French",
+            "Catherine de Medici",
+            "France"
+        ],
+        "DLC": "Vanilla",
+        "persona":17
+    },
+    {
+        "id": 18,
+        "Name": "FrenchBQ",
+        "picPath": "Imgs/civ6/french.png",
+        "Aliases": [
+            "FrenchBQ",
+            "Catherine de Medici (Black Queen)",
+            "FranceBQ",
+            "CatherineBQ"
+        ],
+        "DLC": "PersonaPack",
+        "persona":17
+    },
+    {
+        "id": 19,
+        "Name": "FrenchM",
+        "picPath": "Imgs/civ6/french_alt.png",
+        "Aliases": [
+            "FrenchM",
+            "Catherine de Medici (Magnificence)",
+            "FranceM",
+            "CatherineM"
+        ],
+        "DLC": "PersonaPack",
+        "persona":17
+    },
+    {
+        "id": 20,
+        "Name": "FrenchE",
+        "picPath": "Imgs/civ6/french_alt2.png",
+        "Aliases": [
+            "FrenchE",
+            "Eleanor of Aquitaine (French)",
+            "FranceE",
+            "EleanorF"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 21,
+        "Name": "Gallic",
+        "picPath": "Imgs/civ6/gallic.png",
+        "Aliases": [
+            "Gallic",
+            "Ambiorix",
+            "Gauls"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 22,
+        "Name": "Georgian",
+        "picPath": "Imgs/civ6/georgian.png",
+        "Aliases": [
+            "Georgian",
+            "Tamar"
+        ],
+        "DLC": "R&F"
+    },
+    {
+        "id": 23,
+        "Name": "German",
+        "picPath": "Imgs/civ6/german.png",
+        "Aliases": [
+            "German",
+            "Frederick Barbarossa",
+            "Germany"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 24,
+        "Name": "Gran Colombian",
+        "picPath": "Imgs/civ6/gran_colombian.png",
+        "Aliases": [
+            "Gran Colombian",
+            "Simón Bolívar"
+        ],
+        "DLC": "Maya&GranColombia"
+    },
+    {
+        "id": 25,
+        "Name": "GreekP",
+        "picPath": "Imgs/civ6/greek.png",
+        "Aliases": [
+            "GreekP",
+            "Pericles",
+            "GreekP"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 26,
+        "Name": "GreekG",
+        "picPath": "Imgs/civ6/greek_alt.png",
+        "Aliases": [
+            "GreekG",
+            "Gorgo",
+            "GreekG"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 27,
+        "Name": "Hungarian",
+        "picPath": "Imgs/civ6/hungarian.png",
+        "Aliases": [
+            "Hungarian",
+            "Matthias Corvinus",
+            "Hungary"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 28,
+        "Name": "Incan",
+        "picPath": "Imgs/civ6/incan.png",
+        "Aliases": [
+            "Incan",
+            "Pachacuti",
+            "Incas"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 29,
+        "Name": "IndianG",
+        "picPath": "Imgs/civ6/indian.png",
+        "Aliases": [
+            "IndianG",
+            "Gandhi",
+            "IndiaG"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 30,
+        "Name": "IndianC",
+        "picPath": "Imgs/civ6/indian_alt.png",
+        "Aliases": [
+            "IndianC",
+            "Chandragupta",
+            "IndiaC"
+        ],
+        "DLC": "R&F"
+    },
+    {
+        "id": 31,
+        "Name": "Indonesian",
+        "picPath": "Imgs/civ6/indonesian.png",
+        "Aliases": [
+            "Indonesian",
+            "Gitarja"
+        ],
+        "DLC": "Khmer&Indonesia"
+    },
+    {
+        "id": 32,
+        "Name": "Japanese",
+        "picPath": "Imgs/civ6/japanese.png",
+        "Aliases": [
+            "Japanese",
+            "Hojo Tokimune"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 33,
+        "Name": "Khmer",
+        "picPath": "Imgs/civ6/khmer.png",
+        "Aliases": [
+            "Khmer",
+            "Jayavarman VII"
+        ],
+        "DLC": "Khmer&Indonesia"
+    },
+    {
+        "id": 34,
+        "Name": "Kongolese",
+        "picPath": "Imgs/civ6/kongolese.png",
+        "Aliases": [
+            "Kongolese",
+            "Mvemba a Nzinga"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 35,
+        "Name": "Korean",
+        "picPath": "Imgs/civ6/korean.png",
+        "Aliases": [
+            "Korean",
+            "Seondeok"
+        ],
+        "DLC": "R&F"
+    },
+    {
+        "id": 36,
+        "Name": "Macedonian",
+        "picPath": "Imgs/civ6/macedonian.png",
+        "Aliases": [
+            "Macedonian",
+            "Alexander"
+        ],
+        "DLC": "Persia&Macedon"
+    },
+    {
+        "id": 37,
+        "Name": "Malian",
+        "picPath": "Imgs/civ6/malian.png",
+        "Aliases": [
+            "Malian",
+            "Mansa Musa"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 38,
+        "Name": "Māori",
+        "picPath": "Imgs/civ6/maori.png",
+        "Aliases": [
+            "Māori",
+            "Kupe",
+            "Maori"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 39,
+        "Name": "Mapuche",
+        "picPath": "Imgs/civ6/mapuche.png",
+        "Aliases": [
+            "Mapuche",
+            "Lautaro"
+        ],
+        "DLC": "R&F"
+    },
+    {
+        "id": 40,
+        "Name": "Mayan",
+        "picPath": "Imgs/civ6/mayan.png",
+        "Aliases": [
+            "Mayan",
+            "Lady Six Sky"
+        ],
+        "DLC": "Maya&GranColombia"
+    },
+    {
+        "id": 41,
+        "Name": "Mongolian",
+        "picPath": "Imgs/civ6/mongolian.png",
+        "Aliases": [
+            "Mongolian",
+            "Genghis Khan"
+        ],
+        "DLC": "R&F"
+    },
+    {
+        "id": 42,
+        "Name": "Norwegian",
+        "picPath": "Imgs/civ6/norwegian.png",
+        "Aliases": [
+            "Norwegian",
+            "Harald Hardrada"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 43,
+        "Name": "Nubian",
+        "picPath": "Imgs/civ6/nubian.png",
+        "Aliases": [
+            "Nubian",
+            "Amanitore"
+        ],
+        "DLC": "Nubia"
+    },
+    {
+        "id": 44,
+        "Name": "Ottoman",
+        "picPath": "Imgs/civ6/ottoman.png",
+        "Aliases": [
+            "Ottoman",
+            "Suleiman",
+            "Turkey"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 45,
+        "Name": "Persian",
+        "picPath": "Imgs/civ6/persian.png",
+        "Aliases": [
+            "Persian",
+            "Cyrus"
+        ],
+        "DLC": "Persia&Macedon"
+    },
+    {
+        "id": 46,
+        "Name": "Phoenician",
+        "picPath": "Imgs/civ6/phoenician.png",
+        "Aliases": [
+            "Phoenician",
+            "Dido"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 47,
+        "Name": "Polish",
+        "picPath": "Imgs/civ6/polish.png",
+        "Aliases": [
+            "Polish",
+            "Jadwiga",
+            "Poland"
+        ],
+        "DLC": "Poland"
+    },
+    {
+        "id": 48,
+        "Name": "Roman",
+        "picPath": "Imgs/civ6/roman.png",
+        "Aliases": [
+            "Roman",
+            "Trajan",
+            "Rome"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 49,
+        "Name": "Russian",
+        "picPath": "Imgs/civ6/russian.png",
+        "Aliases": [
+            "Russian",
+            "Peter"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 50,
+        "Name": "Scottish",
+        "picPath": "Imgs/civ6/scottish.png",
+        "Aliases": [
+            "Scottish",
+            "Robert the Bruce",
+            "Scottland"
+        ],
+        "DLC": "R&F"
+    },
+    {
+        "id": 51,
+        "Name": "Scythian",
+        "picPath": "Imgs/civ6/scythian.png",
+        "Aliases": [
+            "Scythian",
+            "Tomyris"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 52,
+        "Name": "Spanish",
+        "picPath": "Imgs/civ6/spanish.png",
+        "Aliases": [
+            "Spanish",
+            "Philip II",
+            "Spain"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 53,
+        "Name": "Sumerian",
+        "picPath": "Imgs/civ6/sumerian.png",
+        "Aliases": [
+            "Sumerian",
+            "Gilgamesh"
+        ],
+        "DLC": "Vanilla"
+    },
+    {
+        "id": 54,
+        "Name": "Swedish",
+        "picPath": "Imgs/civ6/swedish.png",
+        "Aliases": [
+            "Swedish",
+            "Kristina",
+            "Sweden"
+        ],
+        "DLC": "GS"
+    },
+    {
+        "id": 55,
+        "Name": "Zulu",
+        "picPath": "Imgs/civ6/zulu.png",
+        "Aliases": [
+            "Zulu",
+            "Shaka"
+        ],
+        "DLC": "R&F"
+    }
+]
