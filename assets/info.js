@@ -12,7 +12,7 @@ After everyone got their civs they can vote to reroll. If 70%+ of players has vo
     },
     {
         head:`**Commands usage and Prefix**`,
-        text:`To use bot's commands you need to start your message with the prefix or bot mention (e.g. \`!start\` or \`@Civilizatorstart\`)
+        text:`To use bot's commands you need to start your message with the prefix or bot mention (e.g. \`!start\` or \`<@719933714423087135>start\`)
 Bot's default prefix is \`!\`, but you can change it using \`prefix\` command. To view full command list you can use \`help\` or visit bot's [github page](https://github.com/TriDvaRas/Civilizator). To get more info about a specific command use \`<command> help\` (e.g. \`!start help\`)
 **__IMPORTANT!__
 If your server has a bot with  \`!ban\` command you should change <@719933714423087135>'s prefix to avoid actually banning someone** 
@@ -29,8 +29,9 @@ If your server has a bot with  \`!ban\` command you should change <@719933714423
 `
     },
     {
-        head:`**Bugs and Suggestions**`,
-        text:`If you find any bugs or have suggestions you can visit [bot's Discord server](https://discord.gg/nFMFs2e) or you can send them directly to bot's DM
+        head:`**Bugs, Suggestions, Updates**`,
+        text:`For bug reporting you can use [bot's Discord server](https://discord.gg/nFMFs2e) or you can send them directly to bot's DM.
+There you can also find suggestions channel and subscribe to updates channel.
 `
     },
     {
