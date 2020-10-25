@@ -146,10 +146,7 @@ Players can vote to reroll and after 70% of players have voted, all players woul
     - A: Yes, Discord API has a limit of 4 reactions per second.
 - **Q: Can I start multiple games at the same time?**
     - A: No, bot was primarily made for small servers to play with your friends, so  the support of multiple simultaneous games per server is not planned.
-- **Q: Is there Civilization VI support?**
-    - A: No.
-- **Q: Will there be Civilization VI support?**
-    - A: WIP.
+
 - **Q: Can users join game after join phase has ended?**
     - A: No.
 - **Q: Can I get back to previous phase?**
@@ -158,6 +155,10 @@ Players can vote to reroll and after 70% of players have voted, all players woul
     - A: No.
 - **Q: My question is not in FAQ**
     - A: Try asking in [bot's discord server](https://discord.gg/nFMFs2e)
+- **Q: Is there Civilization VI support?**
+    - A: Yes.
+- **Q: Will covs from future game updates be added to the pool?**
+    - A: I'll try to add new civs but I'm not tracking game updates so if I missed an update pls DM the bot about it and I'll fix that.
 ---
 
 
