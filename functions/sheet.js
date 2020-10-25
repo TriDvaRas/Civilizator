@@ -69,6 +69,9 @@ function getSheet(game) {
                     case `lek`:
                         sheet = doc.sheetsByIndex[2]
                         break;
+                    case `civ6`:
+                        sheet = doc.sheetsByIndex[3]
+                        break;
                     default:
                         sheet = doc.sheetsByIndex[0]
                         break;

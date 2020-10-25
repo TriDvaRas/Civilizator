@@ -130,7 +130,12 @@ function checkCivs(state) {
     let newCivs = [];
     state.Civs.forEach(Civ => {
         civObj = CivList.find(C => C.id == Civ);
-        if (state.disabledDLC.includes(civObj.DLC))
+        if (state.game == "Civ6" && civObj.persona) {
+            if (state.DLCs.includes("PersonaPack"))
+                if (civObj.id == civObj.persona)
+                    state.disabled.push(Civ);
+        }
+        else if (state.disabledDLC.includes(civObj.DLC))
             state.disabled.push(Civ);
         else
             newCivs.push(Civ);

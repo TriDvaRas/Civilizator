@@ -304,6 +304,8 @@ function removeDoc(collection, query) {
     })
 }
 function addGameCount(guild) {
+    if (process.argv.includes(`test`))
+        return
     getCollection(`guilds`).then(coll => {
         coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
             if (err)
@@ -320,6 +322,8 @@ function addGameCount(guild) {
     })
 }
 function addFastCount(guild) {
+    if (process.argv.includes(`test`))
+        return
     getCollection(`guilds`).then(coll => {
         coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
             if (err)
