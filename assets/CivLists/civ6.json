@@ -3,7 +3,7 @@
         "id": 1,
         "Name": "American",
         "picPath": "Imgs/civ6/american.png",
-        "Aliases": [
+        "Alias": [
             "American",
             "Teddy Roosevelt"
         ],
@@ -14,7 +14,7 @@
         "id": 2,
         "Name": "AmericanRR",
         "picPath": "Imgs/civ6/american.png",
-        "Aliases": [
+        "Alias": [
             "AmericanRR",
             "Teddy Roosevelt (Rough Rider)",
             "AmericaRR",
@@ -28,7 +28,7 @@
         "id": 3,
         "Name": "AmericanBM",
         "picPath": "Imgs/civ6/american_alt.png",
-        "Aliases": [
+        "Alias": [
             "AmericanBM",
             "Teddy Roosevelt (Bull Moose)",
             "AmericaBM",
@@ -42,7 +42,7 @@
         "id": 4,
         "Name": "Arabian",
         "picPath": "Imgs/civ6/arabian.png",
-        "Aliases": [
+        "Alias": [
             "Arabian",
             "Saladin"
         ],
@@ -52,7 +52,7 @@
         "id": 5,
         "Name": "Australian",
         "picPath": "Imgs/civ6/australian.png",
-        "Aliases": [
+        "Alias": [
             "Australian",
             "John Curtin"
         ],
@@ -62,7 +62,7 @@
         "id": 6,
         "Name": "Aztec",
         "picPath": "Imgs/civ6/aztec.png",
-        "Aliases": [
+        "Alias": [
             "Aztec",
             "Montezuma"
         ],
@@ -72,7 +72,7 @@
         "id": 7,
         "Name": "Brazilian",
         "picPath": "Imgs/civ6/brazilian.png",
-        "Aliases": [
+        "Alias": [
             "Brazilian",
             "Pedro II"
         ],
@@ -82,7 +82,7 @@
         "id": 8,
         "Name": "Byzantine",
         "picPath": "Imgs/civ6/byzantine.png",
-        "Aliases": [
+        "Alias": [
             "Byzantine",
             "Basil II",
             "Byzantium"
@@ -93,7 +93,7 @@
         "id": 9,
         "Name": "Canadian",
         "picPath": "Imgs/civ6/canadian.png",
-        "Aliases": [
+        "Alias": [
             "Canadian",
             "Wilfrid Laurier",
             "Canada"
@@ -104,7 +104,7 @@
         "id": 10,
         "Name": "Chinese",
         "picPath": "Imgs/civ6/chinese.png",
-        "Aliases": [
+        "Alias": [
             "Chinese",
             "Qin Shi Huang",
             "China"
@@ -115,7 +115,7 @@
         "id": 11,
         "Name": "Cree",
         "picPath": "Imgs/civ6/cree.png",
-        "Aliases": [
+        "Alias": [
             "Cree",
             "Poundmaker"
         ],
@@ -125,7 +125,7 @@
         "id": 12,
         "Name": "Dutch",
         "picPath": "Imgs/civ6/dutch.png",
-        "Aliases": [
+        "Alias": [
             "Dutch",
             "Wilhelmina",
             "Netherlands"
@@ -136,7 +136,7 @@
         "id": 13,
         "Name": "Egyptian",
         "picPath": "Imgs/civ6/egyptian.png",
-        "Aliases": [
+        "Alias": [
             "Egyptian",
             "Cleopatra"
         ],
@@ -146,7 +146,7 @@
         "id": 14,
         "Name": "English",
         "picPath": "Imgs/civ6/english.png",
-        "Aliases": [
+        "Alias": [
             "English",
             "Victoria",
             "EnglandV"
@@ -157,7 +157,7 @@
         "id": 15,
         "Name": "EnglishE",
         "picPath": "Imgs/civ6/english_alt.png",
-        "Aliases": [
+        "Alias": [
             "EnglishE",
             "Eleanor of Aquitaine (English)",
             "EnglandE",
@@ -169,7 +169,7 @@
         "id": 16,
         "Name": "Ethiopian",
         "picPath": "Imgs/civ6/ethiopian.png",
-        "Aliases": [
+        "Alias": [
             "Ethiopian",
             "Menelik II"
         ],
@@ -179,7 +179,7 @@
         "id": 17,
         "Name": "French",
         "picPath": "Imgs/civ6/french.png",
-        "Aliases": [
+        "Alias": [
             "French",
             "Catherine de Medici",
             "France"
@@ -191,7 +191,7 @@
         "id": 18,
         "Name": "FrenchBQ",
         "picPath": "Imgs/civ6/french.png",
-        "Aliases": [
+        "Alias": [
             "FrenchBQ",
             "Catherine de Medici (Black Queen)",
             "FranceBQ",
@@ -204,7 +204,7 @@
         "id": 19,
         "Name": "FrenchM",
         "picPath": "Imgs/civ6/french_alt.png",
-        "Aliases": [
+        "Alias": [
             "FrenchM",
             "Catherine de Medici (Magnificence)",
             "FranceM",
@@ -217,7 +217,7 @@
         "id": 20,
         "Name": "FrenchE",
         "picPath": "Imgs/civ6/french_alt2.png",
-        "Aliases": [
+        "Alias": [
             "FrenchE",
             "Eleanor of Aquitaine (French)",
             "FranceE",
@@ -229,7 +229,7 @@
         "id": 21,
         "Name": "Gallic",
         "picPath": "Imgs/civ6/gallic.png",
-        "Aliases": [
+        "Alias": [
             "Gallic",
             "Ambiorix",
             "Gauls"
@@ -240,7 +240,7 @@
         "id": 22,
         "Name": "Georgian",
         "picPath": "Imgs/civ6/georgian.png",
-        "Aliases": [
+        "Alias": [
             "Georgian",
             "Tamar"
         ],
@@ -250,7 +250,7 @@
         "id": 23,
         "Name": "German",
         "picPath": "Imgs/civ6/german.png",
-        "Aliases": [
+        "Alias": [
             "German",
             "Frederick Barbarossa",
             "Germany"
@@ -261,7 +261,7 @@
         "id": 24,
         "Name": "Gran Colombian",
         "picPath": "Imgs/civ6/gran_colombian.png",
-        "Aliases": [
+        "Alias": [
             "Gran Colombian",
             "Simón Bolívar"
         ],
@@ -271,7 +271,7 @@
         "id": 25,
         "Name": "GreekP",
         "picPath": "Imgs/civ6/greek.png",
-        "Aliases": [
+        "Alias": [
             "GreekP",
             "Pericles",
             "GreekP"
@@ -282,7 +282,7 @@
         "id": 26,
         "Name": "GreekG",
         "picPath": "Imgs/civ6/greek_alt.png",
-        "Aliases": [
+        "Alias": [
             "GreekG",
             "Gorgo",
             "GreekG"
@@ -293,7 +293,7 @@
         "id": 27,
         "Name": "Hungarian",
         "picPath": "Imgs/civ6/hungarian.png",
-        "Aliases": [
+        "Alias": [
             "Hungarian",
             "Matthias Corvinus",
             "Hungary"
@@ -304,7 +304,7 @@
         "id": 28,
         "Name": "Incan",
         "picPath": "Imgs/civ6/incan.png",
-        "Aliases": [
+        "Alias": [
             "Incan",
             "Pachacuti",
             "Incas"
@@ -315,7 +315,7 @@
         "id": 29,
         "Name": "IndianG",
         "picPath": "Imgs/civ6/indian.png",
-        "Aliases": [
+        "Alias": [
             "IndianG",
             "Gandhi",
             "IndiaG"
@@ -326,7 +326,7 @@
         "id": 30,
         "Name": "IndianC",
         "picPath": "Imgs/civ6/indian_alt.png",
-        "Aliases": [
+        "Alias": [
             "IndianC",
             "Chandragupta",
             "IndiaC"
@@ -337,7 +337,7 @@
         "id": 31,
         "Name": "Indonesian",
         "picPath": "Imgs/civ6/indonesian.png",
-        "Aliases": [
+        "Alias": [
             "Indonesian",
             "Gitarja"
         ],
@@ -347,7 +347,7 @@
         "id": 32,
         "Name": "Japanese",
         "picPath": "Imgs/civ6/japanese.png",
-        "Aliases": [
+        "Alias": [
             "Japanese",
             "Hojo Tokimune"
         ],
@@ -357,7 +357,7 @@
         "id": 33,
         "Name": "Khmer",
         "picPath": "Imgs/civ6/khmer.png",
-        "Aliases": [
+        "Alias": [
             "Khmer",
             "Jayavarman VII"
         ],
@@ -367,7 +367,7 @@
         "id": 34,
         "Name": "Kongolese",
         "picPath": "Imgs/civ6/kongolese.png",
-        "Aliases": [
+        "Alias": [
             "Kongolese",
             "Mvemba a Nzinga"
         ],
@@ -377,7 +377,7 @@
         "id": 35,
         "Name": "Korean",
         "picPath": "Imgs/civ6/korean.png",
-        "Aliases": [
+        "Alias": [
             "Korean",
             "Seondeok"
         ],
@@ -387,7 +387,7 @@
         "id": 36,
         "Name": "Macedonian",
         "picPath": "Imgs/civ6/macedonian.png",
-        "Aliases": [
+        "Alias": [
             "Macedonian",
             "Alexander"
         ],
@@ -397,7 +397,7 @@
         "id": 37,
         "Name": "Malian",
         "picPath": "Imgs/civ6/malian.png",
-        "Aliases": [
+        "Alias": [
             "Malian",
             "Mansa Musa"
         ],
@@ -407,7 +407,7 @@
         "id": 38,
         "Name": "Māori",
         "picPath": "Imgs/civ6/maori.png",
-        "Aliases": [
+        "Alias": [
             "Māori",
             "Kupe",
             "Maori"
@@ -418,7 +418,7 @@
         "id": 39,
         "Name": "Mapuche",
         "picPath": "Imgs/civ6/mapuche.png",
-        "Aliases": [
+        "Alias": [
             "Mapuche",
             "Lautaro"
         ],
@@ -428,7 +428,7 @@
         "id": 40,
         "Name": "Mayan",
         "picPath": "Imgs/civ6/mayan.png",
-        "Aliases": [
+        "Alias": [
             "Mayan",
             "Lady Six Sky"
         ],
@@ -438,7 +438,7 @@
         "id": 41,
         "Name": "Mongolian",
         "picPath": "Imgs/civ6/mongolian.png",
-        "Aliases": [
+        "Alias": [
             "Mongolian",
             "Genghis Khan"
         ],
@@ -448,7 +448,7 @@
         "id": 42,
         "Name": "Norwegian",
         "picPath": "Imgs/civ6/norwegian.png",
-        "Aliases": [
+        "Alias": [
             "Norwegian",
             "Harald Hardrada"
         ],
@@ -458,7 +458,7 @@
         "id": 43,
         "Name": "Nubian",
         "picPath": "Imgs/civ6/nubian.png",
-        "Aliases": [
+        "Alias": [
             "Nubian",
             "Amanitore"
         ],
@@ -468,7 +468,7 @@
         "id": 44,
         "Name": "Ottoman",
         "picPath": "Imgs/civ6/ottoman.png",
-        "Aliases": [
+        "Alias": [
             "Ottoman",
             "Suleiman",
             "Turkey"
@@ -479,7 +479,7 @@
         "id": 45,
         "Name": "Persian",
         "picPath": "Imgs/civ6/persian.png",
-        "Aliases": [
+        "Alias": [
             "Persian",
             "Cyrus"
         ],
@@ -489,7 +489,7 @@
         "id": 46,
         "Name": "Phoenician",
         "picPath": "Imgs/civ6/phoenician.png",
-        "Aliases": [
+        "Alias": [
             "Phoenician",
             "Dido"
         ],
@@ -499,7 +499,7 @@
         "id": 47,
         "Name": "Polish",
         "picPath": "Imgs/civ6/polish.png",
-        "Aliases": [
+        "Alias": [
             "Polish",
             "Jadwiga",
             "Poland"
@@ -510,7 +510,7 @@
         "id": 48,
         "Name": "Roman",
         "picPath": "Imgs/civ6/roman.png",
-        "Aliases": [
+        "Alias": [
             "Roman",
             "Trajan",
             "Rome"
@@ -521,7 +521,7 @@
         "id": 49,
         "Name": "Russian",
         "picPath": "Imgs/civ6/russian.png",
-        "Aliases": [
+        "Alias": [
             "Russian",
             "Peter"
         ],
@@ -531,7 +531,7 @@
         "id": 50,
         "Name": "Scottish",
         "picPath": "Imgs/civ6/scottish.png",
-        "Aliases": [
+        "Alias": [
             "Scottish",
             "Robert the Bruce",
             "Scottland"
@@ -542,7 +542,7 @@
         "id": 51,
         "Name": "Scythian",
         "picPath": "Imgs/civ6/scythian.png",
-        "Aliases": [
+        "Alias": [
             "Scythian",
             "Tomyris"
         ],
@@ -552,7 +552,7 @@
         "id": 52,
         "Name": "Spanish",
         "picPath": "Imgs/civ6/spanish.png",
-        "Aliases": [
+        "Alias": [
             "Spanish",
             "Philip II",
             "Spain"
@@ -563,7 +563,7 @@
         "id": 53,
         "Name": "Sumerian",
         "picPath": "Imgs/civ6/sumerian.png",
-        "Aliases": [
+        "Alias": [
             "Sumerian",
             "Gilgamesh"
         ],
@@ -573,7 +573,7 @@
         "id": 54,
         "Name": "Swedish",
         "picPath": "Imgs/civ6/swedish.png",
-        "Aliases": [
+        "Alias": [
             "Swedish",
             "Kristina",
             "Sweden"
@@ -584,7 +584,7 @@
         "id": 55,
         "Name": "Zulu",
         "picPath": "Imgs/civ6/zulu.png",
-        "Aliases": [
+        "Alias": [
             "Zulu",
             "Shaka"
         ],
