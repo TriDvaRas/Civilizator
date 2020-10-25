@@ -3,7 +3,7 @@ module.exports=
     {
         head:`**About**`,
         text:`<@719933714423087135>'s main feature is randomizing Civilization picks (CivRandomizer)
-Currently supported games: Civ5, Civ5+LEK. Use \`start help\` or \`fast help\` for more info about choosing game. 
+Currently supported games: Civ5, Civ5+LEK, Civ6. Use \`start help\` or \`fast help\` for more info about choosing game. 
 Randomizer gives each player a set of civs to pick from.
 If you enable bans players can also **ban** civs, removing them from random pool 
 **DLCs** can also be disabled if someone doesn't have some or you just want to play Vanilla game 

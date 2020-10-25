@@ -12,10 +12,10 @@ const getCivList = require(`../functions/civList`)
 module.exports = {
     name: 'fast',
     description: 'Fast game (original CivRandomizer) (has 1m cooldown)',
-    usage: '`fast [game] <Players(1-16)> <CivPerPlayer(1-6)> [-/+] [DLCs to enable/disable]`\n [game] is optional argument to choose the game you play\n Available games: civ5(default), lek',
+    usage: '`fast [game] <Players(1-16)> <CivPerPlayer(1-6)> [-/+] [DLCs to enable/disable]`\n [game] is optional argument to choose the game you play\n Available games: civ5(default), lek, civ6',
     example: `\`fast 4 3\` - civ5, 4 players 3 civs each, all DLCs enabled
 \`fast 4 3 - bnw mon\` - civ5, 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
-\`fast 4 3 + van korea\` - civ5, 4 players 3 civs each, only Vanilla and Korea enabled
+\`fast civ6 4 3 + van korea\` - civ6, 4 players 3 civs each, only Vanilla and Korea enabled
 \`fast lek 2 4\` - civ5 + lek mod, 2 players 4 civs each, all DLCs enabled`,
     execute: async function (message, args) {
         GC.getConfig(message.guild).then(
