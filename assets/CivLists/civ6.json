@@ -103,7 +103,7 @@
     {
         "id": 10,
         "Name": "Chinese",
-        "picPath": "Imgs/civ6/canadian.png",
+        "picPath": "Imgs/civ6/chinese.png",
         "Aliases": [
             "Chinese",
             "Qin Shi Huang",
@@ -114,7 +114,7 @@
     {
         "id": 11,
         "Name": "Cree",
-        "picPath": "Imgs/civ6/canadian.png",
+        "picPath": "Imgs/civ6/cree.png",
         "Aliases": [
             "Cree",
             "Poundmaker"
