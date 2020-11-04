@@ -54,7 +54,7 @@ module.exports = {
                         C = [];
                         //find all aliases
                         CivList.forEach(civ => {
-                            if (state.Civs.includes(civ.id)&&BanF.includesIgnoreCase(civ.Alias, arg))
+                            if (BanF.includesIgnoreCase(civ.Alias, arg))
                                 C.push(civ);
                         });
                         //check if multiple
