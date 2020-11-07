@@ -23,11 +23,10 @@ module.exports = {
                 //check cd
                 if (Date.now() - config.lastFast < globalThis.fastCD) {
                     message.channel.send(`Command is on cooldown. Try again later.`).then(botMsg => {
-                        message.delete({ timeout: 5000 })
-                        botMsg.delete({ timeout: 5000 });
-                    })
-                    .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                        message.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                        botMsg.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                    }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
                     return
                 }
                 //check perm
@@ -38,7 +37,7 @@ module.exports = {
                             let game;
                             if (gameNames.includes(args[0].toLowerCase())) {
                                 game = args.shift();
-                                
+
                             }
                             else
                                 game = "Civ5";
@@ -46,10 +45,10 @@ module.exports = {
                             if (args.length < 2 || !(args[0] >= 1 && args[0] <= 16 && args[1] >= 1 && args[1] <= 6)) {
 
                                 message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(botMsg => {
-                                    message.delete({ timeout: 5000 })
-                                    botMsg.delete({ timeout: 5000 });
-                                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                                    message.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                                    botMsg.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                                }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
                                 return;
                             }
 
@@ -63,10 +62,10 @@ module.exports = {
                                 white = false;
                             else if (args[2]) {
                                 message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(botMsg => {
-                                    message.delete({ timeout: 5000 })
-                                    botMsg.delete({ timeout: 5000 });
-                                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                                    message.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                                    botMsg.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                                }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
                                 return;
                             }
                             //set dlcs
@@ -77,10 +76,10 @@ module.exports = {
                             //check if enough civs 
                             if (state.Civs.length < +args[0] * +args[1]) {
                                 message.channel.send(`Not enough civs for ${args[0]}x${args[1]} game`).then(botMsg => {
-                                    message.delete({ timeout: 5000 })
-                                    botMsg.delete({ timeout: 5000 });
-                                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                                    message.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                                    botMsg.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                                }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
                                 return;
                             }
                             //send embed
@@ -92,8 +91,8 @@ module.exports = {
                                 .addField(`CPP`, args[1], true)
                                 .setTimestamp()
                                 .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
-                            ).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                            ).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
                             //send civs
                             GeneratePicks(state, message.channel, +args[0], +args[1]);
                             db.setLastFast(message.guild)
@@ -102,10 +101,10 @@ module.exports = {
                         err => {
                             logger.log(`error`, `${err}\n${err.stack}`);
                             message.channel.send("Civ role required").then(botMsg => {
-                                message.delete({ timeout: 5000 })
-                                botMsg.delete({ timeout: 5000 })
-                            }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                                message.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                                botMsg.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) })
+                            }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
                             return;
                         }
                     );
@@ -188,8 +187,8 @@ function GetCivLine(state, channel, i, cpp) {
             img.write(`./assets/Imgs/Players/fast${imgid}.png`, () => {
                 channel.send(txt.slice(0, -1), {
                     files: [`./assets/Imgs/Players/fast${imgid}.png`]
-                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
             });
 
         },
@@ -202,6 +201,7 @@ function GetCivLine(state, channel, i, cpp) {
                 img.write(`./assets/Imgs/Players/fast${imgid}.png`, () => {
                     channel.send(`${txt.slice(0, -1)} [failed to add images]`).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
                 });
+            }
         );
     if (state.repeat == true)
         for (let i = state.picked.length - 1; i >= 0; i--) {

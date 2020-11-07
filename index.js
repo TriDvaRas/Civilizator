@@ -12,7 +12,7 @@ let pressI = 1;
 
 globalThis.reactionsMaxTime = 900000;
 globalThis.finalDelay = 1000;
-globalThis.fastCD = 60000;
+globalThis.fastCD = 30000;
 
 globalThis.discordClient = new Discord.Client({
 	presence: {
@@ -22,7 +22,7 @@ globalThis.discordClient = new Discord.Client({
 		}
 	}
 });
-globalThis.gameNames=[`civ5`,`lek`,`civ6`]
+globalThis.gameNames = [`civ5`, `lek`, `civ6`]
 
 
 
@@ -32,22 +32,31 @@ const chalk = require('chalk');
 const db = require('./functions/db');
 
 discordClient.on('ready', () => {
-	logger.log('warn', 'Bot logged in');
+	logger.log('dapi', 'Bot logged in');
 	updateStats();
 	discordClient.setInterval(setPressence, 15532 * 1.68);
 	discordClient.setInterval(updateStats, 98 * 1008);
 })
 	.on('warn', error => logger.log('warn', `[*]\n${error.stack}`))
 	.on('error', error => {
-		logger.log('error', `[*]\n${error.stack}`)
+		if (`${error.stack}`.includes(`DiscordAPIError`))
+			logger.log('dapi', `[*]\n${error.stack}`)
+		else
+			logger.log('error', `[*]\n${error.stack}`)
 	});
 
 process
 	.on('uncaughtException', error => {
-		logger.log('error', `[*]\n${error.stack}`);
+		if (`${error.stack}`.includes(`DiscordAPIError`))
+			logger.log('dapi', `[*]\n${error.stack}`)
+		else
+			logger.log('error', `[*]\n${error.stack}`)
 	})
 	.on('unhandledRejection', error => {
-		logger.log('error', `[*]\n${error.stack}`);
+		if (`${error.stack}`.includes(`DiscordAPIError`))
+			logger.log('dapi', `[*]\n${error.stack}`)
+		else
+			logger.log('error', `[*]\n${error.stack}`)
 	})
 	.on('SIGHUP', () => {
 		logger.log('info', 'Shutting down...')

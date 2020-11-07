@@ -20,8 +20,9 @@ module.exports = {
     execute: function (message, args) {
         if (args.length == 0)
             //send help on 0 args
-            return message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+            return message.channel.send(`Wrong arguments. Try \`${this.name} help\` `)
+                .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
         //read state
         GC.getGameState(message.guild).then(state => {
 
@@ -45,8 +46,7 @@ module.exports = {
                     }, () => { })
                 },
                     () => {
-                        message.channel.send("CivRole only").catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-
+                        message.channel.send("CivRole only").catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
                     })
         });
 
@@ -99,8 +99,7 @@ function preStart(message, args, state) {
                     .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
                 )
             })
-    }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+    }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
 }
 function StartGame(message, args, state, gameEmbed) {
 
@@ -110,9 +109,8 @@ function StartGame(message, args, state, gameEmbed) {
     //check CPP
     if (!args[0] || !parseInt(args[0])) {
         message.channel.send("Wrong arguments").then(msg => {
-            msg.delete({ timeout: 5000 });
-        }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+            msg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)});
+        }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
         return true;
     }
     if (parseInt(args[0]) < 1)
@@ -152,8 +150,8 @@ function CheckLastGame(message, state) {
                     let m = ms / 60000;
 
                     if (m < 1) {
-                        message.channel.send(`Wait at least 5 minutes (1 for last game's op) before starting a new game`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                        message.channel.send(`Wait at least 5 minutes (1 for last game's op) before starting a new game`)
+                            .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
                         reject();
                     } else if (m < 5) {
                         Perm.checkRoles(message.member, state.Op, { admin: true, op: true })
@@ -162,8 +160,8 @@ function CheckLastGame(message, state) {
                                     resolve();
                                 },
                                 () => {
-                                    message.channel.send(`Wait at least 5 minutes (1 for last game's op) before starting a new game`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                                    message.channel.send(`Wait at least 5 minutes (1 for last game's op) before starting a new game`)
+                                        .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
                                     reject();
                                 })
                     } else {

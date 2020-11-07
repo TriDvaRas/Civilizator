@@ -11,18 +11,21 @@ module.exports = {
 
                 createBaseChannel(message.guild, undefined, { message: message })
                     .then(channel => {
-                        message.channel.send(`Successfuly created ${channel}`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                        message.channel.send(`Successfuly created ${channel}`)
+                            .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
                     },
                         err => {
-                            message.channel.send(err).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            
+                            message.channel.send(err)
+                                .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+
                         }
                     );
 
             },
                 () => {
-                    message.channel.send("Server admin command").catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                    message.channel.send("Server admin command")
+                        .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
                     return;
 
                 }

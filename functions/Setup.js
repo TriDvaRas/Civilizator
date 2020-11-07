@@ -1,7 +1,7 @@
 
 const welcome = require(`../assets/welcome`);
 const DB = require(`./db`);
-const logger=require(`../logger`);
+const logger = require(`../logger`);
 const chalk = require('chalk');
 
 function createBaseChannel(guild, role, options) {
@@ -34,14 +34,19 @@ function createBaseChannel(guild, role, options) {
             }).then(channel => {
                 if (!options.message) {
                     channel.send(welcome).then(msg => {
-                        msg.pin();
-                    }).catch(err => logger.log(`error`, `[${chalk.magentaBright(guild.name)}] [SETUP] ${err}`))
-                    channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`).catch(err => logger.log(`error`, `[${chalk.magentaBright(guild.name)}] [SETUP] ${err}`))
+                        msg.pin()
+                            .catch(err => { throw new Error(`pin [${channel.guild.name}] [${channel.name}] \n${err}`) })
+                    })
+                        .catch(err => { throw new Error(`send [${channel.guild.name}] [${channel.name}] \n${err}`) })
+                    channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`)
+                        .catch(err => { throw new Error(`send [${channel.guild.name}] [${channel.name}] \n${err}`) })
                 }
-                channel.send(`Bound bot channel to ${channel} ✅`).catch(err => logger.log(`error`, `[${chalk.magentaBright(guild.name)}] [SETUP] ${err}`))
+                channel.send(`Bound bot channel to ${channel} ✅`)
+                    .catch(err => { throw new Error(`send [${channel.guild.name}] [${channel.name}] \n${err}`) })
                 setConfig(guild, { channelId: channel.id });
                 resolve(channel);
-            });
+            })
+                .catch(err => { throw new Error(`createChannel [${guild.name}] \n${err}`) })
 
         },
             err => reject(err)
@@ -65,14 +70,14 @@ function createBaseRole(guild, ignoreOld) {
                     color: [64, 255, Math.floor(90 + Math.random() * 40)]
                 }
             }).then(role => {
-                guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role);
+                guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role).catch(err => { throw new Error(`addSelfRole [${guild.name}] \n${err}`) });
                 setConfig(guild, { roleId: role.id });
                 resolve(role);
             });
 
         },
             err => reject(err)
-        );
+        ).catch(err => { throw new Error(`createRole [${guild.name}] \n${err}`) })
     });
 }
 function createBase(guild) {

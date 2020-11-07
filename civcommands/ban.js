@@ -10,23 +10,23 @@ module.exports = {
     description: 'Bans Civilization by id or alias',
     usage: '`ban <Id/Alias>`',
     execute: function (message, args) {
-        message.delete({ timeout: 5000 });
+        message.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
         //read GameState
         GC.getGameState(message.guild).then(state => {
             //check phase
             if (state.started != true) {
                 message.channel.send("`start` game first")
                     .then(botMsg => {
-                        botMsg.delete({ timeout: 5000 });
+                        botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
                     })
-                    .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                    .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                 return;
             } else if (state.Phase != "bans") {
                 message.channel.send("Wrong phase")
                     .then(botMsg => {
-                        botMsg.delete({ timeout: 5000 });
+                        botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
                     })
-                    .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                    .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                 return;
 
             } else {
@@ -37,8 +37,8 @@ module.exports = {
                 //check if Player can ban
                 if (!BanF.CheckCanBan(state, message)) {
                     message.channel.send("Out of bans").then(botMsg => {
-                        botMsg.delete({ timeout: 5000 });
-                    });
+                        botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                    }).catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                     return;
                 }
                 for (let j = 0; j < args.length && BanF.CheckCanBan(state, message); j++) {
@@ -66,19 +66,19 @@ module.exports = {
                             });
                             message.channel.send(txt)
                                 .then(botMsg => {
-                                    botMsg.delete({ timeout: 7000 });
+                                    botMsg.delete({ timeout: 7000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
                                 })
-                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-                            continue;
+                                .catch(err => {err.message+=`s[${message.guild.name}] [${message.author.tag}]`; throw err})
+                                continue;
                         }
                         else if (C.length == 0) {
                             let txt = `No aliases found for \`${arg}\``;
                             logger.log(`cmd`, txt);
                             message.channel.send(txt)
                                 .then(botMsg => {
-                                    botMsg.delete({ timeout: 7000 });
+                                    botMsg.delete({ timeout: 7000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
                                 })
-                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                                .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                             continue;
 
                         }
@@ -95,23 +95,22 @@ module.exports = {
                             message.channel.send(`${C.Name} (${C.id}) is already banned `, {
                                 files: [`./assets/${C.picPath}`]
                             }).then(botMsg => {
-                                botMsg.delete({ timeout: 5000 });
-                            }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
-
+                                botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                            }).catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
                         }
                         else if (BanF.CheckDisabled(state, C)) {
                             message.channel.send(`${C.Name} (${C.id}) is already disabled by DLCs settings`, {
                                 files: [`./assets/${C.picPath}`]
                             }).then(botMsg => {
-                                botMsg.delete({ timeout: 5000 });
-                            }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                                botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                            }).catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
                         }
                         else {
                             let player = state.Players.find(u => u.id == `${message.author}`);
                             if (player.bans.length >= state.banSize) {
                                 message.channel.send(`Out of bans`).then(botMsg => {
-                                    botMsg.delete({ timeout: 10000 });
-                                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                                    botMsg.delete({ timeout: 10000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                                }).catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
                                 return;
                             }
                             BanF.Ban(C, state);
@@ -120,9 +119,9 @@ module.exports = {
                             message.channel.send(`${message.author} banned ${C.Name} (${C.id})\nBans: ${state.bansActual}/${state.bansFull}`, {
                                 files: [`./assets/${C.picPath}`]
                             }).then(botMsg => {
-                                botMsg.delete({ timeout: 10000 });
+                                botMsg.delete({ timeout: 10000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
                             })
-                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                                .catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] banned ${C.Name} [${state.bansActual}/${state.bansFull}]`);
                             let embed = Embeder.get(state, message.channel);
                             embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
@@ -132,7 +131,7 @@ module.exports = {
                             if (state.bansActual >= state.bansFull) {
                                 let msg = message.channel.messages.cache.array().find(msg => msg.id == state.embedId);
                                 logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] Last ban, proceeding to picks`);
-                                msg.react(`✔️`);
+                                msg.react(`✔️`).catch(err => { err.message += ` ✔️[${message.guild.name}] [${message.channel.name}]`; throw new Error(err) })
                             }
                         }
                     }

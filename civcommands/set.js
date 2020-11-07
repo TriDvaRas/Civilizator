@@ -11,17 +11,21 @@ module.exports = {
 \`set civs <1-6>\` - change civs per player
 `,
     execute: function (message, args) {
-        message.delete({ timeout: 5000 });
+        message.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
         GC.getGameState(message.guild).then(state => {
 
             Perm.checkRoles(message.member, state.Op, { admin: true, op: true })
                 .then(() => {
                     if (!state.started) {
-                        message.channel.send("`start` game first").then(m => m.delete({ timeout: 5000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                        message.channel.send("`start` game first")
+                            .then(m => m.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)}))
+                            .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                         return;
                     }
                     if (state.Phase != "join") {
-                        message.channel.send("You can change game settings only during join phase").then(m => m.delete({ timeout: 5000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                        message.channel.send("You can change game settings only during join phase")
+                            .then(m => m.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)}))
+                            .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                         return;
                     }
                     let embed;
@@ -30,11 +34,14 @@ module.exports = {
                         case "bans":
                             let newBans = parseInt(args[1]);
                             if (!newBans) {
-                                message.channel.send(`Wrong arguments\n Try \`set help\``).then(m => m.delete({ timeout: 5000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                                message.channel.send(`Wrong arguments\n Try \`set help\``)
+                                    .then(m => m.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)}))
+                                    .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                                 break;
                             }
                             state.banSize = Math.min(Math.max(newBans, 0), 4);
-                            message.channel.send(`Set BPP to ${state.banSize}`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            message.channel.send(`Set BPP to ${state.banSize}`)
+                                .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                             GC.setGameState(message.guild, state);
                             embed = Embeder.get(state, message.channel);
                             embed.fields.find(field => field.name == "Bans per player").value = `${state.banSize}` + '\u200B';
@@ -45,11 +52,14 @@ module.exports = {
                         case "civs":
                             let newCivs = parseInt(args[1]);
                             if (!newCivs) {
-                                message.channel.send(`Wrong arguments\n Try \`set help\``).then(m => m.delete({ timeout: 5000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                                message.channel.send(`Wrong arguments\n Try \`set help\``)
+                                    .then(m => m.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)}))
+                                    .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                                 break;
                             }
                             state.playerSize = Math.min(Math.max(newCivs, 1), 6);
-                            message.channel.send(`Set CPP to ${state.playerSize}`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            message.channel.send(`Set CPP to ${state.playerSize}`)
+                                .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                             GC.setGameState(message.guild, state);
                             embed = Embeder.get(state, message.channel);
                             embed.fields.find(field => field.name == "Civs per player").value = `${state.playerSize}` + '\u200B';
@@ -57,12 +67,16 @@ module.exports = {
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] changed civs to ${state.playerSize}`);
                             break;
                         default:
-                            message.channel.send(`Wrong arguments\n Try \`set help\``).then(m => m.delete({ timeout: 5000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            message.channel.send(`Wrong arguments\n Try \`set help\``)
+                                .then(m => m.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)}))
+                                .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                             break;
                     }
                 },
                     () => {
-                        message.channel.send("Operator command").then(m => m.delete({ timeout: 5000 })).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                        message.channel.send("Operator command")
+                            .then(m => m.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)}))
+                            .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                         return;
 
                     })

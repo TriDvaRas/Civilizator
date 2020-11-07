@@ -134,7 +134,8 @@ function GetCivLine(state, channel, i) {
 
                     Picker.add(mess, Player, i + 1);
 
-                }).catch(err => logger.log(`error`, `[${chalk.magentaBright(channel.guild.name)}] [${chalk.magentaBright(Player.tag)}] ${err}`))
+                })
+                    .catch(err => { throw new Error(`send [${channel.guild.name}] [${channel.name}] [${Player.tag}] \n${err}`) })
             });
 
         },
@@ -178,7 +179,7 @@ function shuffle(Players) {
 function removeOld(mess, max) {
     try {
         if (mess.reactions.cache.some(x => x.emoji.name == [`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][max - 1]))
-            mess.delete();
+            mess.delete().catch(err => { throw new Error(`delete [${mess.guild.name}] [${mess.channel.name}] \n${err}`) })
         else {
             setTimeout(() => removeOld(mess, max), 525);
         }

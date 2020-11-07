@@ -60,9 +60,10 @@ let logger = new winston.createLogger({
     levels: {
         error: 0,
         warn: 1,
-        info: 2,
-        sheet: 4,
-        cmd: 3,
+        dapi: 2,
+        info: 3,
+        cmd: 4,
+        sheet: 5,
         db: 6,
         http: 8,
         verbose: 9,
@@ -88,6 +89,8 @@ function color(text) {
             return chalk.bold.bgRedBright(text);
         case `WARN`:
             return chalk.bold.bgRgb(224, 134, 22)(text);
+        case `DAPI`:
+            return chalk.bold.bgRedBright(text);
         case `DEBUG`:
             return chalk.bold.yellowBright(text);
         case `CMD`:
@@ -104,10 +107,13 @@ function color(text) {
 
 function formatLog(log) {
     let msg = `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`
-    if ([`error`, `warn`].includes(log.level)&&globalThis.discordClient) {
+    if ([`error`, `warn`, `dapi`].includes(log.level) && globalThis.discordClient) {
         let guild = globalThis.discordClient.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
         if (guild)
-            guild.channels.cache.find(channel => channel.name == `error-log`).send(msg);
+            if (log.level == `dapi`)
+                guild.channels.cache.find(channel => channel.name == `api-errors`).send(msg);
+            else
+                guild.channels.cache.find(channel => channel.name == `error-log`).send(msg);
     }
     return msg;
 

@@ -15,7 +15,7 @@ module.exports = {
 \`dlc <blacklist/black/b/-> <DLCs>\` disables all DLCs which are in <DLCs>
 \`dlc <reset/r>\` enables all DLCs`,
     execute: function (message, args) {
-        message.delete({ timeout: 5000 });
+        message.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
         //read GameState
         GC.getGameState(message.guild).then(state => {
             Perm.checkRoles(message.member, state.Op, { admin: true, op: true })
@@ -23,15 +23,13 @@ module.exports = {
                     //check phase
                     if (state.started != true) {
                         message.channel.send("`start` game first").then(botMsg => {
-                            botMsg.delete({ timeout: 5000 });
-                        })
-                            .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                        }).catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                         return;
                     } else if (state.Phase != "join") {
                         message.channel.send("Wrong phase").then(botMsg => {
-                            botMsg.delete({ timeout: 5000 });
-                        })
-                            .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                        }).catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                         return;
 
                     } else {
@@ -51,9 +49,8 @@ module.exports = {
 
                         if (!args[0] || !args[1]) {
                             message.channel.send(`Wrong arguments`).then(botMsg => {
-                                botMsg.delete({ timeout: 5000 });
-                            })
-                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                                botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                            }).catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                             return;
                         }
                         let white;
@@ -63,9 +60,8 @@ module.exports = {
                             white = false;
                         else {
                             message.channel.send(`Wrong arguments`).then(botMsg => {
-                                botMsg.delete({ timeout: 5000 });
-                            })
-                                .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                                botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                            }).catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                             return;
                         }
                         args = args.slice(1);
@@ -91,9 +87,8 @@ module.exports = {
                 },
                     () => {
                         message.channel.send("Operator command").then(botMsg => {
-                            botMsg.delete({ timeout: 5000 })
-                        })
-                            .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
+                            botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+                        }).catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                         return;
                     })
         },

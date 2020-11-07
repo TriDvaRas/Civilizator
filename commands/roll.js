@@ -44,7 +44,8 @@ module.exports = {
             }
             message.reply(text).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`));
         } catch (error) {
-            message.channel.send(`wrong arguments`).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`));
+            message.channel.send(`wrong arguments`)
+                .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] failed to roll ${error}`);
 
         }
