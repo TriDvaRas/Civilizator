@@ -193,7 +193,15 @@ function GetCivLine(state, channel, i, cpp) {
             });
 
         },
-            err => logger.log(`error`, `mergeImg error\n${err}`)
+            err => {
+                logger.log(`error`, `mergeImg error\n${err}`)
+                let imgid = fastid;
+                fastid++;
+                if (fastid > 32)
+                    fastid = 0;
+                img.write(`./assets/Imgs/Players/fast${imgid}.png`, () => {
+                    channel.send(`${txt.slice(0, -1)} [failed to add images]`).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
+                });
         );
     if (state.repeat == true)
         for (let i = state.picked.length - 1; i >= 0; i--) {
