@@ -138,8 +138,19 @@ function GetCivLine(state, channel, i) {
             });
 
         },
-            err => logger.log(`error`, `mergeImg error\n${err}`)
-        );
+            err => {
+                logger.log(`error`, `mergeImg error\n${err}`)
+                channel.send(`${txt.slice(0, -1)} [failed to add images]`).then(mess => {
+                    GC.getPickMsgs(channel.guild).then(msgIds => {
+                        msgIds.push(mess.id)
+                        GC.setPickMsgs(channel.guild, msgIds);
+                    },
+                        err => logger.log(`error`, `${err}`)
+                    )
+                    Picker.add(mess, Player, i + 1);
+                })
+                    .catch(err => { throw new Error(`send [${channel.guild.name}] [${channel.name}] [${Player.tag}] \n${err}`) })
+            });
     if (state.repeat == true)
         for (let i = state.picked.length - 1; i >= 0; i--) {
             state.Civs.push(state.picked.splice(i, 1)[0]);
