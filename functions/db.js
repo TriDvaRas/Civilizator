@@ -30,6 +30,12 @@ function newGame(state, op, guild) {
         getCollection(`games`).then(coll => {
             getGameId(true).then(id => {
                 resolve(id);
+                globalThis.activeGames.set(id,{
+                    guild: guild,
+                    phase: `join`,
+                    startedAt: Date.now()
+                })
+                setTimeout(() => globalThis.activeGames.delete(id),globalThis.reactionsMaxTime*1.5)
                 let newDoc = {
                     id: id,
                     game: state.game,
@@ -69,6 +75,8 @@ function updateGame(state) {
             coll.findOne(
                 { id: state.gameId },
                 function (err, doc) {
+                    ag=globalThis.activeGames.get(state.gameId)
+                    if (ag) ag.phase=state.Phase
                     let newState = {
                         flushed: state.flushed,
                         lastPhase: state.Phase,
@@ -304,8 +312,6 @@ function removeDoc(collection, query) {
     })
 }
 function addGameCount(guild) {
-    if (process.argv.includes(`test`))
-        return
     getCollection(`guilds`).then(coll => {
         coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
             if (err)
@@ -322,8 +328,6 @@ function addGameCount(guild) {
     })
 }
 function addFastCount(guild) {
-    if (process.argv.includes(`test`))
-        return
     getCollection(`guilds`).then(coll => {
         coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
             if (err)

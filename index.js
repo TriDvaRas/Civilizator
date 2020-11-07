@@ -23,7 +23,7 @@ globalThis.discordClient = new Discord.Client({
 	}
 });
 globalThis.gameNames = [`civ5`, `lek`, `civ6`]
-
+globalThis.activeGames = new Discord.Collection();
 
 
 //Set logger
