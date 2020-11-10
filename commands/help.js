@@ -10,7 +10,8 @@ module.exports = {
         const commands = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
         for (const file of commands) {
             const command = require(`../commands/${file}`);
-            text += `\`${command.name}\` - ${command.description}\n`
+            if (!command.ignore)
+                text += `\`${command.name}\` - ${command.description}\n`
         }
         text += `\n      **Civilization Commands**\n`
         const civCommands = fs.readdirSync('./civcommands').filter(file => file.endsWith('.js'));
