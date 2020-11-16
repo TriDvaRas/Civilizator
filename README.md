@@ -3,6 +3,20 @@
 
 # Civilizator Discord Bot
 
+<a href="https://discord.gg/nFMFs2e">
+  <img alt="Bot Discord" src="https://img.shields.io/discord/727081958823165963?label=Join%20Discord%20Server">
+</a>
+<a href="https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952">
+  <img alt="Bot Invite" src="https://img.shields.io/badge/Invite%20Bot-free-green">
+</a>
+<a href="https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952">
+  <img alt="Support" src="https://img.shields.io/badge/Support%20Me%20on%20ko--fi-3%24-green">
+</a>
+
+<a href="https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952">
+  <img alt="GitHub" src="https://img.shields.io/github/license/tridvaras/civilizator">
+</a>  
+
 ## About
 
 Civilizator is a Discord Bot implementation of CivRandomizer (random set of civs to pick from for each player).
@@ -13,9 +27,8 @@ Bot's idea is to make random Civilization games less random and more interesting
 
 There is also original CivRandomizer (`fast` command) without picks, rerolls, bans or stats.
 
-[Invite Link](https://discord.com/oauth2/authorize?client_id=719933714423087135&scope=bot&permissions=268495952)
 
-[Discord Server](https://discord.gg/nFMFs2e)
+
 
 ---
 
