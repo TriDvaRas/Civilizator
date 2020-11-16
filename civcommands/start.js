@@ -58,9 +58,8 @@ function preStart(message, args, state) {
     db.addGameCount(message.guild)
     message.channel.send(new Discord.MessageEmbed()
         .setColor('#46a832')
-        .setTitle("**Civilization V Game**")
+        .setTitle("**Civilizator Game**")
         .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
-        .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
         .addFields(
             { name: 'Creating game...', value: '\u200B', inline: true }
         )
@@ -73,9 +72,16 @@ function preStart(message, args, state) {
             state.startTime = Date.now();
             //create embed
             gameEmbed = Embeder.create();
+
+            gameEmbed.setThumbnail(
+                state.game == "Civ5" ? 'https://tdr.s-ul.eu/HFuCvc8b' :
+                    state.game == "LEK" ? 'https://tdr.s-ul.eu/HFuCvc8b' :
+                        state.game == "Civ6" ? 'https://tdr.s-ul.eu/yNXGRctD' :
+                            "https://tdr.s-ul.eu/FYpCCEZi")
             //start game
             if (StartGame(message, args, state, gameEmbed))
                 return;
+
 
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new ${state.game} game started CPP-${state.playerSize} BPP-${state.banSize}`);
             mess.edit(gameEmbed).then(msg => {
@@ -89,11 +95,11 @@ function preStart(message, args, state) {
                 logger.log(`warn`, `[${chalk.magentaBright(message.guild.name)}] Civilizator machine broke...\n${error}`)
                 mess.edit(new Discord.MessageEmbed()
                     .setColor('#46a832')
-                    .setTitle("**Civilization V Game**")
+                    .setTitle("**Civilizator Game**")
                     .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
                     .setThumbnail('https://tdr.s-ul.eu/Cz9IF5oS')
                     .addFields(
-                        { name: `Civilizator machine broke...\nTry starting a new game\nIf this doesn't help please submit a bug report in bot's Discord server https://discord.gg/nFMFs2e or to Bot's DM`, value: '\u200B', inline: true }
+                        { name: `Civilizator machine broke...\nTry starting a new game\nIf this doesn't help please submit a bug report in bot's Discord server https://discord.gg/nFMFs2e or in Bot's DM`, value: '\u200B', inline: true }
                     )
                     .setTimestamp()
                     .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')

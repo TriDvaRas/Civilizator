@@ -36,11 +36,11 @@ module.exports = {
                             //check game
                             let game;
                             if (gameNames.includes(args[0].toLowerCase())) {
-                                game = args.shift();
+                                game = args.shift().toLowerCase();
 
                             }
                             else
-                                game = "Civ5";
+                                game = "civ5";
                             //check 0/1 args
                             if (args.length < 2 || !(args[0] >= 1 && args[0] <= 16 && args[1] >= 1 && args[1] <= 6)) {
 
@@ -53,7 +53,7 @@ module.exports = {
                             }
 
                             //get default state
-                            let state = getBaseState(game ? game : `Civ5`)
+                            let state = getBaseState(game ? game : `civ5`)
                             //check dlcs settings
                             let white;
                             if (args[2] == "+")
@@ -86,6 +86,11 @@ module.exports = {
                             message.channel.send(new Discord.MessageEmbed()
                                 .setTitle(`Fast Game`)
                                 .setColor('#66D018')
+                                .setThumbnail(
+                                    game == "civ5" ? 'https://tdr.s-ul.eu/HFuCvc8b' :
+                                        game == "lek" ? 'https://tdr.s-ul.eu/HFuCvc8b' :
+                                            game == "civ6" ? 'https://tdr.s-ul.eu/yNXGRctD' :
+                                                "https://tdr.s-ul.eu/FYpCCEZi")
                                 .addField(`DLCs`, state.disabledDLC.length == 0 ? `All` : state.DLCs.join(`\n`), true)
                                 .addField(`Players`, args[0], true)
                                 .addField(`CPP`, args[1], true)
