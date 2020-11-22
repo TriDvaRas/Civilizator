@@ -13,8 +13,9 @@ module.exports = {
                 .addField(`author`, `${message.author.tag}/${message.author.id}`)
                 .addField(`guild`, `${message.guild.name}/${message.guild.id}`)
                 .addField(`channel`, `${message.channel.name}/${message.channel.id}`)
-                .addField(`Active games`, `${globalThis.activeGames.map(game => `${game.guild} ${game.phase} ${time(game.startedAt)}`).join(`\n`)}\u200B`)
+                .addField(`Active games`, `${globalThis.activeGames.map(game => `${game.guild} ${game.phase} ${time(Math.floor((Date.now() - game.startedAt)))}`).join(`\n`)}\u200B`)
                 .addField(`Memory Usage`, mem())
+                .addField(`UpTime`, time(global.discordClient.uptime))
                 .setColor(`RANDOM`)
             )
                 .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
@@ -22,11 +23,11 @@ module.exports = {
 };
 
 function time(t) {
-    let dif = Math.floor((Date.now() - t) / 1000)
-    let s = dif % 60
-    let m = ((dif - s) / 60) % 60
-    let h = ((dif - 60 * m - s) / 3600) % 12
-    return `${h}:${m}:${s}`
+    t=Math.floor(t/1000);
+    let s = t % 60
+    let m = ((t - s) / 60) % 60
+    let h = ((t - 60 * m - s) / 3600) % 12
+    return `${`${h}`.length<2?`0${h}`:h}:${`${m}`.length<2?`0${m}`:m}:${`${s}`.length<2?`0${s}`:s}`
 }
 function mem() {
     let str=`\u200B`
