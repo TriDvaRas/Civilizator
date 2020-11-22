@@ -4,9 +4,11 @@
 const fs = require('fs');
 const IO = require('./functions/IO');
 const DB = require('./functions/db');
+const sheet = require(`./functions/sheet`);
 const Discord = require('discord.js');
 const { token } = require('./config.json');
 const GC = require("./functions/guildConfig.js");
+const cron = require('node-cron');
 let pressences = IO.Read(`./pressence.json`);
 let pressI = 1;
 
@@ -181,7 +183,18 @@ discordClient.on('message', message => {
 		);
 });
 
-
+// save server stats 0 0 1-31 * *
+cron.schedule('0 0 1-31 * *', () => {
+	let stats = IO.Read(`./stats.json`);
+	let date = new Date(Date.now())
+	sheet.SubmitStats({
+		date: `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`,
+		guilds: discordClient.guilds.cache.array().length,
+		games: stats.gameCount,
+		fasts: stats.fastCount,
+		civilized: stats.userCount
+	})
+});
 function setPressence() {
 
 	let act = pressences.shift();

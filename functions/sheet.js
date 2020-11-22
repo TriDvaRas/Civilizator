@@ -7,6 +7,7 @@ const creds = require(`../assets/sheet_secret.json`);
 
 module.exports = {
     SubmitGame,
+    SubmitStats
 }
 
 function SubmitGame(newRow) {
@@ -72,6 +73,9 @@ function getSheet(game) {
                     case `civ6`:
                         sheet = doc.sheetsByIndex[3]
                         break;
+                    case `stats`:
+                        sheet = doc.sheetsByIndex[4]
+                        break;
                     default:
                         sheet = doc.sheetsByIndex[0]
                         break;
@@ -85,5 +89,19 @@ function getSheet(game) {
             err => reject(err)
         );
 
+    });
+}
+
+function SubmitStats(newRow) {
+    return new Promise((resolve, reject) => {
+        logger.log(`sheet`, `Submitting stats`);
+        getSheet(`stats`).then(sheet => {
+            sheet.addRow(newRow)
+                .then(() => resolve(),
+                    err => reject(err)
+                )
+        },
+            err => reject(err)
+        );
     });
 }
