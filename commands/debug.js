@@ -23,17 +23,17 @@ module.exports = {
 };
 
 function time(t) {
-    t=Math.floor(t/1000);
+    t = Math.floor(t / 1000);
     let s = t % 60
     let m = ((t - s) / 60) % 60
     let h = ((t - 60 * m - s) / 3600) % 12
-    return `${`${h}`.length<2?`0${h}`:h}:${`${m}`.length<2?`0${m}`:m}:${`${s}`.length<2?`0${s}`:s}`
+    return `${`${h}`.length < 2 ? `0${h}` : h}:${`${m}`.length < 2 ? `0${m}` : m}:${`${s}`.length < 2 ? `0${s}` : s}`
 }
 function mem() {
-    let str=`\u200B`
+    let str = `\u200B`
     const used = process.memoryUsage();
     for (let key in used) {
-        str+=`${Math.round(used[key] / 1024 / 1024 * 100) / 100}MB ${key} \t\n`
+        str += `${Math.round(used[key] / 1024 / 1024 * 100) / 100}MB ${key} \t\n`
     }
     return str
 }
