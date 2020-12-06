@@ -2,7 +2,6 @@
 const logger = require("../logger");
 const dbCreds = require(`../assets/mongo_secret.json`);
 const chalk = require(`chalk`)
-const sheet = require(`./sheet`);
 const MongoClient = require("mongodb").MongoClient;
 const mongoClient = new MongoClient(dbCreds.login,
     {
@@ -136,16 +135,6 @@ function updateGameFinal(guild) {
                             function (err, game) {
                                 if (err)
                                     return reject(err);
-                                sheet.SubmitGame(game)
-                                    .then(() => {
-                                        coll.updateOne({ id: state.gameId }, { $set: { sheetSync: true } }, function (err, res) {
-                                            if (err)
-                                                return logger.log(`error`, `${err}`);
-                                            logger.log(`db`, `updated sheet game info FINAL`)
-                                        })
-                                    },
-                                        err => logger.log(`warn`, `failed update sheet game info FINAL\n${err}`)
-                                    );
                             }
                         )
                     },
