@@ -184,7 +184,7 @@ discordClient.on('message', message => {
 });
 
 // save server stats 0 0 1-31 * *
-cron.schedule('0 0 1-31 * *', () => {
+cron.schedule('59 23 1-31 * *', () => {
 	let stats = IO.Read(`./stats.json`);
 	let date = new Date(Date.now())
 	sheet.SubmitStats({
