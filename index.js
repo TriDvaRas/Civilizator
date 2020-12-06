@@ -90,11 +90,11 @@ discordClient.on('message', message => {
 	if (message.author.bot)
 		return;
 	if (message.guild == null) {
-		let guild = globalThis.discordClient.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
+		let guild = globalThis.discordClient.guilds.cache.get(`727081958823165963`);
 		if (!guild)
 			return
 		guild.channels.cache.find(channel => channel.name == `feed`).send(`**FEED**
-			From: ${message.author}
+			From: ${message.author} (${message.author.tag})
 			Text: ${message.toString()}
 			Attachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`
 		)
@@ -189,7 +189,7 @@ cron.schedule('0 0 1-31 * *', () => {
 	let date = new Date(Date.now())
 	sheet.SubmitStats({
 		date: `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`,
-		guilds: discordClient.guilds.cache.array().length,
+		guilds: discordClient.guilds.cache.size,
 		games: stats.gameCount,
 		fasts: stats.fastCount,
 		civilized: stats.userCount
@@ -204,7 +204,7 @@ function setPressence() {
 
 	let name = act.name;
 	if (name.includes(`{guildCount}`))
-		name = name.replace(`{guildCount}`, `${discordClient.guilds.cache.array().length}`);
+		name = name.replace(`{guildCount}`, `${discordClient.guilds.cache.size}`);
 	else if (name.includes(`{gamesCount}`))
 		name = name.replace(`{gamesCount}`, `${stats.gameCount}`)
 	else if (name.includes(`{fastCount}`))

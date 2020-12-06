@@ -12,3 +12,4 @@ assets/sheet_secret.json
 assets/mongo_secret.json
 stats.json
 configtest.json
+test.js

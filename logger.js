@@ -104,16 +104,17 @@ function color(text) {
     }
 
 }
-
+let guild
 function formatLog(log) {
     let msg = `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`
     if ([`error`, `warn`, `dapi`].includes(log.level) && globalThis.discordClient) {
-        let guild = globalThis.discordClient.guilds.cache.array().find(guild => guild.id == `727081958823165963`);
         if (guild)
             if (log.level == `dapi`)
                 guild.channels.cache.find(channel => channel.name == `api-errors`).send(msg);
             else
                 guild.channels.cache.find(channel => channel.name == `error-log`).send(msg);
+        else
+            guild = globalThis.discordClient.guilds.cache.get(`727081958823165963`);
     }
     return msg;
 
