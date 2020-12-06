@@ -77,7 +77,7 @@ module.exports = {
             reVotesField.value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
             gameEmbed.fields.find(field => field.name == "Pick").value = state.Players.map(user => user.pick.Name).join('\n') + '\u200B';
 
-            Embeder.set(state, channel, gameEmbed);
+            Embeder.set(state, gameEmbed);
             state.picked.forEach(element => {
                 state.Civs.push(element);
             });

@@ -1,18 +1,22 @@
 [
     {
         "name": "{guildCount} servers",
+        "reps": ["{guildCount}"],
         "type": "LISTENING"
     },
     {
-        "name": "{civilizedCount} Civilized players",
+        "name": "{civilizedCount} civilized players",
+        "reps": ["{civilizedCount}"],
         "type": "LISTENING"
     },
     {
-        "name": "Normal games: {gamesCount}",
+        "name": "{gamesCount} normal games",
+        "reps": ["{gamesCount}"],
         "type": "LISTENING"
     },
     {
-        "name": "Fast games: {fastCount}",
+        "name": "{fastCount} fast games",
+        "reps": ["{fastCount}"],
         "type": "LISTENING"
     }
 ]

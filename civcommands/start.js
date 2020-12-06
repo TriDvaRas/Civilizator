@@ -37,13 +37,14 @@ module.exports = {
                     else
                         game = "Civ5";
                     //check cd
-                    CheckLastGame(message, state).then(function () {
-                        GC.resetGameState(message.guild, game).then(function (state) {
-                            return preStart(message, args, state);
-                        },
-                            err => logger.log(`error`, err)
-                        );
-                    }, () => { })
+                    CheckLastGame(message, state)
+                        .then(function () {
+                            GC.resetGameState(message.guild, game).then(function (state) {
+                                return preStart(message, args, state);
+                            },
+                                err => logger.log(`error`, err)
+                            );
+                        }, () => { })
                 },
                     () => {
                         message.channel.send("CivRole only").catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
@@ -61,12 +62,12 @@ function preStart(message, args, state) {
         .setTitle("**Civilizator Game**")
         .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml?gid=0&single=true)**")
         .addFields(
-            { name: 'Creating game...', value: '\u200B', inline: true }
+            { name: 'Starting game...', value: '\u200B', inline: true }
         )
         .setTimestamp()
         .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
     ).then(mess => {
-        DB.newGame(state, message.author.username, message.guild.name).then(id => {
+        DB.newGame(state, message.author.username, message.guild.name, mess).then(id => {
             state.gameId = id;
             state.guildId = message.guild.id;
             state.startTime = Date.now();
@@ -82,13 +83,12 @@ function preStart(message, args, state) {
             if (StartGame(message, args, state, gameEmbed))
                 return;
 
-
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new ${state.game} game started CPP-${state.playerSize} BPP-${state.banSize}`);
             mess.edit(gameEmbed).then(msg => {
                 logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed created`);
                 state.embedId = msg.id;
                 GC.setGameState(message.guild, state);
-                Reacter.addJoiner(msg);
+                Reacter.addJoiner(msg, global.activeGames.get(state.gameId));
             });
         },
             error => {
@@ -115,7 +115,7 @@ function StartGame(message, args, state, gameEmbed) {
     //check CPP
     if (!args[0] || !parseInt(args[0])) {
         message.channel.send("Wrong arguments").then(msg => {
-            msg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)});
+            msg.delete({ timeout: 5000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}]  \n${err}`) });
         }).catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
         return true;
     }
