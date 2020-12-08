@@ -124,7 +124,7 @@ function updateGame(state) {
                     } catch (error) {
 
                     }
-                    if (newState != {})
+                    if (Object.keys(newState).length != 0)
                         coll.updateOne({ id: state.gameId }, { $set: newState }, function (err, res) {
                             if (err)
                                 return reject(err);
