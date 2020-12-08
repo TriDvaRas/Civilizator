@@ -30,9 +30,7 @@ module.exports = {
 
             } else {
                 //lowercase args
-                args.forEach(x => {
-                    x = x.toLowerCase();
-                });
+                args.map(x => x.toLowerCase())
                 //check if Player can ban
                 if (!BanF.CheckCanBan(state, message)) {
                     message.channel.send("Out of bans").then(botMsg => {
