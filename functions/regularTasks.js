@@ -60,7 +60,7 @@ function updateSheetGames() {
 
 function flushGames() {
     global.activeGames.forEach((ag, key) => {
-        if (Date.now() - ag.startedAt < global.gameMaxTime || Date.now() - ag.lastActiveAt < global.gameMaxIdle) {
+        if (Date.now() - ag.startedAt > global.gameMaxTime || Date.now() - ag.lastActiveAt > global.gameMaxIdle) {
             ag.collectors.forEach(coll=>coll.stop(`game flushed`))
             global.activeGames.delete(key)
             db.setFlushed(key)

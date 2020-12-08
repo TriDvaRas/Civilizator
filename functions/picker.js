@@ -61,7 +61,7 @@ function addPicker(msg, player, playerSlot) {
             try {
                 logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] pick collector ${playerSlot} committed die  reason ${reason}`);
 
-                if (reason == `idle`) {
+                if (reason == `game flushed`) {
                     msg.reactions.removeAll();
                     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] cleared reactions of pick collector ${playerSlot}`);
 
