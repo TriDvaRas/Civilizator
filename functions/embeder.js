@@ -32,5 +32,5 @@ function getEmbed(gameState) {
 function setEmbed(gameState, embed) {
     let ag = global.activeGames.get(gameState.gameId)
     ag?.message.edit(embed)
-    ag.lastActiveAt = Date.now()
+    ag?.lastActiveAt = Date.now()
 }
