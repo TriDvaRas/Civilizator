@@ -127,14 +127,14 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | start | \[game\] \<CivPerPlayer(1-6)\> \[BansPerPlayer(0-4)\] | Starts a new game | !start 3 1 | Civilized |
 | | | By default BansPerPlayer is 0 |  | Civilized |
-| | | \[game\] is optional argument to choose the game you play |  | Civilized |
+| | | \[game\] is optional argument to choose the game you play | !start civ6 3 1 | Civilized |
 | | | Available games are: civ5(default), lek, civ6 |  | Civilized |
 | fast | \[game\] \<Players(1-16)\> \<CivPerPlayer(1-6)\> \[-/+\] \[DLCs to enable/disable\] | Fast game (original CivRandomizer) | !fast 3 3 | Civilized |
-| | | \[game\] is optional argument to choose the game you play |  | Civilized |
+| | | \[game\] is optional argument to choose the game you play | !fast civ6 3 3 | Civilized |
 | | | Available games are: civ5(default), lek, civ6 |  | Civilized |
 | dlc | \<whitelist/white/w/+\> \<DLCs\> | Disables all **not** metioned DLCs | !dlc w vanila g&k Mong | Operator |
 |   | \<blacklist/black/b/-\> \<DLCs\> | Disables all metioned DLCs | !dlc b bnw gods korea | Operator |
-|   | \<reset/r\> | Enables all DLCs | !dlc b bnw gods korea | Operator |
+|   | \<reset/r\> | Enables all DLCs | !dlc r | Operator |
 | set | civs \<1-6\> | Changes current game's BansPerPlayer value | !set civs 3 | Operator |
 |   | bans \<0-4\> | Changes current game's BansPerPlayer value | !set bans 1 | Operator |
 | ban | <Id/Alias> | Bans civilization from pool during bans phase. As alias you can use part of Civilization name or part of it's leader's name  | !roll | everyone |
