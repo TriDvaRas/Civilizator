@@ -2,7 +2,6 @@
 
 const GC = require(`../functions/guildConfig.js`);
 var Perm = require('../functions/Permissions.js');
-var IO = require('../functions/IO.js');
 const Embeder = require("../functions/embeder.js");
 const getCivList = require(`../functions/civList`)
 const logger = require("../logger");

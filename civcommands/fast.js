@@ -1,9 +1,7 @@
 
 var Perm = require('../functions/Permissions.js');
 const logger = require("../logger");
-const chalk = require('chalk');
 const GC = require(`../functions/guildConfig.js`);
-var IO = require('../functions/IO.js');
 const Discord = require('discord.js');
 const db = require('../functions/db.js');
 const mergeImg = require('merge-img');

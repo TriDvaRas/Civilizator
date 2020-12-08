@@ -1,4 +1,3 @@
-var IO = require('../functions/IO.js');
 const GC = require(`../functions/guildConfig.js`);
 var BanF = require('../functions/BansFunctions.js');
 const Embeder = require("../functions/embeder.js");

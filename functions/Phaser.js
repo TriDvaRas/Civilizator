@@ -3,7 +3,6 @@ const Embeder = require(`./embeder.js`);
 const DB = require(`./db`);
 const GC = require(`./guildConfig`);
 const Picker = require(`./picker`);
-var IO = require('./IO.js');
 const getCivList = require(`../functions/civList`)
 const logger = require('../logger.js');
 const chalk = require('chalk');
