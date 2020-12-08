@@ -11,8 +11,8 @@ const RT = require('./functions/regularTasks');
 const logger = require("./logger");
 
 //global settings 
-globalThis.gameMaxTime = 2*3600000;
-globalThis.gameMaxIdle = 3600000/2;
+globalThis.gameMaxTime = 3*3600000;
+globalThis.gameMaxIdle = 3600000;
 globalThis.finalDelay = 1000;
 globalThis.fastCD = 30000;
 globalThis.gameNames = [`civ5`, `lek`, `civ6`]
