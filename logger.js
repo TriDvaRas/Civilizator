@@ -8,15 +8,6 @@ const options = {
 
     file: [
         {
-            level: 'debug',
-            filename: `${appRoot}/logs/raw.log`,
-            handleExceptions: true,
-            json: true,
-            maxsize: 5242880, // 5MB
-            maxFiles: 5,
-            colorize: false,
-        },
-        {
             filename: `${appRoot}/logs/info.log`,
             handleExceptions: true,
             maxsize: 5242880, // 5MB
@@ -104,17 +95,14 @@ function color(text) {
     }
 
 }
-let guild
 function formatLog(log) {
     let msg = `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`
     if ([`error`, `warn`, `dapi`].includes(log.level) && globalThis.discordClient) {
-        if (!guild)
-            guild = globalThis.discordClient.guilds.cache.get(`727081958823165963`);
-        if (guild)
+        if (global.logGuild)
             if (log.level == `dapi`)
-                guild.channels.cache.find(channel => channel.name == `api-errors`).send(msg);
+                global.logGuild.channels.cache.find(channel => channel.name == `api-errors`).send(msg);
             else
-                guild.channels.cache.find(channel => channel.name == `error-log`).send(msg);
+                global.logGuild.channels.cache.find(channel => channel.name == `error-log`).send(msg);
     }
     return msg;
 

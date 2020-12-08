@@ -18,7 +18,7 @@ function addPicker(msg, player, playerSlot) {
         const filter = (reaction, user) => {
             return [`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`].slice(0, player.civs.length).includes(reaction.emoji.name) && !user.bot;
         };
-        const collector = msg.createReactionCollector(filter, { idle: globalThis.reactionsMaxTime });
+        const collector = msg.createReactionCollector(filter);
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created pick collector ${playerSlot}`);
 
         collector.on('collect', (reaction, user) => {
@@ -43,9 +43,9 @@ function addPicker(msg, player, playerSlot) {
 
                     DB.updateGame(state);
 
-                    let embed = Embeder.get(state, msg.channel);
+                    let embed = Embeder.get(state);
                     embed.fields.find(field => field.name == "Pick").value = state.Players.map(user => user.pick.Name).join('\n') + '\u200B';
-                    Embeder.set(state, msg.channel, embed);
+                    Embeder.set(state, embed);
                     GC.setGameState(msg.guild, state);
 
                 },

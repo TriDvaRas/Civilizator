@@ -1,4 +1,3 @@
-var IO = require('../functions/IO.js');
 const GC = require(`../functions/guildConfig.js`);
 var BanF = require('../functions/BansFunctions.js');
 const Embeder = require("../functions/embeder.js");
@@ -31,9 +30,7 @@ module.exports = {
 
             } else {
                 //lowercase args
-                args.forEach(x => {
-                    x = x.toLowerCase();
-                });
+                args.map(x => x.toLowerCase())
                 //check if Player can ban
                 if (!BanF.CheckCanBan(state, message)) {
                     message.channel.send("Out of bans").then(botMsg => {
@@ -123,10 +120,10 @@ module.exports = {
                             })
                                 .catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] banned ${C.Name} [${state.bansActual}/${state.bansFull}]`);
-                            let embed = Embeder.get(state, message.channel);
+                            let embed = Embeder.get(state);
                             embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
                             embed.fields.find(field => field.name == "Banned civs").value = state.banned.map(id => CivList.find(x => x.id == id).Name).join('\n') + '\u200B';
-                            Embeder.set(state, message.channel, embed)
+                            Embeder.set(state, embed)
                             GC.setGameState(message.guild, state);
                             if (state.bansActual >= state.bansFull) {
                                 let msg = message.channel.messages.cache.array().find(msg => msg.id == state.embedId);

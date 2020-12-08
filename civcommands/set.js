@@ -43,9 +43,9 @@ module.exports = {
                             message.channel.send(`Set BPP to ${state.banSize}`)
                                 .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                             GC.setGameState(message.guild, state);
-                            embed = Embeder.get(state, message.channel);
+                            embed = Embeder.get(state);
                             embed.fields.find(field => field.name == "Bans per player").value = `${state.banSize}` + '\u200B';
-                            Embeder.set(state, message.channel, embed)
+                            Embeder.set(state, embed)
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] changed bans to ${state.banSize}`);
                             break;
                         case "c":
@@ -61,9 +61,9 @@ module.exports = {
                             message.channel.send(`Set CPP to ${state.playerSize}`)
                                 .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
                             GC.setGameState(message.guild, state);
-                            embed = Embeder.get(state, message.channel);
+                            embed = Embeder.get(state);
                             embed.fields.find(field => field.name == "Civs per player").value = `${state.playerSize}` + '\u200B';
-                            Embeder.set(state, message.channel, embed)
+                            Embeder.set(state, embed)
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] changed civs to ${state.playerSize}`);
                             break;
                         default:

@@ -1,7 +1,6 @@
 
 const Discord = require('discord.js');
-const logger=require(`../logger`);
-const chalk = require('chalk');
+
 module.exports = {
     create: createEmbed,
     get: getEmbed,
@@ -27,9 +26,14 @@ function createEmbed() {
         .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR');
 }
 
-function getEmbed(gameState, channel) {
-    return channel.messages.cache.array().find(msg=>msg.id==gameState.embedId).embeds[0];
+function getEmbed(gameState) {
+    return global.activeGames.get(gameState.gameId)?.message.embeds[0];
 }
-function setEmbed(gameState, channel, embed) {
-    channel.messages.cache.array().find(msg=>msg.id==gameState.embedId).edit(embed);
+function setEmbed(gameState, embed) {
+    let ag = global.activeGames.get(gameState.gameId)
+    if (ag) {
+        ag.message.edit(embed)
+        ag.lastActiveAt = Date.now()
+    }
+
 }

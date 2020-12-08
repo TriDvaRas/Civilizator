@@ -1,7 +1,8 @@
 
 const logger = require("../logger");
 const dbCreds = require(`../assets/mongo_secret.json`);
-const chalk = require(`chalk`)
+const chalk = require(`chalk`);
+const sheet = require("./sheet");
 const MongoClient = require("mongodb").MongoClient;
 const mongoClient = new MongoClient(dbCreds.login,
     {
@@ -19,22 +20,23 @@ connectToDb()
         err =>
             logger.log(`error`, `Failed connecting to db \n${err}`))
 
-
-
 //+
-function newGame(state, op, guild) {
+function newGame(state, op, guild, message) {
     return new Promise((resolve, reject) => {
         logger.log(`db`, `creating new game`);
 
         getCollection(`games`).then(coll => {
             getGameId(true).then(id => {
-                resolve(id);
-                globalThis.activeGames.set(id,{
+                globalThis.activeGames.set(id, {
                     guild: guild,
+                    message: message,
                     phase: `join`,
-                    startedAt: Date.now()
+                    startedAt: Date.now(),
+                    lastActiveAt: Date.now(),
+                    collectors: []
                 })
-                setTimeout(() => globalThis.activeGames.delete(id),globalThis.reactionsMaxTime*1.5)
+
+                resolve(id);
                 let newDoc = {
                     id: id,
                     game: state.game,
@@ -65,7 +67,24 @@ function newGame(state, op, guild) {
     });
 
 }
-
+function setFlushed(id) {
+    getCollection(`games`).then(coll => {
+        coll.updateOne({ id: id }, { $set: { flushed: true } }, function (err, res) {
+            if (err)
+                return logger.log(`err`, `updated game info`);
+            logger.log(`db`, `set ${id} flushed`);
+        })
+    })
+}
+function setSynced(id) {
+    getCollection(`games`).then(coll => {
+        coll.updateOne({ id: id }, { $set: { sheetSync: true } }, function (err, res) {
+            if (err)
+                return logger.log(`err`, `updated game info`);
+            logger.log(`db`, `set ${id} flushed`);
+        })
+    })
+}
 //+
 function updateGame(state) {
     return new Promise((resolve, reject) => {
@@ -74,8 +93,8 @@ function updateGame(state) {
             coll.findOne(
                 { id: state.gameId },
                 function (err, doc) {
-                    ag=globalThis.activeGames.get(state.gameId)
-                    if (ag) ag.phase=state.Phase
+                    ag = globalThis.activeGames.get(state.gameId)
+                    if (ag) ag.phase = state.Phase
                     let newState = {
                         flushed: state.flushed,
                         lastPhase: state.Phase,
@@ -105,7 +124,7 @@ function updateGame(state) {
                     } catch (error) {
 
                     }
-                    if (newState != {})
+                    if (Object.keys(newState).length != 0)
                         coll.updateOne({ id: state.gameId }, { $set: newState }, function (err, res) {
                             if (err)
                                 return reject(err);
@@ -126,22 +145,8 @@ function updateGameFinal(guild) {
             coll.findOne({ guildId: `${guild.id}` }, function (err, state) {
                 if (err)
                     return reject(err);
-                updateGame(state).then(() => {
-                    logger.log(`db`, `updated game info FINAL`)
-
-                    getCollection(`games`).then(coll => {
-                        coll.findOne(
-                            { id: state.gameId },
-                            function (err, game) {
-                                if (err)
-                                    return reject(err);
-                            }
-                        )
-                    },
-                        error => { reject(error) }
-                    );
-                    resolve()
-                },
+                updateGame(state).then(
+                    () => resolve(),
                     err => reject(err)
                 )
             })
@@ -368,6 +373,21 @@ function setLastFast(guild) {
 
     })
 }
+
+
+function getUnsynced() {
+    getCollection(`games`).then(coll => {
+        coll.find({ flushed: true, sheetSync: false }).toArray(function (err, games) {
+            if (err)
+                return reject(err);
+            sheet.SubmitGames(games).then(() => {
+                coll.updateMany({ flushed: true, sheetSync: false }, { $set: { sheetSync: true } })
+            })
+        })
+
+    })
+}
+
 module.exports = {
     getGameId,
     newGame,
@@ -380,4 +400,7 @@ module.exports = {
     addFastCount,
     setLastFast,
     getStats,
+    setFlushed,
+    setSynced,
+    getUnsynced,
 }

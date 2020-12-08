@@ -2,7 +2,6 @@
 
 const GC = require(`../functions/guildConfig.js`);
 var Perm = require('../functions/Permissions.js');
-var IO = require('../functions/IO.js');
 const Embeder = require("../functions/embeder.js");
 const getCivList = require(`../functions/civList`)
 const logger = require("../logger");
@@ -39,9 +38,9 @@ module.exports = {
                             state.disabledDLC = [];
                             state.Civs = state.Civs.concat(state.disabled);
                             state.disabled = [];
-                            let embed = Embeder.get(state, message.channel);
+                            let embed = Embeder.get(state);
                             embed.fields.find(field => field.name == "DLCs").value = "All" + '\u200B';
-                            Embeder.set(state, message.channel, embed)
+                            Embeder.set(state, embed)
                             GC.setGameState(message.guild, state);
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => all`);
                             return;
@@ -67,7 +66,7 @@ module.exports = {
                         args = args.slice(1);
                         checkDLCs(state, args, white);
                         checkCivs(state);
-                        let embed = Embeder.get(state, message.channel);
+                        let embed = Embeder.get(state);
                         if (state.disabledDLC.length > 0) {
                             embed.fields.find(field => field.name == "DLCs").value = state.DLCs.join('\n') + '\u200B';
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => ${state.DLCs.join('\n')}`);
@@ -80,7 +79,7 @@ module.exports = {
                             embed.fields.find(field => field.name == "DLCs").value = "None" + '\u200B';
                             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] dlc => none`);
                         }
-                        Embeder.set(state, message.channel, embed);
+                        Embeder.set(state, embed);
                         GC.setGameState(message.guild, state);
                     }
 

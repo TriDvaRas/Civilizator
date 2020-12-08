@@ -23,13 +23,6 @@ module.exports = {
         }
         return true;
     },
-    CheckBanned(state, C) {
-        if (state.banned.find(x => x == C.id)) {
-
-            return true;
-        }
-        return false;
-    },
     CheckDisabled(state, C) {
         if (state.disabled.find(x => x == C.id))
             return true;
