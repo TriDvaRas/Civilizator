@@ -174,7 +174,7 @@ function addBanner(msg, ag) {
                 collector.stop(`tick`);
                 let embed = Embeder.get(state);
                 Phaser.StartPicks(state, embed, msg.channel);
-                addReroller(msg);
+                addReroller(msg, ag);
 
                 GC.setGameState(msg.guild, state);
                 msg.edit(embed);
@@ -216,7 +216,7 @@ function addBanner(msg, ag) {
                         try {
                             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
                             Phaser.StartPicks(state, embed, msg.channel);
-                            addReroller(msg);
+                            addReroller(msg, ag);
                             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
                         } catch (error) {
                             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
