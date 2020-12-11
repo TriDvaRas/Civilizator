@@ -108,7 +108,7 @@ function updateGame(state) {
 
                     for (let i = 0; i < state.Players.length; i++) {
                         const player = state.Players[i];
-                        let pers = (x.id == civ6list.find(c => c.id = x.id).persona)
+                        let pers = (civ6list.filter(c => c.id == x.id).length > 1)
                         newState[`p${i + 1}`] = {
                             name: player.tag.split(`#`)[0],
                             bans: player.bans.map(x => {
