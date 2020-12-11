@@ -16,6 +16,7 @@ module.exports = {
                 .addField(`Active games`, `${globalThis.activeGames.map(game => `${game.guild} ${game.phase} ${time(Math.floor((Date.now() - game.startedAt)))}`).join(`\n`)}\u200B`)
                 .addField(`Memory Usage`, mem())
                 .addField(`UpTime`, time(global.discordClient.uptime))
+                .addField(`LocalTime`, now())
                 .setColor(`RANDOM`)
             )
                 .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
@@ -36,4 +37,7 @@ function mem() {
         str += `${Math.round(used[key] / 1024 / 1024 * 100) / 100}MB ${key} \t\n`
     }
     return str
+}
+function now() {
+    return new Date().toTimeString()
 }
