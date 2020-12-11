@@ -11,6 +11,8 @@ const mongoClient = new MongoClient(dbCreds.login,
         useUnifiedTopology: true
     });
 
+let civ6list = require(`../assets/CivLists/civ6.json`)
+
 let dbClient;
 logger.log(`db`, `connecting to db`);
 connectToDb()
@@ -88,7 +90,6 @@ function setSynced(id) {
 //+
 function updateGame(state) {
     return new Promise((resolve, reject) => {
-        logger.log(`db`, `updating game info...`);
         getCollection(`games`).then(coll => {
             coll.findOne(
                 { id: state.gameId },
@@ -107,10 +108,21 @@ function updateGame(state) {
 
                     for (let i = 0; i < state.Players.length; i++) {
                         const player = state.Players[i];
+                        let pers = (x.id == civ6list.find(c => c.id = x.id).persona)
                         newState[`p${i + 1}`] = {
                             name: player.tag.split(`#`)[0],
-                            bans: player.bans.map(x => x.Name).join(`\n`),
-                            civs: player.civs.map(x => x.Name).join(`\n`),
+                            bans: player.bans.map(x => {
+                                if (pers)
+                                    return `${x.Name} `
+                                else
+                                    return x.Name
+                            }).join(`\n`),
+                            civs: player.civs.map(x => {
+                                if (pers)
+                                    return `${x.Name} `
+                                else
+                                    return x.Name
+                            }).join(`\n`),
                             pick: player.pick == `-` ? `-` : player.pick.Name,
                         }
                     }
@@ -376,15 +388,20 @@ function setLastFast(guild) {
 
 
 function getUnsynced() {
-    getCollection(`games`).then(coll => {
-        coll.find({ flushed: true, sheetSync: false }).toArray(function (err, games) {
-            if (err)
-                return reject(err);
-            sheet.SubmitGames(games).then(() => {
-                coll.updateMany({ flushed: true, sheetSync: false }, { $set: { sheetSync: true } })
+    return new Promise((res, rej) => {
+        getCollection(`games`).then(coll => {
+            coll.find({ flushed: true, sheetSync: false }).toArray(function (err, games) {
+                if (err)
+                    return reject(err);
+                sheet.SubmitGames(games).then(() => {
+                    coll.updateMany({ flushed: true, sheetSync: false }, { $set: { sheetSync: true } })
+                    res()
+                },
+                    () => { rej() }
+                )
             })
-        })
 
+        })
     })
 }
 
