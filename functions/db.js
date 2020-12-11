@@ -108,22 +108,22 @@ function updateGame(state) {
 
                     for (let i = 0; i < state.Players.length; i++) {
                         const player = state.Players[i];
-                        let pers = (civ6list.filter(c => c.id == x.id).length > 1)
                         newState[`p${i + 1}`] = {
                             name: player.tag.split(`#`)[0],
                             bans: player.bans.map(x => {
-                                if (pers)
+                                if (state.game == "Civ6" && civ6list.filter(c => c.id == x.id).length > 1)
                                     return `${x.Name} `
                                 else
                                     return x.Name
                             }).join(`\n`),
                             civs: player.civs.map(x => {
-                                if (pers)
+                                if (state.game == "Civ6" && civ6list.filter(c => c.id == x.id).length > 1)
                                     return `${x.Name} `
                                 else
                                     return x.Name
                             }).join(`\n`),
-                            pick: player.pick == `-` ? `-` : player.pick.Name,
+                            pick: player.pick == `-` ? `-` :
+                                state.game == "Civ6" && civ6list.filter(c => c.id == player.pick.id).length > 1 ? `${player.pick.Name} ` : player.pick.Name,
                         }
                     }
                     try {
