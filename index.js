@@ -54,7 +54,8 @@ discordClient
 			RT.flushGames()
 		})
 		// save new games
-		cron.schedule('47 */4 * * *', () => {
+		cron.schedule('0 */2 * * *', () => {
+			logger.log(`info`,	`Syncing new games...`)
 			RT.updateSheetGames()
 		})
 	})

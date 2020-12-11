@@ -113,7 +113,7 @@ function getCivilizedCount() {
 module.exports = {
     updateSheetStats,
     updateLocalStats,
-    updateGames: updateSheetGames,
+    updateSheetGames,
     flushGames,
     updatePressence
 }
