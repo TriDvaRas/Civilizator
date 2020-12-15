@@ -16,6 +16,7 @@ globalThis.gameMaxIdle = 3600000;
 globalThis.finalDelay = 1000;
 globalThis.fastCD = 30000;
 globalThis.gameNames = [`civ5`, `lek`, `civ6`]
+globalThis.minCivilizedCount = -1
 
 //setup Client
 globalThis.discordClient = new Discord.Client({
@@ -36,10 +37,10 @@ discordClient
 		logger.log('dapi', 'Bot logged in');
 		globalThis.logGuild = globalThis.discordClient.guilds.cache.get(`727081958823165963`);
 		RT.updateLocalStats();
-
+		
 		// save daily server stats 
 		cron.schedule('59 23 * * *', () => {
-			RT.updateSheetStats()
+			RT.updateMinCivilized().then(RT.updateSheetStats)
 		})
 		// sync local stats with db
 		cron.schedule('* * * * *', () => {
@@ -48,6 +49,11 @@ discordClient
 		// update pressence 
 		cron.schedule('*/10 * * * * *', () => {
 			RT.updatePressence()
+		})
+		// update actual civilized count
+		setTimeout(RT.updateMinCivilized,10000) 
+		cron.schedule('* */6 * * *', () => {
+			RT.updateMinCivilized()
 		})
 		// flush ended games 
 		cron.schedule('*/30 * * * *', () => {
