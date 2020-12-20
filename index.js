@@ -52,7 +52,7 @@ discordClient
 		})
 		// update actual civilized count
 		setTimeout(RT.updateMinCivilized,10000) 
-		cron.schedule('* */6 * * *', () => {
+		cron.schedule('0 */6 * * *', () => {
 			RT.updateMinCivilized()
 		})
 		// flush ended games 

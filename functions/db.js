@@ -393,9 +393,9 @@ function getUnsynced() {
             coll.find({ flushed: true, sheetSync: false }).toArray(function (err, games) {
                 if (err)
                     return reject(err);
-                sheet.SubmitGames(games).then(() => {
+                sheet.SubmitGames(games).then(succ => {
                     coll.updateMany({ flushed: true, sheetSync: false }, { $set: { sheetSync: true } })
-                    res()
+                    res(succ)
                 },
                     () => { rej() }
                 )

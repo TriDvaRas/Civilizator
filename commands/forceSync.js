@@ -7,7 +7,7 @@ module.exports = {
     usage: '`forceSync`',
     execute: async function (message, args) {
         if (message.author.id == 272084627794034688){
-            db.getUnsynced().then(() => {message.reply(`suc`)},() => {message.reply(`err`)})
+            db.getUnsynced().then(succ => {message.reply(`suc\n${succ}`)},() => {message.reply(`err`)})
             message.reply(`started fcs`)
             
         }

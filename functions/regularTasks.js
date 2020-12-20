@@ -55,16 +55,20 @@ function updateLocalStats() {
     })
 }
 function updateSheetGames() {
-    db.getUnsynced()
+    db.getUnsynced().then(res=>{
+			logger.log(`info`,	`Synced new games: ${res.join(`\n`)}`)
+    })
 }
 
 
 function flushGames() {
+    logger.log(`info`,	`Flushing old games: ${res.join(`\n`)}`)
     global.activeGames.forEach((ag, key) => {
         if (Date.now() - ag.startedAt > global.gameMaxTime || Date.now() - ag.lastActiveAt > global.gameMaxIdle) {
             ag.collectors.forEach(coll => coll.stop(`game flushed`))
             global.activeGames.delete(key)
             db.setFlushed(key)
+            logger.log(`info`,	`Flushed ${key}`)
         }
     })
 }

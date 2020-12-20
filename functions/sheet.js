@@ -66,7 +66,7 @@ function SubmitGames(games) {
                         }
                         newRow.sheetSync = true;
                     })
-                    sheet.addRows(games6).then(() => res(), rej)
+                    sheet.addRows(games6).then(() => res(games6.map(x=>x.id).join(`, `)), rej)
 
                 }, err => reject(err));
             }),
@@ -85,7 +85,7 @@ function SubmitGames(games) {
                         }
                         newRow.sheetSync = true;
                     })
-                    sheet.addRows(gameslek).then(() => res(), rej)
+                    sheet.addRows(gameslek).then(() => res(gameslek.map(x=>x.id).join(`, `)), rej)
                 })
             }),
             new Promise((res, rej) => {
@@ -103,7 +103,7 @@ function SubmitGames(games) {
                         }
                         newRow.sheetSync = true;
                     })
-                    sheet.addRows(games5).then(() => res(), rej)
+                    sheet.addRows(games5).then(() => res(games5.map(x=>x.id).join(`, `)), rej)
 
                 }, err => reject(err));
             })
