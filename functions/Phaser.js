@@ -119,9 +119,9 @@ function GetCivLine(state, channel, i) {
     }
     mergeImg(images)
         .then((img) => {
-            img.write(`./assets/Imgs/Players/${Player.tag}.png`, () => {
+            img.write(`./assets/Imgs/Players/${fixTag(Player.tag)}.png`, () => {
                 channel.send(txt.slice(0, -1), {
-                    files: [`./assets/Imgs/Players/${Player.tag}.png`]
+                    files: [`./assets/Imgs/Players/${fixTag(Player.tag)}.png`]
                 }).then(mess => {
 
                     GC.getPickMsgs(channel.guild).then(msgIds => {
@@ -186,4 +186,8 @@ function removeOld(mess, max) {
         logger.log(`error`, `Error in removeOld ${error.stack}`)
     }
 
+}
+
+function fixTag(tag) {
+    return tag.replace(/[\/:*?"<>|.]/g, "");
 }
