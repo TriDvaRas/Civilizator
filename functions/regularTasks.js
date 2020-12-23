@@ -56,7 +56,7 @@ function updateLocalStats() {
 }
 function updateSheetGames() {
     db.getUnsynced().then(res => {
-        logger.log(`info`, `Synced new games: ${res.join(`\n`)}`)
+        logger.log(`info`, `Synced new games: ${res?.join(`\n`)}`)
     })
 }
 
