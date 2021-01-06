@@ -1,4 +1,5 @@
 const db = require("../functions/db");
+const RT = require('../functions/regularTasks');
 module.exports = {
     name: 'fcf',
     description: `fcf(bot owner only) (you shouldn't see this btw, pls send smth like \`i can see fcs\` here)`,

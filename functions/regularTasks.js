@@ -62,9 +62,11 @@ function updateSheetGames() {
 
 
 function flushGames(force) {
-    logger.log(`info`, `Flushing old games: ${res.join(`\n`)}`)
+    logger.log(`info`, `Flushing old games`)
     global.activeGames.forEach((ag, key) => {
-        if (Date.now() - ag.startedAt > global.gameMaxTime || Date.now() - ag.lastActiveAt > global.gameMaxIdle || force) {
+        let check = Date.now() - ag.startedAt > global.gameMaxTime || Date.now() - ag.lastActiveAt > global.gameMaxIdle || force
+        logger.log(`debug`,`Checks: ${Date.now() - ag.startedAt} > ${global.gameMaxTime} | ${Date.now() - ag.lastActiveAt} > ${global.gameMaxIdle} | ${force} | ${check}`)
+        if (check) {
             ag.collectors.forEach(coll => coll.stop(`game flushed`))
             global.activeGames.delete(key)
             db.setFlushed(key)
@@ -75,9 +77,9 @@ function flushGames(force) {
 
 function updateMinCivilized() {
     return new Promise((resolve, reject) => {
-        logger.log(`info`, `Updating minCivCount...`)
+        logger.log(`debug`, `Updating minCivCount...`)
         let Qs = [];
-        logger.log(`info`, `Guilds: ${discordClient.guilds.cache.size}`)
+        logger.log(`debug`, `Guilds: ${discordClient.guilds.cache.size}`)
         discordClient.guilds.cache.each(guild => {
             Qs.push(new Promise((res, reject) => {
                 guild.members.fetch().then(() => {
@@ -99,7 +101,7 @@ function updateMinCivilized() {
             let sum = 0;
             values.forEach(v => sum += v);
             global.minCivilizedCount = sum
-            logger.log(`info`, `Finished minCivCount: ${values.join(`, `)} = ${sum}`)
+            logger.log(`debug`, `Finished minCivCount: ${values.join(`, `)} = ${sum}`)
             resolve()
         });
     })

@@ -22,7 +22,7 @@ globalThis.minCivilizedCount = -1
 globalThis.discordClient = new Discord.Client({
 	presence: {
 		activity: {
-			name: "Bad Apple!!",
+			name: "RE:CREATE",
 			type: "PLAYING"
 		}
 	}
