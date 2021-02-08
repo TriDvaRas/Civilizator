@@ -33,7 +33,8 @@
             "Teddy Roosevelt (Bull Moose)",
             "AmericaBM",
             "BullMoose",
-            "TeddyBM"
+            "TeddyBM",
+            "L'Alce"
         ],
         "DLC": "PersonaPack",
         "persona":1
@@ -44,7 +45,8 @@
         "picPath": "Imgs/civ6/arabian.png",
         "Alias": [
             "Arabian",
-            "Saladin"
+            "Saladin",
+            "Saladino"
         ],
         "DLC": "Vanilla"
     },
@@ -64,7 +66,8 @@
         "picPath": "Imgs/civ6/aztec.png",
         "Alias": [
             "Aztec",
-            "Montezuma"
+            "Montezuma",
+            "Aztechi"
         ],
         "DLC": "Aztec"
     },
@@ -74,7 +77,8 @@
         "picPath": "Imgs/civ6/brazilian.png",
         "Alias": [
             "Brazilian",
-            "Pedro II"
+            "Pedro II",
+            "Brasile"
         ],
         "DLC": "Vanilla"
     },
@@ -85,7 +89,9 @@
         "Alias": [
             "Byzantine",
             "Basil II",
-            "Byzantium"
+            "Byzantium",
+            "Basilio II",
+            "Bisansio"
         ],
         "DLC": "Byzantine&Gaul"
     },
@@ -107,7 +113,8 @@
         "Alias": [
             "Chinese",
             "Qin Shi Huang",
-            "China"
+            "China",
+            "Cina"
         ],
         "DLC": "Vanilla"
     },
@@ -128,7 +135,9 @@
         "Alias": [
             "Dutch",
             "Wilhelmina",
-            "Netherlands"
+            "Netherlands",
+            "Guglielmina",
+            "Olanda"
         ],
         "DLC": "R&F"
     },
@@ -138,7 +147,8 @@
         "picPath": "Imgs/civ6/egyptian.png",
         "Alias": [
             "Egyptian",
-            "Cleopatra"
+            "Cleopatra",
+            "Egitto"
         ],
         "DLC": "Vanilla"
     },
@@ -149,7 +159,9 @@
         "Alias": [
             "English",
             "Victoria",
-            "EnglandV"
+            "EnglandV",
+            "Vittoria",
+            "InghilterraV"
         ],
         "DLC": "Vanilla"
     },
@@ -161,7 +173,10 @@
             "EnglishE",
             "Eleanor of Aquitaine (English)",
             "EnglandE",
-            "EleanorE"
+            "EleanorE",
+            "Eleonora D'aquitania (Inghilterra)",
+            "EleonoraI",
+            "InghilterraE"
         ],
         "DLC": "GS"
     },
@@ -171,7 +186,8 @@
         "picPath": "Imgs/civ6/ethiopian.png",
         "Alias": [
             "Ethiopian",
-            "Menelik II"
+            "Menelik II",
+            "Etiopia"
         ],
         "DLC": "Ethiopia"
     },
@@ -182,7 +198,9 @@
         "Alias": [
             "French",
             "Catherine de Medici",
-            "France"
+            "France",
+            "Caterina",
+            "Francia"
         ],
         "DLC": "Vanilla",
         "persona":17
@@ -195,7 +213,9 @@
             "FrenchBQ",
             "Catherine de Medici (Black Queen)",
             "FranceBQ",
-            "CatherineBQ"
+            "CatherineBQ",
+            "CaterinaRN",
+            "FranciaRN"
         ],
         "DLC": "PersonaPack",
         "persona":17
@@ -208,7 +228,9 @@
             "FrenchM",
             "Catherine de Medici (Magnificence)",
             "FranceM",
-            "CatherineM"
+            "CatherineM",
+            "CaterinaM",
+            "FranciaM"
         ],
         "DLC": "PersonaPack",
         "persona":17
@@ -221,7 +243,9 @@
             "FrenchE",
             "Eleanor of Aquitaine (French)",
             "FranceE",
-            "EleanorF"
+            "EleanorF",
+            "EleonoraF",
+            "FranciaE"
         ],
         "DLC": "GS"
     },
@@ -242,7 +266,8 @@
         "picPath": "Imgs/civ6/georgian.png",
         "Alias": [
             "Georgian",
-            "Tamar"
+            "Tamar",
+            "Tamara"
         ],
         "DLC": "R&F"
     },
@@ -253,7 +278,9 @@
         "Alias": [
             "German",
             "Frederick Barbarossa",
-            "Germany"
+            "Germany",
+            "Federico",
+            "Germania"
         ],
         "DLC": "Vanilla"
     },
@@ -263,7 +290,9 @@
         "picPath": "Imgs/civ6/gran_colombian.png",
         "Alias": [
             "Gran Colombian",
-            "Simón Bolívar"
+            "Simón Bolívar",
+            "Simon Bolivar",
+            "Grande Colombia"
         ],
         "DLC": "Maya&GranColombia"
     },
@@ -274,7 +303,7 @@
         "Alias": [
             "GreekP",
             "Pericles",
-            "GreekP"
+            "GreciaP"
         ],
         "DLC": "Vanilla"
     },
@@ -285,7 +314,7 @@
         "Alias": [
             "GreekG",
             "Gorgo",
-            "GreekG"
+            "GreciaG"
         ],
         "DLC": "Vanilla"
     },
@@ -296,7 +325,9 @@
         "Alias": [
             "Hungarian",
             "Matthias Corvinus",
-            "Hungary"
+            "Hungary",
+            "Mattia Corvino",
+            "Ungheria"
         ],
         "DLC": "GS"
     },
@@ -349,7 +380,8 @@
         "picPath": "Imgs/civ6/japanese.png",
         "Alias": [
             "Japanese",
-            "Hojo Tokimune"
+            "Hojo Tokimune",
+            "Giappone"
         ],
         "DLC": "Vanilla"
     },
@@ -369,7 +401,8 @@
         "picPath": "Imgs/civ6/kongolese.png",
         "Alias": [
             "Kongolese",
-            "Mvemba a Nzinga"
+            "Mvemba a Nzinga",
+            "Congo"
         ],
         "DLC": "Vanilla"
     },
@@ -379,7 +412,8 @@
         "picPath": "Imgs/civ6/korean.png",
         "Alias": [
             "Korean",
-            "Seondeok"
+            "Seondeok",
+            "Corea"
         ],
         "DLC": "R&F"
     },
@@ -389,7 +423,8 @@
         "picPath": "Imgs/civ6/macedonian.png",
         "Alias": [
             "Macedonian",
-            "Alexander"
+            "Alexander",
+            "Alessandro"
         ],
         "DLC": "Persia&Macedon"
     },
@@ -430,7 +465,8 @@
         "picPath": "Imgs/civ6/mayan.png",
         "Alias": [
             "Mayan",
-            "Lady Six Sky"
+            "Lady Six Sky",
+            "Wac-Chanil-Ahau"
         ],
         "DLC": "Maya&GranColombia"
     },
@@ -471,7 +507,9 @@
         "Alias": [
             "Ottoman",
             "Suleiman",
-            "Turkey"
+            "Turkey",
+            "Solimano",
+            "Ottomani"
         ],
         "DLC": "GS"
     },
@@ -481,7 +519,8 @@
         "picPath": "Imgs/civ6/persian.png",
         "Alias": [
             "Persian",
-            "Cyrus"
+            "Cyrus",
+            "Ciro"
         ],
         "DLC": "Persia&Macedon"
     },
@@ -491,7 +530,9 @@
         "picPath": "Imgs/civ6/phoenician.png",
         "Alias": [
             "Phoenician",
-            "Dido"
+            "Dido",
+            "Didone",
+            "Fenicia"
         ],
         "DLC": "GS"
     },
@@ -502,7 +543,9 @@
         "Alias": [
             "Polish",
             "Jadwiga",
-            "Poland"
+            "Poland",
+            "Polonia",
+            "Edvige"
         ],
         "DLC": "Poland"
     },
@@ -513,7 +556,9 @@
         "Alias": [
             "Roman",
             "Trajan",
-            "Rome"
+            "Rome",
+            "Traiano",
+            "Roma"
         ],
         "DLC": "Vanilla"
     },
@@ -523,7 +568,8 @@
         "picPath": "Imgs/civ6/russian.png",
         "Alias": [
             "Russian",
-            "Peter"
+            "Peter",
+            "Pietro"
         ],
         "DLC": "Vanilla"
     },
@@ -534,7 +580,8 @@
         "Alias": [
             "Scottish",
             "Robert the Bruce",
-            "Scottland"
+            "Scottland",
+            "Scozia"
         ],
         "DLC": "R&F"
     },
@@ -544,7 +591,9 @@
         "picPath": "Imgs/civ6/scythian.png",
         "Alias": [
             "Scythian",
-            "Tomyris"
+            "Tomyris",
+            "Tomiri",
+            "Scizia"
         ],
         "DLC": "Vanilla"
     },
@@ -555,7 +604,9 @@
         "Alias": [
             "Spanish",
             "Philip II",
-            "Spain"
+            "Spain",
+            "Filippo II",
+            "Spagna"
         ],
         "DLC": "Vanilla"
     },
@@ -576,7 +627,9 @@
         "Alias": [
             "Swedish",
             "Kristina",
-            "Sweden"
+            "Sweden",
+            "Cristina",
+            "Svezia"
         ],
         "DLC": "GS"
     },
