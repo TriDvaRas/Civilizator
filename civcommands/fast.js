@@ -1,6 +1,5 @@
 
 var Perm = require('../functions/Permissions.js');
-const logger = require("../logger");
 const GC = require(`../functions/guildConfig.js`);
 const Discord = require('discord.js');
 const db = require('../functions/db.js');

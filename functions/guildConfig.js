@@ -1,6 +1,4 @@
 const { createBase } = require('./Setup.js');
-const logger = require(`../logger`);
-const chalk = require('chalk');
 const DB = require(`./db`);
 const getBaseState = require(`../functions/baseState`)
 

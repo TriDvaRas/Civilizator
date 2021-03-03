@@ -1,8 +1,6 @@
 
 const GC = require("../functions/guildConfig.js");
 const Perm = require('../functions/Permissions.js');
-const logger = require("../logger");
-const chalk = require('chalk');
 module.exports = {
     name: 'prefix',
     description: 'Change bot\'s prefix (Admin)',

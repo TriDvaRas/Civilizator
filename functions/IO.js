@@ -1,6 +1,5 @@
 
 var fs = require('fs');
-const logger = require(`../logger`);
 module.exports = {
     Read: function Read(Path) {
         var data = fs.readFileSync(Path, "utf8");

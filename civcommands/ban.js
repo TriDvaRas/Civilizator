@@ -2,8 +2,6 @@ const GC = require(`../functions/guildConfig.js`);
 var BanF = require('../functions/BansFunctions.js');
 const Embeder = require("../functions/embeder.js");
 const getCivList = require(`../functions/civList`)
-const logger = require("../logger");
-const chalk = require('chalk');
 module.exports = {
     name: 'ban',
     description: 'Bans Civilization by id or alias',

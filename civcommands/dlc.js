@@ -4,8 +4,6 @@ const GC = require(`../functions/guildConfig.js`);
 var Perm = require('../functions/Permissions.js');
 const Embeder = require("../functions/embeder.js");
 const getCivList = require(`../functions/civList`)
-const logger = require("../logger");
-const chalk = require('chalk');
 module.exports = {
     name: 'dlc',
     description: 'Manage DLCs (Operator)',

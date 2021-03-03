@@ -2,8 +2,6 @@
 const Discord = require('discord.js');
 const GC = require("../functions/guildConfig.js");
 //Set logger
-const logger = require("../logger");
-const chalk = require(`chalk`)
 
 module.exports = function (message) {
     if (message.author.bot)

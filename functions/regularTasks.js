@@ -3,7 +3,6 @@ const sheet = require(`./sheet`);
 const GC = require("./guildConfig.js");
 const db = require("./db");
 let pressences = IO.Read(`./pressence.json`);
-const logger = require("../logger");
 
 let pressenceReps = new Map()
     .set(`{guildCount}`, (val, stats) => val.replace(`{guildCount}`, `${discordClient.guilds.cache.size}`))

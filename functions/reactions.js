@@ -3,8 +3,6 @@ const GC = require(`./guildConfig.js`);
 const Embeder = require(`./embeder.js`);
 const Perm = require('./Permissions.js');
 const Phaser = require('./Phaser.js');
-const logger = require(`../logger`);
-const chalk = require('chalk');
 const DB = require(`./db`);
 const getCivList = require(`../functions/civList`)
 

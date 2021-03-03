@@ -4,8 +4,6 @@ const DB = require(`./db`);
 const GC = require(`./guildConfig`);
 const Picker = require(`./picker`);
 const getCivList = require(`../functions/civList`)
-const logger = require('../logger.js');
-const chalk = require('chalk');
 const mergeImg = require('merge-img');
 
 module.exports = {

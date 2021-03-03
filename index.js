@@ -8,10 +8,12 @@ const handleMessage = require(`./functions/messageHandler`)
 const RT = require('./functions/regularTasks');
 
 //Set logger
-const logger = require("./logger");
+global.logger = require("./logger");
+global.chalk = require(`chalk`);
+
 
 //global settings 
-globalThis.gameMaxTime = 3*3600000;
+globalThis.gameMaxTime = 3 * 3600000;
 globalThis.gameMaxIdle = 3600000;
 globalThis.finalDelay = 1000;
 globalThis.fastCD = 30000;
@@ -37,7 +39,7 @@ discordClient
 		logger.log('dapi', 'Bot logged in');
 		globalThis.logGuild = globalThis.discordClient.guilds.cache.get(`727081958823165963`);
 		RT.updateLocalStats();
-		
+
 		// save daily server stats 
 		cron.schedule('59 23 * * *', () => {
 			RT.updateMinCivilized().then(RT.updateSheetStats)
@@ -51,7 +53,7 @@ discordClient
 			RT.updatePressence()
 		})
 		// update actual civilized count
-		setTimeout(RT.updateMinCivilized,10000) 
+		setTimeout(RT.updateMinCivilized, 10000)
 		cron.schedule('0 */6 * * *', () => {
 			RT.updateMinCivilized()
 		})
@@ -61,7 +63,7 @@ discordClient
 		})
 		// save new games
 		cron.schedule('0 */2 * * *', () => {
-			logger.log(`info`,	`Syncing new games...`)
+			logger.log(`info`, `Syncing new games...`)
 			RT.updateSheetGames()
 		})
 	})

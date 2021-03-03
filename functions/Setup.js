@@ -1,7 +1,6 @@
 
 const welcome = require(`../assets/welcome`);
 const DB = require(`./db`);
-const logger = require(`../logger`);
 
 function createBaseChannel(guild, role, options) {
     return new Promise(function (resolve, reject) {

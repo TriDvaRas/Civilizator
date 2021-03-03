@@ -1,8 +1,6 @@
 
 const GC = require(`./guildConfig.js`);
-const logger = require(`../logger`);
 const Embeder = require(`./embeder.js`);
-const chalk = require('chalk');
 const DB = require(`./db`);
 
 module.exports = {

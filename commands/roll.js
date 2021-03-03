@@ -1,6 +1,4 @@
 
-const logger = require("../logger");
-const chalk = require('chalk');
 module.exports = {
     name: 'roll',
     description: 'Roll!',

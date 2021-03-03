@@ -1,5 +1,4 @@
 const GSS = require(`google-spreadsheet`);
-const logger = require("../logger");
 
 const creds = require(`../assets/sheet_secret.json`);
 const doc = new GSS.GoogleSpreadsheet(`1db51c8lzs6TVJU7u2eL1_RkxFdMKfjfFYNHDdjgQbTg`)
