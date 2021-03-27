@@ -7,7 +7,7 @@ module.exports = {
 \`roll <N>\` - random number in range 1-N
 \`roll <M>-<N>\` - random number in range M-N
 \`roll <M>d<N>\` - M random numbers in range 1-N `,
-    execute: async function (message, args) {
+    execute: async function (message, args, guildConfig) {
         try {
             let n = 1;
             let min, max;
@@ -42,7 +42,7 @@ module.exports = {
             }
             message.reply(text).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`));
         } catch (error) {
-            message.channel.send(`wrong arguments`)
+            message.channel.send(`Wrong arguments. Try \`${this.name} help\` `)
                 .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] failed to roll ${error}`);
 

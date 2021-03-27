@@ -1,6 +1,6 @@
 
 const welcome = require(`../assets/welcome`);
-const DB = require(`./db`);
+const db = require(`./db`);
 
 function createBaseChannel(guild, role, options) {
     return new Promise(function (resolve, reject) {
@@ -55,39 +55,42 @@ function createBaseChannel(guild, role, options) {
 }
 
 function createBaseRole(guild, ignoreOld) {
-    return new Promise(function (resolve, reject) {
-        getConfig(guild).then(config => {
-            let oldRole = guild.roles.cache.find(role => role.id === config.roleId);
-            if (oldRole && !ignoreOld) {
-                return reject(`Role already exists (\`${oldRole.name}\`)`);
-            }
-            guild.roles.create({
-                data: {
-                    name: "Civilized",
-                    mentionable: true,
-                    color: [64, 255, Math.floor(90 + Math.random() * 40)]
+    return new Promise((resolve, reject) => {
+        getConfig(guild).then(
+            config => {
+                let oldRole = guild.roles.cache.find(role => role.id === config.roleId);
+                if (oldRole && !ignoreOld) {
+                    return reject(`Role already exists (\`${oldRole.name}\`)`);
                 }
-            }).then(role => {
-                guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role).catch(err => { throw new Error(`addSelfRole [${guild.name}] \n${err}`) });
-                setConfig(guild, { roleId: role.id });
-                resolve(role);
-            });
+                guild.roles.create({
+                    data: {
+                        name: "Civilized",
+                        mentionable: true,
+                        color: [64, 255, Math.floor(90 + (Math.random() * 40))]
+                    }
+                }).then(role => {
+                    guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role).catch(err => { throw new Error(`addSelfRole [${guild.name}] \n${err}`) });
+                    setConfig(guild, { roleId: role.id });
+                    resolve(role);
+                });
 
-        },
+            },
             err => reject(err)
         ).catch(err => { throw new Error(`createRole [${guild.name}] \n${err}`) })
     });
 }
 function createBase(guild) {
     return new Promise((resolve, reject) => {
-        createBaseRole(guild, true).then(role => {
-            createBaseChannel(guild, role, { ignoreOld: true }).then(channel => {
-                setConfig(guild, { roleId: role.id, channelId: channel.id })
-                resolve()
+        createBaseRole(guild, true).then(
+            role => {
+                createBaseChannel(guild, role, { ignoreOld: true }).then(
+                    channel => {
+                        setConfig(guild, { roleId: role.id, channelId: channel.id })
+                        resolve()
+                    },
+                    err => reject(err)
+                );
             },
-                err => reject(err)
-            );
-        },
             err => reject(err)
         );
     })
@@ -97,42 +100,4 @@ module.exports = {
     createBase,
     createBaseChannel,
     createBaseRole
-}
-
-function getConfig(guild) {
-    return new Promise((resolve, reject) => {
-        DB.getCollection(`guilds`).then(coll => {
-            coll.findOne({ guildId: guild.id }, function (err, config) {
-                if (err)
-                    return reject(err);
-                resolve(config);
-            })
-
-        })
-    });
-}
-function setConfig(guild, newConfig) {
-    return new Promise((resolve, reject) => {
-        DB.getCollection(`guilds`).then(coll => {
-            coll.findOne({ guildId: guild.id }, function (err, oldConfig) {
-                if (err)
-                    return reject(err);
-                resolve();
-                for (const key in newConfig) {
-                    if (newConfig.hasOwnProperty(key)) {
-                        if (newConfig[key] === oldConfig[key])
-                            delete newConfig[key];
-                    }
-                }
-                if (newConfig != {})
-                    coll.updateOne({ guildId: guild.id }, { $set: newConfig }, function (err, res) {
-                        if (err)
-                            return reject(err);
-                        resolve()
-                        logger.log(`db`, `set config setup`);
-                    })
-            })
-
-        })
-    });
 }

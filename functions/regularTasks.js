@@ -1,3 +1,4 @@
+/* global discordClient  logger chalk */
 const IO = require('./IO');
 const sheet = require(`./sheet`);
 const GC = require("./guildConfig.js");
@@ -45,11 +46,12 @@ function updateLocalStats() {
     let stats = {}
     getCivilizedCount().then(count => {
         stats[`userCount`] = count;
-        db.getStats().then(doc => {
-            stats[`gameCount`] = doc.lastGameId;
-            stats[`fastCount`] = doc.globalFastCount;
-            IO.Write(`./stats.json`, stats);
-        })
+        //TODO
+        // db.getStats().then(doc => {
+        //     stats[`gameCount`] = doc.lastGameId;
+        //     stats[`fastCount`] = doc.globalFastCount;
+        //     IO.Write(`./stats.json`, stats);
+        // })
 
     })
 }
@@ -64,7 +66,7 @@ function flushGames(force) {
     logger.log(`info`, `Flushing old games`)
     global.activeGames.forEach((ag, key) => {
         let check = Date.now() - ag.startedAt > global.gameMaxTime || Date.now() - ag.lastActiveAt > global.gameMaxIdle || force
-        logger.log(`debug`,`Checks: ${Date.now() - ag.startedAt} > ${global.gameMaxTime} | ${Date.now() - ag.lastActiveAt} > ${global.gameMaxIdle} | ${force} | ${check}`)
+        logger.log(`debug`, `Checks: ${Date.now() - ag.startedAt} > ${global.gameMaxTime} | ${Date.now() - ag.lastActiveAt} > ${global.gameMaxIdle} | ${force} | ${check}`)
         if (check) {
             ag.collectors.forEach(coll => coll.stop(`game flushed`))
             global.activeGames.delete(key)
@@ -82,15 +84,16 @@ function updateMinCivilized() {
         discordClient.guilds.cache.each(guild => {
             Qs.push(new Promise((res, reject) => {
                 guild.members.fetch().then(() => {
-                    GC.getConfig(guild).then(cfg => {
-                        if (!cfg)
-                            return res(0)
-                        guild.roles.fetch(cfg.roleId).then(role => {
-                            if (!role)
+                    db.getGuildConfig(guild.id).then(
+                        cfg => {
+                            if (!cfg)
                                 return res(0)
-                            res(role.members.size)
-                        })
-                    },
+                            guild.roles.fetch(cfg.roleId).then(role => {
+                                if (!role)
+                                    return res(0)
+                                res(role.members.size)
+                            })
+                        },
                         err => logger.log(`error`, `${err}`)
                     );
                 })
@@ -98,7 +101,9 @@ function updateMinCivilized() {
         });
         Promise.all(Qs).then(values => {
             let sum = 0;
-            values.forEach(v => sum += v);
+            values.forEach(v => {
+                sum += v
+            });
             global.minCivilizedCount = sum
             logger.log(`debug`, `Finished minCivCount: ${values.join(`, `)} = ${sum}`)
             resolve()
@@ -118,14 +123,15 @@ function getCivilizedCount() {
         let Qs = [];
         discordClient.guilds.cache.each(guild => {
             Qs.push(new Promise((res, reject) => {
-                GC.getConfig(guild).then(cfg => {
-                    if (!cfg)
-                        return res(0)
-                    role = guild.roles.cache.get(cfg.roleId)
-                    if (!role)
-                        return res(0)
-                    res(role.members.size)
-                },
+                db.getGuildConfig(guild.id).then(
+                    cfg => {
+                        if (!cfg)
+                            return res(0)
+                        let role = guild.roles.cache.get(cfg.roleId)
+                        if (!role)
+                            return res(0)
+                        res(role.members.size)
+                    },
                     err => logger.log(`error`, `${err}`)
                 );
             }))

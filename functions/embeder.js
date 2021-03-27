@@ -3,15 +3,24 @@ const Discord = require('discord.js');
 
 module.exports = {
     create: createEmbed,
-    get: getEmbed,
-    set: setEmbed,
 }
+
+
+Discord.MessageEmbed.prototype.updateField = function updateField(fieldName, value) {
+    let field = this.fields?.find(field => field.name == fieldName)
+    if (field) {
+        field.value = value
+        return this
+    }
+    return false
+}
+
 
 function createEmbed() {
     return new Discord.MessageEmbed()
         .setColor('#46a832')
         .setTitle("**Civilizator Game**")
-        .setDescription("**[Civilization List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml)**")
+        .setDescription("**[Civilizations List](https://docs.google.com/spreadsheets/d/e/2PACX-1vR5u67tm62bbcc5ayIByMOeiArV7HgYvrhHYoS2f84m0u4quPep5lHv9ghQZ0lNvArDogYdhuu1_f9b/pubhtml)**")
         .addFields(
             { name: 'Game Operator', value: '\u200B', inline: true },
             { name: 'Game Id', value: '\u200B', inline: true },
@@ -22,18 +31,5 @@ function createEmbed() {
             { name: 'Bans per player', value: '\u200B', inline: true },
             { name: 'Players', value: '\u200B', inline: true }
         )
-        .setTimestamp()
-        .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR');
-}
-
-function getEmbed(gameState) {
-    return global.activeGames.get(gameState.gameId)?.message.embeds[0];
-}
-function setEmbed(gameState, embed) {
-    let ag = global.activeGames.get(gameState.gameId)
-    if (ag) {
-        ag.message.edit(embed)
-        ag.lastActiveAt = Date.now()
-    }
-
+        .setFooter('Created by TriDvaRas#4805', 'https://tdr.s-ul.eu/hP8HuUCR');
 }

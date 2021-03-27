@@ -4,7 +4,7 @@ module.exports = {
     name: 'help',
     description: 'View bot command list',
     usage: '`help`',
-    execute: async function (message, args) {
+    execute: async function (message, args, guildConfig) {
         message.delete({ timeout: 30000 }).catch(err => { throw new Error(`delete [${message.guild.name}] [${message.channel.name}] \n${err}`) });
         let text = `**List of Civilizator bot Commands**\nAll commands start with prefix(default \`!\`) or bot mention\nTo get more info about a specific command use \`<command> help\` (e.g. \`start help\`)\n\n      **Standard Commands**\n`
         const commands = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));

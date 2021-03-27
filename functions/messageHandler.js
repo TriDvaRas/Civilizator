@@ -1,6 +1,6 @@
 //imports
 const Discord = require('discord.js');
-const GC = require("../functions/guildConfig.js");
+const db = require(`./db`)
 //Set logger
 
 module.exports = function (message) {
@@ -25,12 +25,12 @@ module.exports = function (message) {
 
 
 
-    GC.getConfig(message.guild)
+    db.getGuildConfig(message.guild.id)
         .then(cfg => {
             //check if server has no config
             if (!cfg)
                 if (message.content.startsWith(`!`) || message.content.startsWith(`<@!${discordClient.user.id}>`))
-                    return message.channel.send(`Failed command execution. Your server has no config.\nThis was probably caused by bot being offline then you added it to your server.\nThe easiest way to fix this is to kick and readd the bot to your server.`)
+                    return message.channel.send(`Failed command execution. Your server has no config.\nThis was probably caused by bot being offline then you added it to your server.\nThe easiest way to fix this is to kick and reinvite the bot to your server.`)
                         .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                 else
                     return;
@@ -53,7 +53,7 @@ module.exports = function (message) {
                     .addField(`Normal Games Count`, cfg.gameCount, false)
                     .addField(`Fast Games Count`, cfg.fastCount, true)
                     .setTimestamp()
-                    .setFooter('Created by TriDvaRas', 'https://tdr.s-ul.eu/hP8HuUCR')
+                    .setFooter('Created by TriDvaRas#4805', 'https://tdr.s-ul.eu/hP8HuUCR')
                 ).catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
             }
             else if (message.content.startsWith(`<@!${discordClient.user.id}>`) || message.content.startsWith(`<@${discordClient.user.id}>`)) {
@@ -73,7 +73,7 @@ module.exports = function (message) {
                             .then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) })
                             .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                     } else
-                        discordClient.commands.get(command).execute(message, args);
+                        discordClient.commands.get(command).execute(message, args, cfg);
                 } catch (error) {
                     logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
                 }
@@ -85,7 +85,7 @@ module.exports = function (message) {
                             .then(msg => { message.delete({ timeout: 30000 }); msg.delete({ timeout: 30000 }) })
                             .catch(err => logger.log(`error`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${err}`))
                     } else if (cfg.channelId == message.channel.id || process.argv.includes(`test`))
-                        discordClient.civcommands.get(command).execute(message, args);
+                        discordClient.civcommands.get(command).execute(message, args, cfg);
                     else {
                         logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] bad channel`);
                         message.channel.send(`Randomizer-related commands only work in set channel. You can check current channel and role settings by mentioning bot.`)
@@ -98,4 +98,4 @@ module.exports = function (message) {
             err =>
                 logger.log(`error`, `${err}`)
         );
-} 
+}

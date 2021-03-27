@@ -1,15 +1,16 @@
-
+/*global logger, chalk, discordClient */
 const GC = require(`./guildConfig.js`);
 const Embeder = require(`./embeder.js`);
 const Perm = require('./Permissions.js');
 const Phaser = require('./Phaser.js');
-const DB = require(`./db`);
-const getCivList = require(`../functions/civList`)
+const BanF = require('../functions/BansFunctions.js');
+const db = require(`./db`);
 
 module.exports = {
     addJoiner,
     addBanner,
-    addReroller
+    addReroller,
+    startPicks
 }
 
 function addJoiner(msg, ag) {
@@ -18,128 +19,24 @@ function addJoiner(msg, ag) {
         .then(() => msg.react(`❎`))
         .then(() => msg.react(`⏩`));
     //set reaction filter
-    const filter = (reaction, user) => {
-        return [`✅`, `❎`, `⏩`].includes(reaction.emoji.name) && !user.bot;
-    };
-    const collector = msg.createReactionCollector(filter);
+    const collector = msg.createReactionCollector((reaction, user) => [`✅`, `❎`, `⏩`].includes(reaction.emoji.name) && !user.bot);
     ag.collectors.push(collector)
 
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created join collector`);
     collector.on('collect', (reaction, user) => {
-        reaction.users.remove(user);
-        GC.getGameState(msg.guild).then(state => {
-
-            if (state.embedId != msg.id) {
-                collector.stop(`old game`);
-                return;
-            }
-            if (reaction.emoji.name === '⏩') {
-                //check perm
-                Perm.checkRoles(msg.guild.members.cache.get(user.id), state.Op, { admin: true, op: true })
-                    .then(() => {
-                        //check if players
-                        if (state.Players.length < 1) {
-                            msg.channel.send(`Can't start game without players`)
-                                .then(m => m.delete({ timeout: 7500 })).catch(err => { throw new Error(`delete [${msg.guild.name}] [${msg.channel.name}] \n${err}`) })
-                                .catch(err => { throw new Error(`send [${msg.guild.name}] [${msg.channel.name}] [${msg.author.tag}] \n${err}`) })
-                            return;
-                        }
-                        //check size
-                        let size = state.Players.length * (state.banSize + state.playerSize)
-                        let maxSize = state.Civs.length;
-                        if (size > maxSize) {
-                            msg.channel.send(`Not enough civs for all players
-Civs in pool: \`${maxSize}\`
-Civs needed to start: \`${size}\`(players count*(CPP+BPP))
-Try lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command 
-or enabling more DLCs with \`dlc\` command`)
-                                .then(m => m.delete({ timeout: 12500 }).catch(err => { throw new Error(`delete [${msg.guild.name}] [${msg.channel.name}] \n${err}`) }))
-                                .catch(err => { throw new Error(`send [${msg.guild.name}] [${msg.channel.name}] [${msg.author.tag}] \n${err}`) })
-                            return;
-                        }
-                        //go to next phase
-                        collector.stop("force end");
-                        let embed = Embeder.get(state);
-
-                        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] joins ended`);
-                        if (state.banSize > 0) {
-                            try {
-                                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting bans`);
-                                Phaser.StartBans(state, embed);
-                                addBanner(msg, ag);
-                                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started bans`);
-                            } catch (error) {
-                                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting bans ${error}`);
-
-                            }
-                        }
-                        else {
-                            try {
-                                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] skiping bans`);
-                                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
-                                Phaser.StartPicks(state, embed, msg.channel);
-                                addReroller(msg, ag);
-                                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
-                            } catch (error) {
-                                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
-
-                            }
-                        }
-
-                        GC.setGameState(msg.guild, state);
-                        msg.edit(embed);
-                    })
-                    .then(() => { }, () => { });
-
-            }
-            else {
-                if (reaction.emoji.name === '✅') {
-                    if (state.Players.find(P => P.id == `${user}`))
-                        return;
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] player joined`);
-
-                    state.Players.push({
-                        tag: user.tag,
-                        id: `${user}`,
-                        bans: [],
-                        civs: [],
-                        pick: "",
-                        civsMessage: ""
-                    });
-                    state.gameSize = parseInt(state.gameSize) + 1;
-                }
-                else {
-                    let player = state.Players.find(P => P.id == `${user}`)
-                    if (!player)
-                        return;
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] player left`);
-                    state.Players.splice(state.Players.indexOf(player), 1);
-                    state.gameSize = parseInt(state.gameSize) - 1;
-                }
-                GC.setGameState(msg.guild, state);
-                let embed = Embeder.get(state);
-                embed.fields.find(field => field.name == "Players").value = state.Players.map(user => user.id).join('\n') + '\u200B';
-                msg.edit(embed);
-            }
-        },
-            error => logger.log(`error`, `${error}`)
-        )
+        onJoinCollect(msg, ag, collector, reaction, user)
     });
     collector.on('end', (collected, reason) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] join collector committed die | reason ${reason}`);
         if (reason != `messageDelete`)
             msg.reactions.removeAll();
         ag.collectors.splice(ag.collectors.indexOf(collector), 1)
-        if ([`idle`, `new game`].includes(reason)) {
-            GC.getGameState(msg.guild).then(state => {
-                state.flushed = true;
-                GC.setGameState(msg.guild, state);
-                DB.updateGame(state);
-                setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
-            },
+        if ([`idle`, `new game`].includes(reason))
+            db.getState(ag.gameId).then(
+                state => state.setFlushed(),
                 error => logger.log(`error`, `${error}`)
             )
-        }
+
     });
 }
 
@@ -148,179 +45,199 @@ function addBanner(msg, ag) {
     msg.react(`➡️`)
         .then(() => msg.react(`⏩`));
     //set reaction filter
-    const filter = (reaction, user) => {
-        return [`➡️`, `⏩`, `✔️`].includes(reaction.emoji.name) && (!user.bot || user.id == 719933714423087135);
-    };
-    const collector = msg.createReactionCollector(filter);
+    const collector = msg.createReactionCollector((reaction, user) => [`➡️`, `⏩`].includes(reaction.emoji.name));
     ag.collectors.push(collector)
-
-    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created banner collector`);
-
+    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created banner collector`)
     collector.on('collect', (reaction, user) => {
-
-        GC.getGameState(msg.guild).then(state => {
-
-            if (state.embedId != msg.id) {
-                collector.stop(`old game`);
-                return;
-            }
-            if (reaction.emoji.name === '✔️') {
-                if (user.id != 719933714423087135)
-                    return;
-                if (collector.ended)
-                    return;
-                collector.stop(`tick`);
-                let embed = Embeder.get(state);
-                Phaser.StartPicks(state, embed, msg.channel);
-                addReroller(msg, ag);
-
-                GC.setGameState(msg.guild, state);
-                msg.edit(embed);
-                return;
-            }
-            if (user.id == 719933714423087135)
-                return;
-            reaction.users.remove(user);
-            if (reaction.emoji.name === '➡️') {
-                let player = state.Players.find(P => P.id == `${user}`)
-                if (!player)
-                    return;
-                state.Banners.push(`${user}`);
-                player.bans.push({
-                    "id": "0",
-                    "Name": "Skip"
-                });
-                state.bansActual = parseInt(state.bansActual) + 1;
-
-                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] ban skip [${state.bansActual}/${state.bansFull}]`);
-                let civList = getCivList(state.game)
-                let embed = Embeder.get(state);
-                embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
-                embed.fields.find(field => field.name == "Banned civs").value = state.banned.map(id => civList.find(x => x.id == id).Name).join('\n') + '\u200B';
-                Embeder.set(state, embed)
-                GC.setGameState(msg.guild, state);
-                if (state.bansActual >= state.bansFull) {
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans ended`);
-                    msg.react(`✔️`);
-                }
-
-            }
-            else if (reaction.emoji.name === '⏩') {
-                Perm.checkRoles(msg.guild.members.cache.array().find(M => M.user = user), state.Op, { admin: true, op: true })
-                    .then(() => {
-                        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans ended`);
-                        let embed = Embeder.get(state);
-                        collector.stop("force end");
-                        try {
-                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
-                            Phaser.StartPicks(state, embed, msg.channel);
-                            addReroller(msg, ag);
-                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] started picks`);
-                        } catch (error) {
-                            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] failed starting picks ${error}`);
-                        }
-
-                        GC.setGameState(msg.guild, state);
-                        msg.edit(embed);
-                    })
-                    .then(() => { }, () => { });
-            }
-        },
-            error => logger.log(`error`, `${error}`)
-        )
+        onBanCollect(msg, ag, collector, reaction, user)
     });
     collector.on('end', (collected, reason) => {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] banner collector committed die | reason ${reason}`);
         if (reason != `messageDelete`)
             msg.reactions.removeAll();
         ag.collectors.splice(ag.collectors.indexOf(collector), 1)
-        if ([`idle`, `new game`].includes(reason)) {
-            GC.getGameState(msg.guild).then(state => {
-                state.flushed = true;
-                GC.setGameState(msg.guild, state);
-                DB.updateGame(state);
-                setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
-            },
+        if ([`idle`, `new game`].includes(reason))
+            db.getState(ag.gameId).then(
+                state => state.setFlushed(),
                 error => logger.log(`error`, `${error}`)
             )
-        }
     });
 }
+// eslint-disable-next-line max-lines-per-function
 function addReroller(msg, ag) {
     //add reaction
     msg.react(`🔁`);
     //set reaction filter
-    const filter = (reaction, user) => {
-        return [`🔁`].includes(reaction.emoji.name) && !user.bot;
-    };
-    const collector = msg.createReactionCollector(filter);
+    const collector = msg.createReactionCollector((reaction, user) => [`🔁`].includes(reaction.emoji.name) && !user.bot);
     ag.collectors.push(collector)
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created re collector`);
 
     collector.on('collect', (reaction, user) => {
-        try {
-            reaction.users.remove(user);
-            GC.getGameState(msg.guild).then(state => {
-                if (state.embedId != msg.id) {
-                    collector.stop(`old game`);
-                    return;
-                }
-                let player = state.Players.find(P => P.id == `${user}`)
-                if (!player)
-                    return;
-                let reVoter = state.reVoters.find(p => p.id == `${user}`);
-                if (reVoter) {
-                    state.reVoters.splice(state.reVoters.indexOf(reVoter), 1);
-                    state.reVotes = parseInt(state.reVotes) - 1;
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] -re vote [${state.reVotes}/${state.reVotesFull}]`);
-
-
-                }
-                else {
-                    state.reVoters.push(player);
-                    state.reVotes = parseInt(state.reVotes) + 1;
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] +re vote [${state.reVotes}/${state.reVotesFull}]`);
-
-                }
-                let embed = Embeder.get(state);
-                embed.fields.find(field => field.name == "Reroll Votes").value = `[${state.reVotes}/${state.reVotesFull}]\n` + state.reVoters.map(user => user.id).join('\n') + '\u200B';
-                Embeder.set(state, embed)
-                if (state.reVotes == state.reVotesFull) {
-                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] rerolling`);
-                    Phaser.StartPicks(state, embed, msg.channel);
-                }
-                GC.setGameState(msg.guild, state);
-
-            },
-                error => logger.log(`error`, `${error}`)
-            )
-
-        } catch (error) {
-            logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] Error on collecting re ${error.stack}`);
-
-        }
-
+        onReCollect(msg, ag, collector, reaction, user)
     });
     collector.on('end', (collected, reason) => {
-        try {
-            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] re collector committed die | reason ${reason}`);
-            if (reason != `messageDelete`)
-                msg.reactions.removeAll();
-            ag.collectors.splice(ag.collectors.indexOf(collector), 1)
-            GC.getGameState(msg.guild).then(state => {
-
-                if ([`idle`, `new game`].includes(reason)) {
-                    state.flushed = true;
-                    GC.setGameState(msg.guild, state);
-                    setTimeout(() => DB.updateGameFinal(msg.guild), globalThis.finalDelay)
-                }
-                DB.updateGame(state);
-            },
+        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] re collector committed die | reason ${reason}`);
+        if (reason != `messageDelete`)
+            msg.reactions.removeAll();
+        ag.collectors.splice(ag.collectors.indexOf(collector), 1)
+        if ([`idle`, `new game`].includes(reason))
+            db.getState(ag.gameId).then(
+                state => state.setFlushed(),
                 error => logger.log(`error`, `${error}`)
             )
-        } catch (error) {
-            logger.log(`error`, `[${chalk.magentaBright(msg.guild.name)}] Error on ending re ${error.stack}`);
-        }
     });
 }
+//--------
 
+
+function onJoinCollect(msg, agState, collector, reaction, user) {
+    reaction.users.remove(user);
+    db.getState(agState.gameId).then(
+        state => {
+            if (state.embedId != msg.id) {
+                collector.stop(`old game`);
+                return;
+            }
+            if (reaction.emoji.name === '⏩') {
+                endJoinPhase(msg, agState, state, reaction, user, collector)
+            }
+            else {
+                if (reaction.emoji.name === '✅') {
+                    if (state.players.find(P => P.id == user.id))
+                        return;
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] player joined`);
+                    state.addPlayer(user)
+                }
+                else {
+                    let player = state.players.find(P => P.id == user.id)
+                    if (!player)
+                        return;
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] player left`);
+                    state.remPlayer(user)
+                }
+                state.embed.updateField("Players", `${state.players.map(user => `<@${user.id}>`).join('\n')}\u200B`)
+                state.embedMsg.edit(state.embed);
+            }
+        },
+        error => logger.log(`error`, `${error}`)
+    )
+}
+function endJoinPhase(msg, agState, state, reaction, user, collector) {
+    //check perm
+    db.getGuildConfig(msg.guild.id)
+        .then(gConfig => {
+            if (Perm.checkRoles(gConfig, msg.guild.members.cache.get(user.id), state.opId, { admin: true, op: true })) {
+                //check if players
+                if (state.players.length < 1) {
+                    msg.channel.send(`Can't start game without players`)
+                        .then(m => m.delete({ timeout: 7500 }))
+                    return;
+                }
+                //check size
+                let size = state.players.length * (state.cpp + state.bpp)
+                let maxSize = state.civs.length
+                if (size > maxSize) {
+                    msg.channel.send(`Not enough civs for all players\nCivs in pool: \`${maxSize}\`\nCivs needed to start: \`${size}\`(players count*(CPP+BPP))\nTry lowering **C**ivs/**B**ans **P**er **P**layer values with \`set\` command\nor enabling more DLCs with \`dlc\` command`)
+                        .then(m => m.delete({ timeout: 12500 }))
+                    return;
+                }
+                //go to next phase
+                collector.stop("force end");
+                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] joins ended`);
+                if (state.bpp > 0) {
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting bans`);
+                    Phaser.startBans(state, state.embed);
+                    addBanner(msg, agState);
+                    state.embedMsg.edit(state.embed);
+                }
+                else {
+                    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] skiping bans`);
+                    startPicks(msg, agState, state)
+                }
+            }
+
+
+        })
+}
+
+function onBanCollect(msg, agState, collector, reaction, user) {
+    db.getState(agState.gameId).then(
+        state => {
+            if (state.embedId != msg.id) {
+                collector.stop(`old game`);
+                return;
+            }
+            if (user.id == discordClient.user.id)
+                return;
+            reaction.users.remove(user);
+            if (reaction.emoji.name === '➡️') {
+                skipBan(msg, agState, state, reaction, user, collector)
+            }
+            else if (reaction.emoji.name === '⏩') {
+                endBanPhase(msg, agState, state, reaction, user, collector)
+            }
+        },
+        error => logger.log(`error`, `${error}`)
+    )
+}
+
+function skipBan(msg, agState, state, reaction, user, collector) {
+    if (!state.players.find(P => P.id == user.id)) return
+    if (!BanF.checkCanBan(state, user)) return
+
+    state.addBan(user, 0)
+    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] ban skip [${state.players.map(x => x.bans.length).reduce((a, b) => a + b)}/${state.bansFull}]`);
+    state.embed.updateField("Bans", `${state.players.map(user => `[${user.bans.length}/${state.bpp}]`).join('\n')}\u200B`)
+    state.embed.updateField("Banned civs", `${state.banned.map(id => state.civList.find(x => x.id == id).name).join('\n')}\u200B`)
+    state.embedMsg.edit(state.embed)
+    if (state.players.map(x => x.bans.length).reduce((a, b) => a + b) >= state.bansFull) {
+        logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans ended`);
+        collector.stop("full");
+        startPicks(msg, agState, state)
+    }
+}
+function endBanPhase(msg, agState, state, reaction, user, collector) {
+    Perm.checkRoles(msg.guild.members.cache.get(user.id), state.opId, { admin: true, op: true })
+        .then(() => {
+            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans fended`);
+            collector.stop("force end");
+            startPicks(msg, agState, state)
+        })
+}
+
+function startPicks(msg, agState, state) {
+    logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
+    Phaser.startPicks(state);//TODO
+    addReroller(msg, agState);
+    state.embedMsg.edit(state.embed);
+}
+
+function onReCollect(msg, agState, collector, reaction, user) {
+    reaction.users.remove(user);
+    db.getState(agState.gameId).then(
+        state => {
+            if (state.embedId != msg.id) {
+                collector.stop(`old game`);
+                return;
+            }
+            let player = state.players.find(P => P.id == user.id)
+            if (!player) return
+            if (player.reVote) {
+                state.remReVote(user)
+                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] -re vote [${state.players.filter(x => x.reVote).length}/${state.reVotesFull}]`);
+            }
+            else {
+                state.addReVote(user)
+                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] +re vote [${state.players.filter(x => x.reVote).length}/${state.reVotesFull}]`);
+            }
+            state.embed.updateField("Reroll Votes", `[${state.players.filter(x => x.reVote).length}/${state.reVotesFull}]\n ${state.players.filter(x => x.reVote).map(user => `<@${user.id}>`).join(' ')}`)
+            state.embedMsg.edit(state.embed)
+            if (state.players.filter(x => x.reVote).length >= state.reVotesFull) {
+                logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] rerolling`);
+                Phaser.startPicks(state);
+            }
+        },
+        error => logger.log(`error`, `${error}`)
+    )
+
+}

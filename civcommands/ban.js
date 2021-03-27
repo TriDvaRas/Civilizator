@@ -1,142 +1,111 @@
-const GC = require(`../functions/guildConfig.js`);
-var BanF = require('../functions/BansFunctions.js');
-const Embeder = require("../functions/embeder.js");
-const getCivList = require(`../functions/civList`)
+/* global activeGames, logger, chalk */
+const db = require(`../functions/db`)
+const BanF = require('../functions/BansFunctions.js');
+const { startPicks } = require(`../functions/reactions`)
 module.exports = {
     name: 'ban',
     description: 'Bans Civilization by id or alias',
     usage: '`ban <Id/Alias>`',
-    execute: function (message, args) {
-        message.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
+    execute: function execute(message, args, guildConfig) {
+        message.delete({ timeout: 5000 })
         //read GameState
-        GC.getGameState(message.guild).then(state => {
-            //check phase
-            if (state.started != true) {
-                message.channel.send("`start` game first")
-                    .then(botMsg => {
-                        botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                    })
-                    .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
-                return;
-            } else if (state.Phase != "bans") {
-                message.channel.send("Wrong phase")
-                    .then(botMsg => {
-                        botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                    })
-                    .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
-                return;
-
-            } else {
-                //lowercase args
-                args.map(x => x.toLowerCase())
+        db.getState(activeGames.findKey(x => x.guild.id == message.guild.id)).then(
+            state => {
+                if (state.phase != "bans")
+                    return message.reply("Wrong phase").then(botMsg => botMsg.delete({ timeout: 5000 }))
                 //check if Player can ban
-                if (!BanF.CheckCanBan(state, message)) {
-                    message.channel.send("Out of bans").then(botMsg => {
-                        botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                    }).catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
-                    return;
-                }
-                for (let j = 0; j < args.length && BanF.CheckCanBan(state, message); j++) {
-                    let arg = args[j];
-                    //read list
-                    var CivList = getCivList(state.game)
-
-                    //find civ by id
-                    C = CivList.find(civ => civ.id == arg);
-
-                    // if not found by id
-                    if (!C) {
-                        C = [];
-                        //find all aliases
-                        CivList.forEach(civ => {
-                            if (BanF.includesIgnoreCase(civ.Alias, arg))
-                                C.push(civ);
-                        });
-                        //check if multiple
-                        if (C.length > 1) {
-                            let txt = `Multiple aliases for \`${arg}\`:`;
-                            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] ${txt}`);
-                            C.forEach(civ => {
-                                txt += `\n${civ.id}. ${civ.Alias.join(` - `)}`
-                            });
-                            message.channel.send(txt)
-                                .then(botMsg => {
-                                    botMsg.delete({ timeout: 7000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                                })
-                                .catch(err => {err.message+=`s[${message.guild.name}] [${message.author.tag}]`; throw err})
-                                continue;
-                        }
-                        else if (C.length == 0) {
-                            let txt = `No aliases found for \`${arg}\``;
-                            logger.log(`cmd`, txt);
-                            message.channel.send(txt)
-                                .then(botMsg => {
-                                    botMsg.delete({ timeout: 7000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                                })
-                                .catch(err => {throw new Error(`send [${message.guild.name}] [${message.author.tag}] \n${err}`)})
-                            continue;
-
-                        }
-                        if (C.length == 1)
-                            C = C[0];
-
+                if (!BanF.checkCanBan(state, message.author))
+                    return message.reply("Out of bans").then(botMsg => botMsg.delete({ timeout: 5000 }))
+                let searchRes = parseArgs(message, args, state, guildConfig)
+                for (let i = 0; i < searchRes.length; i++) {
+                    const civs = searchRes[i];
+                    if (civs.length > 1) {
+                        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] Multiple aliases for \`${args[i]}\``);
+                        sendMultiple(message, args[i], civs, guildConfig)
                     }
-
-
-                    //if found 
-                    if (C) {
-                        //check if banned
-                        if (BanF.CheckBanned(state, C)) {
-                            message.channel.send(`${C.Name} (${C.id}) is already banned `, {
-                                files: [`./assets/${C.picPath}`]
-                            }).then(botMsg => {
-                                botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                            }).catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
-                        }
-                        else if (BanF.CheckDisabled(state, C)) {
-                            message.channel.send(`${C.Name} (${C.id}) is already disabled by DLCs settings`, {
-                                files: [`./assets/${C.picPath}`]
-                            }).then(botMsg => {
-                                botMsg.delete({ timeout: 5000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                            }).catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
-                        }
-                        else {
-                            let player = state.Players.find(u => u.id == `${message.author}`);
-                            if (player.bans.length >= state.banSize) {
-                                message.channel.send(`Out of bans`).then(botMsg => {
-                                    botMsg.delete({ timeout: 10000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                                }).catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
-                                return;
-                            }
-                            BanF.Ban(C, state);
-                            state.Banners.push(`${message.author}`);
-                            state.Players.find(user => user.id == `${message.author}`).bans.push(C);
-                            message.channel.send(`${message.author} banned ${C.Name} (${C.id})\nBans: ${state.bansActual}/${state.bansFull}`, {
-                                files: [`./assets/${C.picPath}`]
-                            }).then(botMsg => {
-                                botMsg.delete({ timeout: 10000 }).catch(err => {throw new Error( `delete [${message.guild.name}] [${message.channel.name}]  \n${err}`)})
-                            })
-                                .catch(err => { err.message += ` [${message.guild.name}] [${message.author.tag}]`; throw err })
-                            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] banned ${C.Name} [${state.bansActual}/${state.bansFull}]`);
-                            let embed = Embeder.get(state);
-                            embed.fields.find(field => field.name == "Bans").value = state.Players.map(user => `[${user.bans.length}/${state.banSize}]`).join('\n') + '\u200B';
-                            embed.fields.find(field => field.name == "Banned civs").value = state.banned.map(id => CivList.find(x => x.id == id).Name).join('\n') + '\u200B';
-                            Embeder.set(state, embed)
-                            GC.setGameState(message.guild, state);
-                            if (state.bansActual >= state.bansFull) {
-                                let msg = message.channel.messages.cache.array().find(msg => msg.id == state.embedId);
-                                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] Last ban, proceeding to picks`);
-                                msg.react(`✔️`).catch(err => { err.message += ` ✔️[${message.guild.name}] [${message.channel.name}]`; throw new Error(err) })
-                            }
-                        }
+                    else if (civs.length == 0) {
+                        logger.log(`cmd`, `No aliases found for \`${args[i]}\``);
+                        message.channel.send(`No aliases found for \`${args[i]}\``)
+                            .then(botMsg => botMsg.delete({ timeout: 7000 }))
                     }
+                    else
+                        tryBan(message, state, civs[0])
                 }
 
+
+            },
+            () => {
+                message.channel.send("No game found. Use `start` command to create one")
+                    .then(botMsg => botMsg.delete({ timeout: 5000 }))
             }
-        },
-            error => logger.log(`error`, `${error}`)
         )
 
 
     },
 };
+
+
+function parseArgs(message, args, state, guildConfig) {
+    let Cs = []
+    for (let j = 0; j < args.length && BanF.checkCanBan(state, message.author); j++) {
+        let arg = args[j];
+        //find civ by id
+        let C = state.civList.find(civ => civ.id == arg);
+        // if not found by id
+        if (C)
+            Cs.push([C])
+        else
+            Cs.push(findByAlias(arg, state, guildConfig))
+    }
+    return Cs
+}
+
+function tryBan(message, state, C) {
+    //check if banned
+    if (BanF.checkBanned(state, C)) {
+        return message.channel.send(`${C.name} (${C.id}) is already banned `, {
+            files: [`./assets/${C.path}`]
+        }).then(botMsg => botMsg.delete({ timeout: 5000 }))
+    }
+    if (BanF.checkDisabled(state, C)) {
+        message.channel.send(`${C.name} (${C.id}) is already disabled by DLCs settings`, {
+            files: [`./assets/${C.path}`]
+        }).then(botMsg => botMsg.delete({ timeout: 5000 }))
+    }
+    else {
+        if (!BanF.checkCanBan(state, message.author))
+            return message.reply(`Out of bans`).then(botMsg => botMsg.delete({ timeout: 10000 }))
+
+        state.addBan(message.author, C.id)
+        message.channel.send(`${message.author} banned ${C.name} (${C.id})\nBans: ${state.players.map(x => x.bans.length).reduce((a, b) => a + b)}/${state.bansFull}`, {
+            files: [`./assets/${C.path}`]
+        }).then(botMsg => botMsg.delete({ timeout: 10000 }))
+        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] banned ${C.name} [${state.players.map(x => x.bans.length).reduce((a, b) => a + b)}/${state.bansFull}]`);
+        state.embed.updateField("Bans", `${state.players.map(user => `[${user.bans.length}/${state.bpp}]`).join('\n')}\u200B`)
+        state.embed.updateField("Banned civs", `${state.banned.map(id => state.civList.find(x => x.id == id).name).join(', ')}\u200B`)
+        state.embedMsg.edit(state.embed)
+        if (state.players.map(x => x.bans.length).reduce((a, b) => a + b) >= state.bansFull) {
+            logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] Last ban, proceeding to picks`);
+            let ag = { gameId: state.gameId, ...activeGames.get(state.gameId) }
+            ag.collectors[0].stop("full");
+            startPicks(state.embedMsg, ag, state)
+        }
+    }
+}
+
+
+function findByAlias(input, state, guildConfig) {
+    return state.civList.filter(civ => {
+        for (const loc of guildConfig.locales.match(/.{2}/gu))
+            if (civ.aliases[loc] && civ.aliases[loc].find(x => x.toLowerCase().includes(input.toLowerCase())))
+                return true
+        return false
+    });
+}
+
+function sendMultiple(message, arg, civs, guildConfig) {
+    let locs = guildConfig.locales.match(/.{2}/gu)
+    let txt = `Multiple aliases for \`${arg}\`:\n${civs.map(civ => `${civ.id}. ${civ.name} - ${locs.map(loc => civ.aliases[loc]).filter(x => x && x.length > 0).flat().slice(1).join(`, `)}`).join(`\n`)}`;
+    message.channel.send(txt)
+        .then(botMsg => botMsg.delete({ timeout: 7000 }))
+}

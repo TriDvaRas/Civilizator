@@ -7,7 +7,7 @@ module.exports = {
     description: `debug(bot owner only) (you shouldn't see this btw, pls send smth like \`i can see debug\` here)`,
     ignore: true,
     usage: '`debug`',
-    execute: async function (message, args) {
+    execute: async function (message, args, guildConfig) {
         if (message.author.id == 272084627794034688)
             message.channel.send(new Discord.MessageEmbed()
                 .addField(`author`, `${message.author.tag}/${message.author.id}`)

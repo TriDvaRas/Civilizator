@@ -1,4 +1,4 @@
-
+/*global process*/
 const appRoot = require('app-root-path');
 const winston = require('winston');
 const chalk = require(`chalk`)
@@ -97,7 +97,7 @@ function color(text) {
 }
 function formatLog(log) {
     let msg = `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`
-    if ([`error`, `warn`, `dapi`].includes(log.level) && globalThis.discordClient) {
+    if ([`error`, `warn`, `dapi`].includes(log.level) && globalThis.discordClient && !process.argv.includes(`test`)) {
         if (global.logGuild)
             if (log.level == `dapi`)
                 global.logGuild.channels.cache.find(channel => channel.name == `api-errors`).send(msg);

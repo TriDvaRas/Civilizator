@@ -1,32 +1,19 @@
 //imports
-var Perm = require('../functions/Permissions.js');
-const GC = require(`../functions/guildConfig.js`);
+const db = require(`../functions/db`)
+const Perm = require('../functions/Permissions.js');
 module.exports = {
     name: 'lockchannel',
     description:
         `Change channel lock to this channel  (Admin)
 *Civilization commands only work in locked channel*`,
     usage: `\`lockchannel\``,
-    execute: async function (message, args) {
-        Perm.checkRoles(message.member, null, { admin: true })
-            .then(() => {
-
-                GC.getConfig(message.guild).then(config => {
-                    config.channelId = message.channel.id;
-                    GC.setConfig(message.guild, config);
-                    message.channel.send(`Bound bot to ${message.channel} ✅`)
-                        .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
-
-                })
-
-            },
-                () => {
-                    message.channel.send("Server admin command")
-                        .catch(err => { throw new Error(`send [${message.guild.name}] [${message.channel.name}] [${message.author.tag}] \n${err}`) })
-                    return;
-
-                }
-            );
-
+    execute: function execute(message, args, guildConfig) {
+        if (Perm.checkRoles(guildConfig, message.member, null, { admin: true })) {
+            db.updateGuildConfig(message.guild, guildConfig, { channelId: message.channel.id })
+            message.channel.send(`Bound bot to ${message.channel} ✅`)
+        }
+        else {
+            message.channel.send("Server admin command")
+        }
     },
 }
