@@ -16,9 +16,11 @@
     "nodemon": "^2.0.4",
     "winston": "^3.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.22.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js test"
   },
   "repository": {
     "type": "git",
