@@ -847,27 +847,12 @@ function getLastGameTime(guildId) {
     })
 }
 
-function setLastGameTime(guildId) {
-    return new Promise((resolve, reject) => {
-        let q = `UPDATE guilds SET last_fast='${Date().now().toISOString().slice(0, 19).replace('T', ' ')}' WHERE guild_id='${guildId}'`
-        connection.query(q, (err, res) => {
-            if (err) {
-                logger.log('error', `Failed  setLastGameTime\n${err}`)
-                reject(new Error(`Failed  setLastGameTime\n${err}`))
-            }
-            else {
-                logger.log('db', `succ  setLastGameTime`)
-                resolve()
-            }
-        })
-    })
-}
 
 //----
 
 function getGuildConfig(guildId) {
     return new Promise((resolve, reject) => {
-        let q = `SELECT prefix, last_fast AS lastFast, allow_getrole AS allowGetrole, role_id AS roleId, channel_id AS channelId, locales
+        let q = `SELECT prefix, last_fast AS lastFast, allow_getrole AS allowGetrole, role_id AS roleId, channel_id AS channelId, locales, configured
         FROM guilds WHERE id='${guildId}' `
         connection.query(q, (err, res) => {
             if (err) {
@@ -885,7 +870,7 @@ function getGuildConfig(guildId) {
 function updateGuildConfig(guildId, oldConfig, options) {
     let keys = []
     if ('allowGetrole' in options) {
-        keys.push(`allow_getrole='${options[`allowGetrole`].replace(/'/gmu, `\\'`)}'`)
+        keys.push(`allow_getrole=${options[`allowGetrole`] ? `TRUE` : `FALSE`}`)
     }
     if ('roleId' in options) {
         keys.push(`role_id='${options[`roleId`].replace(/'/gmu, `\\'`)}'`)
@@ -902,8 +887,18 @@ function updateGuildConfig(guildId, oldConfig, options) {
     if ('prefix' in options) {
         keys.push(`prefix='${options[`prefix`].replace(/'/gmu, `\\'`)}'`)
     }
+    if ('kicked' in options) {
+        keys.push(`kicked=${options[`kicked`] ? `TRUE` : `FALSE`}`)
+    }
+    if ('configured' in options) {
+        keys.push(`configured=${options[`configured`] ? `TRUE` : `FALSE`}`)
+    }
 
     return new Promise((resolve, reject) => {
+        if (keys.length == 0) {
+            reject(new Error(`No updateGuildConfig options given`))
+            return
+        }
         let q = `UPDATE guilds SET ${keys.join(`,`)}
         WHERE id='${guildId}' `
         connection.query(q, (err, res) => {
@@ -919,9 +914,47 @@ function updateGuildConfig(guildId, oldConfig, options) {
     })
 }
 
-function createGuildConfig(guildId, guildName, roleId, channelId) {
+function createGuildConfig(guild) {
     return new Promise((resolve, reject) => {
-        //TODO
+        let q = `INSERT guilds(
+                id,
+                name,
+                joined_at,
+                configured,
+                prefix,
+                role_id,
+                channel_id,
+                allow_getrole,
+                game_count,
+                fast_count,
+                last_fast,
+                locales,
+                kicked
+            ) VALUES (
+                '${guild.id}',
+                '${guild.name}',
+                '${new Date().toISOString().slice(0, 19).replace('T', ' ')}',
+                FALSE,
+                '!',
+                NULL,
+                NULL,
+                TRUE,
+                0,
+                0,
+                '${new Date(1000).toISOString().slice(0, 19).replace('T', ' ')}',
+                'en',
+                FALSE
+        )`
+        connection.query(q, (err, res) => {
+            if (err) {
+                logger.log('error', `Failed  createGuildConfig\n${err}`)
+                reject(new Error(`Failed  createGuildConfig\n${err}`))
+            }
+            else {
+                logger.log('db', `succ  createGuildConfig`)
+                getGuildConfig(guild.id).then(resolve)
+            }
+        })
     })
 }
 
@@ -936,5 +969,5 @@ module.exports = {
     getState,
     updateGuildConfig,
     getStateByGuild,
-    setLastGameTime,
+    createGuildConfig,
 }

@@ -1,103 +1,63 @@
+/* eslint-disable prefer-promise-reject-errors */
+/* global discordClient*/
 
-const welcome = require(`../assets/welcome`);
-const db = require(`./db`);
-
-function createBaseChannel(guild, role, options) {
-    return new Promise(function (resolve, reject) {
-        getConfig(guild).then(config => {
-            let oldCh = guild.channels.cache.find(channel => channel.id === config.channelId);
-            if (oldCh && !options.ignoreOld) {
+function createChannel(guild, config, role, firstTime) {
+    return new Promise((resolve, reject) => {
+        if (!firstTime) {
+            let oldCh = guild.channels.cache.get(config.channelId)
+            if (oldCh) {
                 reject(`Channel already exists (${oldCh})`);
                 return;
             }
-
-            if (!role)
-                role = guild.roles.cache.find(role => role.id === config.roleId);
-            guild.channels.create("Civilizator", {
-                type: 'text',
-                permissionOverwrites: [
-                    {
-                        id: guild.roles.everyone.id,
-                        deny: ['VIEW_CHANNEL'],
-                    },
-                    {
-                        id: role.id,
-                        allow: ['VIEW_CHANNEL'],
-                    },
-                    {
-                        id: guild.members.cache.find(member => member.user.id == 719933714423087135).user,
-                        allow: ['VIEW_CHANNEL'],
-                    },
-                ]
-            }).then(channel => {
-                if (!options.message) {
-                    channel.send(welcome).then(msg => {
-                        msg.pin()
-                            .catch(err => { throw new Error(`pin [${channel.guild.name}] [${channel.name}] \n${err}`) })
-                    })
-                        .catch(err => { throw new Error(`send [${channel.guild.name}] [${channel.name}] \n${err}`) })
-                    channel.send(`Created role \`${role.name}\` and bound bot role to it ✅`)
-                        .catch(err => { throw new Error(`send [${channel.guild.name}] [${channel.name}] \n${err}`) })
-                }
-                channel.send(`Bound bot channel to ${channel} ✅`)
-                    .catch(err => { throw new Error(`send [${channel.guild.name}] [${channel.name}] \n${err}`) })
-                setConfig(guild, { channelId: channel.id });
-                resolve(channel);
-            })
-                .catch(err => { throw new Error(`createChannel [${guild.name}] \n${err}`) })
-
-        },
-            err => reject(err)
-        );
-
-
+        }
+        if (!role)
+            role = guild.roles.cache.get(config.roleId);
+        guild.channels.create("Civilizator", {
+            type: 'text',
+            permissionOverwrites: [
+                {
+                    id: guild.roles.everyone.id,
+                    deny: ['VIEW_CHANNEL'],
+                },
+                {
+                    id: role.id,
+                    allow: ['VIEW_CHANNEL'],
+                },
+                {
+                    id: guild.members.cache.get(discordClient.user.id).user,
+                    allow: ['VIEW_CHANNEL'],
+                },
+            ]
+        }).then(channel => {
+            resolve(channel);
+        })
     });
 }
 
-function createBaseRole(guild, ignoreOld) {
-    return new Promise((resolve, reject) => {
-        getConfig(guild).then(
-            config => {
-                let oldRole = guild.roles.cache.find(role => role.id === config.roleId);
-                if (oldRole && !ignoreOld) {
-                    return reject(`Role already exists (\`${oldRole.name}\`)`);
-                }
-                guild.roles.create({
-                    data: {
-                        name: "Civilized",
-                        mentionable: true,
-                        color: [64, 255, Math.floor(90 + (Math.random() * 40))]
-                    }
-                }).then(role => {
-                    guild.members.cache.find(member => member.user.id == globalThis.discordClient.user.id).roles.add(role).catch(err => { throw new Error(`addSelfRole [${guild.name}] \n${err}`) });
-                    setConfig(guild, { roleId: role.id });
-                    resolve(role);
-                });
 
-            },
-            err => reject(err)
-        ).catch(err => { throw new Error(`createRole [${guild.name}] \n${err}`) })
-    });
-}
-function createBase(guild) {
+function createRole(guild, config, firstTime) {
     return new Promise((resolve, reject) => {
-        createBaseRole(guild, true).then(
-            role => {
-                createBaseChannel(guild, role, { ignoreOld: true }).then(
-                    channel => {
-                        setConfig(guild, { roleId: role.id, channelId: channel.id })
-                        resolve()
-                    },
-                    err => reject(err)
-                );
-            },
-            err => reject(err)
-        );
-    })
+        if (!firstTime) {
+            let oldRole = guild.roles.cache.get(config.roleId);
+            if (oldRole) {
+                reject(`Role already exists (\`${oldRole.name}(${oldRole.id})\`)`);
+                return
+            }
+        }
+        guild.roles.create({
+            data: {
+                name: "Civilized",
+                mentionable: true,
+                color: [64, 255, Math.floor(90 + (Math.random() * 40))]
+            }
+        }).then(role => {
+            guild.members.cache.get(discordClient.user.id).roles.add(role)
+            resolve(role);
+        })
+    });
 }
 
 module.exports = {
-    createBase,
-    createBaseChannel,
-    createBaseRole
+    createChannel,
+    createRole
 }

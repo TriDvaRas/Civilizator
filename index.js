@@ -46,7 +46,6 @@ discordClient
     .on('ready', () => {
         logger.log('dapi', 'Bot logged in');
         globalThis.logGuild = globalThis.discordClient.guilds.cache.get(`727081958823165963`);
-
         //TODO
         // RT.updateLocalStats();
 
