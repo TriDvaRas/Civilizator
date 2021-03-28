@@ -77,7 +77,7 @@ function createChannel(command, message, args, guildConfig) {
                 channel.send(`Bound bot to ${channel} ✅`)
             },
             err => {
-                message.channel.send(`Failed creating channel ${err.message}`)
+                message.channel.send(`Failed creating channel: \`${err.message}\``)
             }
         );
 }
@@ -103,7 +103,7 @@ function createRole(command, message, args, guildConfig) {
                 message.channel.send(`Bound bot to ${role} ✅`)
             },
             err => {
-                message.channel.send(`Failed creating channel ${err.message}`)
+                message.channel.send(`Failed creating role: \`${err.message}\``)
             }
         );
 }

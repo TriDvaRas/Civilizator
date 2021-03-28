@@ -12,7 +12,7 @@ module.exports = {
                 })
             return;
         }
-        if (message.member.roles.cache.some(role => role.id === guildConfig.roleId)) {
+        if (message.member.roles.cache.has(guildConfig.roleId)) {
             message.reply(`you already have civilized role`)
                 .then(botMsg => {
                     message.delete({ timeout: 10000 })
@@ -20,7 +20,7 @@ module.exports = {
                 })
         }
         else {
-            let role = message.guild.roles.cache.find(role => role.id === guildConfig.roleId);
+            let role = message.guild.roles.cache.get(guildConfig.roleId);
             message.member.roles.add(role);
             message.channel.send(`Set \`${role.name}\` role to ${message.author}`)
         }

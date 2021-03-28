@@ -6,7 +6,7 @@ const mergeImg = require('merge-img');
 const rand = require(`../functions/randomizer`)
 module.exports = {
     name: 'fast',
-    description: 'Fast game (original CivRandomizer) (has 1m cooldown)',
+    description: 'Fast game (original CivRandomizer)',
     usage: '`fast [game] <Players(1-16)> <CivPerPlayer(1-6)> [-/+] [DLCs to enable/disable]`\n [game] is optional argument to choose the game you play\n Available games: civ5(default), lek, civ6',
     example: `\`fast 4 3\` - civ5, 4 players 3 civs each, all DLCs enabled
 \`fast 4 3 - bnw mon\` - civ5, 4 players 3 civs each, all DLCs except BNW and Mongolia enabled
