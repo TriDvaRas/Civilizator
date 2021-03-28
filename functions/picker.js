@@ -1,6 +1,4 @@
 /* global logger chalk activeGames */
-const GC = require(`./guildConfig.js`);
-const Embeder = require(`./embeder.js`);
 const db = require(`./db`);
 
 module.exports = {
@@ -9,7 +7,7 @@ module.exports = {
 
 function addPicker(msg, player) {
     //add reactions
-    numReact(msg, player);
+    numReact(msg, player, 0);
     const collector = msg.createReactionCollector((reaction, user) => [`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`].slice(0, player.civs.length).includes(reaction.emoji.name) && !user.bot);
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created pick collector ${player.slot}`);
     collector.on('collect', (reaction, user) => {
@@ -20,14 +18,6 @@ function addPicker(msg, player) {
         if (reason == `game flushed`) {
             msg.reactions.removeAll();
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] cleared reactions of pick collector ${player.slot}`);
-
-            db.getState(activeGames.findKey(x => x.guildId == msg.guild.id)).then(
-                state => {
-                    //TODO do i really need this?
-                    //state.setFlushed()
-                },
-                error => logger.log(`error`, `${error}`)
-            )
         }
     });
 
@@ -37,37 +27,29 @@ function onPickerCollect(msg, playerSlot, reaction, user) {
     if (msg.deleted)
         return;
     reaction.users.remove(user)
-    if (!msg.mentions.users.has(user.id)) {
+    if (!msg.mentions.users.has(user.id))
         return;
-    }
-    db.getState(activeGames.findKey(x => x.guildId == msg.guild.id)).then(
+    db.getState(activeGames.findKey(x => x.guild.id == msg.guild.id)).then(
         state => {
             let player = state.players.find(P => P.slot == playerSlot)
-            let expectedPicks = player.civs.map(civ => civ.Name).join(`/`);
-            if (msg.content.split(`\n`)[1] != expectedPicks) {
+            let expectedPicks = player.civs.map(x => state.civList.find(y => y.id == x).name).join(`/`);
+            if (msg.content.split(`\n`)[1] != expectedPicks)
                 return;
-            }
             let pick = player.civs[[`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`].indexOf(reaction.emoji.name)];
-            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] pick ${pick.Name}`);
+            logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] pick ${pick}`);
             state.setPlayerPick(pick, player)
-
-            state.embed.updateField("Pick", `${state.Players.map(user => user.pick.Name).join('\n')}\u200B`)
-            state.embedmsg.edit(state.embed);
+            state.embed.updateField("Pick", `${state.players.map(p => p.pick ? state.civList.find(y => y.id == p.pick).name : `-`).join('\n')}\u200B`)
+            state.embedMsg.edit(state.embed);
         },
         error => logger.log(`error`, `${error}`)
     )
 }
 
-function numReact(msg, player) {
-    try {
-        for (let i = 0; i < player.civs.length; i++)
-            if (!msg.deleted)
-                msg.react([`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][i]).then(() => { }, error => {
-                    logger.log(`error`, ` Error on numReact ${msg} ${i} ${player.civs.length} \n${error.stack}`);
-
-                })
-    } catch (error) {
-        logger.log(`error`, ` Error on numReact ${msg} ${i} ${player.civs.length} \n${error.stack}`);
-    }
-
+function numReact(msg, player, i) {
+    if (!msg.deleted && i < player.civs.length)
+        msg.react([`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][i]).then(
+            () => {
+                numReact(msg, player, i + 1)
+            },
+            () => { })
 }

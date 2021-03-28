@@ -1,4 +1,4 @@
-/* global logger */
+/* global logger activeGames*/
 const Picker = require(`./picker`);
 const mergeImg = require('merge-img');
 const rand = require(`./randomizer`)
@@ -26,17 +26,12 @@ function StartPicks(state) {
     let pickField = state.embed.fields.find(field => field.name == "Pick")
     if (!pickField)
         pickField = state.embed.addFields(
-            { name: 'Pick', value: '\u200B', inline: true }
+            { name: 'Pick', value: `${state.players.map(user => user.pick ? state.civList.find(x => x.id == user.pick).name : '-').join('\n')}\u200B`, inline: true }
         );
     let reVotesField = rerollCleanup(state)//todo here
 
     reVotesField.value = `[${state.players.filter(p => p.reVote).length}/${state.reVotesFull}]\n${state.players.filter(p => p.reVote).map(p => `<@${p.id}>`).join('\n')}\u200B`
-    pickField.value = `${state.players.map(user => {
-        let civ = state.civList.find(x => x.id == user.pick)
-        if (civ)
-            return civ.name
-        return '-'
-    }).join('\n')}\u200B`
+    pickField.value = `${state.players.map(user => user.pick ? state.civList.find(x => x.id == user.pick).name : '-').join('\n')}\u200B`
     state.embedMsg.edit(state.embed)
 
     generatePicks(state);
@@ -52,8 +47,15 @@ function rerollCleanup(state) {
     let reVotesField = state.embed.fields.find(field => field.name == "Reroll Votes")
     if (reVotesField) {
         //TODO REMOVE OLD PICK MSGS
-        //GC.setPickMsgs(channel.guild, []);
+        for (const id of state.pickMsgs.slice()) {
+            let msg = state.embedMsg.channel.messages.cache.get(id)
+            state.pickMsgs = state.pickMsgs.filter(x => x != id)
+            if (msg) {
+                msg.delete({ reason: `reroll` })
+            }
+        }
         state.addReroll()
+        state.resetPickedCivs()
         state.resetAllPlayerReVotes()
         state.embed.updateField("Rerolls", state.rerolls)
     }
@@ -83,7 +85,7 @@ function sendPicks(state) {
             image => {
                 image.write(`./assets/Imgs/Players/${state.guildId}-${player.slot}.png`,
                     () => {
-                        state.embedMsg.channel.send(civs.map(x => x.name).join(`/`), {
+                        state.embedMsg.channel.send(`<@${player.id}>\n${civs.map(x => x.name).join(`/`)}`, {
                             files: [`./assets/Imgs/Players/${state.guildId}-${player.slot}.png`]
                         }).then(msg => {
                             state.addPickMsg(msg)
@@ -93,25 +95,10 @@ function sendPicks(state) {
             },
             err => {
                 logger.log(`error`, `mergeImg error\n${err}`)
-                state.embedMsg.channel.send(`${civs.map(x => x.name).join(`/`)} [failed to add imgs]`).then(msg => {
+                state.embedMsg.channel.send(`<@${player.id}>\n${civs.map(x => x.name).join(`/`)}\n [failed to add imgs]`).then(msg => {
                     state.addPickMsg(msg)
                     Picker.add(msg, player, state);
                 })
             })
     }
-}
-
-//TODO may be needed
-function removeOld(mess, max) {
-    try {
-        if (mess.reactions.cache.some(x => x.emoji.name == [`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`][max - 1]))
-            mess.delete().catch(err => { throw new Error(`delete [${mess.guild.name}] [${mess.channel.name}] \n${err}`) })
-        else {
-            setTimeout(() => removeOld(mess, max), 525);
-        }
-    }
-    catch (error) {
-        logger.log(`error`, `Error in removeOld ${error.stack}`)
-    }
-
 }

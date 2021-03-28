@@ -15,10 +15,5 @@ module.exports = {
         if (state.disabledCivs.find(x => x == C.id))
             return true;
         return false;
-    },
-    //remove civ from pool
-    opBan(C, state) {
-        state.civs.splice(state.civs.findIndex(x => x == C.id), 1);
-        state.banned.push(C.id);
     }
 }

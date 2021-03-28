@@ -400,8 +400,8 @@ class State {
     }
 
     resetPickedCivs() {
-        while (this.picked.length > 0)
-            this.civs.push(this.picked.shift())
+        this.civs = [...this.civs, ...this.picked]
+        this.picked = []
         for (const player of this.players) {
             player.civs = []
             player.pick = null
@@ -412,7 +412,7 @@ class State {
                     let q = `UPDATE game_states SET 
                     civs='${JSON.stringify(this.civs)}',
                     picked='[]'
-                    WHERE id=${this.gameId}`
+                    WHERE game_id=${this.gameId}`
                     connection.query(q, (err, res) => {
                         if (err) {
                             logger.log('error', `Failed  resetPickedCivs1 id=${this.gameId}\n${err}`)

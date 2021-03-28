@@ -105,7 +105,7 @@ function sendPicks(picks, channel) {
             },
             err => {
                 logger.log(`error`, `mergeImg error\n${err}`)
-                channel.send(`${civs.map(x => x.name).join(`/`)} [failed to add imgs]`)
+                channel.send(`${civs.map(x => x.name).join(`/`)}\n [failed to add imgs]`)
             })
     }
 }
