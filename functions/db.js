@@ -879,7 +879,7 @@ function updateGuildConfig(guildId, oldConfig, options) {
         keys.push(`channel_id='${options[`channelId`].replace(/'/gmu, `\\'`)}'`)
     }
     if ('locale' in options) {
-        keys.push(`locale='${options[`locale`].replace(/'/gmu, `\\'`)}'`)
+        keys.push(`locales='${options[`locale`].replace(/'/gmu, `\\'`)}'`)
     }
     if ('name' in options) {
         keys.push(`name='${options[`name`].replace(/'/gmu, `\\'`)}'`)
@@ -893,7 +893,9 @@ function updateGuildConfig(guildId, oldConfig, options) {
     if ('configured' in options) {
         keys.push(`configured=${options[`configured`] ? `TRUE` : `FALSE`}`)
     }
-
+    if ('news' in options) {
+        keys.push(`news=${options[`news`] ? `TRUE` : `FALSE`}`)
+    }
     return new Promise((resolve, reject) => {
         if (keys.length == 0) {
             reject(new Error(`No updateGuildConfig options given`))

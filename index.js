@@ -4,6 +4,7 @@ globalThis.gameMaxTime = 3 * 3600000;
 globalThis.gameMaxIdle = 3600000;
 globalThis.finalDelay = 1000;
 globalThis.fastCD = 30000;
+globalThis.localeCodes = [`en`, `it`, `ru`]
 globalThis.gameNames = [`Civ5`, `LEK`, `Civ6`]
 globalThis.gameLogos = {
     "Civ5": 'https://tdr.s-ul.eu/HFuCvc8b',

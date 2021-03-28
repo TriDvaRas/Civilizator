@@ -1,4 +1,3 @@
-/* eslint-disable prefer-promise-reject-errors */
 /* global discordClient*/
 
 function createChannel(guild, config, role, firstTime) {
@@ -6,7 +5,7 @@ function createChannel(guild, config, role, firstTime) {
         if (!firstTime) {
             let oldCh = guild.channels.cache.get(config.channelId)
             if (oldCh) {
-                reject(`Channel already exists (${oldCh})`);
+                reject(new Error(`Channel already exists (${oldCh})`));
                 return;
             }
         }
@@ -30,7 +29,7 @@ function createChannel(guild, config, role, firstTime) {
             ]
         }).then(channel => {
             resolve(channel);
-        })
+        }).catch(err => reject(err))
     });
 }
 
@@ -40,7 +39,7 @@ function createRole(guild, config, firstTime) {
         if (!firstTime) {
             let oldRole = guild.roles.cache.get(config.roleId);
             if (oldRole) {
-                reject(`Role already exists (\`${oldRole.name}(${oldRole.id})\`)`);
+                reject(new Error(`Role already exists (\`${oldRole.name}(${oldRole.id})\`)`));
                 return
             }
         }
@@ -53,7 +52,7 @@ function createRole(guild, config, firstTime) {
         }).then(role => {
             guild.members.cache.get(discordClient.user.id).roles.add(role)
             resolve(role);
-        })
+        }).catch(err => reject(err))
     });
 }
 
