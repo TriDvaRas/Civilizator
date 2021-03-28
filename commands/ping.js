@@ -3,8 +3,9 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
     name: 'ping',
     description: 'Ping!',
+    allowDM: true,
     usage: '`ping`',
-    execute: function execute(message, args, guildConfig) {
+    execute: function execute(message, args, guildConfig, isDM) {
         let ping = Date.now() - message.createdTimestamp
         let color = `GREEN`
         if (ping > 300) color = `RED`

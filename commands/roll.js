@@ -3,12 +3,13 @@ const rand = require(`../functions/randomizer`)
 module.exports = {
     name: 'roll',
     description: 'Roll!',
+    allowDM: true,
     usage:
         `\`roll\` - random number in range 1-100  
 \`roll <N>\` - random number in range 1-N
 \`roll <M>-<N>\` - random number in range M-N
 \`roll <M>d<N>\` - M random numbers in range 1-N `,
-    execute: function execute(message, args, guildConfig) {
+    execute: function execute(message, args, guildConfig, isDM) {
         let n = 1
         let min = 1
         let max = 100

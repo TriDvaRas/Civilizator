@@ -567,10 +567,10 @@ function newGame(guild, author, gameMessage, options) {
             })
 
             checkIfNewPlayer(author.id, author.tag)
-                .then(() => createGame(id, guild, author, options))
-                .then(() => createGameState(id, gameMessage, options))
-                .then(() => getState(id))
-                .then(resolve)
+                .then(() => createGame(id, guild, author, options), reject)
+                .then(() => createGameState(id, gameMessage, options), reject)
+                .then(() => getState(id), reject)
+                .then(resolve, reject)
         })
     });
 }
@@ -852,7 +852,7 @@ function getLastGameTime(guildId) {
 
 function getGuildConfig(guildId) {
     return new Promise((resolve, reject) => {
-        let q = `SELECT prefix, last_fast AS lastFast, allow_getrole AS allowGetrole, role_id AS roleId, channel_id AS channelId, locales, configured
+        let q = `SELECT prefix, last_fast AS lastFast, allow_getrole AS allowGetrole, role_id AS roleId, channel_id AS channelId, locales, configured, news, game_count as gameCount, fast_count as fastCount
         FROM guilds WHERE id='${guildId}' `
         connection.query(q, (err, res) => {
             if (err) {
@@ -960,7 +960,55 @@ function createGuildConfig(guild) {
     })
 }
 
-
+function getPressences() {
+    return new Promise((resolve, reject) => {
+        let q = `SELECT * FROM pressences`
+        connection.query(q, (err, res) => {
+            if (err) {
+                logger.log('error', `Failed  getPressences\n${err}`)
+                reject(new Error(`Failed  getPressences\n${err}`))
+            }
+            else {
+                logger.log('db', `succ  getPressences`)
+                resolve(res)
+            }
+        })
+    })
+}
+function getStats() {
+    return new Promise((resolve, reject) => {
+        let q = `SELECT (SELECT COUNT(*) FROM players) AS 'players',
+        (SELECT COUNT(*) FROM games) AS 'games',
+        (SELECT COUNT(*) FROM guilds) AS 'guilds',
+        (SELECT SUM(fast_count) FROM guilds) AS 'fasts'`
+        connection.query(q, (err, res) => {
+            if (err) {
+                logger.log('error', `Failed  getStats\n${err}`)
+                reject(new Error(`Failed  getStats\n${err}`))
+            }
+            else {
+                logger.log('db', `succ  getStats`)
+                resolve(res)
+            }
+        })
+    })
+}
+function updateDaily() {
+    return new Promise((resolve, reject) => {
+        let q = `INSERT stats(date,guilds,games,fasts,players) VALUES (
+            CURDATE(), (SELECT COUNT(*) FROM guilds WHERE kicked=FALSE), (SELECT COUNT(*) FROM games), (SELECT SUM(fast_count) FROM guilds), (SELECT COUNT(*) FROM players))`
+        connection.query(q, (err, res) => {
+            if (err) {
+                logger.log('error', `Failed  updateDaily\n${err}`)
+                reject(new Error(`Failed  updateDaily\n${err}`))
+            }
+            else {
+                logger.log('db', `succ  updateDaily`)
+                resolve()
+            }
+        })
+    })
+}
 module.exports = {
     civLists,
     getGamesCount,
@@ -972,4 +1020,7 @@ module.exports = {
     updateGuildConfig,
     getStateByGuild,
     createGuildConfig,
+    getPressences,
+    getStats,
+    updateDaily,
 }

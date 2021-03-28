@@ -28,8 +28,7 @@ function StartPicks(state) {
         pickField = state.embed.addFields(
             { name: 'Pick', value: `${state.players.map(user => user.pick ? state.civList.find(x => x.id == user.pick).name : '-').join('\n')}\u200B`, inline: true }
         );
-    let reVotesField = rerollCleanup(state)//todo here
-
+    let reVotesField = rerollCleanup(state)
     reVotesField.value = `[${state.players.filter(p => p.reVote).length}/${state.reVotesFull}]\n${state.players.filter(p => p.reVote).map(p => `<@${p.id}>`).join('\n')}\u200B`
     pickField.value = `${state.players.map(user => user.pick ? state.civList.find(x => x.id == user.pick).name : '-').join('\n')}\u200B`
     state.embedMsg.edit(state.embed)
@@ -46,7 +45,6 @@ module.exports = {
 function rerollCleanup(state) {
     let reVotesField = state.embed.fields.find(field => field.name == "Reroll Votes")
     if (reVotesField) {
-        //TODO REMOVE OLD PICK MSGS
         for (const id of state.pickMsgs.slice()) {
             let msg = state.embedMsg.channel.messages.cache.get(id)
             state.pickMsgs = state.pickMsgs.filter(x => x != id)

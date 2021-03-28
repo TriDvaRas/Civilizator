@@ -7,7 +7,7 @@ module.exports = {
     description: 'Info about Civilizator',
     allowDM: true,
     usage: '`info`',
-    execute: function execute(message, args, guildConfig) {
+    execute: function execute(message, args, guildConfig, isDM) {
         let emb = new Discord.MessageEmbed()
             .setColor('#46a832')
             .setTitle("**Civilizator Info**")
