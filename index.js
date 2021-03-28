@@ -48,58 +48,42 @@ discordClient
         logger.log('dapi', 'Bot logged in');
         globalThis.logGuild = globalThis.discordClient.guilds.cache.get(`727081958823165963`);
         //TODO
-        // RT.updateLocalStats();
 
-        // // save daily server stats 
-        // cron.schedule('59 23 * * *', () => {
-        //     RT.updateMinCivilized().then(RT.updateSheetStats)
-        // })
-        // // sync local stats with db
-        // cron.schedule('* * * * *', () => {
-        //     RT.updateLocalStats()
-        // })
-        // // update pressence 
-        // cron.schedule('*/10 * * * * *', () => {
-        //     RT.updatePressence()
-        // })
-        // // update actual civilized count
-        // setTimeout(RT.updateMinCivilized, 10000)
-        // cron.schedule('0 */6 * * *', () => {
-        //     RT.updateMinCivilized()
-        // })
-        // // flush ended games 
-        // cron.schedule('*/30 * * * *', () => {
-        //     RT.flushGames()
-        // })
-        // // save new games
-        // cron.schedule('0 */2 * * *', () => {
-        //     logger.log(`info`, `Syncing new games...`)
-        //     RT.updateSheetGames()
-        // })
+        // save daily server stats 
+        cron.schedule('59 23 * * *', () => {
+            RT.updateDaily()
+        })
+        // update pressence 
+        cron.schedule('*/10 * * * * *', () => {
+            RT.updatePressence()
+        })
+        // flush ended games 
+        cron.schedule('*/30 * * * *', () => {
+            RT.flushGames()
+        })
     })
     .on('message', handleMessage)
     .on('warn', error => logger.log('warn', `[*]\n${error.stack}`))
     .on('debug', error => { if (error.includes(`Session Limit Information`)) logger.log('dapi', `Logins remaining ${error.slice(-3)}`) })
     .on('error', error => {
         if (`${error.stack}`.includes(`DiscordAPIError`))
-            logger.log('dapi', `[*]\n${error.stack}`)
+            logger.log('dapi', `[*]\n${error.stack ? error.stack : error}`)
         else
-            logger.log('error', `[*]\n${error.stack}`)
+            logger.log('error', `[*]\n${error.stack ? error.stack : error}`)
     })
 // setup process events
 process
     .on('uncaughtException', error => {
         if (`${error.stack}`.includes(`DiscordAPIError`))
-            logger.log('dapi', `[*]\n${error.stack}`)
+            logger.log('dapi', `[*]\n${error.stack ? error.stack : error}`)
         else
-            logger.log('error', `[*]\n${error.stack}`)
+            logger.log('error', `[*]\n${error.stack ? error.stack : error}`)
     })
     .on('unhandledRejection', error => {
-        // if (`${error.stack}`.includes(`DiscordAPIError`))
-        //     logger.log('dapi', `[*]\n${error.stack}`)
-        // else
-        //     logger.log('error', `[*]\n${error.stack}`)
-        logger.log('error', `[**]\n${error.stack ? error.stack : error}`)
+        if (`${error?.stack}`.includes(`DiscordAPIError`))
+            logger.log('dapi', `[**]\n${error.stack ? error.stack : error}`)
+        else
+            logger.log('error', `[**]\n${error.stack ? error.stack : error}`)
     })
     .on('SIGHUP', () => {
         logger.log('info', 'Shutting down...')
