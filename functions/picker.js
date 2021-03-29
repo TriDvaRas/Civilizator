@@ -5,11 +5,12 @@ module.exports = {
     add: addPicker
 }
 
-function addPicker(msg, player) {
+function addPicker(msg, player, state) {
     //add reactions
     numReact(msg, player, 0);
     const collector = msg.createReactionCollector((reaction, user) => [`1️⃣`, `2️⃣`, `3️⃣`, `4️⃣`, `5️⃣`, `6️⃣`].slice(0, player.civs.length).includes(reaction.emoji.name) && !user.bot);
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] created pick collector ${player.slot}`);
+    activeGames.get(state.gameId).collectors.push(collector)
     collector.on('collect', (reaction, user) => {
         onPickerCollect(msg, player.slot, reaction, user)
     });
@@ -19,8 +20,8 @@ function addPicker(msg, player) {
             msg.reactions.removeAll();
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] cleared reactions of pick collector ${player.slot}`);
         }
+        activeGames.get(state.gameId).collectors.splice(activeGames.get(state.gameId).collectors.indexOf(collector), 1)
     });
-
 }
 
 function onPickerCollect(msg, playerSlot, reaction, user) {

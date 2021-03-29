@@ -29,13 +29,14 @@ function updatePressence() {
 
 
 function flushGames(force) {
-    logger.log(`info`, `Flushing old games`)
+    logger.log(`debug`, `Flushing old games`)
     global.activeGames.forEach((ag, key) => {
         let check = Date.now() - ag.startedAt > global.gameMaxTime || Date.now() - ag.lastActiveAt > global.gameMaxIdle || force
         logger.log(`debug`, `Checks: ${Date.now() - ag.startedAt} > ${global.gameMaxTime} | ${Date.now() - ag.lastActiveAt} > ${global.gameMaxIdle} | ${force} | ${check}`)
         if (check) {
-            ag.collectors.forEach(coll => coll.stop(`game flushed`))
-            activeGames.delete(key)
+            for (const coll of ag.collectors.slice()) {
+                coll.stop(`game flushed`)
+            }
             db.statesCache.get(key)?.setFlushed()
             logger.log(`info`, `Flushed ${key}`)
         }

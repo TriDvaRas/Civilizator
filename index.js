@@ -1,8 +1,7 @@
 /*global  gameNames, logger, discordClient,process*/
 //global settings 
 globalThis.gameMaxTime = 3 * 3600000;
-globalThis.gameMaxIdle = 3600000;
-globalThis.finalDelay = 1000;
+globalThis.gameMaxIdle = 50000//3600000;
 globalThis.fastCD = 30000;
 globalThis.localeCodes = [`en`, `it`, `ru`]
 globalThis.gameNames = [`Civ5`, `LEK`, `Civ6`]
@@ -12,7 +11,6 @@ globalThis.gameLogos = {
     "Civ6": 'https://tdr.s-ul.eu/yNXGRctD'
 }
 globalThis.gameNamesLower = gameNames.map(x => x.toLowerCase())
-globalThis.minCivilizedCount = -1
 
 //imports
 const fs = require('fs');
@@ -47,7 +45,6 @@ discordClient
     .on('ready', () => {
         logger.log('dapi', 'Bot logged in');
         globalThis.logGuild = globalThis.discordClient.guilds.cache.get(`727081958823165963`);
-        //TODO
 
         // save daily server stats 
         cron.schedule('59 23 * * *', () => {
@@ -58,7 +55,7 @@ discordClient
             RT.updatePressence()
         })
         // flush ended games 
-        cron.schedule('*/30 * * * *', () => {
+        cron.schedule('*/30 * * * * *', () => {
             RT.flushGames()
         })
     })

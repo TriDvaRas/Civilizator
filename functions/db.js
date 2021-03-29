@@ -988,7 +988,7 @@ function getStats() {
             }
             else {
                 logger.log('db', `succ  getStats`)
-                resolve(res)
+                resolve(res[0])
             }
         })
     })
@@ -1023,4 +1023,5 @@ module.exports = {
     getPressences,
     getStats,
     updateDaily,
+    statesCache,
 }
