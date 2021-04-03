@@ -73,7 +73,7 @@ function parceArgs(message, args) {
 
     //CPP
     if (!args[0] || !parseInt(args[0])) {
-        message.channel.send(`Wrong arguments. Try \`${this.name} help\` `).then(msg => msg.delete({ timeout: 5000 }))
+        message.channel.send(`Wrong arguments. Try \`${module.exports.name} help\` `).then(msg => msg.delete({ timeout: 5000 }))
         return false
     }
     if (parseInt(args[0]) < 1)

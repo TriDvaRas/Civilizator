@@ -31,7 +31,7 @@ module.exports = {
                     updateGetrole(this, message, args, guildConfig)
                     break;
                 case `lang`:
-                    updateLang(this, message, args, guildConfig)
+                    updateLang(message, args, guildConfig)
                     break;
                 case `channel`:
                     if (args[0] == `set`)
@@ -108,7 +108,7 @@ function createRole(command, message, args, guildConfig) {
         );
 }
 
-function updateLang(command, message, args, guildConfig) {
+function updateLang(message, args, guildConfig) {
     let locs = guildConfig.locales.match(/.{2}/gu)
     let loc = args[1]?.toLowerCase()
     switch (args[0]) {
@@ -132,7 +132,7 @@ function updateLang(command, message, args, guildConfig) {
             }
             else {
                 message.delete({ timeout: 10000 })
-                message.reply(`Wrong arguments. Try \`${this.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
+                message.reply(`Wrong arguments. Try \`${module.exports.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
             }
             break;
         case `r`:
@@ -148,12 +148,12 @@ function updateLang(command, message, args, guildConfig) {
             }
             else {
                 message.delete({ timeout: 10000 })
-                message.reply(`Wrong arguments. Try \`${this.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
+                message.reply(`Wrong arguments. Try \`${module.exports.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
             }
             break;
         default:
             message.delete({ timeout: 10000 })
-            message.reply(`Wrong arguments. Try \`${command.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
+            message.reply(`Wrong arguments. Try \`${module.exports.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
             break;
     }
 
