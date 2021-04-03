@@ -1,7 +1,7 @@
 /*global  gameNames, logger, discordClient,process*/
 //global settings 
 globalThis.gameMaxTime = 3 * 3600000;
-globalThis.gameMaxIdle = 50000//3600000;
+globalThis.gameMaxIdle = 3600000;
 globalThis.fastCD = 30000;
 globalThis.localeCodes = [`en`, `it`, `ru`]
 globalThis.gameNames = [`Civ5`, `LEK`, `Civ6`]
@@ -98,6 +98,12 @@ discordClient.civcommands = new Discord.Collection();
 const civCommandFiles = fs.readdirSync('./civcommands').filter(file => file.endsWith('.js'));
 for (const file of civCommandFiles) {
     const command = require(`./civcommands/${file}`);
+    discordClient.civcommands.set(command.name, command);
+}
+//init civCommands shortcuts
+const shortcutsFiles = fs.readdirSync('./shortcuts').filter(file => file.endsWith('.js'));
+for (const file of shortcutsFiles) {
+    const command = require(`./shortcuts/${file}`);
     discordClient.civcommands.set(command.name, command);
 }
 
