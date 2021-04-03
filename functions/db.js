@@ -1009,6 +1009,22 @@ function updateDaily() {
         })
     })
 }
+
+function getAnnounceGuilds() {
+    return new Promise((resolve, reject) => {
+        let q = `SELECT id,channel_id as channel FROM guilds WHERE news=1 AND kicked=0`
+        connection.query(q, (err, res) => {
+            if (err) {
+                logger.log('error', `Failed  getAnnounceGuilds\n${err}`)
+                reject(new Error(`Failed  getAnnounceGuilds\n${err}`))
+            }
+            else {
+                logger.log('db', `succ  getAnnounceGuilds`)
+                resolve(res)
+            }
+        })
+    })
+}
 module.exports = {
     civLists,
     getGamesCount,
@@ -1024,4 +1040,5 @@ module.exports = {
     getStats,
     updateDaily,
     statesCache,
+    getAnnounceGuilds,
 }
