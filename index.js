@@ -15,12 +15,13 @@ globalThis.gameNamesLower = gameNames.map(x => x.toLowerCase())
 //imports
 const fs = require('fs');
 const Discord = require('discord.js');
-const { token } = require('./config.json');
+const { token, botOwnerId } = require('./config.json');
 const GC = require("./functions/guildConfig.js");
 const cron = require('node-cron');
 const handleMessage = require(`./functions/messageHandler`)
 const RT = require('./functions/regularTasks');
 
+global.botOwnerId = botOwnerId
 global.Collection = Discord.Collection
 //Set logger
 global.logger = require("./logger");

@@ -1,5 +1,5 @@
 
-/* global process activeGames discordClient*/
+/* global process activeGames discordClient botOwnerId*/
 const Discord = require('discord.js');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
     ignore: true,
     usage: '`debug`',
     execute: function execute(message, args, guildConfig) {
-        if (message.author.id == `272084627794034688`)
+        if (message.author.id == botOwnerId)
             message.channel.send(new Discord.MessageEmbed()
                 .addField(`author`, `${message.author}/${message.author.id}`)
                 .addField(`guild`, `${message.guild}/${message.guild.id}`)

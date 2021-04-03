@@ -1,3 +1,4 @@
+/*global botOwnerId */
 const db = require("../functions/db");
 const RT = require('../functions/regularTasks');
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
     ignore: true,
     usage: '`fcf`',
     execute: function execute(message, args, guildConfig) {
-        if (message.author.id == 272084627794034688) {
+        if (message.author.id == botOwnerId) {
             RT.flushGames(true)
             message.reply(`started fcf`)
         }

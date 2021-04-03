@@ -1,8 +1,9 @@
+/*global  botOwnerId*/
 
 module.exports = {
     //check for permissions
     checkRoles(gConfig, gMember, op, allow) {
-        if (`${gMember.user.id}` == "272084627794034688")
+        if (`${gMember.user.id}` == botOwnerId)
             return true
         else if (allow) {
             //check if admin
