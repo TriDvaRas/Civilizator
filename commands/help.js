@@ -8,7 +8,8 @@ module.exports = {
     execute: function execute(message, args, guildConfig, isDM) {
         let text = `**List of Civilizator bot Commands**\nAll commands start with prefix(default \`!\`) or bot mention(${discordClient.user})\nTo get more info about a specific command use \`<command> help\` (e.g. \`start help\`)\n\n      **Standard Commands**\n`
         text += `${discordClient.commands.filter(x => !x.ignore).map(command => `\`${command.name}\` - ${command.description}\n`).join(``)}
-      **Civilization Commands**\n${discordClient.civcommands.map(command => `\`${command.name}\` - ${command.description}\n`).join(``)}`
+      **Civilization Commands**\n${discordClient.civcommands.filter(x => !x.description.startsWith(`Short for`)).map(command => `\`${command.name}\` - ${command.description}\n`).join(``)}
+      **Shortcut Commands**\n${discordClient.civcommands.filter(x => x.description.startsWith(`Short for`)).map(command => `\`${command.name}\` - ${command.description}\n`).join(``)}`
         if (isDM)
             message.channel.send(text)
         else
