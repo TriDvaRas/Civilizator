@@ -16,6 +16,4 @@ configtest.json
 test.js
 depr
 test
-assets/announcement.json
-assets/announcementTest.json
-assets/announceResults.txt
+announce/*

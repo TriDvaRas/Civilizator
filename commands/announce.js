@@ -11,19 +11,18 @@ module.exports = {
     execute: function execute(message, args, guildConfig) {
         if (message.author.id == botOwnerId) {
             try {
-                let ann = JSON.parse(fs.readFileSync(`./assets/announcement.json`))
+                let ann = JSON.parse(fs.readFileSync(`./announce/announcement.json`))
                 let emb = new Discord.MessageEmbed()
                     .setTitle(ann.title)
                     .setColor(ann.color)
                     .setAuthor(message.author.tag, `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png `)
-                if (ann.description)
-                    emb.setDescription(ann.description)
+                if (ann.description?.length > 0) emb.setDescription(ann.description)
+                if (ann.footer?.length > 0) emb.setFooter(ann.footer)
                 for (const field of ann.fields)
                     emb.addField(field.title, field.value)
 
                 message.channel.send(emb).then(msg => {
                     msg.react(`❌`)
-                    msg.react(`👍`)
                     //set reaction filter
                     const collector = msg.createReactionCollector((reaction, user) => [`❌`, `👍`].includes(reaction.emoji.name) && user.id == botOwnerId);
                     collector.on('collect', (reaction, user) => {
@@ -43,7 +42,7 @@ module.exports = {
                                         .catch(err => { g.err = err.message })
                                 }
                                 msg.channel.send(`Sent ${guilds.filter(x => x.succ).length}/${guilds.length} messages`);
-                                fs.writeFileSync(`./assets/announceResults.txt`, guilds.map(x => x.succ ? `${x.id} Succ ${x.succ}` : `${x.id} ${x.err}`).join(`\n`))
+                                fs.writeFileSync(`./announce/announceResults(${Date.now()}).txt`, guilds.map(x => x.succ ? `${x.id} Succ ${x.succ}` : `${x.id} ${x.err}`).join(`\n`))
                             })
                         }
                     });

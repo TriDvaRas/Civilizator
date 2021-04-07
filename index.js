@@ -1,9 +1,9 @@
 /*global  gameNames, logger, discordClient,process*/
 //global settings 
-globalThis.gameMaxTime = 3 * 3600000;
+globalThis.gameMaxTime = 2 * 3600000;
 globalThis.gameMaxIdle = 3600000;
 globalThis.fastCD = 30000;
-globalThis.localeCodes = [`en`, `it`, `ru`]
+globalThis.localeCodes = [`en`, `it`]
 globalThis.gameNames = [`Civ5`, `LEK`, `Civ6`]
 globalThis.gameLogos = {
     "Civ5": 'https://tdr.s-ul.eu/HFuCvc8b',
@@ -33,7 +33,7 @@ globalThis.discordClient = new Discord.Client({
     presence: {
         activity: {
             name: "Rondo³⭕⭕⭕",
-            type: "PLAYING"
+            type: "WATCHING"
         }
     }
 });

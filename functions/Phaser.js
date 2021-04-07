@@ -15,7 +15,7 @@ function StartBans(state) {
         { name: 'Pick', value: '\u200B', inline: true },
         { name: 'Banned civs', value: '\u200B', inline: false }
     );
-    state.embed.updateField("Bans", `${state.players.map(user => `[${user.bans.length}/${state.bpp}]`).join(', ')}\u200B`)
+    state.embed.updateField("Bans", `${state.players.map(user => `[${user.bans.length}/${state.bpp}]`).join('\n')}\u200B`)
     state.embed.setColor('#de3b09')
 }
 function StartPicks(state) {

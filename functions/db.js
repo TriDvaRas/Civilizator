@@ -93,7 +93,7 @@ class State {
         this.bansFull = this.players.length * this.bpp
         this.reVotesFull = Math.ceil(this.players.length * .65)
         return new Promise((resolve, reject) => {
-            checkIfNewPlayer(user.id, user.tag)
+            checkIfNewPlayer(user)
                 .then(() => {
                     let q = `INSERT player_states(
                         game_id,
@@ -129,7 +129,7 @@ class State {
         this.bansFull = this.players.length * this.bpp
         this.reVotesFull = Math.ceil(this.players.length * .65)
         return new Promise((resolve, reject) => {
-            checkIfNewPlayer(user.id, user.tag)
+            checkIfNewPlayer(user)
                 .then(() => {
                     let q = `DELETE FROM player_states 
                     WHERE game_id=${this.gameId} AND player_id='${user.id}'`
@@ -566,18 +566,19 @@ function newGame(guild, author, gameMessage, options) {
                 collectors: []
             })
 
-            checkIfNewPlayer(author.id, author.tag)
+            checkIfNewPlayer(author)
                 .then(() => createGame(id, guild, author, options), reject)
                 .then(() => createGameState(id, gameMessage, options), reject)
                 .then(() => getState(id), reject)
                 .then(resolve, reject)
         })
+        updateGuildConfig(guild.id, null, { name: guild.name, avatar: guild.icon })
     });
 }
 
-function checkIfNewPlayer(playerId, playerTag) {
+function checkIfNewPlayer(author) {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT tag FROM players WHERE id='${playerId}'`, (err, res) => {
+        connection.query(`SELECT tag FROM players WHERE id='${author.id}'`, (err, res) => {
             if (err) {
                 logger.log('error', `Failed  SELECT player\n${err}`)
                 reject(new Error(`Failed  SELECT player\n${err}`))
@@ -586,8 +587,8 @@ function checkIfNewPlayer(playerId, playerTag) {
                 if (res.length == 0) {
                     let q = `INSERT players(id, tag, joined_at) 
                     VALUES(
-                        '${playerId}',
-                         '${playerTag.split(``).map(x => x == `'` ? `\\'` : x).join(``)}',
+                        '${author.id}',
+                         '${author.tag.replace(/'/gmu, `\\'`)}',
                           '${new Date().toISOString().slice(0, 19).replace('T', ' ')}'
                           )`
                     connection.query(q, (err, res) => {
@@ -603,8 +604,8 @@ function checkIfNewPlayer(playerId, playerTag) {
                 }
                 else {
                     resolve()
-                    if (playerTag && res) {
-                        let q = `UPDATE players SET tag='${playerTag.split(``).map(x => x == `'` ? `\\'` : x).join(``)}' WHERE id='${playerId}'`
+                    if (author.tag && res) {
+                        let q = `UPDATE players SET tag='${author.tag.replace(/'/gmu, `\\'`)}',avatar='${author.avatar.replace(/'/gmu, `\\'`)}' WHERE id='${author.id}'`
                         connection.query(q, (err, res) => {
                             if (err) {
                                 logger.log('error', `Failed  UPDATE player\n${err}`)
@@ -869,33 +870,26 @@ function getGuildConfig(guildId) {
 
 function updateGuildConfig(guildId, oldConfig, options) {
     let keys = []
-    if ('allowGetrole' in options) {
+    if ('allowGetrole' in options)
         keys.push(`allow_getrole=${options[`allowGetrole`] ? `TRUE` : `FALSE`}`)
-    }
-    if ('roleId' in options) {
-        keys.push(`role_id='${options[`roleId`].replace(/'/gmu, `\\'`)}'`)
-    }
-    if ('channelId' in options) {
-        keys.push(`channel_id='${options[`channelId`].replace(/'/gmu, `\\'`)}'`)
-    }
-    if ('locale' in options) {
-        keys.push(`locales='${options[`locale`].replace(/'/gmu, `\\'`)}'`)
-    }
-    if ('name' in options) {
-        keys.push(`name='${options[`name`].replace(/'/gmu, `\\'`)}'`)
-    }
-    if ('prefix' in options) {
-        keys.push(`prefix='${options[`prefix`].replace(/'/gmu, `\\'`)}'`)
-    }
-    if ('kicked' in options) {
+    if ('roleId' in options)
+        keys.push(`role_id='${options[`roleId`]?.replace(/'/gmu, `\\'`)}'`)
+    if ('channelId' in options)
+        keys.push(`channel_id='${options[`channelId`]?.replace(/'/gmu, `\\'`)}'`)
+    if ('locale' in options)
+        keys.push(`locales='${options[`locale`]?.replace(/'/gmu, `\\'`)}'`)
+    if ('name' in options)
+        keys.push(`name='${options[`name`]?.replace(/'/gmu, `\\'`)}'`)
+    if ('prefix' in options)
+        keys.push(`prefix='${options[`prefix`]?.replace(/'/gmu, `\\'`)}'`)
+    if ('kicked' in options)
         keys.push(`kicked=${options[`kicked`] ? `TRUE` : `FALSE`}`)
-    }
-    if ('configured' in options) {
+    if ('configured' in options)
         keys.push(`configured=${options[`configured`] ? `TRUE` : `FALSE`}`)
-    }
-    if ('news' in options) {
+    if ('news' in options)
         keys.push(`news=${options[`news`] ? `TRUE` : `FALSE`}`)
-    }
+    if ('avatar' in options)
+        keys.push(`avatar='${options[`avatar`]?.replace(/'/gmu, `\\'`)}'`)
     return new Promise((resolve, reject) => {
         if (keys.length == 0) {
             reject(new Error(`No updateGuildConfig options given`))

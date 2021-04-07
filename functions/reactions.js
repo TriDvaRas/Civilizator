@@ -188,7 +188,7 @@ function skipBan(msg, agState, state, reaction, user, collector) {
     state.addBan(user, 0)
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] ban skip [${state.players.map(x => x.bans.length).reduce((a, b) => a + b)}/${state.bansFull}]`);
     state.embed.updateField("Bans", `${state.players.map(user => `[${user.bans.length}/${state.bpp}]`).join('\n')}\u200B`)
-    state.embed.updateField("Banned civs", `${state.banned.map(id => state.civList.find(x => x.id == id).name).join('\n')}\u200B`)
+    state.embed.updateField("Banned civs", `${state.banned.map(id => state.civList.find(x => x.id == id).name).join(', ')}\u200B`)
     state.embedMsg.edit(state.embed)
     if (state.players.map(x => x.bans.length).reduce((a, b) => a + b) >= state.bansFull) {
         logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans ended`);
