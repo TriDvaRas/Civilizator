@@ -1,4 +1,4 @@
-/*global  gameNames, logger, discordClient,process*/
+/*global  gameNames, logger, discordClient,process gameMaxTime*/
 //global settings 
 globalThis.gameMaxTime = 2 * 3600000;
 globalThis.gameMaxIdle = 3600000;
@@ -35,7 +35,10 @@ globalThis.discordClient = new Discord.Client({
             name: "Rondo³⭕⭕⭕",
             type: "WATCHING"
         }
-    }
+    },
+    messageCacheLifetime: gameMaxTime / 1000,
+    messageSweepInterval: 30,
+    messageEditHistoryMaxSize: 1,
 });
 
 //active games list
