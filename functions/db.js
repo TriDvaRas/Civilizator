@@ -605,7 +605,7 @@ function checkIfNewPlayer(author) {
                 else {
                     resolve()
                     if (author.tag && res) {
-                        let q = `UPDATE players SET tag='${author.tag.replace(/'/gmu, `\\'`)}',avatar='${author.avatar.replace(/'/gmu, `\\'`)}' WHERE id='${author.id}'`
+                        let q = `UPDATE players SET tag='${author.tag.replace(/'/gmu, `\\'`)}',avatar=${author.avatar ? `'${author.avatar.replace(/'/gmu, `\\'`)}'` : `NULL`} WHERE id='${author.id}'`
                         connection.query(q, (err, res) => {
                             if (err) {
                                 logger.log('error', `Failed  UPDATE player\n${err}`)
