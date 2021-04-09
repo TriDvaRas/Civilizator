@@ -13,7 +13,7 @@ module.exports = {
             else if (allow.op && (op == `${gMember.user.id}`))
                 return true
             //check if civilized or civlizator guild
-            else if (allow.civ && (gMember.roles.cache.some(role => role.id == gConfig.roleId) || gMember.guild.id == "727081958823165963"))
+            else if (allow.civ && (gMember.roles.cache.some(role => role.id == gConfig?.roleId) || gMember.guild.id == "727081958823165963"))
                 return true
         }
         return false

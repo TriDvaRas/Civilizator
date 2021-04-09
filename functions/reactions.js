@@ -126,7 +126,7 @@ function endJoinPhase(msg, agState, state, reaction, user, collector) {
     //check perm
     db.getGuildConfig(msg.guild.id)
         .then(gConfig => {
-            if (Perm.checkRoles(gConfig, msg.guild.members.cache.get(user.id), state.opId, { admin: true, op: true })) {
+            if (Perm.checkRoles(gConfig, msg.guild.member(user), state.opId, { admin: true, op: true })) {
                 //check if players
                 if (state.players.length < 1) {
                     msg.channel.send(`Can't start game without players`)
@@ -197,7 +197,8 @@ function skipBan(msg, agState, state, reaction, user, collector) {
     }
 }
 function endBanPhase(msg, agState, state, reaction, user, collector) {
-    Perm.checkRoles(msg.guild.members.cache.get(user.id), state.opId, { admin: true, op: true })
+    db.getGuildConfig(msg.guild.id)
+        .then(gConfig => Perm.checkRoles(gConfig, msg.guild.member(user), state.opId, { admin: true, op: true }))
         .then(() => {
             logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] bans fended`);
             collector.stop("force end");
