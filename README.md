@@ -101,6 +101,8 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 
 ### Standard Commands
 
+_**Outdated!** Use `help` command for up to date info_
+
 | Command | Arguments | Description | Usage example | Permissions |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | createchannel | | Create Civilizator channel| !createchannel | Admin |
@@ -167,7 +169,7 @@ Players can vote to reroll and after 70% of players have voted, all players woul
 - **Q: Can I unban Civilization?**
     - A: No.
 - **Q: My question is not in FAQ**
-    - A: Try asking in [bot's discord server](https://discord.gg/nFMFs2e)
+    - A: Try asking in [bot's discord server](https://discord.gg/nFMFs2e). Or DM TriDvaRas#4805
 - **Q: Is there Civilization VI support?**
     - A: Yes.
 - **Q: Will covs from future game updates be added to the pool?**
