@@ -748,13 +748,13 @@ function getState(gameId) {
             reject(new Error(`Can't getState without id`))
     })
 }
-function getStateByGuild(guildId) {
+function getStateByGuild(guild) {
     return new Promise((resolve, reject) => {
         let q = `SELECT g.id, g.game_name, g.guild_id, g.cpp, g.bpp, g.rerolls, g.last_phase, g.started_at, g.op_id, g.ban_count,
                 s.embed_id, s.pick_msgs, s.civs, s.banned, s.picked, s.dlcs, s.disabled,s.disabledDLCs
                 FROM games AS g 
                 JOIN game_states AS s ON g.id=s.game_id
-                WHERE guild_id='${guildId}' ORDER BY g.id DESC LIMIT 1`
+                WHERE guild_id='${guild.id}' ORDER BY g.id DESC LIMIT 1`
         connection.query(q, (err, res) => {
             if (err) {
                 logger.log('error', `Failed  GET getStateByGuild\n${err}`)
