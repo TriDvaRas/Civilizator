@@ -1,5 +1,6 @@
 /* global activeGames, logger, chalk */
 const db = require(`../functions/db`)
+const { findBestMatch } = require("string-similarity");
 const BanF = require('../functions/BansFunctions.js');
 const { startPicks } = require(`../functions/reactions`)
 module.exports = {
@@ -24,17 +25,19 @@ module.exports = {
                         sendMultiple(message, args[i], civs, guildConfig)
                     }
                     else if (civs.length == 0) {
-                        logger.log(`cmd`, `No aliases found for \`${args[i]}\``);
-                        message.channel.send(`No aliases found for \`${args[i]}\``)
+                        let sim = findSimilar(args[i], state.civList, guildConfig.locales.match(/.{2}/gu))
+                        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] No aliases found for \`${args[i]}\`. Sim:[${sim.join(` `)}]`);
+                        message.channel.send(`No aliases found for \`${args[i]}\`${sim?.length > 0 ? `. Similar aliases: \`${sim.join('`, `')}\`` : ``}`)
                             .then(botMsg => botMsg.delete({ timeout: 7000 }))
+                        for (const str of JSON.stringify(state.civList).match(/.{1,1750}/gu))
+                            logger.log('error', str)//! REMOVE DEBUG 
                     }
                     else
                         tryBan(message, state, civs[0])
                 }
-
-
             },
             () => {
+                logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] No game found`);
                 message.channel.send("No game found. Use `start` command to create one")
                     .then(botMsg => botMsg.delete({ timeout: 5000 }))
             }
@@ -105,7 +108,18 @@ function findByAlias(input, state, guildConfig) {
 
 function sendMultiple(message, arg, civs, guildConfig) {
     let locs = guildConfig.locales.match(/.{2}/gu)
-    let txt = `Multiple aliases for \`${arg}\`:\n${civs.map(civ => `${civ.id}. ${civ.name} - ${locs.map(loc => civ.aliases[loc]).filter(x => x && x.length > 0).flat().slice(1).join(`, `)}`).join(`\n`)}`;
+    let txt = `Multiple aliases for \`${arg}\`:\n${civs.map(civ => `${civ.id}. \`${civ.name}\` - \`${locs.map(loc => civ.aliases[loc]).filter(x => x && x.length > 0).flat(3).slice(1).join(`\`, \``)}\``).join(`\n`)}`;
     message.channel.send(txt)
-        .then(botMsg => botMsg.delete({ timeout: 7000 }))
+        .then(botMsg => botMsg.delete({ timeout: 5000 + (700 * civs.length) }))
+}
+
+function findSimilar(str, civList, locales) {
+    let matches = findBestMatch(str, civList.map(x => {
+        let a = []
+        for (const loc of locales)
+            if (x.aliases[loc])
+                a.push(x.aliases[loc])
+        return a
+    }).flat(3))
+    return matches.ratings.filter(x => x.rating > 0.3).sort((a, b) => b.rating - a.rating).slice(0, 3).map(x => x.target).filter((x, i, arr) => arr.indexOf(x) == i)
 }
