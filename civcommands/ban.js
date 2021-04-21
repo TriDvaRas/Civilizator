@@ -121,5 +121,5 @@ function findSimilar(str, civList, locales) {
                 a.push(x.aliases[loc])
         return a
     }).flat(3))
-    return matches.ratings.filter(x => x.rating > 0.3).sort((a, b) => b.rating - a.rating).slice(0, 3).map(x => x.target).filter((x, i, arr) => arr.indexOf(x) == i)
+    return matches.ratings.filter(x => x.rating > 0.13).sort((a, b) => b.rating - a.rating).slice(0, 2).map(x => x.target).filter((x, i, arr) => arr.indexOf(x) == i)
 }
