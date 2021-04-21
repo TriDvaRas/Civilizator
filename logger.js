@@ -8,6 +8,18 @@ const options = {
 
     file: [
         {
+            level: 'self',
+            filename: `${appRoot}/logs/self.log`,
+            handleExceptions: true,
+            maxsize: 5242880, // 5MB
+            maxFiles: 5,
+            colorize: true,
+            format: winston.format.combine(
+                winston.format(log => log.level == 'self' ? log : false)(),
+                winston.format.printf(log => `[${new Date(Date.now()).toLocaleString()}] [${log.level.toUpperCase()}] - ${log.message}`)
+            )
+        },
+        {
             filename: `${appRoot}/logs/info.log`,
             handleExceptions: true,
             maxsize: 5242880, // 5MB
@@ -54,7 +66,7 @@ let logger = new winston.createLogger({
         dapi: 2,
         info: 3,
         cmd: 4,
-        sheet: 5,
+        self: 5,
         db: 6,
         http: 8,
         verbose: 9,

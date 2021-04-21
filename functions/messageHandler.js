@@ -5,6 +5,13 @@ const db = require(`./db`)
 //Set logger
 
 module.exports = message => {
+    try {
+        if (message.author.id == discordClient.user.id)
+            logger.log(`self`, message.cleanContent)
+    }
+    catch (err) {
+        logger.log(`self`, `ops ${err.message}, ${err.stack}`);
+    }
     if (message.author.bot)
         return;
     if (message.guild === null)
