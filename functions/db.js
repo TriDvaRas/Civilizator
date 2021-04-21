@@ -148,7 +148,7 @@ class State {
     }
 
     resetDLC() {
-        return this.updateDLC([this.dlcs, this.disabledDLCs].flat(), [])
+        return this.updateDLC([this.dlcs, this.disabledDLCs].flat(2), [])
     }
 
     updateDLC(enabled, disabled) {
@@ -925,7 +925,8 @@ function createGuildConfig(guild) {
                 fast_count,
                 last_fast,
                 locales,
-                kicked
+                kicked,
+                owner
             ) VALUES (
                 '${guild.id}',
                 '${guild.name}',
@@ -939,7 +940,8 @@ function createGuildConfig(guild) {
                 0,
                 '${new Date(1000).toISOString().slice(0, 19).replace('T', ' ')}',
                 'en',
-                FALSE
+                FALSE,
+                '${guild.ownerID}'
         )`
         connection.query(q, (err, res) => {
             if (err) {
@@ -972,8 +974,8 @@ function getPressences() {
 function getStats() {
     return new Promise((resolve, reject) => {
         let q = `SELECT (SELECT COUNT(*) FROM players) AS 'players',
-        (SELECT COUNT(*) FROM games) AS 'games',
-        (SELECT COUNT(*) FROM guilds) AS 'guilds',
+        (SELECT MAX(id) FROM games) AS 'games',
+        (SELECT COUNT(*) FROM guilds WHERE kicked=0) AS 'guilds',
         (SELECT SUM(fast_count) FROM guilds) AS 'fasts'`
         connection.query(q, (err, res) => {
             if (err) {
