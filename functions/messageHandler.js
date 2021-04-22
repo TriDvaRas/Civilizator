@@ -7,7 +7,7 @@ const db = require(`./db`)
 module.exports = message => {
     try {
         if (message.author.id == discordClient.user.id)
-            logger.log(`self`, message.cleanContent)
+            logger.log(`self`, `[${message.guild.id}] [${message.channel.id}] ${message.cleanContent}`)
     }
     catch (err) {
         logger.log(`self`, `ops ${err.message}, ${err.stack}`);
