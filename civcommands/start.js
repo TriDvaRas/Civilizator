@@ -50,7 +50,7 @@ function startGame(message, args) {
                 gameEmbed.updateField("Game Id", state.gameId)
                 gameEmbed.updateField("Game", state.gameName)
                 //Start join phase
-                Phaser.startJoins(state, gameEmbed);//TODO
+                Phaser.startJoins(state, gameEmbed);
                 logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] new ${state.gameName} game started CPP-${state.cpp} BPP-${state.bpp}`);
                 PH.edit(gameEmbed).then(msg => {
                     logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] embed posted`)

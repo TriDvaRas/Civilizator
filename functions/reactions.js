@@ -208,7 +208,7 @@ function endBanPhase(msg, agState, state, reaction, user, collector) {
 
 function startPicks(msg, agState, state) {
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
-    Phaser.startPicks(state);//TODO
+    Phaser.startPicks(state);
     addReroller(msg, agState);
     state.embedMsg.edit(state.embed);
 }

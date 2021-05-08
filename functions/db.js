@@ -643,7 +643,6 @@ function createGame(id, guild, author, options) {
             '${author.id}'
             )
             `
-        //TODO date ^^
         connection.query(q, (err, res) => {
             if (err) {
                 logger.log('error', `Failed  INSERT new game\n${err}\n${q}`)
