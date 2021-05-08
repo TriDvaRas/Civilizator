@@ -2,7 +2,8 @@
 const db = require(`../functions/db`)
 const { findBestMatch } = require("string-similarity");
 const BanF = require('../functions/BansFunctions.js');
-const { startPicks } = require(`../functions/reactions`)
+const { startPicks } = require(`../functions/reactions`);
+const logger = require("../logger");
 module.exports = {
     name: 'ban',
     description: 'Bans Civilization by id or alias',
@@ -29,8 +30,9 @@ module.exports = {
                         logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] [${chalk.magentaBright(message.author.tag)}] No aliases found for \`${args[i]}\`. Sim:[${sim.join(` `)}]`);
                         message.channel.send(`No aliases found for \`${args[i]}\`${sim?.length > 0 ? `. Similar aliases: \`${sim.join('`, `')}\`` : ``}`)
                             .then(botMsg => botMsg.delete({ timeout: 7000 }))
-                        for (const str of JSON.stringify(state.civList).match(/.{1,1750}/gu))
-                            logger.log('error', str)//! REMOVE DEBUG 
+                        logger.log('error',`No aliases found for \`${args[i]}\`${sim?.length > 0 ? `. Similar aliases: \`${sim.join('`, `')}\`` : ``}`) //! REMOVE DEBUG TODO
+                        for (const str of JSON.stringify(state.civList).match(/.{1,1750}/gu)) //! REMOVE DEBUG TODO
+                            logger.log('dapi', str)//! REMOVE DEBUG TODO
                     }
                     else
                         tryBan(message, state, civs[0])
