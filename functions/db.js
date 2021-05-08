@@ -679,7 +679,7 @@ function createGameState(id, gameMessage, options) {
                 '[]',
                 '[]',
                 '[${defaults.dlcs.map(x => `"${x}"`).join(`,`)}]',
-                '[]',
+                '[${defaults.disabled.map(x => `"${x}"`).join(`,`)}]',
                 '[]'
             );`
             connection.query(q, (err, res) => {
@@ -692,21 +692,22 @@ function createGameState(id, gameMessage, options) {
                     resolve()
                 }
             })
-        })// TODO disable personas by default
+        })
 
     })
 }
 
 function getDefaultStateInfo(game) {
     return new Promise((resolve, reject) => {
-        let q = `SELECT id, dlc FROM civilizations WHERE game='${game}'`
+        let q = `SELECT id, dlc, persona_id FROM civilizations WHERE game='${game}'`
         connection.query(q, (err, res) => {
             if (err)
                 reject(err)
             else {
                 resolve({
-                    ids: res.map(x => x.id),
-                    dlcs: res.map(x => x.dlc).filter((value, index, self) => self.indexOf(value) === index)
+                    ids: res.filter(x => game != "Civ6" || x.id != x.persona_id).map(x => x.id),
+                    dlcs: res.map(x => x.dlc).filter((value, index, self) => self.indexOf(value) === index),
+                    disabled: res.filter(x => game == "Civ6" && x.id == x.persona_id).map(x => x.id)
                 });
             }
         })
