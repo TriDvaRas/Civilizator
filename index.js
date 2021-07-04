@@ -1,4 +1,4 @@
-/*global  gameNames, logger, discordClient,process gameMaxTime*/
+/*global  gameNames, logger,__dirname, discordClient,process gameMaxTime*/
 //global settings 
 globalThis.gameMaxTime = 2 * 3600000;
 globalThis.gameMaxIdle = 3600000;
@@ -14,6 +14,7 @@ globalThis.gameNamesLower = gameNames.map(x => x.toLowerCase())
 
 //imports
 const fs = require('fs');
+const path = require('path');
 const Discord = require('discord.js');
 const { token, botOwnerId } = require('./config.json');
 const GC = require("./functions/guildConfig.js");
@@ -21,6 +22,7 @@ const cron = require('node-cron');
 const handleMessage = require(`./functions/messageHandler`)
 const RT = require('./functions/regularTasks');
 
+global.__dirname = path.resolve();
 global.botOwnerId = botOwnerId
 global.Collection = Discord.Collection
 //Set logger
@@ -92,20 +94,20 @@ process
 
 //init Commands
 discordClient.commands = new Discord.Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(path.resolve(__dirname, './commands')).filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     discordClient.commands.set(command.name, command);
 }
 //init civCommands
 discordClient.civcommands = new Discord.Collection();
-const civCommandFiles = fs.readdirSync('./civcommands').filter(file => file.endsWith('.js'));
+const civCommandFiles = fs.readdirSync(path.resolve(__dirname, './civcommands')).filter(file => file.endsWith('.js'));
 for (const file of civCommandFiles) {
     const command = require(`./civcommands/${file}`);
     discordClient.civcommands.set(command.name, command);
 }
 //init civCommands shortcuts
-const shortcutsFiles = fs.readdirSync('./shortcuts').filter(file => file.endsWith('.js'));
+const shortcutsFiles = fs.readdirSync(path.resolve(__dirname, './shortcuts')).filter(file => file.endsWith('.js'));
 for (const file of shortcutsFiles) {
     const command = require(`./shortcuts/${file}`);
     discordClient.civcommands.set(command.name, command);

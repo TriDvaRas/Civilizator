@@ -1,8 +1,9 @@
 
-/* global process activeGames discordClient botOwnerId*/
+/* global process __dirname activeGames discordClient botOwnerId*/
 const Discord = require('discord.js');
 const fs = require(`fs`)
 const db = require(`../functions/db`)
+const path = require('path');
 module.exports = {
     name: 'announce',
     description: `announce(bot owner only) (you shouldn't see this btw)`,
@@ -11,7 +12,7 @@ module.exports = {
     execute: function execute(message, args, guildConfig) {
         if (message.author.id == botOwnerId) {
             try {
-                let ann = JSON.parse(fs.readFileSync(`./announce/announcement.json`))
+                let ann = JSON.parse(fs.readFileSync(path.resolve(__dirname, `./announce/announcement.json`)))
                 let emb = new Discord.MessageEmbed()
                     .setTitle(ann.title)
                     .setColor(ann.color)
@@ -42,7 +43,7 @@ module.exports = {
                                         .catch(err => { g.err = err.message })
                                 }
                                 msg.channel.send(`Sent ${guilds.filter(x => x.succ).length}/${guilds.length} messages`);
-                                fs.writeFileSync(`./announce/announceResults(${Date.now()}).txt`, guilds.map(x => x.succ ? `${x.id} Succ ${x.succ}` : `${x.id} ${x.err}`).join(`\n`))
+                                fs.writeFileSync(path.resolve(__dirname, `./announce/announceResults(${Date.now()}).txt`), guilds.map(x => x.succ ? `${x.id} Succ ${x.succ}` : `${x.id} ${x.err}`).join(`\n`))
                             })
                         }
                     });
