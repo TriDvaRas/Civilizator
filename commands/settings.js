@@ -15,7 +15,9 @@ module.exports = {
 \`settings channel <set/create>\` - **set** bot to current channel or **create** a new one and bind to it 
 \`settings role create\` - creates a new role and binds bot to it
 \`settings news <yes/no>\` - enables/disables receiving messages about major bot updates
+\`settings reroll% <0-100>\` - sets how many votes is required for a reroll (in %). Use 0 to disable rerolls
 `,
+    // eslint-disable-next-line max-lines-per-function
     execute: function execute(message, args, guildConfig) {
         if (Perm.checkRoles(guildConfig, message.member, null, { admin: true })) {
             if (args.length < 2 && args[0] != `reset`) return message.reply(`Wrong arguments. Try \`${this.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
@@ -52,7 +54,10 @@ module.exports = {
                     }
                     break;
                 case `news`:
-                    updateAnounce(this, message, args, guildConfig)//TODO
+                    updateAnounce(this, message, args, guildConfig)
+                    break;
+                case `reroll%`:
+                    updateReroll(this, message, args, guildConfig)
                     break;
                 default:
                     message.delete({ timeout: 10000 })
@@ -179,13 +184,28 @@ function updateAnounce(command, message, args, guildConfig) {
             message.channel.send(`Disabled news`)
             logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] disabled news`);
             break;
-
         default:
             message.delete({ timeout: 10000 })
             message.reply(`Wrong arguments. Try \`${this.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
             break;
     }
 }
+
+function updateReroll(command, message, args, guildConfig) {
+    if (args[0] == 0) {
+        db.updateGuildConfig(message.guild.id, guildConfig, { rerollThreshold: +args[0] })
+        message.channel.send(`Disabled rerolls`)
+        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] Disabled rerolls`);
+    }
+    else if (args[0] >= 1 && args[0] <= 100) {
+        db.updateGuildConfig(message.guild.id, guildConfig, { rerollThreshold: +args[0] })
+        message.channel.send(`Set reroll threshold to \`${args[0]}\`%`)
+        logger.log(`cmd`, `[${chalk.magentaBright(message.guild.name)}] Set reroll threshold to \`${args[0]}\`%`);
+    }
+    else
+        message.reply(`Wrong arguments. Try \`${command.name} help\``).then(msg => msg.delete({ timeout: 10000 }))
+}
+
 function updateGetrole(command, message, args, guildConfig) {
     switch (args[0]) {
         case `+`:

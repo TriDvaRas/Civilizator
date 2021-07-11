@@ -1,15 +1,20 @@
 /* global logger, gameNames,activeGames */
 const mysql = require('mysql2');
-const connection = mysql.createConnection(require(`../assets/mysql_secret.json`));
+let connection = mysql.createConnection(require(`../assets/mysql_secret.json`));
 const { Collection } = require(`discord.js`)
+connection.on('error', error => {
+    logger.log('error', `DB DIED. Trying to reconnect ${error}`);
+    connection.end()
+    connection = mysql.createConnection(require(`../assets/mysql_secret.json`));
+});
 
 let civLists = new Collection()
 updateCivLists()
 let statesCache = new Collection()
 
 class State {
-    constructor(rawState, rawPlayers) {
-        //uncountable
+    constructor(rawState, rawPlayers, guildConfig) {
+        //uncalc
         this.gameId = rawState.id
         this.gameName = rawState.game_name
         this.guildId = rawState.guild_id
@@ -40,9 +45,9 @@ class State {
         })
 
 
-        //countable
+        //calc
         this.bansFull = this.players.length * this.bpp
-        this.reVotesFull = Math.ceil(this.players.length * .65)
+        this.reVotesFull = guildConfig.rerollThreshold > 0 ? Math.ceil(this.players.length * guildConfig.rerollThreshold / 100) : null
         this.civList = civLists.get(this.gameName)
         this.fetchedAt = Date.now()
 
@@ -81,7 +86,7 @@ class State {
         })
     }
 
-    addPlayer(user) {
+    addPlayer(user, guildConfig) {
         let p = {
             id: user.id,
             slot: this.getFreeSlot(this.players),
@@ -91,7 +96,7 @@ class State {
         }
         this.players.push(p)
         this.bansFull = this.players.length * this.bpp
-        this.reVotesFull = Math.ceil(this.players.length * .65)
+        this.reVotesFull = guildConfig.rerollThreshold > 0 ? Math.ceil(this.players.length * guildConfig.rerollThreshold / 100) : null
         return new Promise((resolve, reject) => {
             checkIfNewPlayer(user)
                 .then(() => {
@@ -124,10 +129,10 @@ class State {
         })
     }
 
-    remPlayer(user) {
+    remPlayer(user, guildConfig) {
         this.players = this.players.filter(x => x.id != user.id)
         this.bansFull = this.players.length * this.bpp
-        this.reVotesFull = Math.ceil(this.players.length * .65)
+        this.reVotesFull = guildConfig.rerollThreshold > 0 ? Math.ceil(this.players.length * guildConfig.rerollThreshold / 100) : null
         return new Promise((resolve, reject) => {
             checkIfNewPlayer(user)
                 .then(() => {
@@ -569,7 +574,7 @@ function newGame(guild, author, gameMessage, options) {
             checkIfNewPlayer(author)
                 .then(() => createGame(id, guild, author, options), reject)
                 .then(() => createGameState(id, gameMessage, options), reject)
-                .then(() => getState(id), reject)
+                .then(() => getState(id, guild.id), reject)
                 .then(resolve, reject)
         })
         updateGuildConfig(guild.id, null, { name: guild.name, avatar: guild.icon })
@@ -728,7 +733,7 @@ function getGamesCount() {
 
 //--------------------
 
-function getState(gameId) {
+function getState(gameId, guildId) {
     return new Promise((resolve, reject) => {
         if (gameId) {
             let s = statesCache.get(gameId)
@@ -738,7 +743,8 @@ function getState(gameId) {
                 Promise.all([fetchGameState(gameId), fetchPlayerStates(gameId)])
                     .then(res => {
                         const [game, players] = res
-                        resolve(new State(game, players))
+                        getGuildConfig(guildId).then(cfg => resolve(new State(game, players, cfg)))
+
                     })
                     .catch(err => {
                         reject(err)
@@ -763,7 +769,8 @@ function getStateByGuild(guild) {
             else {
                 if (res[0])
                     fetchPlayerStates(res[0].id).then(players => {
-                        resolve(new State(res[0], players))
+                        getGuildConfig(guild.id).then(cfg => resolve(new State(res[0], players, cfg)))
+
                     })
                 else
                     resolve()
@@ -853,7 +860,7 @@ function getLastGameTime(guildId) {
 
 function getGuildConfig(guildId) {
     return new Promise((resolve, reject) => {
-        let q = `SELECT prefix, last_fast AS lastFast, allow_getrole AS allowGetrole, role_id AS roleId, channel_id AS channelId, locales, configured, news, game_count as gameCount, fast_count as fastCount
+        let q = `SELECT prefix, last_fast AS lastFast, allow_getrole AS allowGetrole, role_id AS roleId, channel_id AS channelId, locales, configured, news, game_count as gameCount, fast_count as fastCount, reroll_threshold as rerollThreshold
         FROM guilds WHERE id='${guildId}' `
         connection.query(q, (err, res) => {
             if (err) {
@@ -890,6 +897,8 @@ function updateGuildConfig(guildId, oldConfig, options) {
         keys.push(`news=${options[`news`] ? `TRUE` : `FALSE`}`)
     if ('avatar' in options)
         keys.push(`avatar='${options[`avatar`]?.replace(/'/gmu, `\\'`)}'`)
+    if ('rerollThreshold' in options)
+        keys.push(`reroll_threshold='${options[`rerollThreshold`]}'`)
     return new Promise((resolve, reject) => {
         if (keys.length == 0) {
             reject(new Error(`No updateGuildConfig options given`))
@@ -928,8 +937,8 @@ function createGuildConfig(guild) {
                 kicked,
                 owner
             ) VALUES (
-                '${guild.id}',
-                '${guild.name}',
+                '${guild.id.replace(/'/gmu, `\\'`)}}',
+                '${guild.name.replace(/'/gmu, `\\'`)}}',
                 '${new Date().toISOString().slice(0, 19).replace('T', ' ')}',
                 FALSE,
                 '!',

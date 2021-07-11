@@ -11,7 +11,7 @@ module.exports = {
     execute: function execute(message, args, guildConfig) {
         message.delete({ timeout: 5000 })
         //read GameState
-        db.getState(activeGames.findKey(x => x.guild.id == message.guild.id)).then(
+        db.getState(activeGames.findKey(x => x.guild.id == message.guild.id), message.guild.id).then(
             state => {
                 if (state.phase != "bans")
                     return message.reply("Wrong phase").then(botMsg => botMsg.delete({ timeout: 5000 }))

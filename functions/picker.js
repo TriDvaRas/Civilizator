@@ -30,7 +30,7 @@ function onPickerCollect(msg, playerSlot, reaction, user) {
     reaction.users.remove(user)
     if (!msg.mentions.users.has(user.id))
         return;
-    db.getState(activeGames.findKey(x => x.guild.id == msg.guild.id)).then(
+    db.getState(activeGames.findKey(x => x.guild.id == msg.guild.id), msg.guild.id).then(
         state => {
             let player = state.players.find(P => P.slot == playerSlot)
             let expectedPicks = player.civs.map(x => state.civList.find(y => y.id == x).name).join(`/`);

@@ -19,7 +19,7 @@ function StartBans(state) {
     state.embed.setColor('#de3b09')
 }
 function StartPicks(state) {
-    state.embed.updateField("Game Phase", "**Picks** \n Click 🔁 to vote for reroll\n Click 🔁 again to remove vote\n Click 🔢 to pick (for stats)\n\u200B")
+    state.embed.updateField(`Game Phase`, `**Picks** ${state.reVotesFull ? `\n Click 🔁 to vote for reroll\n Click 🔁 again to remove vote` : ``}\n Click 🔢 to submit your pick (for stats)\n\u200B`)
 
     state.embed.setColor('#09ded0');
     state.updatePhase("picks")
@@ -28,8 +28,10 @@ function StartPicks(state) {
         pickField = state.embed.addFields(
             { name: 'Pick', value: `${state.players.map(user => user.pick ? state.civList.find(x => x.id == user.pick).name : '-').join('\n')}\u200B`, inline: true }
         );
-    let reVotesField = rerollCleanup(state)
-    reVotesField.value = `[${state.players.filter(p => p.reVote).length}/${state.reVotesFull}]\n${state.players.filter(p => p.reVote).map(p => `<@${p.id}>`).join('\n')}\u200B`
+    if (state.reVotesFull) {
+        let reVotesField = rerollCleanup(state)
+        reVotesField.value = `[${state.players.filter(p => p.reVote).length}/${state.reVotesFull}]\n${state.players.filter(p => p.reVote).map(p => `<@${p.id}>`).join('\n')}\u200B`
+    }
     pickField.value = `${state.players.map(user => user.pick ? state.civList.find(x => x.id == user.pick).name : '-').join('\n')}\u200B`
     state.embedMsg.edit(state.embed)
 

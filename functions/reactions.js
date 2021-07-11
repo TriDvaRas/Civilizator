@@ -32,7 +32,7 @@ function addJoiner(msg, ag) {
             msg.reactions.removeAll();
         ag.collectors.splice(ag.collectors.indexOf(collector), 1)
         if ([`idle`, `new game`].includes(reason))
-            db.getState(ag.gameId).then(
+            db.getState(ag.gameId, msg.guild.id).then(
                 state => state.setFlushed(),
                 error => logger.log(`error`, `${error}`)
             )
@@ -57,7 +57,7 @@ function addBanner(msg, ag) {
             msg.reactions.removeAll();
         ag.collectors.splice(ag.collectors.indexOf(collector), 1)
         if ([`idle`, `new game`].includes(reason))
-            db.getState(ag.gameId).then(
+            db.getState(ag.gameId, msg.guild.id).then(
                 state => state.setFlushed(),
                 error => logger.log(`error`, `${error}`)
             )
@@ -81,7 +81,7 @@ function addReroller(msg, ag) {
             msg.reactions.removeAll();
         ag.collectors.splice(ag.collectors.indexOf(collector), 1)
         if ([`idle`, `new game`].includes(reason))
-            db.getState(ag.gameId).then(
+            db.getState(ag.gameId, msg.guild.id).then(
                 state => state.setFlushed(),
                 error => logger.log(`error`, `${error}`)
             )
@@ -92,7 +92,7 @@ function addReroller(msg, ag) {
 
 function onJoinCollect(msg, agState, collector, reaction, user) {
     reaction.users.remove(user);
-    db.getState(agState.gameId).then(
+    db.getState(agState.gameId, msg.guild.id).then(
         state => {
             if (state.embedId != msg.id) {
                 collector.stop(`old game`);
@@ -106,18 +106,26 @@ function onJoinCollect(msg, agState, collector, reaction, user) {
                     if (state.players.find(P => P.id == user.id))
                         return;
                     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] player joined`);
-                    state.addPlayer(user)
+                    db.getGuildConfig(msg.guild.id).then(cfg => {
+                        state.addPlayer(user, cfg)
+                        state.embed.updateField("Players", `${state.players.map(user => `<@${user.id}>`).join('\n')}\u200B`)
+                        state.embedMsg.edit(state.embed);
+                    })
+
                 }
                 else {
                     let player = state.players.find(P => P.id == user.id)
                     if (!player)
                         return;
                     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] [${chalk.magentaBright(user.tag)}] player left`);
-                    state.remPlayer(user)
+                    db.getGuildConfig(msg.guild.id).then(cfg => {
+                        state.remPlayer(user, cfg)
+                        state.embed.updateField("Players", `${state.players.map(user => `<@${user.id}>`).join('\n')}\u200B`)
+                        state.embedMsg.edit(state.embed);
+                    })
                 }
-                state.embed.updateField("Players", `${state.players.map(user => `<@${user.id}>`).join('\n')}\u200B`)
-                state.embedMsg.edit(state.embed);
             }
+
         },
         error => logger.log(`error`, `${error}`)
     )
@@ -161,7 +169,7 @@ function endJoinPhase(msg, agState, state, reaction, user, collector) {
 }
 
 function onBanCollect(msg, agState, collector, reaction, user) {
-    db.getState(agState.gameId).then(
+    db.getState(agState.gameId, msg.guild.id).then(
         state => {
             if (state.embedId != msg.id) {
                 collector.stop(`old game`);
@@ -209,13 +217,14 @@ function endBanPhase(msg, agState, state, reaction, user, collector) {
 function startPicks(msg, agState, state) {
     logger.log(`cmd`, `[${chalk.magentaBright(msg.guild.name)}] starting picks`);
     Phaser.startPicks(state);
-    addReroller(msg, agState);
+    if (state.reVotesFull)
+        addReroller(msg, agState);
     state.embedMsg.edit(state.embed);
 }
 
 function onReCollect(msg, agState, collector, reaction, user) {
     reaction.users.remove(user);
-    db.getState(agState.gameId).then(
+    db.getState(agState.gameId, msg.guild.id).then(
         state => {
             if (state.embedId != msg.id) {
                 collector.stop(`old game`);
