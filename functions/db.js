@@ -937,7 +937,7 @@ function createGuildConfig(guild) {
                 kicked,
                 owner
             ) VALUES (
-                '${guild.id.replace(/'/gmu, `\\'`)}}',
+                '${guild.id}',
                 '${guild.name.replace(/'/gmu, `\\'`)}}',
                 '${new Date().toISOString().slice(0, 19).replace('T', ' ')}',
                 FALSE,

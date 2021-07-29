@@ -27,7 +27,7 @@ function execCommand(message) {
                 //check if server has no config
                 if (!cfg)
                     if (message.content.startsWith(`!`) || message.content.startsWith(`<@!${discordClient.user.id}>`))
-                        return message.channel.send(`Failed command execution. Your server has no config.\nThis was probably caused by bot being offline then you added it to your server.\nThe easiest way to fix this is to kick and reinvite the bot to your server.`)
+                        return message.channel.send(`Failed command execution. Your server has no config.\nThis was probably caused by bot being offline then you added it to your server.\nThe easiest way to fix this is to kick and reinvite the bot to your server(if it's still broken try again later)\n `)
                     else return
                 const { prefix } = cfg;
                 if (isStatsMention(message, cfg)) return
