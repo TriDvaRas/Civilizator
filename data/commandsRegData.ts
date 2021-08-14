@@ -17,6 +17,14 @@ export default {
     set: {
         name: `set`,
         description: `Shows game settings menu`,
+        options:[
+            {
+                name: `public`,
+                description: `Should the menu be visible to other players`,
+                type: `BOOLEAN`,
+                required: false,
+            }
+        ]
     },
     start: {
         name: `start`,

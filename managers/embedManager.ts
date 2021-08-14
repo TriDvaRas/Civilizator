@@ -23,16 +23,19 @@ export function createGameSetEmbed(game: IFullGame, type: GameSettingsType) {
     const embed = new MessageEmbed()
         .setColor(`#807BC5`)
         .setTitle(`Civilizator Game \#${game.id} Settings`)
-        .setFooter(`Click dismiss message to hide this menu`)
+        .setFooter(`Click dismiss message to hide this menu\nIf main game menu is not updating click any button on it`)
     switch (type) {
         case `menu`:
             embed.setTitle(`Choose which setting you want to update`)
             break;
+        case `game`:
+            embed.setTitle(`Choose game`)
+            break;
         case `cpp`:
-            embed.setTitle(`Choose new cpp value`)
+            embed.setTitle(`Choose cpp value`)
             break;
         case `bpp`:
-            embed.setTitle(`Choose new bpp value`)
+            embed.setTitle(`Choose bpp value`)
             break;
         case `dlc`:
             embed.setTitle(`Click DLC to toggle (green - enabled)`)
@@ -95,9 +98,6 @@ function getEmbedColor(phase?: string) {
 }
 function setFields(embed: MessageEmbed, game: IFullGame) {
     const dlcString = `Enabled: ${game.state.dlcs?.length || 0}\nDisabled: ${game.state.disabledDlcs?.length || 0}`
-    // game.state.dlcs.length === 0 ? `None` :
-    //     game.state.disabledDlcs.length === 0 ? `All` :
-    //     game.state.dlcs.join('\n')
     switch (game.phase) {
         case `join`:
             embed.addFields(

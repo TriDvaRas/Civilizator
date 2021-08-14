@@ -231,6 +231,25 @@ export function getGameSetButtons(game: IFullGame, type: GameSettingsType): Mess
             rows.push(new MessageActionRow()
                 .addComponents(
                     new MessageButton()
+                        .setCustomId(`set-game-select/civ5`)
+                        .setLabel(`Civ V`)
+                        .setStyle(game.gameName === 'civ5'?`SUCCESS`:`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`set-game-select/lek`)
+                        .setLabel(`Civ V LEK `)
+                        .setStyle(game.gameName === 'lek'?`SUCCESS`:`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`set-game-select/civ6`)
+                        .setLabel(`Civ VI `)
+                        .setStyle(game.gameName === 'civ6'?`SUCCESS`:`SECONDARY`)
+                        .setEmoji(``),
+
+                ))
+            rows.push(new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
                         .setCustomId(`set-menu`)
                         .setLabel(`Back `)
                         .setStyle(`SECONDARY`)
