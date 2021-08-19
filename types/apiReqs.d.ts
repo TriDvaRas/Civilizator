@@ -1,5 +1,6 @@
 import { Snowflake } from "discord.js";
 import { GameTypes, PhaseTypes } from "./api";
+import { IPickMsg } from "./custom";
 
 export interface IGameStartArgs {
     guildId: string;
@@ -23,12 +24,12 @@ export interface IGameStateStartArgs {
     threadId: string;
 }
 export interface IGameStateUpdateArgs {
-    pickIds: Snowflake[],
-    banned: number[],
-    rolled: number[],
-    disabled: number[],
-    dlcs: number[],
-    disabledDlcs: number[],
+    pickIds?: IPickMsg[],
+    banned?: number[],
+    rolled?: number[],
+    disabled?: number[],
+    dlcs?: number[],
+    disabledDlcs?: number[],
 }
 export interface IPlayerCreateArgs {
     id: Snowflake;
@@ -46,7 +47,10 @@ export interface IPlayerStateCreateArgs {
     player: IPlayerCreateArgs;
 }
 export interface IPlayerStateUpdateArgs {
-    //! --------
+    vote?: boolean;
+    banned?: number[];
+    rolled?: number[];
+    picked?: number;
 }
 export interface IGuildCreateArgs {
     id: Snowflake;

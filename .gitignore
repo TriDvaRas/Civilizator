@@ -3,4 +3,5 @@
 node_modules
 .env
 build
-assets/Imgs/Players/*
+assets/imgs/players/*
+assets/imgs/bans/*

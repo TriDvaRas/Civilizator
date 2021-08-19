@@ -1,9 +1,10 @@
-import { ButtonInteraction, Snowflake } from "discord.js";
+import { ButtonInteraction, Snowflake, ThreadChannel } from "discord.js";
 import api from "../api/api";
-import { getGameEmbedButtons } from "../managers/buttonManager";
+import { getGameEmbedButtons, getLoadingButton } from "../managers/buttonManager";
 import { createGameEmbed } from "../managers/embedManager";
+import { sendPicks } from "../managers/rollManager";
 import { IFullGame } from "../types/api";
-import { IGameUpdateArgs, IPlayerStateCreateArgs } from "../types/apiReqs";
+import { IGameUpdateArgs, IPlayerStateCreateArgs, IPlayerStateUpdateArgs } from "../types/apiReqs";
 import { findGame } from "../util/games";
 
 export default {
@@ -20,9 +21,25 @@ export default {
         const data = {
             phase: game.bpp > 0 ? 'ban' : 'pick',
         } as IGameUpdateArgs
-        const newGame = await api.patch(`/game/${game.id}`, data) as IFullGame
-        
-        await interaction.update({ embeds: [createGameEmbed(newGame)], components: getGameEmbedButtons(newGame) })
+        let newGame = await api.patch(`/game/${game.id}`, data) as IFullGame
+        //send picks 
+        if (game.bpp === 0) {
+            await interaction.editReply({ embeds: [createGameEmbed(newGame)], components: [getLoadingButton(`Rolling...`)] })
+            const pickMsgs = await sendPicks(game, interaction.channel as ThreadChannel, game.state.pickIds)
+            await api.patch(`/game/${game.id}`, {
+                phase: 'pick',
+                gameState: {
+                    pickIds: pickMsgs
+                }
+            } as IGameUpdateArgs)
+            newGame = await api.patch(`/playerstate/${game.id}/all`, {
+                vote: false
+            } as IPlayerStateUpdateArgs)
+
+            await interaction.editReply({ embeds: [createGameEmbed(newGame)], components: getGameEmbedButtons(newGame) })
+        }
+        else
+            await interaction.update({ embeds: [createGameEmbed(newGame)], components: getGameEmbedButtons(newGame) })
     }
 }
 

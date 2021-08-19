@@ -30,6 +30,30 @@ export default {
             }
         ]
     },
+    ban: {
+        name: `ban`,
+        description: `Ban civilizations during bans phase. You can specify multiple bans at once with extra options`,
+        options:[
+            {
+                name: `civ1`,
+                description: `Civilization's id or name/leader alias(or part of it)`,
+                type: `STRING`,
+                required: true,
+            },
+            {
+                name: `civ2`,
+                description: `Civilization's id or name/leader alias(or part of it)`,
+                type: `STRING`,
+                required: false,
+            },
+            {
+                name: `civ3`,
+                description: `Civilization's id or name/leader alias(or part of it)`,
+                type: `STRING`,
+                required: false,
+            }
+        ]
+    },
     start: {
         name: `start`,
         description: `Start a new game!`,

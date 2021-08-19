@@ -2,6 +2,7 @@ import { MessageActionRow, MessageButton } from "discord.js";
 import { IFullGame } from "../types/api";
 import { GameSettingsType } from "../types/custom";
 import { sortDlcs } from "../util/dlcs";
+import { IPick } from "./rollManager";
 
 export function getGameEmbedButtons(game: IFullGame): MessageActionRow[] {
     const rows: MessageActionRow[] = []
@@ -57,17 +58,24 @@ export function getGameEmbedButtons(game: IFullGame): MessageActionRow[] {
             rows.push(new MessageActionRow()
                 .addComponents(
                     new MessageButton()
-                        .setCustomId(`pick-reroll`)
+                        .setCustomId(`pick-vote`)
                         .setLabel(`Vote for Reroll`)
                         .setStyle(`PRIMARY`)
                         .setEmoji(`civilizatorRe:875297793995059220`),
                 )
                 .addComponents(
                     new MessageButton()
-                        .setCustomId(`pick-reroll-cancel`)
+                        .setCustomId(`pick-vote-cancel`)
                         .setLabel(`Cancel Vote`)
                         .setStyle(`SECONDARY`)
                         .setEmoji(`civilizatorReC:875306900579827742​`),
+                )
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId(`pick-show-select-menu`)
+                        .setLabel(`Submit Pick`)
+                        .setStyle(`SUCCESS`)
+                        .setEmoji(``),
                 ))
             rows.push(new MessageActionRow()
                 .addComponents(
@@ -225,6 +233,16 @@ export function getGameSetButtons(game: IFullGame, type: GameSettingsType): Mess
                         .setLabel(`Back `)
                         .setStyle(`SECONDARY`)
                         .setEmoji(`civilizatorL:875782163281346632`),
+                    new MessageButton()
+                        .setCustomId(`set-dlc-all`)
+                        .setLabel(`Enable all`)
+                        .setStyle(game.state.disabledDlcs.length === 0 ? `SUCCESS` : `SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`set-dlc-none`)
+                        .setLabel(`Disable all`)
+                        .setStyle(game.state.dlcs.length === 0 ? `SUCCESS` : `SECONDARY`)
+                        .setEmoji(``),
                 ))
             break;
         case `game`:
@@ -233,17 +251,17 @@ export function getGameSetButtons(game: IFullGame, type: GameSettingsType): Mess
                     new MessageButton()
                         .setCustomId(`set-game-select/civ5`)
                         .setLabel(`Civ V`)
-                        .setStyle(game.gameName === 'civ5'?`SUCCESS`:`SECONDARY`)
+                        .setStyle(game.gameName === 'civ5' ? `SUCCESS` : `SECONDARY`)
                         .setEmoji(``),
                     new MessageButton()
                         .setCustomId(`set-game-select/lek`)
                         .setLabel(`Civ V LEK `)
-                        .setStyle(game.gameName === 'lek'?`SUCCESS`:`SECONDARY`)
+                        .setStyle(game.gameName === 'lek' ? `SUCCESS` : `SECONDARY`)
                         .setEmoji(``),
                     new MessageButton()
                         .setCustomId(`set-game-select/civ6`)
                         .setLabel(`Civ VI `)
-                        .setStyle(game.gameName === 'civ6'?`SUCCESS`:`SECONDARY`)
+                        .setStyle(game.gameName === 'civ6' ? `SUCCESS` : `SECONDARY`)
                         .setEmoji(``),
 
                 ))
@@ -262,4 +280,17 @@ export function getGameSetButtons(game: IFullGame, type: GameSettingsType): Mess
             break;
     }
     return rows
+}
+export function getPickButtons(pick: IPick) {
+
+}
+export function getLoadingButton(customText?: string) {
+    return new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId(`disabled-button`)
+                .setLabel(customText || `Loading...`)
+                .setStyle(`SECONDARY`)
+                .setDisabled(true)
+        )
 }

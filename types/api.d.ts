@@ -1,4 +1,5 @@
 import { Snowflake } from "discord.js"
+import { IPickMsg } from "./custom"
 
 export type AliasLanguages = 'en' | 'it' | 'ru'
 export type GameTypes = 'civ5' | 'lek' | 'civ6'
@@ -9,8 +10,8 @@ export type Civ6Dlc = string //TODO dlc list
 export type AnyDlc = Civ5Dlc | Civ6Dlc | 'lek' //TODO dlc list
 export type PressenceReps = { [key: string]: any }
 export type PressenceTypes = string
-export interface ICivilizationAliases {
-  AliasLanguages?: Array<string>;
+export type ICivilizationAliases = {
+  [key in AliasLanguages]: Array<string>
 }
 export interface ICivilization {
   id: number;
@@ -45,6 +46,8 @@ export interface IGuild {
   kicked: boolean;
   news: boolean;
   fastCount: number;
+  rerollThreshold: number;
+  locales: AliasLanguages[];
   avatar?: string;
   ownerId?: Snowflake;//todo check if i have all ownerIds
 }
@@ -67,7 +70,8 @@ export interface IGameState {
   channelId: Snowflake;
   msgId: Snowflake;
   threadId: Snowflake;
-  pickIds?: Snowflake[];
+  pickIds?: IPickMsg[];
+  civs: number[];
   banned: number[];
   rolled: number[];
   disabled: number[];
@@ -87,7 +91,8 @@ export interface IPlayerState {
 export interface IFullGame extends IGame {
   state: IGameState;
   playerStates: IPlayerState[];
-  civlist: ICivilization[]
+  civlist: ICivilization[];
+  guildConfig: IGuild;
 }
 //!------------------
 export interface IPressence {

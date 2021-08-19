@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
-import { ICivilization, IFullGame, IGame, IPlayerState } from "../types/api";
+import { ICivilization, IFullGame, IPlayerState } from "../types/api";
 import { GameSettingsType } from "../types/custom";
-import { getCivName, getDlcNames } from "../util/civlist";
+import { getCivName } from "../util/civlist";
 
 export function createBaseGameEmbed() {
     return new MessageEmbed()
@@ -51,6 +51,7 @@ export function createGameSetEmbed(game: IFullGame, type: GameSettingsType) {
     }
     return embed
 }
+
 function getPlayerTags(playerStates: IPlayerState[]) {
     return playerStates.map(ps => `<@${ps.playerId}>`).join(`\n`)
 }
@@ -97,7 +98,7 @@ function getEmbedColor(phase?: string) {
     }
 }
 function setFields(embed: MessageEmbed, game: IFullGame) {
-    const dlcString = `Enabled: ${game.state.dlcs?.length || 0}\nDisabled: ${game.state.disabledDlcs?.length || 0}`
+    const dlcString = `${game.state.dlcs?.length || 0}/${(game.state.disabledDlcs?.length || 0) + (game.state.dlcs?.length || 0)} enabled`
     switch (game.phase) {
         case `join`:
             embed.addFields(
@@ -108,7 +109,7 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
                 { name: `Civs per player`, value: `${game.cpp}\u200B`, inline: true },
                 { name: `Bans per player`, value: `${game.bpp}\u200B`, inline: true },
                 { name: `Players`, value: `${getPlayerTags(game.playerStates)}\u200B`, inline: true },
-                { name: `Tip\u200B`, value: `You can use \`/set\` to edit game settings`, inline: false },
+                { name: `Tips\u200B`, value: `Use \`/set\` to edit game settings\nUse \`/dlcs\` to view dlcs info`, inline: false },
             )
             break;
         case `ban`:
@@ -134,6 +135,8 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
                 { name: `Players`, value: `${getPlayerTags(game.playerStates)}\u200B`, inline: true },
                 { name: game.bpp > 0 ? `Bans` : `\u200B`, value: `${game.bpp > 0 ? getPlayerBans(game.playerStates, game.bpp) : ``}\u200B`, inline: true },
                 { name: `Pick`, value: `${getPlayerPicks(game.playerStates, game.civlist)}\u200B`, inline: true },
+                { name: `Reroll Votes [${game.playerStates.filter(x => x.vote).length}/${Math.ceil(game.playerStates.length * game.guildConfig.rerollThreshold / 100)}]`, value: `${getRerollVotes(game.playerStates)}\u200B`, inline: true },
+                { name: `Tips`, value: `You can submit your pick to save it for stats using the button bellow\nIf every players submits their pick \`/winner\` command can be used\u200B`, inline: false },
             )
             break;
         default:
@@ -144,4 +147,7 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
     }
     return embed
 
+}
+function getRerollVotes(playerStates: IPlayerState[]) {
+    return playerStates.filter(x => x.vote).map(x => `<@${x.playerId}>`).join(`  `)
 }

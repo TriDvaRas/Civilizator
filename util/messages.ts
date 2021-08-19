@@ -5,5 +5,5 @@ export async function findGameMessage(threadId: Snowflake, messageId: Snowflake,
     const gameMessage = thread.messages.cache.get(messageId)
     if (gameMessage)
         return gameMessage
-    await thread.messages.fetch()
+    return await thread.messages.fetch(messageId)
 }
