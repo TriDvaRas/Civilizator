@@ -17,10 +17,14 @@ export default {
     set: {
         name: `set`,
         description: `Shows game settings menu`,
+    },
+    dlcs: {
+        name: `dlcs`,
+        description: `Shows current game dlc info`,
         options:[
             {
                 name: `public`,
-                description: `Should the menu be visible to other players`,
+                description: `Should the list be visible to other players`,
                 type: `BOOLEAN`,
                 required: false,
             }
