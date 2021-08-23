@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, MessagePayload } from "discord.js";
 import commandsPermData from "../data/commandsPermData";
 import commandsRegData from "../data/commandsRegData";
 import commandsData from "../data/commandsRegData";

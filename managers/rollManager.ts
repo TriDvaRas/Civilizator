@@ -1,6 +1,6 @@
 import { Message, MessageAttachment, MessageOptions, Snowflake, ThreadChannel, User } from "discord.js";
 import api from "../api/api";
-import { ICivilization, IFullGame, IPlayerState } from "../types/api";
+import { GameTypes, ICivilization, IFullGame, IPlayerState } from "../types/api";
 import { IGameUpdateArgs } from "../types/apiReqs";
 import { IPickMsg } from "../types/custom";
 import { combineImages } from "../util/image";
@@ -17,6 +17,17 @@ export function rollPicks(game: IFullGame): IPick[] {
             _rolled.push(civ)
             rolled.push(civ)
         }
+        res.push({
+            player: ps,
+            civs: _rolled,
+        })
+    }
+    return res
+}
+export function getPicks(game: IFullGame) {
+    const res: IPick[] = []
+    for (const ps of game.playerStates) {
+        const _rolled = game.civlist.filter(x => ps.rolled.includes(x.id))
         res.push({
             player: ps,
             civs: _rolled,
@@ -41,9 +52,8 @@ export async function createPicksMessage(pick: IPick) {
         messageData: msg
     }
 }
-export async function sendPicks(game: IFullGame, channel: ThreadChannel, oldMessages?: IPickMsg[]) {
-    const picks = rollPicks(game)
-    const messagesData = await Promise.all(picks.map(async (pick) => await createPicksMessage(pick)))
+export async function sendPicks(game: IFullGame, picks: IPick[], channel: ThreadChannel, oldMessages?: IPickMsg[]) {
+    const messagesData = await Promise.all(picks.map(async (pick) => createPicksMessage(pick)))
     const pickMessages = await Promise.all(messagesData.map(async md => {
         if (oldMessages) {
             const msg = oldMessages.find(m => m.playerId === md.id)
@@ -52,10 +62,10 @@ export async function sendPicks(game: IFullGame, channel: ThreadChannel, oldMess
                 if (!msg?.playerId)
                     message.delete()
                 else
-                    return await message.edit({ ...md.messageData, attachments: [] })
+                    return message.edit({ ...md.messageData, attachments: [] })
             }
         }
-        return await channel?.send({ ...md.messageData })
+        return channel?.send({ ...md.messageData })
 
     }))
     const pickMsgs: IPickMsg[] = pickMessages.map(msg => ({

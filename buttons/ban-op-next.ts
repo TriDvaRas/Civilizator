@@ -2,9 +2,10 @@ import { ButtonInteraction, ThreadChannel } from "discord.js";
 import api from "../api/api";
 import { getGameEmbedButtons, getLoadingButton } from "../managers/buttonManager";
 import { createGameEmbed } from "../managers/embedManager";
-import { sendPicks } from "../managers/rollManager";
+import { rollPicks, sendPicks } from "../managers/rollManager";
 import { IFullGame } from "../types/api";
 import { IGameUpdateArgs, IPlayerStateCreateArgs, IPlayerStateUpdateArgs } from "../types/apiReqs";
+import { updatePicksInfo } from "../util/picks";
 
 export default {
     customId: 'ban-op-next',
@@ -21,16 +22,9 @@ export default {
         let newGame = await api.patch(`/game/${game.id}`, data) as IFullGame
         //send picks
         await interaction.update({ embeds: [createGameEmbed(newGame)], components: [getLoadingButton(`Rolling...`)] })
-        const pickMsgs = await sendPicks(game, interaction.channel as ThreadChannel, game.state.pickIds)
-        await api.patch(`/game/${game.id}`, {
-            phase: 'pick',
-            gameState: {
-                pickIds: pickMsgs
-            }
-        } as IGameUpdateArgs)
-        newGame = await api.patch(`/playerstate/${game.id}/all`, {
-            vote: false
-        } as IPlayerStateUpdateArgs)
+        const picks = rollPicks(game)
+        const pickMsgs = await sendPicks(game, picks, interaction.channel as ThreadChannel, game.state.pickIds)
+        newGame = await updatePicksInfo(game, pickMsgs, picks);
 
         await interaction.editReply({ embeds: [createGameEmbed(newGame)], components: getGameEmbedButtons(newGame) })
     }

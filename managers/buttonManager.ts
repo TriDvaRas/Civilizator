@@ -73,7 +73,7 @@ export function getGameEmbedButtons(game: IFullGame): MessageActionRow[] {
                 .addComponents(
                     new MessageButton()
                         .setCustomId(`pick-show-select-menu`)
-                        .setLabel(`Submit Pick`)
+                        .setLabel(`Submit My Pick`)
                         .setStyle(`SUCCESS`)
                         .setEmoji(``),
                 ))

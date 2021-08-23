@@ -24,6 +24,7 @@ export interface IGameStateStartArgs {
     threadId: string;
 }
 export interface IGameStateUpdateArgs {
+    msgId?: Snowflake;
     pickIds?: IPickMsg[],
     banned?: number[],
     rolled?: number[],

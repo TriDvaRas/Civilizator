@@ -5,6 +5,7 @@ import { createGameEmbed } from "../managers/embedManager";
 import { createPicksMessage, rollPicks, sendPicks } from "../managers/rollManager";
 import { IFullGame } from "../types/api";
 import { IGameUpdateArgs, IPlayerStateUpdateArgs } from "../types/apiReqs";
+import { updatePicksInfo } from "../util/picks";
 
 export default {
     customId: 'pick-vote',
@@ -29,16 +30,9 @@ export default {
 
         if (votesCount >= threshold) {
             await interaction.update({ embeds: [createGameEmbed(newGame)], components: [getLoadingButton(`Rerolling...`)] })
-            const pickMsgs = await sendPicks(game, interaction.channel as ThreadChannel, game.state.pickIds)
-            await api.patch(`/game/${game.id}`, {
-                phase: 'pick',
-                gameState: {
-                    pickIds: pickMsgs
-                }
-            } as IGameUpdateArgs)
-            newGame = await api.patch(`/playerstate/${game.id}/all`, {
-                vote: false
-            } as IPlayerStateUpdateArgs)
+            const picks = rollPicks(game)
+            const pickMsgs = await sendPicks(game, picks, interaction.channel as ThreadChannel, game.state.pickIds)
+            newGame = await updatePicksInfo(game, pickMsgs, picks);
 
             await interaction.editReply({ embeds: [createGameEmbed(newGame)], components: getGameEmbedButtons(newGame) })
         }

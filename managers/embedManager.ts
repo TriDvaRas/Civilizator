@@ -136,7 +136,7 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
                 { name: game.bpp > 0 ? `Bans` : `\u200B`, value: `${game.bpp > 0 ? getPlayerBans(game.playerStates, game.bpp) : ``}\u200B`, inline: true },
                 { name: `Pick`, value: `${getPlayerPicks(game.playerStates, game.civlist)}\u200B`, inline: true },
                 { name: `Reroll Votes [${game.playerStates.filter(x => x.vote).length}/${Math.ceil(game.playerStates.length * game.guildConfig.rerollThreshold / 100)}]`, value: `${getRerollVotes(game.playerStates)}\u200B`, inline: true },
-                { name: `Tips`, value: `You can submit your pick to save it for stats using the button bellow\nIf every players submits their pick \`/winner\` command can be used\u200B`, inline: false },
+                { name: `Tips`, value: `OP can resend this message with \`/gm\` command\nIf every player submits their pick \`/winner\` command can be used\u200B`, inline: false },
             )
             break;
         default:

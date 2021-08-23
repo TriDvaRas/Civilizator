@@ -18,6 +18,22 @@ export default {
         name: `set`,
         description: `Shows game settings menu`,
     },
+    pm: {
+        name: `pm`,
+        description: `Resends picks messages, so you won't need to scroll to the top of the thread to see them`,
+    },
+    pickmessages: {
+        name: `pickmessages`,
+        description: `Resends picks messages, so you won't need to scroll to the top of the thread to see them`,
+    },
+    gm: {
+        name: `gm`,
+        description: `Resends main game message, so you won't need to scroll to the top of the thread to see it`,
+    },
+    gamemessage: {
+        name: `gamemessage`,
+        description: `Resends main game message, so you won't need to scroll to the top of the thread to see it`,
+    },
     dlcs: {
         name: `dlcs`,
         description: `Shows current game dlc info`,

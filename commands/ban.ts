@@ -2,7 +2,7 @@ import { CommandInteraction, MessageEmbed, ThreadChannel } from "discord.js";
 import api from "../api/api";
 import { getGameEmbedButtons, getLoadingButton } from "../managers/buttonManager";
 import { createGameEmbed } from "../managers/embedManager";
-import { sendPicks } from "../managers/rollManager";
+import { rollPicks, sendPicks } from "../managers/rollManager";
 import { ICivilization, IFullGame } from "../types/api";
 import { IGameUpdateArgs, IPlayerStateUpdateArgs } from "../types/apiReqs";
 import { uniqueFilter } from "../util/arrays";
@@ -10,6 +10,7 @@ import { aliasToCivs, combineAliases, findSimilar } from "../util/civlist";
 import { findGame } from "../util/games";
 import { combineImages } from "../util/image";
 import { findGameMessage } from "../util/messages";
+import { updatePicksInfo } from "../util/picks";
 
 export default {
     name: 'ban',
@@ -114,16 +115,9 @@ export default {
             }
             else {
                 await gameMessage.edit({ embeds: [createGameEmbed(newGame)], components: [getLoadingButton(`Rolling...`)] })
-                const pickMsgs = await sendPicks(game, interaction.channel as ThreadChannel, game.state.pickIds)
-                await api.patch(`/game/${game.id}`, {
-                    phase: 'pick',
-                    gameState: {
-                        pickIds: pickMsgs
-                    }
-                } as IGameUpdateArgs)
-                newGame = await api.patch(`/playerstate/${game.id}/all`, {
-                    vote: false
-                } as IPlayerStateUpdateArgs)
+                const picks = rollPicks(game)
+                const pickMsgs = await sendPicks(game, picks, interaction.channel as ThreadChannel, game.state.pickIds)
+                newGame = await updatePicksInfo(game, pickMsgs, picks);
 
                 await gameMessage.edit({ embeds: [createGameEmbed(newGame)], components: getGameEmbedButtons(newGame) })
             }
