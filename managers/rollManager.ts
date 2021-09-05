@@ -35,6 +35,21 @@ export function getPicks(game: IFullGame) {
     }
     return res
 }
+export async function createAnonPicksMessage(civs: ICivilization[]) {
+    const msg = {
+        content: `${civs.map(x => x.name).join(`|`)}\u200B`,
+        components: [],
+    } as MessageOptions
+    const aId = Math.floor(Math.random() * 100)
+    try {
+        await combineImages(civs.map(x => `./assets/${x.thumbnailPath}`), `./assets/imgs/players/a${aId}.png`)
+        msg.files = [new MessageAttachment(`./assets/imgs/players/a${aId}.png`)]
+    } catch (error) {
+        log.warn(`mergeImg error\n${error}`)
+        msg.content += `\n*Failed to create image*`
+    }
+    return msg
+}
 export async function createPicksMessage(pick: IPick) {
     const msg = {
         content: `<@${pick.player.playerId}>\n${pick.civs.map(x => x.name).join(`|`)}\u200B`,
