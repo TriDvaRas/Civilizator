@@ -45,6 +45,10 @@ export interface IGuild {
   publicStats: boolean;
   kicked: boolean;
   news: boolean;
+  newsChannels: Snowflake[];
+  whiteChannels: Snowflake[];
+  whiteRoles: Snowflake[];
+  privilegedUsers: Snowflake[];
   fastCount: number;
   rerollThreshold: number;
   locales: AliasLanguages[];

@@ -1,6 +1,7 @@
 import { MessageActionRow, MessageButton } from "discord.js";
-import { IFullGame } from "../types/api";
-import { GameSettingsType } from "../types/custom";
+import { AliasLanguages, IFullGame, IGuild, IPlayerState } from "../types/api";
+import { GameSettingsType, GuildSettingsType } from "../types/custom";
+import { getCivName, isEnoughCivsToStartGame } from "../util/civlist";
 import { sortDlcs } from "../util/dlcs";
 import { IPick } from "./rollManager";
 
@@ -14,16 +15,19 @@ export function getGameEmbedButtons(game: IFullGame): MessageActionRow[] {
                         .setCustomId(`join-join`)
                         .setLabel(`Join`)
                         .setStyle(`SUCCESS`)
+                        .setDisabled(game.playerStates.length === (game.gameName === 'civ6' ? 20 : 12))
                         .setEmoji(`civilizatorTick:875078196050141185`),
                     new MessageButton()
                         .setCustomId(`join-leave`)
                         .setLabel(`Leave`)
                         .setStyle(`DANGER`)
+                        .setDisabled(game.playerStates.length === 0)
                         .setEmoji(`civilizatorCross:875078196444405780`),
                     new MessageButton()
                         .setCustomId(`join-op-next`)
                         .setLabel(`Start ${game.bpp > 0 ? `bans` : `picks`} (op)`)
                         .setStyle(`SUCCESS`)
+                        .setDisabled(game.playerStates.length === 0 || !isEnoughCivsToStartGame(game))
                         .setEmoji(`civilizatorNext:875082717606338690​`),
                 ))
             break;
@@ -276,13 +280,181 @@ export function getGameSetButtons(game: IFullGame, type: GameSettingsType): Mess
                 ))
             break;
         default:
-            log.warn(`Invalid game phase in buttonManager: ${game.phase}`);
+            log.warn(`Invalid type in buttonManager: ${type}`);
             break;
     }
     return rows
 }
-export function getPickButtons(pick: IPick) {
+export function getSettingsButtons(guildConfig: IGuild, type: GuildSettingsType): MessageActionRow[] {
+    const rows: MessageActionRow[] = []
+    switch (type) {
+        case `menu`:
+            rows.push(new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId(`settings-menu-select/reroll`)
+                        .setLabel(`Reroll`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-menu-select/news`)
+                        .setLabel(`News`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-menu-select/locale`)
+                        .setLabel(`Alias locales`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-menu-select/permissions`)
+                        .setLabel(`Permissions`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                ))
+            break;
+        case `reroll`:
+            rows.push(new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId(`settings-reroll-add/-20`)
+                        .setLabel(`-20%`)
+                        .setStyle(`DANGER`)
+                        .setEmoji(``)
+                        .setDisabled(guildConfig.rerollThreshold <= 0 || guildConfig.rerollThreshold === 5),
+                    new MessageButton()
+                        .setCustomId(`settings-reroll-add/-5`)
+                        .setLabel(`-5%`)
+                        .setStyle(`DANGER`)
+                        .setEmoji(``)
+                        .setDisabled(guildConfig.rerollThreshold <= 0 || guildConfig.rerollThreshold === 5),
+                    new MessageButton()
+                        .setCustomId(`settings-reroll-add/5`)
+                        .setLabel(`+5%`)
+                        .setStyle(`SUCCESS`)
+                        .setEmoji(``)
+                        .setDisabled(guildConfig.rerollThreshold <= 0 || guildConfig.rerollThreshold === 100),
+                    new MessageButton()
+                        .setCustomId(`settings-reroll-add/20`)
+                        .setLabel(`+20%`)
+                        .setStyle(`SUCCESS`)
+                        .setEmoji(``)
+                        .setDisabled(guildConfig.rerollThreshold <= 0 || guildConfig.rerollThreshold === 100),
 
+                ))
+            rows.push(new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId(`settings-menu`)
+                        .setLabel(`Back`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(`civilizatorL:875782163281346632`),
+                    new MessageButton()
+                        .setCustomId(`settings-reroll-toggle`)
+                        .setLabel(`${guildConfig.rerollThreshold > 0 ? `Disable` : `Enable`} Rerolls`)
+                        .setStyle(`PRIMARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-reroll-default`)
+                        .setLabel(`Restore Default`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                ))
+            break;
+        case `news`:
+            rows.push(new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId(`settings-menu`)
+                        .setLabel(`Back`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(`civilizatorL:875782163281346632`),
+                    new MessageButton()
+                        .setCustomId(`settings-menu-select/news`)
+                        .setLabel(`Update Info`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-news-toggle`)
+                        .setLabel(`${guildConfig.news ? `Disable` : `Enable`} news`)
+                        .setStyle(guildConfig.news ? `DANGER` : `SUCCESS`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-news-default`)
+                        .setLabel(`Clear news channels`)
+                        .setDisabled(guildConfig.newsChannels.length === 0)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                ))
+            break;
+        case `locale`:
+            const locales: AliasLanguages[] = ['en', 'it']
+
+            rows.push(new MessageActionRow()
+                .addComponents(locales.map(locale => new MessageButton()
+                    .setCustomId(`settings-locales-toggle/${locale}`)
+                    .setLabel(locale)
+                    .setStyle(guildConfig.locales.includes(locale) ? `SUCCESS` : `SECONDARY`)
+                    .setDisabled(locale === `en`)
+                )))
+            rows.push(new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId(`settings-menu`)
+                        .setLabel(`Back`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(`civilizatorL:875782163281346632`),
+                ))
+            break;
+        case `permissions`:
+            rows.push(new MessageActionRow()
+                .addComponents(
+                    new MessageButton()
+                        .setCustomId(`settings-menu`)
+                        .setLabel(`Back`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(`civilizatorL:875782163281346632`),
+                    new MessageButton()
+                        .setCustomId(`settings-menu-select/permissions`)
+                        .setLabel(`Update Info`)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-permissions-default/c`)
+                        .setLabel(`Allow all channels`)
+                        .setDisabled(guildConfig.whiteChannels.length === 0)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-permissions-default/r`)
+                        .setLabel(`Allow all roles`)
+                        .setDisabled(guildConfig.whiteRoles.length === 0)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                    new MessageButton()
+                        .setCustomId(`settings-permissions-default/pu`)
+                        .setLabel(`Clear privileged users`)
+                        .setDisabled(guildConfig.privilegedUsers.length === 0)
+                        .setStyle(`SECONDARY`)
+                        .setEmoji(``),
+                ))
+            break;
+        default:
+            log.warn(`Invalid game phase in buttonManager: ${type}`);
+            break;
+    }
+    return rows
+}
+export function getPickSelectButtons(game: IFullGame, playerState: IPlayerState) {
+    return new MessageActionRow()
+        .addComponents(
+            ...playerState.rolled.map(x =>
+                new MessageButton()
+                    .setCustomId(`pick-select/${x}`)
+                    .setLabel(`${getCivName(game.civlist, x)}`)
+                    .setStyle(playerState.picked == x ? `SUCCESS` : `SECONDARY`)
+            )
+        )
 }
 export function getLoadingButton(customText?: string) {
     return new MessageActionRow()

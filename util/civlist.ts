@@ -1,4 +1,4 @@
-import { AliasLanguages, ICivilization } from "../types/api";
+import { AliasLanguages, ICivilization, IFullGame } from "../types/api";
 import { findBestMatch } from "string-similarity";
 
 export function getDlcNames(civs: ICivilization[]) {
@@ -18,6 +18,7 @@ export function filterPersonas(enable: boolean, civlist: ICivilization[], disabl
     return [civs, _disabled]
 }
 export function filterDlcs(dlcs: string[], civlist: ICivilization[], disabled: number[] = []): [number[], number[]] {
+
     const civs = civlist.filter(x => !disabled.includes(x.id) && (dlcs.includes(x.dlc))).map(x => x.id)
     const _disabled = civlist.filter(x => !civs.includes(x.id)).map(x => x.id)
     return [civs, _disabled]
@@ -49,4 +50,15 @@ export function findSimilar(alias: string, civlist: ICivilization[], locales: Al
         return a
     }).flat(3))
     return matches.ratings.filter(x => x.rating > 0.3).sort((a, b) => b.rating - a.rating).slice(0, 2).map(x => x.target).filter((x, i, arr) => arr.indexOf(x) == i)
+}
+
+export function isEnoughCivsToStartGame(game: IFullGame, extraSlot?: boolean) {
+    const civsRequired = (game.bpp + game.cpp) * game.playerStates.length
+    const civsAvailable = game.state.civs.length + game.playerStates.reduce((a, c) => a + c.banned.length, 0)
+    console.log({ civsRequired, civsAvailable });
+
+
+    if (extraSlot)
+        return civsAvailable > civsRequired
+    return civsAvailable >= civsRequired
 }

@@ -1,6 +1,9 @@
 import { ButtonInteraction, CommandInteraction, Snowflake } from "discord.js";
 
 export type GameSettingsType = 'menu' | 'game' | 'cpp' | 'bpp' | 'dlc' | 'wrongphase' | 'wrongop'
+export type GuildSettingsType = 'menu' | 'reroll' | 'news' | 'locale' | 'permissions'
+export type PermissionTypes = 'pu' | 'c' | 'r'
+
 export interface ICommand {
     name: string;
     execute: (interaction: CommandInteraction) => Promise<void>

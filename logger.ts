@@ -1,4 +1,6 @@
 import * as winston from 'winston';
+import { sendLog } from './util/discordLogger';
+import { format as prettyFormat } from 'pretty-format';
 
 const colorizer = winston.format.colorize();
 export const logger = winston.createLogger({
@@ -8,6 +10,7 @@ export const logger = winston.createLogger({
         info: 2,
         dapi: 3,
         cmd: 4,
+        btn: 4,
         self: 5,
         db: 6,
         http: 8,
@@ -19,7 +22,12 @@ export const logger = winston.createLogger({
         winston.format.timestamp(),
         winston.format.simple(),
         winston.format.printf(msg => {
-            return `${colorizer.colorize('verbose', `[${msg.timestamp}]`)} ${colorizer.colorize(msg.level, `[${msg.level.toUpperCase()}]`)} ${typeof msg.message === 'string' ? msg.message : JSON.stringify(msg.message)}`
+            sendLog(msg)
+            return `${colorizer.colorize('verbose', `[${msg.timestamp}]`)} ${colorizer.colorize([`cmd`, `btn`].includes(msg.level) ? `info` : msg.level, `[${msg.level.toUpperCase()}]`)} ${typeof msg.message === 'string' ? msg.message : prettyFormat(msg.message, {
+                indent: 8,
+                printBasicPrototype: false,
+                printFunctionName: true,
+            })}`
         })
     ),
     transports: [

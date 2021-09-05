@@ -24,9 +24,6 @@ export default {
         // reroll sequence
         const threshold = newGame.playerStates.length * game.guildConfig.rerollThreshold / 100
         const votesCount = newGame.playerStates.filter(x => x.vote).length
-        console.log({
-            votesCount, threshold
-        });
 
         if (votesCount >= threshold) {
             await interaction.update({ embeds: [createGameEmbed(newGame)], components: [getLoadingButton(`Rerolling...`)] })

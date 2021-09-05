@@ -23,6 +23,8 @@ export default {
             banned: [...player.banned, 0]
         } as IPlayerStateUpdateArgs
         let newGame = await api.patch(`/playerstate/${game.id}/${player.playerId}`, data) as IFullGame
+        await interaction.channel?.send({ content: `<@${interaction.user.id}> skipped \`${1}\` ban` })
+        
         if (newGame.playerStates.find(x => x.banned.length && x.banned.length < game.bpp))
             await interaction.update({ embeds: [createGameEmbed(newGame)], components: getGameEmbedButtons(newGame) })
         else {

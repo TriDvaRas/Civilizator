@@ -15,11 +15,12 @@ export default {
             guildId: interaction.guildId,
         })
         const player = game.playerStates.find(x => x.playerId === interaction.user.id)
+
         if (!player)
             return await interaction.reply({ content: `You are not this game's player`, ephemeral: true })
         if (player.banned.length === game.bpp)
             return await interaction.reply({ content: `You have no bans left`, ephemeral: true })
-        const newBanned = player.banned
+        const newBanned = [...player.banned]
         while (newBanned.length < game.bpp) {
             newBanned.push(0)
         }
@@ -27,8 +28,14 @@ export default {
             banned: newBanned
         } as IPlayerStateUpdateArgs
         let newGame = await api.patch(`/playerstate/${game.id}/${player.playerId}`, data) as IFullGame
+        console.log({
+            bpp: game.bpp,
+            banned: player.banned,
+            ps: newGame.playerStates
+        });
 
-        if (newGame.playerStates.find(x => x.banned.length && x.banned.length < game.bpp))
+        await interaction.channel?.send({ content: `<@${interaction.user.id}> skipped \`${game.bpp - player.banned.length}\` ban${game.bpp - player.banned.length > 1 ? `s` : ``}` })
+        if (newGame.playerStates.find(x => x.banned.length < game.bpp))
             await interaction.update({ embeds: [createGameEmbed(newGame)], components: getGameEmbedButtons(newGame) })
         else {
             await interaction.update({ embeds: [createGameEmbed(newGame)], components: [getLoadingButton(`Rolling...`)] })

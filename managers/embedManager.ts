@@ -1,7 +1,7 @@
 import { MessageEmbed } from "discord.js";
-import { ICivilization, IFullGame, IPlayerState } from "../types/api";
-import { GameSettingsType } from "../types/custom";
-import { getCivName } from "../util/civlist";
+import { ICivilization, IFullGame, IGuild, IPlayerState } from "../types/api";
+import { GameSettingsType, GuildSettingsType } from "../types/custom";
+import { getCivName, isEnoughCivsToStartGame } from "../util/civlist";
 
 export function createBaseGameEmbed() {
     return new MessageEmbed()
@@ -23,7 +23,7 @@ export function createGameSetEmbed(game: IFullGame, type: GameSettingsType) {
     const embed = new MessageEmbed()
         .setColor(`#807BC5`)
         .setTitle(`Civilizator Game \#${game.id} Settings`)
-        .setFooter(`Click dismiss message to hide this menu\nIf main game menu is not updating click any button on it`)
+        .setDescription(`Click *Dismiss message* to hide this menu`)
     switch (type) {
         case `menu`:
             embed.setTitle(`Choose which setting you want to update`)
@@ -111,6 +111,8 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
                 { name: `Players`, value: `${getPlayerTags(game.playerStates)}\u200B`, inline: true },
                 { name: `Tips\u200B`, value: `Use \`/set\` to edit game settings\nUse \`/dlcs\` to view dlcs info`, inline: false },
             )
+            if (!isEnoughCivsToStartGame(game))
+                embed.addField(`**Not enough civs to proceed**`, `\`${game.state.civs.length}\` civs in pool, \`${(game.bpp + game.cpp) * game.playerStates.length}\` is needed\nLower cpp, bpp or enable more dlcs`)
             break;
         case `ban`:
             embed.addFields(
@@ -150,4 +152,70 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
 }
 function getRerollVotes(playerStates: IPlayerState[]) {
     return playerStates.filter(x => x.vote).map(x => `<@${x.playerId}>`).join(`  `)
+}
+export function createPickSelectEmbed(game: IFullGame, playerState: IPlayerState) {
+    const embed = new MessageEmbed()
+        .setColor(`#807BC5`)
+        .setTitle(`Pick Selector`)
+        .setDescription(`Click *Dismiss message* to hide this menu`)
+
+    return embed
+}
+
+
+export function createSettingsEmbed(guildConfig: IGuild, type: GuildSettingsType) {
+    const embed = new MessageEmbed()
+        .setColor(`#807BC5`)
+        .setTitle(`Civilizator Settings`)
+        .setDescription(`Click *Dismiss message* to hide this menu`)
+    switch (type) {
+        case `menu`:
+            embed.setTitle(`Choose settings group you want to update`)
+            break;
+        case `reroll`:
+            embed.setTitle(`Reroll Settings`)
+            getVotesPlayers(embed, guildConfig.rerollThreshold)
+            break;
+        case `news`:
+            embed.setTitle(`News Settings`)
+            embed.addField(`About`, `Bot sends info about major updates once in few months. You can specify channels in which info would be sent. If no channels are specified info would be sent in channel where \`/start\` was last used. You can also fully disable news.`)
+            embed.addField(`News Channels`, `In which channels news would be sent:\n${guildConfig.news ? (guildConfig.newsChannels.length === 0 ? `**_In last game's channel_**` : guildConfig.newsChannels.map(x => `<#${x}>`).join(` `)) : `**News Disabled**`}\n Use \`/news\` to change\n\u200B`)
+            break;
+        case `locale`:
+            embed.setTitle(`Alias Locales Settings`)
+            embed.addField(`About`, `WIP feature, don't expect it to be fully functional. If you want to contribute with adding locales please message ${process.env.BOT_OWNER_TAG}\n`)
+            break;
+        case `permissions`:
+            embed.setTitle(`Permissions Settings`)
+            embed.addField(`Channels`, `In which channels can \`/start\` and \`/fast\` be used:\n${guildConfig.whiteChannels.length === 0 ? `**_In all_**` : guildConfig.whiteChannels.map(x => `<#${x}>`).join(` `)}\n Use \`/permissions c\` to change\n\u200B`)
+            embed.addField(`Roles`, `Which roles can use \`/start\` and \`/fast\`:\n${guildConfig.whiteRoles.length === 0 ? `@everyone` : guildConfig.whiteRoles.map(x => `<@&${x}>`).join(` `)}\n Use \`/permissions r\` to change\n\u200B`)
+            embed.addField(`Privileged Users`, `Which users (other than server admins) can use \`/settings\` and \`/permissions\`:\n${guildConfig.privilegedUsers.length === 0 ? `**_None_**` : guildConfig.privilegedUsers.map(x => `<@${x}>`).join(` `)}\n Use \`/permissions pu\` to change`)
+            break;
+
+    }
+    return embed
+}
+
+
+function getVotesPlayers(embed: MessageEmbed, threshold: number) {
+    embed.addField(`Current threshold`, threshold > 0 ? `${threshold}%` : `Rerolls disabled`, false);
+    if (threshold < 0)
+        return
+    let i = 1
+    embed.addField(`\u200B`, `${new Array(7).fill(0)
+        .map(() => i++)
+        .map(x => `${Math.ceil(x * threshold / 100)}/${x}`)
+        .join(`\n`)
+        }`, true);
+    embed.addField(`\u200B`, `${new Array(7).fill(0)
+        .map(() => i++)
+        .map(x => `${Math.ceil(x * threshold / 100)}/${x}`)
+        .join(`\n`)
+        }`, true);
+    embed.addField(`\u200B`, `\u200B\n${new Array(6).fill(0)
+        .map(() => i++)
+        .map(x => `${Math.ceil(x * threshold / 100)}/${x}`)
+        .join(`\n`)
+        }`, true);
+    embed.setFooter(`Votes required/Total players`)
 }

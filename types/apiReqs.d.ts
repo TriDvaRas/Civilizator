@@ -1,5 +1,5 @@
 import { Snowflake } from "discord.js";
-import { GameTypes, PhaseTypes } from "./api";
+import { AliasLanguages, GameTypes, PhaseTypes } from "./api";
 import { IPickMsg } from "./custom";
 
 export interface IGameStartArgs {
@@ -26,6 +26,7 @@ export interface IGameStateStartArgs {
 export interface IGameStateUpdateArgs {
     msgId?: Snowflake;
     pickIds?: IPickMsg[],
+    civs?: number[],
     banned?: number[],
     rolled?: number[],
     disabled?: number[],
@@ -60,11 +61,17 @@ export interface IGuildCreateArgs {
     ownerId: string;
 }
 export interface IGuildUpdateArgs {
-    id: Snowflake;
+    id?: Snowflake;
     name?: string;
     publicStats?: boolean;
     kicked?: boolean;
     news?: boolean;
+    newsChannels?: Snowflake[];
     avatar?: string;
     ownerId?: string;
+    rerollThreshold?: number;
+    locales?: AliasLanguages[];
+    whiteChannels?: Snowflake[];
+    whiteRoles?: Snowflake[];
+    privilegedUsers?: Snowflake[];
 }

@@ -6,6 +6,30 @@ export default {
         name: `ping`,
         description: `Sends bot's latency info`,
     },
+    roll: {
+        name: `roll`,
+        description: `Random number generator (literally RNG)`,
+        options: [
+            {
+                name: `min`,
+                description: `Minimum value`,
+                type: `INTEGER`,
+                required: false,
+            },
+            {
+                name: `max`,
+                description: `Maximum value`,
+                type: `INTEGER`,
+                required: false,
+            },
+            {
+                name: `amount`,
+                description: `Amount of values`,
+                type: `INTEGER`,
+                required: false,
+            },
+        ]
+    },
     emojilist: {
         name: `emojilist`,
         description: `Sends all emoji identifiers of current guild`,
@@ -16,6 +40,10 @@ export default {
     },
     set: {
         name: `set`,
+        description: `Shows game settings menu`,
+    },
+    version: {
+        name: `version`,
         description: `Shows game settings menu`,
     },
     pm: {
@@ -37,7 +65,7 @@ export default {
     dlcs: {
         name: `dlcs`,
         description: `Shows current game dlc info`,
-        options:[
+        options: [
             {
                 name: `public`,
                 description: `Should the list be visible to other players`,
@@ -46,10 +74,41 @@ export default {
             }
         ]
     },
+    rollcivs: {
+        name: `rollcivs`,
+        description: `Generates a set of random civilizations. Lit. /roll but with civilizations`,
+        options: [
+            {
+                name: `game`,
+                description: `Choose the game`,
+                type: `STRING`,
+                required: true,
+                choices: [
+                    { name: `Civilization V`, value: `civ5` },
+                    { name: `Civilization V + LEK`, value: `lek` },
+                    { name: `Civilization VI`, value: `civ6` },
+                ]
+            },
+            {
+                name: `amount`,
+                description: `Choose how many civs you'll get`,
+                type: `INTEGER`,
+                required: true,
+                choices: [
+                    { name: `3`, value: 3 },
+                    { name: `1`, value: 1 },
+                    { name: `2`, value: 2 },
+                    { name: `4`, value: 4 },
+                    { name: `5`, value: 5 },
+                    { name: `6`, value: 6 },
+                ]
+            }
+        ]
+    },
     ban: {
         name: `ban`,
         description: `Ban civilizations during bans phase. You can specify multiple bans at once with extra options`,
-        options:[
+        options: [
             {
                 name: `civ1`,
                 description: `Civilization's id or name/leader alias(or part of it)`,
@@ -68,6 +127,18 @@ export default {
                 type: `STRING`,
                 required: false,
             }
+        ]
+    },
+    opban: {
+        name: `opban`,
+        description: `Ban extra civilizations during bans phase without spending standart ban slots. OP only`,
+        options: [
+            {
+                name: `civ`,
+                description: `Civilization's id or name/leader alias(or part of it)`,
+                type: `STRING`,
+                required: true,
+            },
         ]
     },
     start: {
@@ -174,6 +245,147 @@ export default {
                 ]
             },
         ]
+    },
+    permissions: {
+        name: `permissions`,
+        description: `Edit Permissions settings`,
+        options: [
+            {
+                name: `pu`,
+                description: `Privileged Users`,
+                type: `SUB_COMMAND_GROUP`,
+                options: [
+                    {
+                        name: `add`,
+                        description: `Add Privileged User`,
+                        type: `SUB_COMMAND`,
+                        options: [
+                            {
+                                name: `user`,
+                                description: `User to add`,
+                                type: `USER`,
+                                required: true,
+                            },
+                        ]
+                    },
+                    {
+                        name: `remove`,
+                        description: `Remove Privileged User`,
+                        type: `SUB_COMMAND`,
+                        options: [
+                            {
+                                name: `user`,
+                                description: `User to remove`,
+                                type: `USER`,
+                                required: true,
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                name: `c`,
+                description: `Allowed Channels`,
+                type: `SUB_COMMAND_GROUP`,
+                options: [
+                    {
+                        name: `add`,
+                        description: `Add Allowed Channel`,
+                        type: `SUB_COMMAND`,
+                        options: [
+                            {
+                                name: `channel`,
+                                description: `Channel to add`,
+                                type: `CHANNEL`,
+                                required: true,
+                            },
+                        ]
+                    },
+                    {
+                        name: `remove`,
+                        description: `Remove Allowed Channel`,
+                        type: `SUB_COMMAND`,
+                        options: [
+                            {
+                                name: `channel`,
+                                description: `Channel to remove`,
+                                type: `CHANNEL`,
+                                required: true,
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                name: `r`,
+                description: `Allowed Roles`,
+                type: `SUB_COMMAND_GROUP`,
+                options: [
+                    {
+                        name: `add`,
+                        description: `Add Allowed Role`,
+                        type: `SUB_COMMAND`,
+                        options: [
+                            {
+                                name: `role`,
+                                description: `Role to add`,
+                                type: `ROLE`,
+                                required: true,
+                            },
+                        ]
+                    },
+                    {
+                        name: `remove`,
+                        description: `Remove Allowed Role`,
+                        type: `SUB_COMMAND`,
+                        options: [
+                            {
+                                name: `role`,
+                                description: `Role to remove`,
+                                type: `ROLE`,
+                                required: true,
+                            },
+                        ]
+                    }
+                ]
+            },
+        ]
+    },
+    news: {
+        name: `news`,
+        description: `Edit News Channels settings`,
+        options: [
+            {
+                name: `add`,
+                description: `Add News Channel`,
+                type: `SUB_COMMAND`,
+                options: [
+                    {
+                        name: `channel`,
+                        description: `Channel to add`,
+                        type: `CHANNEL`,
+                        required: true,
+                    },
+                ]
+            },
+            {
+                name: `remove`,
+                description: `Remove News Channel`,
+                type: `SUB_COMMAND`,
+                options: [
+                    {
+                        name: `channel`,
+                        description: `Channel to remove`,
+                        type: `CHANNEL`,
+                        required: true,
+                    },
+                ]
+            }
+        ]
+    },
+    settings: {
+        name: `settings`,
+        description: `Open server-wide Civilizator settings menu`,
     },
     regcommand: {
         name: `regcommand`,

@@ -1,8 +1,12 @@
 import { ColorResolvable, CommandInteraction, MessageEmbed } from "discord.js";
 
 export default {
-    name: 'ping',
+    name: 'rollcivs',
     execute: async (interaction: CommandInteraction) => {
+        
+        
+        
+        
         const pingTime = Date.now()
         let ping = pingTime - interaction.createdTimestamp
         let color: ColorResolvable = `GREEN`

@@ -1,4 +1,4 @@
-import { ButtonInteraction, Collection } from "discord.js";
+import { ButtonInteraction, Collection, TextChannel } from "discord.js";
 import fs from 'fs';
 import path from 'path';
 import { IButton } from "../types/custom";
@@ -13,6 +13,13 @@ for (const file of buttonFiles) {
 export default async function buttonHandler(interaction: ButtonInteraction) {
     const cid = interaction.customId.split(`/`)
     const button = buttons.get(cid.shift() as string)
+    log.log(`btn`, {
+        button: `${interaction.customId}`,
+        guild: `${interaction.guildId}\n${interaction.guild?.name}`,
+        channel: `${interaction.channel?.type}\n${interaction.channelId}\n${(interaction.channel as TextChannel | null)?.name}`,
+        user: `${interaction.user.id}/\n${interaction.user.username}`,
+        msg: `${interaction.message.type}/\n${interaction.message.id}`,
+    })
     if (!button) {
         interaction.reply({
             content: `Missing button handler for \`${interaction.customId}\`.`,
@@ -24,6 +31,7 @@ export default async function buttonHandler(interaction: ButtonInteraction) {
         try {
             await button.execute(interaction, cid)
         } catch (error) {
+            log.error(button.customId)
             log.error(error.stack)
             if (!interaction.replied)
                 await interaction.reply({
