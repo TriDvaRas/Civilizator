@@ -1,7 +1,9 @@
 import { ButtonInteraction, Collection, TextChannel } from "discord.js";
 import fs from 'fs';
 import path from 'path';
-import { IButton } from "../types/custom";
+import api from "../api/api";
+import { IButtonInteractionCreateArgs, IButtonInteractionUpdateArgs } from "../types/apiReqs";
+import { IButton, IButtonInteraction } from "../types/custom";
 
 const buttons = new Collection<string, IButton>();
 const buttonFiles = fs.readdirSync(path.resolve(__dirname, '../buttons')).filter(file => file.endsWith('.ts'));
@@ -29,8 +31,22 @@ export default async function buttonHandler(interaction: ButtonInteraction) {
     }
     else
         try {
+            const interactionLog = await api.post(`/interaction`, {
+                type: 'button',
+                guildId: interaction.guildId,
+                userId: interaction.user.id,
+                channelId: interaction.channelId,
+                messageId: interaction.message.id,
+                buttonName: button.customId,
+            } as IButtonInteractionCreateArgs) as IButtonInteraction
             await button.execute(interaction, cid)
-        } catch (error) {
+            console.log( await api.patch(`/interaction`, {
+                id: interactionLog.id,
+                type: 'button',
+                successful: true,
+            } as IButtonInteractionUpdateArgs) as IButtonInteraction);
+            
+        } catch (error: any) {
             log.error(button.customId)
             log.error(error.stack)
             if (!interaction.replied)

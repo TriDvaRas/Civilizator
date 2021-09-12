@@ -18,3 +18,19 @@ export interface IPickMsg {
     id: Snowflake;
     playerId: Snowflake | null;
 }
+interface IInteraction {
+  id: number;
+  guildId?: string;
+  userId: string;
+  channelId: string;
+  timestamp: Date;
+  successful: boolean;
+}
+export interface ICommandInteraction extends IInteraction {
+  commandId: number;
+  args: {}[];
+}
+export interface IButtonInteraction extends IInteraction {
+  buttonId: number;
+  messageId: string;
+}

@@ -75,3 +75,40 @@ export interface IGuildUpdateArgs {
     whiteRoles?: Snowflake[];
     privilegedUsers?: Snowflake[];
 }
+
+export interface IInteractionCreateArgs {
+    type: 'command' | 'button'
+    guildId?: string;
+    userId: string;
+    channelId: string;
+}
+export interface ICommandInteractionCreateArgs extends IInteractionCreateArgs {
+    type: 'command'
+    commandName: string;
+    args: {}[];
+}
+export interface IButtonInteractionCreateArgs extends IInteractionCreateArgs {
+    type: 'button'
+    buttonName: string;
+    messageId: string;
+}
+export interface IInteractionUpdateArgs {
+    id: number;
+    type: 'command' | 'button'
+    successful: boolean;
+}
+export interface ICommandInteractionUpdateArgs extends IInteractionUpdateArgs {
+    type: 'command'
+}
+export interface IButtonInteractionUpdateArgs extends IInteractionUpdateArgs {
+    type: 'button'
+}
+export interface IButtonCreateArgs {
+    name: string
+}
+export interface ICommandCreateArgs {
+    name: string;
+    description: string;
+    example?: string;
+    options?: {}[];
+}

@@ -23,11 +23,13 @@ export const logger = winston.createLogger({
         winston.format.simple(),
         winston.format.printf(msg => {
             sendLog(msg)
-            return `${colorizer.colorize('verbose', `[${msg.timestamp}]`)} ${colorizer.colorize([`cmd`, `btn`].includes(msg.level) ? `info` : msg.level, `[${msg.level.toUpperCase()}]`)} ${typeof msg.message === 'string' ? msg.message : prettyFormat(msg.message, {
-                indent: 8,
-                printBasicPrototype: false,
-                printFunctionName: true,
-            })}`
+            const message = msg.message || msg.command || msg.button || `?`
+            return `${colorizer.colorize('verbose', `[${msg.timestamp}]`)} ${colorizer.colorize([`cmd`, `btn`].includes(msg.level) ? `info` : msg.level, `[${msg.level.toUpperCase()}]`)
+                } ${typeof message === 'string' ? message : prettyFormat(message, {
+                    indent: 8,
+                    printBasicPrototype: false,
+                    printFunctionName: true,
+                })}`
         })
     ),
     transports: [
