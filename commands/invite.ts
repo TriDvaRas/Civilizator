@@ -21,6 +21,6 @@ export default {
                 'bot',
             ]
         })
-        interaction.reply(`[Click here](${invite}) to invite bot to a different server`)
+        interaction.reply(`[Click here](${invite}) to invite bot to another server`)
     }
 }
