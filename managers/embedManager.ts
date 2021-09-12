@@ -2,7 +2,7 @@ import { MessageEmbed } from "discord.js";
 import { ICivilization, IFullGame, IGuild, IPlayerState } from "../types/api";
 import { GameSettingsType, GuildSettingsType } from "../types/custom";
 import { getCivName, isEnoughCivsToStartGame } from "../util/civlist";
-
+import gameLogos from '../assets/json/gameLogos.json'
 export function createBaseGameEmbed() {
     return new MessageEmbed()
         .setColor(`#46a832`)
@@ -14,6 +14,7 @@ export function createBaseGameEmbed() {
 export function createGameEmbed(game: IFullGame) {
     return setFields(
         new MessageEmbed()
+            .setThumbnail(gameLogos[game.gameName])
             .setColor(getEmbedColor(game.phase))
             .setTitle(`**Civilizator Game \#${game.id}**`)
             .setFooter(`Civilizator by TriDvaRas#4805`, `https://tdr.s-ul.eu/hP8HuUCR`)

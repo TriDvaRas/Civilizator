@@ -1,5 +1,6 @@
 import { ColorResolvable, MessageEmbed, TextChannel } from "discord.js";
 import winston from "winston";
+import { toKeyValue } from "./objects";
 
 export async function sendLog(msg: winston.Logform.TransformableInfo) {
     const logChannel = await client.channels.fetch(process.env.FULLLOG_CHANNEL_ID as string) as TextChannel
@@ -41,16 +42,7 @@ function formatLog(msg: winston.Logform.TransformableInfo) {
 
     return embed
 }
-function toKeyValue(object: any) {
-    const arr: { key: string, value: any }[] = []
-    for (const key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, key)) {
-            const value = object[key];
-            arr.push({ key, value })
-        }
-    }
-    return arr
-}
+
 function levelToColor(level: string): ColorResolvable {
     switch (level) {
         case 'error':
