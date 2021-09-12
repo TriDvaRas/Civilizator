@@ -40,11 +40,11 @@ export default async function buttonHandler(interaction: ButtonInteraction) {
                 buttonName: button.customId,
             } as IButtonInteractionCreateArgs) as IButtonInteraction
             await button.execute(interaction, cid)
-            console.log( await api.patch(`/interaction`, {
+            await api.patch(`/interaction`, {
                 id: interactionLog.id,
                 type: 'button',
                 successful: true,
-            } as IButtonInteractionUpdateArgs) as IButtonInteraction);
+            } as IButtonInteractionUpdateArgs) as IButtonInteraction
             
         } catch (error: any) {
             log.error(button.customId)

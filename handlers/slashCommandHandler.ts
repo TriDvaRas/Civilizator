@@ -40,11 +40,11 @@ export default async function slashCommandHandler(interaction: CommandInteractio
                 args: (interaction.options as any)?._hoistedOptions
             } as ICommandInteractionCreateArgs) as ICommandInteraction
             await command.execute(interaction)
-            console.log(await api.patch(`/interaction`, {
+            await api.patch(`/interaction`, {
                 id: interactionLog.id,
                 type: 'command',
                 successful: true,
-            } as ICommandInteractionUpdateArgs));
+            } as ICommandInteractionUpdateArgs)
             
         } catch (error: any) {
             log.error(command.name)
