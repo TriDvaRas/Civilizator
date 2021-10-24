@@ -188,8 +188,8 @@ export function createSettingsEmbed(guildConfig: IGuild, type: GuildSettingsType
             break;
         case `permissions`:
             embed.setTitle(`Permissions Settings`)
-            embed.addField(`Channels`, `In which channels can \`/start\` and \`/fast\` be used:\n${guildConfig.whiteChannels.length === 0 ? `**_In all_**` : guildConfig.whiteChannels.map(x => `<#${x}>`).join(` `)}\n Use \`/permissions c\` to change\n\u200B`)
-            embed.addField(`Roles`, `Which roles can use \`/start\` and \`/fast\`:\n${guildConfig.whiteRoles.length === 0 ? `@everyone` : guildConfig.whiteRoles.map(x => `<@&${x}>`).join(` `)}\n Use \`/permissions r\` to change\n\u200B`)
+            embed.addField(`Channels`, `In which channels can \`/start\` be used:\n${guildConfig.whiteChannels.length === 0 ? `**_In all_**` : guildConfig.whiteChannels.map(x => `<#${x}>`).join(` `)}\n Use \`/permissions c\` to change\n\u200B`)
+            embed.addField(`Roles`, `Which roles can use \`/start\`:\n${guildConfig.whiteRoles.length === 0 ? `@everyone` : guildConfig.whiteRoles.map(x => `<@&${x}>`).join(` `)}\n Use \`/permissions r\` to change\n\u200B`)
             embed.addField(`Privileged Users`, `Which users (other than server admins) can use \`/settings\` and \`/permissions\`:\n${guildConfig.privilegedUsers.length === 0 ? `**_None_**` : guildConfig.privilegedUsers.map(x => `<@${x}>`).join(` `)}\n Use \`/permissions pu\` to change`)
             break;
 

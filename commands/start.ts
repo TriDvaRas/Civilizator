@@ -3,13 +3,16 @@ import api from "../api/api";
 import { getGameEmbedButtons } from "../managers/buttonManager";
 import { createBaseGameEmbed, createGameEmbed } from "../managers/embedManager";
 import { newGame } from "../managers/gameManager";
-import { GameTypes } from "../types/api";
+import { GameTypes, IGuild } from "../types/api";
 
 export default {
     name: 'start',
     execute: async (interaction: CommandInteraction) => {
         if (!interaction.guild)
             return interaction.reply(`You can't start a game in DM`)
+        const guildConfig: IGuild = await api.get(`/guild/${interaction.guildId}`)
+        if (guildConfig.whiteChannels.length > 0 && !guildConfig.whiteChannels.includes(interaction.channelId))
+            return interaction.reply({ content: `You can't start a game in this channel\nAllowed channels: ${guildConfig.whiteChannels.map(x => `<#${x}>`)}`, ephemeral: true })
         const gameName = interaction.options.getSubcommand(true) as GameTypes
         const cpp = interaction.options.getInteger(`cpp`, true)
         const bpp = interaction.options.getInteger(`bpp`, true)
