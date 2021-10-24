@@ -18,24 +18,63 @@ export const logger = winston.createLogger({
         debug: 10,
         silly: 11,
     },
-    format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.simple(),
-        winston.format.printf(msg => {
-            sendLog(msg)
-            const message = msg.message || msg.command || msg.button || `?`
-            return `${colorizer.colorize('verbose', `[${msg.timestamp}]`)} ${colorizer.colorize([`cmd`, `btn`].includes(msg.level) ? `info` : msg.level, `[${msg.level.toUpperCase()}]`)
-                } ${typeof message === 'string' ? message : prettyFormat(message, {
-                    indent: 8,
-                    printBasicPrototype: false,
-                    printFunctionName: true,
-                })}`
-        })
-    ),
+
     transports: [
         new winston.transports.Console({
             level: `debug`,
             handleExceptions: true,
+            format: winston.format.combine(
+                winston.format.timestamp(),
+                winston.format.simple(),
+                winston.format.printf(msg => {
+                    sendLog(msg)
+                    const message = msg.message || msg.command || msg.button || `?`
+                    return `${colorizer.colorize('verbose', `[${`${msg.timestamp}`.replace(/[T]/, ` `).replace(/[Z]/, ``)}]`)} ${colorizer.colorize([`cmd`, `btn`].includes(msg.level) ? `info` : msg.level, `[${msg.level.toUpperCase()}]`)
+                        } ${typeof message === 'string' ? message : prettyFormat(message, {
+                            indent: 8,
+                            printBasicPrototype: false,
+                            printFunctionName: true,
+                        })}`
+                })
+            ),
+        }),
+        new winston.transports.File({
+            level: `debug`,
+            handleExceptions: true,
+            filename: `./logs/debug.log`,
+            maxsize: 5242880, // 5MB,
+            format: winston.format.combine(
+                winston.format.timestamp(),
+                winston.format.simple(),
+                winston.format.printf(msg => {
+                    sendLog(msg)
+                    const message = msg.message || msg.command || msg.button || `?`
+                    return `[${`${msg.timestamp}`.replace(/[T]/, ` `).replace(/[Z]/, ``)}] [${msg.level.toUpperCase()}] ${typeof message === 'string' ? message : prettyFormat(message, {
+                        indent: 8,
+                        printBasicPrototype: false,
+                        printFunctionName: true,
+                    })}`
+                })
+            ),
+        }),
+        new winston.transports.File({
+            level: `btn`,
+            handleExceptions: true,
+            filename: `./logs/application.log`,
+            maxsize: 5242880, // 5MB
+            format: winston.format.combine(
+                winston.format.timestamp(),
+                winston.format.simple(),
+                winston.format.printf(msg => {
+                    sendLog(msg)
+                    const message = msg.message || msg.command || msg.button || `?`
+                    return `[${`${msg.timestamp}`.replace(/[T]/, ` `).replace(/[Z]/, ``)}] [${msg.level.toUpperCase()}] ${typeof message === 'string' ? message : prettyFormat(message, {
+                        indent: 8,
+                        printBasicPrototype: false,
+                        printFunctionName: true,
+                    })}`
+                })
+            ),
         }),
     ],
     exitOnError: false,
