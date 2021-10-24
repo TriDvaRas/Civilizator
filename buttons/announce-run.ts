@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import path from 'path';
 import api from "../api/api";
 import { IGuild } from "../types/api";
-import { getAnnounceMessageEmbeds } from "../util/announce";
+import { getAnnounceMessageEmbeds } from "../util/embeds";
 
 export default {
     customId: 'announce-run',

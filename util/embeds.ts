@@ -14,3 +14,16 @@ export function getAnnounceMessageEmbeds(ann: any, author: User) {
         emb.addField(field.title, field.value);
     return [emb];
 }
+
+export function getAboutMessageEmbeds(about: any) {
+    let emb = new MessageEmbed()
+        .setTitle(about.title)
+        .setColor(about.color)
+    if (about.description?.length > 0)
+        emb.setDescription(about.description);
+    if (about.footer?.length > 0)
+        emb.setFooter(about.footer);
+    for (const field of about.fields)
+        emb.addField(field.title, field.value);
+    return [emb];
+}

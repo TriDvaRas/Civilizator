@@ -410,4 +410,8 @@ export default {
         name: `announce`,
         description: `Sends news`,
     },
+    about: {
+        name: `about`,
+        description: `Sends info about the bot`,
+    },
 } as CommandRegData

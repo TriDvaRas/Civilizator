@@ -2,7 +2,7 @@ import { ColorResolvable, CommandInteraction, MessageEmbed } from "discord.js";
 import * as fs from 'fs'
 import path from 'path';
 import { getAnnounceButtons } from "../managers/buttonManager";
-import { getAnnounceMessageEmbeds } from "../util/announce";
+import { getAnnounceMessageEmbeds } from "../util/embeds";
 
 export default {
     name: 'announce',
