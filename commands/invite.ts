@@ -3,6 +3,7 @@ import { Permissions, ColorResolvable, CommandInteraction, MessageEmbed } from "
 export default {
     name: 'invite',
     execute: async (interaction: CommandInteraction) => {
+        const raw = interaction.options.getBoolean(`raw`, false)
         const invite = client.generateInvite({
             permissions: [
                 Permissions.FLAGS.CHANGE_NICKNAME,
@@ -21,6 +22,6 @@ export default {
                 'bot',
             ]
         })
-        interaction.reply(`[Click here](${invite}) to invite bot to another server`)
+        interaction.reply(`[Click here](${invite}) to invite bot to another server${raw?`\n${invite}`:``}`)
     }
 }

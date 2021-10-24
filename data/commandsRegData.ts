@@ -37,6 +37,14 @@ export default {
     invite: {
         name: `invite`,
         description: `Sends bot invite link`,
+        options: [
+            {
+                name: `raw`,
+                description: `Send raw link (for copying)`,
+                type: `BOOLEAN`,
+                required: false,
+            },
+        ]
     },
     set: {
         name: `set`,
