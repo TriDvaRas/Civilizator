@@ -9,4 +9,11 @@ export default {
             permission: true,
         }
     ],
+    announce: [
+        {
+            id: '272084627794034688',
+            type: 'USER',
+            permission: true,
+        }
+    ],
 } as CommandPermData

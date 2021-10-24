@@ -1,0 +1,19 @@
+{
+    "title":"TestAnnouncement",
+    "color":"#E3DC13",
+    "description":"It describes...",
+    "fields":[
+        {
+            "title":"test1",
+            "value":"val1"
+        },
+        {
+            "title":"test1",
+            "value":"val1"
+        }
+    ],
+    "footer":"nothing to see here",
+    "ignoreGuilds":[
+        "000000000000000000"
+    ]
+}

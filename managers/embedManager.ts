@@ -179,7 +179,7 @@ export function createSettingsEmbed(guildConfig: IGuild, type: GuildSettingsType
             break;
         case `news`:
             embed.setTitle(`News Settings`)
-            embed.addField(`About`, `Bot sends info about major updates once in few months. You can specify channels in which info would be sent. If no channels are specified info would be sent in channel where \`/start\` was last used. You can also fully disable news.`)
+            embed.addField(`About`, `Bot sends info about major updates once in few months. You can specify channels in which info would be sent. If no channels are specified info would be sent in channel where \`/start\` was last used. You can also fully disable news. **Make sure bot can send messages in selected channels!**`)
             embed.addField(`News Channels`, `In which channels news would be sent:\n${guildConfig.news ? (guildConfig.newsChannels.length === 0 ? `**_In last game's channel_**` : guildConfig.newsChannels.map(x => `<#${x}>`).join(` `)) : `**News Disabled**`}\n Use \`/news\` to change\n\u200B`)
             break;
         case `locale`:

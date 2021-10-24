@@ -406,4 +406,8 @@ export default {
             }
         ]
     },
+    announce: {
+        name: `announce`,
+        description: `Sends news`,
+    },
 } as CommandRegData

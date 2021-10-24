@@ -466,3 +466,23 @@ export function getLoadingButton(customText?: string) {
                 .setDisabled(true)
         )
 }
+export function getAnnounceButtons() {
+    return [new MessageActionRow()
+        .addComponents(
+            new MessageButton()
+                .setCustomId(`announce-cancel`)
+                .setLabel(`Cancel`)
+                .setStyle(`SUCCESS`)
+                .setDisabled(false),
+            new MessageButton()
+                .setCustomId(`announce-dry`)
+                .setLabel(`Dry Run`)
+                .setStyle(`SECONDARY`)
+                .setDisabled(false),
+            new MessageButton()
+                .setCustomId(`announce-run`)
+                .setLabel(`Run`)
+                .setStyle(`DANGER`)
+                .setDisabled(false)
+        )]
+}
