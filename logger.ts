@@ -47,7 +47,6 @@ export const logger = winston.createLogger({
                 winston.format.timestamp(),
                 winston.format.simple(),
                 winston.format.printf(msg => {
-                    sendLog(msg)
                     const message = msg.message || msg.command || msg.button || `?`
                     return `[${`${msg.timestamp}`.replace(/[T]/, ` `).replace(/[Z]/, ``)}] [${msg.level.toUpperCase()}] ${typeof message === 'string' ? message : prettyFormat(message, {
                         indent: 8,
@@ -66,7 +65,6 @@ export const logger = winston.createLogger({
                 winston.format.timestamp(),
                 winston.format.simple(),
                 winston.format.printf(msg => {
-                    sendLog(msg)
                     const message = msg.message || msg.command || msg.button || `?`
                     return `[${`${msg.timestamp}`.replace(/[T]/, ` `).replace(/[Z]/, ``)}] [${msg.level.toUpperCase()}] ${typeof message === 'string' ? message : prettyFormat(message, {
                         indent: 8,
