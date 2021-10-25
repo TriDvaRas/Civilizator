@@ -414,6 +414,25 @@ export default {
             }
         ]
     },
+    unregcommand: {
+        name: `unregcommand`,
+        description: `unregcommand`,
+        defaultPermission: false,
+        options: [
+            {
+                name: `command`,
+                description: `command to unregister`,
+                type: `STRING`,
+                required: true,
+            },
+            {
+                name: `global`,
+                description: `global/guild`,
+                type: `BOOLEAN`,
+                required: false,
+            }
+        ]
+    },
     announce: {
         name: `announce`,
         description: `Sends news`,

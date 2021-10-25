@@ -6,7 +6,7 @@ import { IButtonInteractionCreateArgs, IButtonInteractionUpdateArgs } from "../t
 import { IButton, IButtonInteraction } from "../types/custom";
 
 const buttons = new Collection<string, IButton>();
-const buttonFiles = fs.readdirSync(path.resolve(__dirname, '../buttons')).filter(file => file.endsWith('.ts'));
+const buttonFiles = fs.readdirSync(path.resolve(__dirname, '../buttons')).filter(file => file.endsWith('.ts') || file.endsWith('.js'));
 for (const file of buttonFiles) {
     const command: IButton = require(`../buttons/${file}`).default;
     buttons.set(command.customId, command);
@@ -45,7 +45,7 @@ export default async function buttonHandler(interaction: ButtonInteraction) {
                 type: 'button',
                 successful: true,
             } as IButtonInteractionUpdateArgs) as IButtonInteraction
-            
+
         } catch (error: any) {
             log.error(button.customId)
             log.error(error.stack)

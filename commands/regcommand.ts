@@ -14,7 +14,7 @@ export default {
         const permData = commandsPermData[`${cmd}`]
         if (!command)
             return interaction.reply(`Failed registering ${global ? `global` : `local`} command \`/${cmd}\` `)
-        const perm = (permData && !global) ? await command.permissions.set({ permissions: permData }) : []
+        const perm = (permData && !global) ? (await command.permissions.set({ permissions: permData })) : []
         
         return interaction.reply(`Registered ${global ? `global` : `local`} command \`/${cmd}\` with \`${perm ? perm.length : `0`}\` permissions`)
     }

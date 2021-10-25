@@ -7,7 +7,8 @@ import api from "../api/api";
 import { ICommandInteractionCreateArgs, ICommandInteractionUpdateArgs } from "../types/apiReqs";
 
 const commands = new Collection<string, ICommand>();
-const commandFiles = fs.readdirSync(path.resolve(__dirname, '../commands')).filter(file => file.endsWith('.ts'));
+const commandFiles = fs.readdirSync(path.resolve(__dirname, '../commands')).filter(file => file.endsWith('.ts') || file.endsWith('.js'));
+
 for (const file of commandFiles) {
     const command: ICommand = require(`../commands/${file}`).default;
     commands.set(command.name, command);
@@ -45,7 +46,7 @@ export default async function slashCommandHandler(interaction: CommandInteractio
                 type: 'command',
                 successful: true,
             } as ICommandInteractionUpdateArgs)
-            
+
         } catch (error: any) {
             log.error(command.name)
             log.error(error.stack)
