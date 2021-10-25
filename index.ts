@@ -7,6 +7,7 @@ import { onGuildJoin, onGuildKick, onGuildUpdate } from './handlers/guildHandler
 import interactionHandler from './handlers/interactionHandler';
 import messageHandler from './handlers/messageHandler';
 import { logger } from './logger';
+import * as pjson from './package.json'
 declare global {
     let client: Client;
     let log: winston.Logger;
@@ -15,9 +16,9 @@ declare global {
 global.log = logger
 //@ts-ignore
 global.client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-log.info(`Starting CivBOT v${process.env.npm_package_version}`);
+log.info(`Starting CivBOT v${pjson.version}`);
 client.once('ready', async () => {
-    log.warn(`Logged in as ${client.user?.tag} \n\t\tCivBOT v${process.env.npm_package_version || `FUCK`}\t\tCivAPI v${await api.version() || `FUCK`}`);
+    log.warn(`Logged in as ${client.user?.tag} \n\t\tCivBOT v${pjson.version || `FUCK`}\t\tCivAPI v${await api.version() || `FUCK`}`);
 });
 client.on('messageCreate', messageHandler);
 client.on('interactionCreate', interactionHandler);
