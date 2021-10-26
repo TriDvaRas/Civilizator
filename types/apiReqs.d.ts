@@ -52,7 +52,7 @@ export interface IPlayerStateUpdateArgs {
     vote?: boolean;
     banned?: number[];
     rolled?: number[];
-    picked?: number;
+    picked?: number| null;
 }
 export interface IGuildCreateArgs {
     id: Snowflake;

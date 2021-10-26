@@ -19,6 +19,7 @@ export async function updatePicksInfo(game: IFullGame, pickMsgs: IPickMsg[], pic
         })
     ])
     return await api.patch(`/playerstate/${game.id}/all`, {
-        vote: false
+        vote: false,
+        picked: null,
     } as IPlayerStateUpdateArgs) as IFullGame;
 }
