@@ -36,6 +36,6 @@ export default {
         if (freeId !== game.id)
             await thread.setName(`Civilizator Game ${game.id}`)
         await message.edit({ embeds: [createGameEmbed(game)], components: getGameEmbedButtons(game) })
-        await msg.edit({ content: `Game started. You can now join the thread and the game` })
+        await msg.edit({ content: `Game ${game.id} started. Join the thread to continue` })
     }
 }

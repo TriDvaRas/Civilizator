@@ -30,7 +30,6 @@ export default {
                 }
             else {
                 const channelId = (await api.get(`/guild/${g.id}/lastchannelid`))?.id
-                console.log(`/guild/${g.id}/lastchannelid => ${channelId}`);
                 
                 if (channelId)
                     try {
@@ -41,14 +40,13 @@ export default {
                             channelType: `last`
                         })
                     } catch (error) {
-                        console.log(`Error [${g.id}] [${channelId}] ${error}`);
+                        log.warn(`Dry run Error [${g.id}] [${channelId}] ${error}`);
                         notFound.push(g)
                     }
                 else
                     notFound.push(g)
             }
         }
-        console.log(channels);
         
         //todo log
         let ann = JSON.parse(fs.readFileSync(path.resolve(__dirname, `../assets/json/announcement.json`)) as any)

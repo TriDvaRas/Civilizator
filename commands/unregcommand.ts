@@ -8,8 +8,6 @@ export default {
         const global = interaction.options.get('global', false)?.value || false
         const commands = await (((global ? client.application : interaction.guild)?.commands as GuildApplicationCommandManager).fetch())
         const command = commands.find(c => c.name == cmd)
-        console.log(commands.map(x => ({ id: x.id, name: x.name })));
-
         if (!command)
             return interaction.reply(`Can't find ${global ? `global` : `local`} command \`/${cmd}\` `)
         try {

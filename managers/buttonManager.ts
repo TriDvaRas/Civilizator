@@ -81,14 +81,14 @@ export function getGameEmbedButtons(game: IFullGame): MessageActionRow[] {
                         .setStyle(`SUCCESS`)
                         .setEmoji(``),
                 ))
-            rows.push(new MessageActionRow()
-                .addComponents(
-                    new MessageButton()
-                        .setCustomId(`pick-op-lock-rerolls`)
-                        .setLabel(`Lock Rerolls (op)`)
-                        .setStyle(`DANGER`)
-                        .setEmoji(`🔒`),
-                ))
+            // rows.push(new MessageActionRow()
+            //     .addComponents(
+            //         new MessageButton()
+            //             .setCustomId(`pick-op-lock-rerolls`)
+            //             .setLabel(`Lock Rerolls (op)`)
+            //             .setStyle(`DANGER`)
+            //             .setEmoji(`🔒`),
+            //     ))
             break;
         default:
             log.warn(`Invalid game phase in buttonManager: ${game.phase}`);

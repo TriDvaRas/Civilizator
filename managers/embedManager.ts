@@ -113,7 +113,7 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
                 { name: `Tips\u200B`, value: `Use \`/set\` to edit game settings\nUse \`/dlcs\` to view dlcs info`, inline: false },
             )
             if (!isEnoughCivsToStartGame(game))
-                embed.addField(`**Not enough civs to proceed**`, `\`${game.state.civs.length}\` civs in pool, \`${(game.bpp + game.cpp) * game.playerStates.length}\` is needed\nLower cpp, bpp or enable more dlcs`)
+                embed.addField(`**Not enough civs to proceed⚠️**`, `\`${game.state.civs.length}\` civs in pool, \`${(game.bpp + game.cpp) * game.playerStates.length}\` is required\nLower cpp, bpp or enable more dlcs`)
             break;
         case `ban`:
             embed.addFields(
@@ -139,7 +139,8 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
                 { name: game.bpp > 0 ? `Bans` : `\u200B`, value: `${game.bpp > 0 ? getPlayerBans(game.playerStates, game.bpp) : ``}\u200B`, inline: true },
                 { name: `Pick`, value: `${getPlayerPicks(game.playerStates, game.civlist)}\u200B`, inline: true },
                 { name: `Reroll Votes [${game.playerStates.filter(x => x.vote).length}/${Math.ceil(game.playerStates.length * game.guildConfig.rerollThreshold / 100)}]`, value: `${getRerollVotes(game.playerStates)}\u200B`, inline: true },
-                { name: `Tips`, value: `OP can resend this message with \`/gm\` command\nIf every player submits their pick \`/winner\` command can be used\u200B`, inline: false },
+                { name: `Tips`, value: `OP can resend this message with \`/gm\` command and resend pick messages with \`/pm\` command\u200B`, inline: false },
+                //If every player submits their pick \`/winner\` command can be used
             )
             break;
         default:

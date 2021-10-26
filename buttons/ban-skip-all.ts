@@ -28,11 +28,6 @@ export default {
             banned: newBanned
         } as IPlayerStateUpdateArgs
         let newGame = await api.patch(`/playerstate/${game.id}/${player.playerId}`, data) as IFullGame
-        console.log({
-            bpp: game.bpp,
-            banned: player.banned,
-            ps: newGame.playerStates
-        });
 
         await interaction.channel?.send({ content: `<@${interaction.user.id}> skipped \`${game.bpp - player.banned.length}\` ban${game.bpp - player.banned.length > 1 ? `s` : ``}` })
         if (newGame.playerStates.find(x => x.banned.length < game.bpp))

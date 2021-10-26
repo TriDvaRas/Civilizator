@@ -42,7 +42,7 @@ export default {
                             result: false
                         })
                     } catch (error) {
-                        console.log(`Error [${g.id}] [${channelId}] ${error}`);
+                        log.warn(`Real Run Error [${g.id}] [${channelId}] ${error}`);
                         notFound.push(g)
                     }
                 else

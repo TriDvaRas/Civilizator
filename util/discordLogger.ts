@@ -11,6 +11,7 @@ export async function sendLog(msg: winston.Logform.TransformableInfo) {
         if (['error', 'warn'].includes(msg.level))
             await (await client.channels.fetch(process.env.ERRORLOG_CHANNEL_ID as string) as TextChannel)?.send({ content: msg.level === `error` && !process.env.DEV ? `<@${process.env.BOT_OWNER_ID}>` : undefined, embeds: [formatLog(msg)] })
     } catch (error) {
+        //! do not use winston here as it loops 
         console.log(error);
     }
 }

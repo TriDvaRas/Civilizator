@@ -55,8 +55,6 @@ export function findSimilar(alias: string, civlist: ICivilization[], locales: Al
 export function isEnoughCivsToStartGame(game: IFullGame, extraSlot?: boolean) {
     const civsRequired = (game.bpp + game.cpp) * game.playerStates.length
     const civsAvailable = game.state.civs.length + game.playerStates.reduce((a, c) => a + c.banned.length, 0)
-    console.log({ civsRequired, civsAvailable });
-
 
     if (extraSlot)
         return civsAvailable > civsRequired
