@@ -16,7 +16,7 @@ declare global {
 //@ts-ignore
 global.log = logger
 //@ts-ignore
-global.client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+global.client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] , partials: ['CHANNEL']});
 log.info(`Starting CivBOT v${pjson.version}`);
 client.once('ready', async () => {
     initCrons()
