@@ -433,6 +433,19 @@ export default {
             }
         ]
     },
+    unregallcommands: {
+        name: `unregallcommands`,
+        description: `unregallcommands`,
+        defaultPermission: false,
+        options: [
+            {
+                name: `global`,
+                description: `global/guild`,
+                type: `BOOLEAN`,
+                required: false,
+            }
+        ]
+    },
     announce: {
         name: `announce`,
         description: `Sends news`,

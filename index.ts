@@ -7,6 +7,7 @@ import { onGuildJoin, onGuildKick, onGuildUpdate } from './handlers/guildHandler
 import interactionHandler from './handlers/interactionHandler';
 import messageHandler from './handlers/messageHandler';
 import { logger } from './logger';
+import { initCrons } from './managers/cronManager';
 import * as pjson from './package.json'
 declare global {
     let client: Client;
@@ -18,6 +19,7 @@ global.log = logger
 global.client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 log.info(`Starting CivBOT v${pjson.version}`);
 client.once('ready', async () => {
+    initCrons()
     log.warn(`Logged in as ${client.user?.tag} \n\t\tCivBOT v${pjson.version || `FUCK`}\t\tCivAPI v${await api.version() || `FUCK`}`);
 });
 client.on('messageCreate', messageHandler);
