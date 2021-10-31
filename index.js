@@ -54,11 +54,11 @@ discordClient
 
         // save daily server stats 
         cron.schedule('59 23 * * *', () => {
-            RT.updateDaily()
+            // RT.updateDaily()
         })
         // update pressence 
         cron.schedule('*/10 * * * * *', () => {
-            RT.updatePressence()
+            // RT.updatePressence()
         })
         // flush ended games 
         cron.schedule('*/30 * * * * *', () => {

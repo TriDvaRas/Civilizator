@@ -142,3 +142,12 @@ function execCivCommand(message, args, command, cfg) {
         logger.log('error', `[${chalk.magentaBright(message.guild.name)}] ${error}`)
     }
 }
+
+
+function sendDeprecation(channel){
+    channel.send(new Discord.MessageEmbed()
+        .setTitle(`⚠️Deprecation Warning⚠️`)
+        .setDescription(`As of 01.11.2021 Civilizator now uses [slash commands](https://blog.discord.com/slash-commands-are-here-8db0a385d9e6).\n You might need to update bot's permissions by clicking [here](https://discord.com/api/oauth2/authorize?client_id=719933714423087135&scope=applications.commands+bot&permissions=257765459968)** for slash commands to appear. \nOld commands will still work till December, bit you will see this message every time you use any command`)
+        .setFooter(`This message will automaticaly be deleted in 15 minutes (not guaranteed but bot would try to delete it)`)
+    ).then(msg=>msg.delete({timeout:900000}))
+}

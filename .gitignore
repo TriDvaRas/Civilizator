@@ -17,3 +17,7 @@ test.js
 depr
 test
 announce/*
+.v1
+build
+assets/*
+.env
