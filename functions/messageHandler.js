@@ -57,16 +57,16 @@ function execDMCommand(message) {
             message.channel.send(`Unknown command. Try \`!help\`. If you want to submit feedback remove \`!\` at the start of the message`)
     }
     else {
-        let guild = globalThis.logGuild;
-        if (!guild)
-            return
-        guild.channels.cache.find(channel => channel.name == `feed`).send(`**FEED**
-\t\t\tFrom: ${message.author} (${message.author.tag})
-\t\t\tText: ${message.toString()}
-\t\t\tAttachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`
-        ).then(() => {
-            message.channel.send(`Your message was successfully submited 👍`)
-        })
+//         let guild = globalThis.logGuild;
+//         if (!guild)
+//             return
+//         guild.channels.cache.find(channel => channel.name == `feed`).send(`**FEED**
+// \t\t\tFrom: ${message.author} (${message.author.tag})
+// \t\t\tText: ${message.toString()}
+// \t\t\tAttachments: ${message.attachments.array().map(x => `${x.name}\n${x.url}`).join(`,\n`)}`
+//         ).then(() => {
+//             message.channel.send(`Your message was successfully submited 👍`)
+//         })
     }
 }
 
