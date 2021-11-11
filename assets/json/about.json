@@ -1,0 +1,23 @@
+{
+    "title":"Civilizator v3",
+    "color":"#87D937",
+    "fields":[
+        {
+            "title": "**About**",
+            "value": "<@719933714423087135>'s main feature is randomizing Civilization picks. Basicaly all players receive a random and unique selection of 1-6 civilizations to choose from.\nCurrently supported games: Civ5, Civ5+LEK, Civ6.  \nIf you enable bans players can also **ban** civs, removing them from the pool \n**DLCs** can also be disabled if someone doesn't have some ~~or in case you want to feel the Vanilla experience~~ \nAfter everyone receives their civs they can vote to reroll. If 70% (can be changed) of players has voted all player will receive a new set to pick from."
+        },
+        {
+            "title": "**Commands**",
+            "value": "Bot fully relies on Discord's fancy *slash commands*. The command you probably want to start with is `/start`. You can view full list of commands by typing `/` in chat and opening Civilizator tab "
+        },
+        {
+            "title": "**Permissions**",
+            "value": "By default anyone can use `/start` command. You can create a whitelist of roles, channels and users who would be able to start games.\nFor more info open Permissions tab of `/settings command`"
+        },
+        {
+            "title": "**Bugs, Suggestions, Updates**",
+            "value": "You can send any suggestions and bugs directly in Bot's DM, [Official Discord server](https://discord.gg/nFMFs2e) or Owner's DM (TriDvaRas#4805)"
+        }
+    ]
+}
+    
