@@ -125,6 +125,7 @@ function setFields(embed: MessageEmbed, game: IFullGame) {
                 { name: `Bans per player`, value: `${game.bpp}\u200B`, inline: true },
                 { name: `Players`, value: `${getPlayerTags(game.playerStates)}\u200B`, inline: true },
                 { name: `Bans`, value: `${getPlayerBans(game.playerStates, game.bpp)}\u200B`, inline: true },
+                { name: `Tips`, value: `You can ban using \`/ban\` command\u200B`, inline: false },
             )
             break;
         case `pick`:
